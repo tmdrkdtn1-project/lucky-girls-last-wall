@@ -34,6 +34,8 @@ jobs:
           node --check /tmp/index-inline.js
       - name: Check battle modal lifecycle
         run: python3 scripts/check_modal_lifecycle.py
+      - name: Check battle prep start flow
+        run: python3 scripts/check_prep_start_flow.py
       - name: Check rapid battle input path
         run: python3 scripts/check_fast_input.py
       - name: Check fixed battle viewport
