@@ -12,7 +12,7 @@ must("rapid summon stays direct", "bindFastAction($('summon'),performSummon)" in
 must("summon never restarts loop", "function performSummon()" in html and "scheduleBattleRender()" in html and "function performSummon(){if" in html)
 must("boss wave resets stale input/hitstop", "function beginWave()" in html and "document.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'));resetBattlePointerState()" in html)
 must("boss skill is session guarded", "warnBossSkill(p.n,()=>{" in html and "battleTimeout(()=>{if(w.isConnected)w.remove();if(!running||paused)return;cb()},650,session)" in html)
-must("speed restart serialized", "if(running&&!paused)startLoop();" in html)
+must("speed toggle keeps persistent timer", "if(running&&!paused)startLoop();" not in html and "intervalMs=1100" in html and "waveTime+=1.1*speed" in html)
 must("watchdog detects stalled tick", "LG_BATTLE_TICK_STALL" in html and "lastBattleTickAt" in html)
 must("watchdog repairs combat locks", "specialAttackLock=false;lastBattleTickAt=now;startLoop()" in html)
 must("watchdog is not aggressive", "Math.max(5200,3200/speed)" in html)
@@ -31,7 +31,7 @@ must("wave advance does not create second timer", "function advanceWave()" in ht
 
 scenarios=[
  ("W1 x1 summon spam", ["performSummon","scheduleBattleRender","validateBattleState"]),
- ("W1 x2 summon spam", ["performSummon","speed=speed===1?2:1","startLoop"]),
+ ("W1 x2 summon spam", ["performSummon","speed=speed===1?2:1","waveTime+=1.1*speed"]),
  ("W5 boss x1", ["beginWave","bossHp=100","bossSkill"]),
  ("W5 boss x2 + summon", ["bossSkill","performSummon","battleWatchdogTimer"]),
  ("boss + merge/drag input coexistence", ["performMerge","resetBattlePointerState","bossSkill"]),
