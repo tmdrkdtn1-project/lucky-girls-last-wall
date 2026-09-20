@@ -6,9 +6,9 @@ end=html.find("$('enter').onclick",start)
 loop=html[start:end] if start>=0 and end>=0 else ""
 checks={
  "no raw timer clear in battle loop":"clearInterval(timer)" not in loop,
- "terminal clear uses stop helper":"running=false;stopBattleLoop()" in loop,
- "stage clear is session guarded":"battleTimeout(clearStage,450)" in loop,
- "defeat is session guarded":"battleTimeout(()=>result(false),500)" in loop,
+ "terminal clear uses stop helper":"running=false;stopBattleLoop()" in step,
+ "stage clear is session guarded":"battleTimeout(clearStage,450)" in step,
+ "defeat is session guarded":"battleTimeout(()=>result(false),500)" in step,
  "single interval source":"},intervalMs)}" in loop,
  "lane cleanup session guarded":"battleTimeout(()=>{if(lines[lane])" in html,
  "hitstop cleanup independent fail-safe":"setTimeout(()=>host.classList.remove('combatHitstop')" in html,
