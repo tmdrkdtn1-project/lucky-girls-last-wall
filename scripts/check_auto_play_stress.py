@@ -23,16 +23,15 @@ must("invalid session stops watchdog", "lastBattleTickAt=0;stopBattleWatchdog()"
 # Static stress matrix: all high-risk event paths must coexist without direct raw timer mutation.
 start=html.find("function startLoop()")
 end=html.find("$('enter').onclick",start)
-loop=html[start:end]
-must("single timer source in combat loop", loop.count("setInterval(")==1)
+loop=html[start:end]\nstep_start=html.find("function runBattleStep()")\nstep_end=html.find("function startLoop()",step_start)\nstep=html[step_start:step_end]\nmust("single timer source in combat loop", loop.count("setInterval(")==1)
 must("no raw clearInterval inside combat loop", "clearInterval(timer)" not in loop)
 must("boss handling present in simulation step", "bossSkill()" in step and "wave%5===0" in step)
 must("scheduler delegates simulation", "runBattleStep()" in loop and "bossSkill()" not in loop)
 must("wave advance does not create second timer", "function advanceWave()" in html and "beginWave();" in html)
 
 scenarios=[
- ("W1 x1 summon spam", ["queueSummonInput","performSummon","scheduleBattleRender","validateBattleState"]),
- ("W1 x2 summon spam", ["queueSummonInput","performSummon","speed=speed===1?2:1","waveTime+=1.1*speed"]),
+ ("W1 x1 summon spam", ["cooledSummon","performSummon","scheduleBattleRender","validateBattleState"]),
+ ("W1 x2 summon spam", ["cooledSummon","performSummon","speed=speed===1?2:1","waveTime+=1.1*speed"]),
  ("W5 boss x1", ["beginWave","bossHp=100","bossSkill"]),
  ("W5 boss x2 + summon", ["bossSkill","performSummon","battleWatchdogTimer"]),
  ("boss + merge/drag input coexistence", ["performMerge","resetBattlePointerState","bossSkill"]),
