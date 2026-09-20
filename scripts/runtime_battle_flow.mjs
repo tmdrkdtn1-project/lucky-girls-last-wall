@@ -24,6 +24,18 @@ await page.evaluate(([a,b])=>__LG_TEST__.swap(a,b),occupied); let after=await pa
 assert.equal(await page.evaluate(()=>__LG_TEST__.speed()),2);
 let tick0=(await page.evaluate(()=>__LG_TEST__.snapshot())).tick; await page.waitForTimeout(2500); let later=await page.evaluate(()=>__LG_TEST__.snapshot()); assert.ok(later.tick>tick0); assert.equal(later.running,true); assert.equal(later.timerAlive,true);
 await page.evaluate(()=>__LG_TEST__.fund(0)); await page.waitForTimeout(550); let fail=await page.evaluate(()=>__LG_TEST__.summon()); assert.equal(fail.ok,false); assert.equal(fail.cooldown,false);
+// Sustained rapid-input stress: 30 attempts, only cooldown-eligible summons may succeed.
+await page.evaluate(()=>__LG_TEST__.fund(100000));
+let stressStart=await page.evaluate(()=>__LG_TEST__.snapshot());
+for(let i=0;i<30;i++){ await page.evaluate(()=>__LG_TEST__.summon()); await page.waitForTimeout(25); }
+await page.waitForTimeout(1200);
+let stressEnd=await page.evaluate(()=>__LG_TEST__.snapshot());
+assert.equal(stressEnd.running,true); assert.equal(stressEnd.timerAlive,true); assert.ok(stressEnd.tick>=stressStart.tick);
+// Repeated speed toggles must not kill or duplicate the persistent scheduler.
+for(let i=0;i<12;i++) await page.evaluate(()=>__LG_TEST__.speed());
+await page.waitForTimeout(2400);
+let speedEnd=await page.evaluate(()=>__LG_TEST__.snapshot());
+assert.equal(speedEnd.running,true); assert.equal(speedEnd.timerAlive,true); assert.ok(speedEnd.tick>stressEnd.tick);
 assert.deepEqual(pageErrors,[]);
-console.log('PASS - Chromium battle prep/start/summon cooldown/swap/speed/tick flow');
+console.log('PASS - Chromium battle prep/start/summon cooldown/swap/speed/tick + rapid-input stress');
 await browser.close();
