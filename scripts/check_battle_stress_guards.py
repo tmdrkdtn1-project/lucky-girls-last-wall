@@ -9,6 +9,10 @@ checks={
  "fx overflow guard":"function validateBattleFx()" in html,
  "render validates fx":"validateBattleFx()" in html,
  "new run clears transient fx":"document.querySelectorAll('.combatTransient').forEach(x=>x.remove())" in html,
+ "battle watchdog installed":"function installBattleWatchdog()" in html and "LG_BATTLE_TICK_STALL" in html,
+ "watchdog repairs stalled loop":"specialAttackLock=false;lastBattleTickAt=now;startLoop()" in html,
+ "boss wave clears stale hitstop":"function beginWave()" in html and "document.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'));resetBattlePointerState()" in html,
+ "hitstop cleanup independent":"setTimeout(()=>host.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'))" in html,
 }
 bad=[k for k,v in checks.items() if not v]
 for k,v in checks.items(): print(("PASS" if v else "FAIL")+" - "+k)
