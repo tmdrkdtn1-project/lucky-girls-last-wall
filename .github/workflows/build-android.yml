@@ -32,6 +32,8 @@ jobs:
           Path('/tmp/index-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
           PY
           node --check /tmp/index-inline.js
+      - name: Check battle modal lifecycle
+        run: python3 scripts/check_modal_lifecycle.py
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4

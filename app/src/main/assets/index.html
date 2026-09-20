@@ -13,7 +13,7 @@
 <button id="daily" class="btn secondary">출석 보상 받기</button>
 <div id="account" class="upgrade" style="display:none"></div><div id="homeStats" style="display:none"></div>
 <div style="display:none"><select id="modeSelect"><option value="normal">NORMAL</option><option value="hard">HARD</option><option value="infinite">무한성</option></select><select id="stageSelect"></select><div id="modeStatus"></div><button id="start"></button><button id="collection"></button><button id="shop"></button><button id="collectionMain"></button></div>
-<div class="portraitOnlyNote">MILESTONE 2.42.0 · PORTRAIT LOBBY</div>
+<div class="portraitOnlyNote">MILESTONE 2.43.0 · PORTRAIT LOBBY</div>
 </section>
 <section id="storyHub" class="screen"><div class="hubHeader"><button class="hudbtn backTop" id="storyBack">←</button><div class="hubTitle">스토리</div><span id="storyProgressText">0/5</span></div><div class="storyMap" id="storyChapters"></div></section>
 <section id="characterHub" class="screen"><div class="hubHeader"><button class="hudbtn backTop" id="characterBack">←</button><div class="hubTitle">캐릭터</div><span id="characterCount">0/20</span></div>
@@ -265,12 +265,15 @@ const rootTabs=new Set(['home','characterHub','summonHub','store','menuHub']);
 function show(id){if(!$(id))return;currentScreen=id;if(rootTabs.has(id))lastRootScreen=id;document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));$(id).classList.add('on');updateBottomNav(id);window.scrollTo(0,0)}
 function closeTopOverlay(){let o=document.querySelector('.pauseOverlay,.notificationSheet,.result#mergeGroupChoice,.result#mergeChoice,.result#relicClassChoice,.result#relicChoice');if(!o)return false;if(typeof o._onBack==='function'){o._onBack();return true}let wasPause=o.classList.contains('pauseOverlay');o.remove();if(wasPause&&currentScreen==='battle'){paused=false;$('pause').textContent='Ⅱ';startLoop()}return true}
 function resumeAfterChoice(){if(currentScreen==='battle'){paused=false;$('pause').textContent='Ⅱ'}}
+function activeBattleModal(){return document.querySelector('.pauseOverlay,.result#mergeGroupChoice,.result#mergeChoice,.result#relicClassChoice,.result#relicChoice')}
+function recoverOrphanPause(){if(currentScreen!=='battle'||!running||!paused)return false;if(activeBattleModal())return false;paused=false;$('pause').textContent='Ⅱ';$('msg').textContent='▶ 전투 상태 자동 복구';toast('전투 정지 상태를 자동으로 복구했습니다.');return true}
+
 function installChoiceBackLock(node,message){node._onBack=()=>toast(message||'선택을 완료해야 전투를 계속할 수 있습니다.')}
 
 function leaveBattleToPrep(){running=false;if(timer)clearInterval(timer);$('boss').style.display='none';$('bossbar').style.display='none';renderBattlePrep();show('battlePrep')}
 function goBackFlow(){if(closeTopOverlay())return true;if(currentScreen==='battle'){leaveBattleToPrep();return true}if(currentScreen==='battlePrep'){if(prepReturnScreen==='infiniteHub')renderInfiniteHub();else renderStoryHub();show(prepReturnScreen||'home');return true}if(currentScreen==='charDetail'){renderCharacterHub();show('characterHub');return true}if(currentScreen==='col'){let ret=window._collectionReturn;window._collectionReturn=null;if(ret==='battlePrep'){renderBattlePrep();show('battlePrep')}else if(ret==='menuHub'){renderMenuHub();show('menuHub')}else{renderCharacterHub();show('characterHub')}return true}if(['settingsHub','noticeHub','mailHub','missionHub','helpHub'].includes(currentScreen)){renderMenuHub();show('menuHub');return true}if(currentScreen==='storyHub'||currentScreen==='infiniteHub'){show('home');return true}if(rootTabs.has(currentScreen)&&currentScreen!=='home'){show('home');return true}if(currentScreen==='home')return false;show(lastRootScreen||'home');return true}
 window.handleNativeBack=()=>goBackFlow();
-window.addEventListener('error',e=>{try{console.error('LG_RUNTIME',e.error||e.message);toast('런타임 오류를 감지했습니다. 화면을 유지하고 복구를 시도합니다.')}catch(_){}});
+window.addEventListener('error',e=>{try{console.error('LG_RUNTIME',{error:e.error||e.message,screen:currentScreen,paused,running,modal:activeBattleModal()?.id||activeBattleModal()?.className||'none'});toast('런타임 오류를 감지했습니다. 화면을 유지하고 복구를 시도합니다.')}catch(_){}});
 window.addEventListener('unhandledrejection',e=>{try{console.error('LG_PROMISE',e.reason);toast('처리되지 않은 오류를 감지했습니다.')}catch(_){}});
 
 
@@ -473,7 +476,7 @@ function beginWave(){waveTime=0;enemyCount=Math.max(6,Math.floor(swarmTarget()*.
 function advanceWave(){wave++;if(wave>20){running=false;clearInterval(timer);$('msg').textContent='🏆 '+stages[currentStage].name+' 클리어!';setTimeout(clearStage,450);return}beginWave();$('msg').textContent=wave%5===0?'👹 '+stages[currentStage].bosses[wave]+' + 졸병 러시':'🌙 WAVE '+wave+' · 적 증원'}
 function onAllyDefeated(unit){moveSelected=-1;dragFrom=-1;allyDeathFeedback();if(unit)toast('💀 '+unit.name+' 전투불능 · 해당 슬롯이 비었습니다.');setTimeout(()=>updateCollapseState(true),40)}
 function enemySkin(){beginWave()}
-function startLoop(){if(timer)clearInterval(timer);running=true;timer=setInterval(()=>{if(!running||paused)return;
+function startLoop(){if(timer)clearInterval(timer);running=true;timer=setInterval(()=>{if(!running)return;if(paused){recoverOrphanPause();if(paused)return;}
 waveTime+=2.2;let target=swarmTarget(),spawn=Math.max(2,Math.ceil((target-enemyCount)*.52));enemyCount=Math.min(target,enemyCount+spawn);
 if(runRegenPct>0&&Date.now()-lastRegenAt>=8000){units.forEach((u,i)=>{if(!u)return;ensureUnitHp(u);let h=Math.max(1,Math.round(u.maxHp*runRegenPct));u.hp=Math.min(u.maxHp,u.hp+h);u.healUntil=Date.now()+500;showHealTarget(i,h)});lastRegenAt=Date.now()}let sp=skillPower(),power=sp[0];animateCombatVolley();let modeMult=currentMode==='hard'?1.72:currentMode==='infinite'?(1.42+Math.max(0,currentFloor-1)*.095):1;
 let profile=stageProfile(),sixteenSlotMult=1.28,need=(3+Math.floor(wave*.61)+Math.pow(wave,1.21)*.13)*stages[currentStage].power*modeMult*sixteenSlotMult*profile.armor;if(Date.now()<combatSlowUntil)power*=.78;
