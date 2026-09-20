@@ -2,8 +2,8 @@ from pathlib import Path
 import sys
 html=Path("app/src/main/assets/index.html").read_text(encoding="utf-8")
 checks={
- "rapid summon untouched":"function performSummon(){if(paused||currentScreen!=='battle'||activeBattleModal())return;" in html,
- "no summon debounce":"setTimeout(performSummon" not in html and "summonCooldown" not in html,
+ "summon core guarded":"function performSummon(){if(paused||currentScreen!=='battle'||activeBattleModal())return;" in html,
+ "summon cooldown active":"summonCooldown" in html and "summonCooldownTimer=setTimeout" in html and "500)" in html,
  "exclusive guard exists":"function battleExclusiveBlocked()" in html,
  "merge guarded":"function performMerge(){if(battleExclusiveBlocked())return;" in html,
  "luck guarded":"function performLuck(){if(battleExclusiveBlocked())return;" in html,
