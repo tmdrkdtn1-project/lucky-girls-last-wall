@@ -85,6 +85,17 @@ jobs:
               assert token in h, token
           print('PASS - deterministic runtime test API available')
           PY
+      - name: Install browser runtime
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Execute battle flow in Chromium
+        shell: bash
+        run: |
+          python3 -m http.server 8765 --directory app/src/main/assets >/tmp/lg-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID' EXIT
+          node scripts/runtime_battle_flow.mjs
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
