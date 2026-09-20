@@ -9,7 +9,7 @@ def must(label, cond):
 
 failures=[]
 must("summon uses cooldown gate", "bindFastAction($('summon'),cooledSummon)" in html and "summonCooldown" in html)
-must("summon never restarts loop", "function performSummon()" in html and "scheduleBattleRender()" in html and "function performSummon(){if" in html)
+must("summon never restarts loop", "function performSummon()" in html and "scheduleBattleRender()" in html and "if(paused||currentScreen!='battle'||activeBattleModal())return false;" in html.replace("\\'","'"))
 must("boss wave resets stale input/hitstop", "function beginWave()" in html and "document.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'));resetBattlePointerState()" in html)
 must("boss skill is session guarded", "warnBossSkill(p.n,()=>{" in html and "battleTimeout(()=>{if(w.isConnected)w.remove();if(!running||paused)return;cb()},650,session)" in html)
 must("speed toggle keeps persistent timer", "if(running&&!paused)startLoop();" not in html and "intervalMs=100" in html and "battleAccumulatorMs+=elapsed*speed" in html and "waveTime+=2.2" in html)
