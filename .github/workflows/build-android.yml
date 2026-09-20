@@ -36,6 +36,8 @@ jobs:
         run: python3 scripts/check_modal_lifecycle.py
       - name: Check rapid battle input path
         run: python3 scripts/check_fast_input.py
+      - name: Check fixed battle viewport
+        run: python3 scripts/check_battle_viewport.py
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
