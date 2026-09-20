@@ -1,9 +1,11 @@
 from pathlib import Path
 import sys
 html=Path("app/src/main/assets/index.html").read_text(encoding="utf-8")
+step_start=html.find("function runBattleStep()")
 start=html.find("function startLoop()")
 end=html.find("$('enter').onclick",start)
 loop=html[start:end] if start>=0 and end>=0 else ""
+step=html[step_start:start] if step_start>=0 and start>=0 else ""
 checks={
  "no raw timer clear in battle loop":"clearInterval(timer)" not in loop,
  "terminal clear uses stop helper":"running=false;stopBattleLoop()" in step,
