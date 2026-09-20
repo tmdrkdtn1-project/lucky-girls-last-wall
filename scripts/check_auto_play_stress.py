@@ -31,8 +31,8 @@ must("scheduler delegates simulation", "runBattleStep()" in loop and "bossSkill(
 must("wave advance does not create second timer", "function advanceWave()" in html and "beginWave();" in html)
 
 scenarios=[
- ("W1 x1 summon spam", ["performSummon","scheduleBattleRender","validateBattleState"]),
- ("W1 x2 summon spam", ["performSummon","speed=speed===1?2:1","waveTime+=1.1*speed"]),
+ ("W1 x1 summon spam", ["queueSummonInput","performSummon","scheduleBattleRender","validateBattleState"]),
+ ("W1 x2 summon spam", ["queueSummonInput","performSummon","speed=speed===1?2:1","waveTime+=1.1*speed"]),
  ("W5 boss x1", ["beginWave","bossHp=100","bossSkill"]),
  ("W5 boss x2 + summon", ["bossSkill","performSummon","battleWatchdogTimer"]),
  ("boss + merge/drag input coexistence", ["performMerge","resetBattlePointerState","bossSkill"]),
