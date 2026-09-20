@@ -7,7 +7,7 @@ checks={
  "pause does not clear timer":"function openPauseMenu(){if(activeBattleModal())return;resetBattlePointerState();paused=true;if(timer)clearInterval(timer)" not in html,
  "resume avoids duplicate loop":"if(running&&!timer)startLoop()" in html,
  "speed guarded":"if(currentScreen!=='battle'||activeBattleModal())return;speed=speed===1?2:1" in html,
- "speed restart serialized":"if(running&&!paused)startLoop()" in html,
+ "speed keeps persistent loop":"if(running&&!paused)startLoop()" not in html,
  "new run stops old loop":"$('start').addEventListener('click',()=>{stopBattleLoop();" in html and "beginBattleSession();" in html,
  "loop diagnostic":"function validateBattleLoop()" in html,
 }
