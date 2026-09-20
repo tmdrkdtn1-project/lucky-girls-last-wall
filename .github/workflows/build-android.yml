@@ -71,6 +71,16 @@ jobs:
           assert 'animateCombatVolley()' not in loop
           print('PASS - scheduler delegates one battle simulation step')
           PY
+      - name: Check runtime test surface
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          h=Path('app/src/main/assets/index.html').read_text(encoding='utf-8')
+          for token in ['window.__LG_TEST__','snapshot:()=>','start:()=>','summon:()=>','speed:()=>','step:()=>runBattleStep()','swap:(a,b)=>swapFormation(a,b)']:
+              assert token in h, token
+          print('PASS - deterministic runtime test API available')
+          PY
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
