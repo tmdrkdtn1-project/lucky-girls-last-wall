@@ -13,7 +13,7 @@
 <button id="daily" class="btn secondary">출석 보상 받기</button>
 <div id="account" class="upgrade" style="display:none"></div><div id="homeStats" style="display:none"></div>
 <div style="display:none"><select id="modeSelect"><option value="normal">NORMAL</option><option value="hard">HARD</option><option value="infinite">무한성</option></select><select id="stageSelect"></select><div id="modeStatus"></div><button id="start"></button><button id="collection"></button><button id="shop"></button><button id="collectionMain"></button></div>
-<div class="portraitOnlyNote">MILESTONE 2.40.0 · PORTRAIT LOBBY</div>
+<div class="portraitOnlyNote">MILESTONE 2.41.0 · PORTRAIT LOBBY</div>
 </section>
 <section id="storyHub" class="screen"><div class="hubHeader"><button class="hudbtn backTop" id="storyBack">←</button><div class="hubTitle">스토리</div><span id="storyProgressText">0/5</span></div><div class="storyMap" id="storyChapters"></div></section>
 <section id="characterHub" class="screen"><div class="hubHeader"><button class="hudbtn backTop" id="characterBack">←</button><div class="hubTitle">캐릭터</div><span id="characterCount">0/20</span></div>
@@ -71,7 +71,7 @@
 <nav class="bottomNav" id="bottomNav"><button data-go="home" class="active"><b>⌂</b>로비</button><button data-go="characterHub"><b>👤</b>캐릭터</button><button data-go="summonHub"><b>✦</b>소환</button><button data-go="store"><b>🛍</b>상점</button><button data-go="menuHub"><b>☰</b>메뉴</button></nav>
 <script>
 const chars=['아리아 ⚔️','유나 🎴','리엘 🔮','루비 🔫','에리카 🐉','세라 😇','레이나 ❄️','카린 🥷','벨 🧸','미아 🗡️','아이린 🫖','네온 💻','샤샤 💣','루나 ✨','비올라 🧪','클로에 🎤','아델 🛡️','니아 😈','오로라 🌠','이브 ⏳'];
-let gold=120,life=20,wave=1,luck=0,units=Array(16).fill(null),kills=0,waveKills=0,currentStage=1,currentMode='normal',currentFloor=1,runAtk=1,runGoldBonus=0,runLuckBonus=0,enemyCount=0,waveTime=0,waveDuration=32,running=false,timer=null,bossHp=100,bossTick=0,jackpotUntil=0,speed=1,paused=false,summonCount=0;let meta=JSON.parse(localStorage.getItem('lg_meta')||'{"coins":8500,"gems":1200,"owned":[0,1,2,3,4],"daily":0,"accountLv":1,"xp":0,"atkLv":0,"goldLv":0}');meta.accountLv=meta.accountLv||1;meta.xp=meta.xp||0;meta.atkLv=meta.atkLv||0;meta.goldLv=meta.goldLv||0;const looks={아리아:['#ff8acb','#d94a91','⚔'],유나:['#f7f2ff','#a77cff','◇'],리엘:['#d8c2ff','#6d4bdb','✦'],루비:['#ffb06a','#d95050','⌁'],에리카:['#78e4ff','#246e9c','◆'],세라:['#ffe6a8','#d79b42','✧'],레이나:['#b8efff','#468bb5','❄'],카린:['#ff91a6','#822e50','✣'],벨:['#e8c4ff','#7d5695','♟'],미아:['#f2c88f','#7d4d37','†'],아이린:['#d8e4ff','#526b8d','♢'],네온:['#7effe3','#216d74','⌘'],샤샤:['#ff826f','#9b3b38','●'],루나:['#fff0c2','#9b79c5','☾'],비올라:['#b79aff','#563b8d','♜'],클로에:['#ff9fe8','#a04489','♪'],아델:['#d9dce9','#65718a','▣'],니아:['#c78cff','#592d72','▲'],오로라:['#9ad9ff','#4c68ad','✦'],이브:['#e5e0ff','#6e668f','◷']};
+let gold=120,life=20,wave=1,luck=0,units=Array(16).fill(null),kills=0,waveKills=0,currentStage=1,currentMode='normal',currentFloor=1,runAtk=1,runDef=1,runHp=1,runAttackSpeed=1,runCritChance=0,runAoeChain=1,runCooldownRate=1,runBossDamage=1,runDominantClass='',runSkillClass='',runRegenPct=0,lastRegenAt=0,runUndyingReady=false,runResonance=false,summonCostExtra=0,luckyCoinCharges=0,runGoldBonus=0,runLuckBonus=0,enemyCount=0,waveTime=0,waveDuration=32,running=false,timer=null,bossHp=100,bossTick=0,jackpotUntil=0,speed=1,paused=false,summonCount=0;let meta=JSON.parse(localStorage.getItem('lg_meta')||'{"coins":8500,"gems":1200,"owned":[0,1,2,3,4],"daily":0,"accountLv":1,"xp":0,"atkLv":0,"goldLv":0}');meta.accountLv=meta.accountLv||1;meta.xp=meta.xp||0;meta.atkLv=meta.atkLv||0;meta.goldLv=meta.goldLv||0;const looks={아리아:['#ff8acb','#d94a91','⚔'],유나:['#f7f2ff','#a77cff','◇'],리엘:['#d8c2ff','#6d4bdb','✦'],루비:['#ffb06a','#d95050','⌁'],에리카:['#78e4ff','#246e9c','◆'],세라:['#ffe6a8','#d79b42','✧'],레이나:['#b8efff','#468bb5','❄'],카린:['#ff91a6','#822e50','✣'],벨:['#e8c4ff','#7d5695','♟'],미아:['#f2c88f','#7d4d37','†'],아이린:['#d8e4ff','#526b8d','♢'],네온:['#7effe3','#216d74','⌘'],샤샤:['#ff826f','#9b3b38','●'],루나:['#fff0c2','#9b79c5','☾'],비올라:['#b79aff','#563b8d','♜'],클로에:['#ff9fe8','#a04489','♪'],아델:['#d9dce9','#65718a','▣'],니아:['#c78cff','#592d72','▲'],오로라:['#9ad9ff','#4c68ad','✦'],이브:['#e5e0ff','#6e668f','◷']};
 const combatClass={아리아:'전사',유나:'치유사',리엘:'마법사',루비:'암살자',에리카:'전사',세라:'치유사',레이나:'마법사',카린:'암살자',벨:'암살자',미아:'암살자',아이린:'치유사',네온:'마법사',샤샤:'전사',루나:'마법사',비올라:'암살자',클로에:'치유사',아델:'전사',니아:'전사',오로라:'마법사',이브:'마법사'};
 meta.charStars=meta.charStars||{};meta.starDust=meta.starDust||0;meta.starShards=meta.starShards||0;meta.charGrowth=meta.charGrowth||{};meta.stageClear=meta.stageClear||0;meta.hardUnlocked=meta.hardUnlocked||false;meta.infinityUnlocked=meta.infinityUnlocked||false;meta.hardClear=meta.hardClear||0;meta.infinityFloor=meta.infinityFloor||1;meta.infinityBest=meta.infinityBest||0;meta.banned=meta.banned||[];meta.equippedCostume=meta.equippedCostume||{};meta.seenEvents=meta.seenEvents||{};meta.lobbyHero=meta.lobbyHero??(meta.owned[0]||0);meta.settings=meta.settings||{sfx:true,haptic:true,shake:true,hitstop:true};
 const baseStar=n=>Math.max(1,Math.min(5,meta.charStars[n]||1));
@@ -82,7 +82,7 @@ const canRank=n=>{let g=growthOf(n);return g.atk>=5&&g.def>=5&&g.hp>=5&&baseStar
 const permanentStatMult=(n,stat)=>{let g=growthOf(n),rank=(baseStar(n)-1)*.08,step=stat==='hp'?.04:.03;return 1+rank+(g[stat]||0)*step};
 
 const convertDust=()=>{let made=Math.floor(meta.starDust/100);if(made>0){meta.starDust-=made*100;meta.starShards+=made;save();toast('별의 조각 +'+made+' 획득!');metaRender();renderShop()}};
-const summonCost=()=>10+summonCount*2;
+const summonCost=()=>10+summonCostExtra;
 const skillBook={
 '아리아':[{s:1,n:'성광참',cd:5},{s:3,n:'수호의 맹세',cd:10},{s:5,n:'심판의 성검',cd:18}],
 '유나':[{s:1,n:'봉인의 부적',cd:7},{s:3,n:'월령 결계',cd:12},{s:5,n:'천월대봉인',cd:20}],
@@ -107,7 +107,7 @@ const skillBook={
 };
 const unlockedSkills=u=>(skillBook[u.name]||[]).filter(k=>u.lv>=k.s);
 const skillReady=(u,k)=>!u.skillCd||!u.skillCd[k.n]||Date.now()>=u.skillCd[k.n];
-const markSkill=(u,k)=>{u.skillCd=u.skillCd||{};u.skillCd[k.n]=Date.now()+k.cd*1000};
+const markSkill=(u,k)=>{u.skillCd=u.skillCd||{};u.skillCd[k.n]=Date.now()+(k.cd*1000/runCooldownRate)};
 const stages={
 1:{name:'에버그린 대초원',power:1.00,bosses:{5:'갈기폭풍 브람',10:'가시여왕 플로라',15:'천둥발굽 볼테르',20:'대초원의 수호수 에르단'}},
 2:{name:'천공절벽 산맥',power:1.35,bosses:{5:'절벽포식자 그리프',10:'암벽거인 돌가르',15:'폭풍날개 아르켄',20:'산맥왕 베르카논'}},
@@ -133,25 +133,25 @@ let combatSlowUntil=0,bossShield=0;
 function stageProfile(){return stageCombat[currentStage]||stageCombat[1]}
 const relicPools={
 1:[
-{n:'전투의 각인 I',d:'이번 런 공격력 +12%',f:()=>runAtk*=1.12},
-{n:'황금 부적 I',d:'적 처치 골드 +2G',f:()=>runGoldBonus+=2},
-{n:'행운의 별 I',d:'적 처치 LUCK +1%',f:()=>runLuckBonus+=1},
-{n:'수호석 I',d:'방어선 체력 +3 회복',f:()=>life=Math.min(20,life+3)},
-{n:'소환 계약 I',d:'즉시 전투 골드 +30G',f:()=>gold+=30}
+{n:'날선 룬',d:'ATK +8%',f:()=>runAtk*=1.08},
+{n:'신속의 깃',d:'공격속도 +7%',f:()=>runAttackSpeed*=1.07},
+{n:'수호의 매듭',d:'DEF +10%',f:()=>runDef*=1.10},
+{n:'황금 주머니',d:'전투 골드 +18',f:()=>gold+=18},
+{n:'직업의 인장',d:'현재 최다 배치 직업 피해 +12%',f:()=>{runDominantClass=dominantCombatClass()}}
 ],
 2:[
-{n:'전투의 각인 II',d:'이번 런 공격력 +20%',f:()=>runAtk*=1.20},
-{n:'황금 부적 II',d:'적 처치 골드 +4G',f:()=>runGoldBonus+=4},
-{n:'행운의 별 II',d:'적 처치 LUCK +2%',f:()=>runLuckBonus+=2},
-{n:'철벽 성흔 II',d:'방어선 체력 +5 회복',f:()=>life=Math.min(20,life+5)},
-{n:'별빛 촉매 II',d:'LUCK 즉시 +35%',f:()=>luck=Math.min(100,luck+35)}
+{n:'쌍성 룬',d:'ATK +10% · 치명타 +8%',f:()=>{runAtk*=1.10;runCritChance+=.08}},
+{n:'연쇄의 심장',d:'광역/연쇄 피해 +18%',f:()=>runAoeChain*=1.18},
+{n:'재생 코어',d:'8초마다 아군 최대 HP의 4% 회복',f:()=>{runRegenPct=Math.max(runRegenPct,.04);lastRegenAt=Date.now()}},
+{n:'행운의 주화',d:'다음 5회 소환 비용 증가폭 +1G',f:()=>{luckyCoinCharges+=5}},
+{n:'전문화 인장',d:'선택 직업 스킬 위력 +18%',chooseClass:true}
 ],
 3:[
-{n:'전투의 각인 III',d:'이번 런 공격력 +35%',f:()=>runAtk*=1.35},
-{n:'왕의 황금인장 III',d:'적 처치 골드 +7G',f:()=>runGoldBonus+=7},
-{n:'운명의 별 III',d:'적 처치 LUCK +4%',f:()=>runLuckBonus+=4},
-{n:'불멸의 성흔 III',d:'방어선 체력 완전 회복',f:()=>life=20},
-{n:'초월 촉매 III',d:'즉시 LUCK 100%',f:()=>luck=100}
+{n:'별의 왕관',d:'ATK / DEF / HP +15%',f:()=>{runAtk*=1.15;runDef*=1.15;runHp*=1.15;refreshAllRunHp()}},
+{n:'초월의 톱니',d:'스킬 쿨다운 진행속도 +22%',f:()=>runCooldownRate*=1.22},
+{n:'처형자의 눈',d:'보스 피해 +28%',f:()=>runBossDamage*=1.28},
+{n:'불굴의 핵',d:'치명 피해 1회 생존 · HP 30%',f:()=>{runUndyingReady=true}},
+{n:'공명의 문장',d:'동일 직업 3명 이상 배치 시 해당 직업 피해 +25%',f:()=>{runResonance=true}}
 ]};
 
 const costumeBook={
@@ -263,7 +263,7 @@ function result(win){if(document.querySelector('.result'))return;running=false;i
 let currentScreen='home',lastRootScreen='home';
 const rootTabs=new Set(['home','characterHub','summonHub','store','menuHub']);
 function show(id){if(!$(id))return;currentScreen=id;if(rootTabs.has(id))lastRootScreen=id;document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));$(id).classList.add('on');updateBottomNav(id);window.scrollTo(0,0)}
-function closeTopOverlay(){let o=document.querySelector('.pauseOverlay,.notificationSheet,.result#mergeGroupChoice,.result#mergeChoice,.result#relicChoice');if(o){let wasPause=o.classList.contains('pauseOverlay');o.remove();if(wasPause&&currentScreen==='battle'){paused=false;$('pause').textContent='Ⅱ';startLoop()}return true}return false}
+function closeTopOverlay(){let o=document.querySelector('.pauseOverlay,.notificationSheet,.result#mergeGroupChoice,.result#mergeChoice,.result#relicClassChoice,.result#relicChoice');if(o){let wasPause=o.classList.contains('pauseOverlay');o.remove();if(wasPause&&currentScreen==='battle'){paused=false;$('pause').textContent='Ⅱ';startLoop()}return true}return false}
 function leaveBattleToPrep(){running=false;if(timer)clearInterval(timer);$('boss').style.display='none';$('bossbar').style.display='none';renderBattlePrep();show('battlePrep')}
 function goBackFlow(){if(closeTopOverlay())return true;if(currentScreen==='battle'){leaveBattleToPrep();return true}if(currentScreen==='battlePrep'){if(prepReturnScreen==='infiniteHub')renderInfiniteHub();else renderStoryHub();show(prepReturnScreen||'home');return true}if(currentScreen==='charDetail'){renderCharacterHub();show('characterHub');return true}if(currentScreen==='col'){let ret=window._collectionReturn;window._collectionReturn=null;if(ret==='battlePrep'){renderBattlePrep();show('battlePrep')}else if(ret==='menuHub'){renderMenuHub();show('menuHub')}else{renderCharacterHub();show('characterHub')}return true}if(['settingsHub','noticeHub','mailHub','missionHub','helpHub'].includes(currentScreen)){renderMenuHub();show('menuHub');return true}if(currentScreen==='storyHub'||currentScreen==='infiniteHub'){show('home');return true}if(rootTabs.has(currentScreen)&&currentScreen!=='home'){show('home');return true}if(currentScreen==='home')return false;show(lastRootScreen||'home');return true}
 window.handleNativeBack=()=>goBackFlow();
@@ -274,7 +274,10 @@ if(mode.value==='infinite'&&!meta.infinityUnlocked)mode.value='normal';
 currentMode=mode.value;sel.innerHTML='';
 if(currentMode==='infinite'){let max=Math.min(99,Math.max(1,meta.infinityBest+1));for(let f=1;f<=max;f++){let o=document.createElement('option');o.value=f;o.textContent='무한성 '+f+'층 · '+stages[((f-1)%5)+1].name;sel.appendChild(o)}sel.value=Math.min(meta.infinityFloor,max);$('modeStatus').textContent='무한성 최고 '+meta.infinityBest+'층 · 각 층 20 WAVE';}
 else{let max=currentMode==='hard'?5:Math.min(5,meta.stageClear+1);for(let i=1;i<=5;i++){let o=document.createElement('option');o.value=i;o.textContent=(currentMode==='hard'?'HARD ':'STAGE ')+i+' · '+stages[i].name+(i>max?' 🔒':'');o.disabled=i>max;sel.appendChild(o)}$('modeStatus').textContent=(meta.hardUnlocked?'HARD 해금':'HARD 잠김')+' · '+(meta.infinityUnlocked?'무한성 99층 해금':'무한성 잠김');}}
-function openRelicChoice(tier,onDone){paused=true;let pool=[...relicPools[tier]].sort(()=>Math.random()-.5).slice(0,3),x=document.createElement('div');x.className='result';x.id='relicChoice';x.innerHTML='<div class="resultbox"><div class="muted">BOSS REWARD · TIER '+tier+'</div><h2>유물 1개 선택</h2>'+pool.map((r,i)=>'<button class="btn relicpick" data-i="'+i+'"><b>'+r.n+'</b><br><span style="font-size:12px">'+r.d+'</span></button>').join('')+'</div>';document.body.appendChild(x);x.querySelectorAll('.relicpick').forEach(b=>b.onclick=()=>{let r=pool[+b.dataset.i];r.f();x.remove();paused=false;toast('유물 획득 · '+r.n);render();onDone()})}
+function dominantCombatClass(){let counts={전사:0,암살자:0,마법사:0,치유사:0};units.forEach(u=>{if(u)counts[combatClass[u.name]]=(counts[combatClass[u.name]]||0)+1});return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0]}
+function refreshAllRunHp(){units.forEach(u=>{if(!u)return;let old=u.maxHp||unitMaxHp(u),ratio=old>0?(u.hp??old)/old:1;u.maxHp=null;let nm=unitMaxHp(u);u.maxHp=nm;u.hp=Math.max(1,Math.min(nm,Math.round(nm*ratio)))})}
+function openRelicClassChoice(relic,onDone){let old=$('relicClassChoice');if(old)old.remove();let x=document.createElement('div');x.className='result';x.id='relicClassChoice';let classes=['전사','암살자','마법사','치유사'];x.innerHTML='<div class="resultbox"><div class="muted">RELIC · '+relic.n+'</div><h2>전문화 직업 선택</h2><p>선택한 직업의 스킬 위력이 이번 런 동안 +18% 증가합니다.</p>'+classes.map(c=>'<button class="btn relicClassPick" data-c="'+c+'">'+c+' · 현재 '+units.filter(u=>u&&combatClass[u.name]===c).length+'명</button>').join('')+'<button class="btn secondary" id="relicClassCancel">취소</button></div>';document.body.appendChild(x);x.querySelector('#relicClassCancel').onclick=()=>x.remove();x.querySelectorAll('.relicClassPick').forEach(b=>b.onclick=()=>{runSkillClass=b.dataset.c;x.remove();toast('전문화 인장 · '+runSkillClass+' 스킬 +18%');onDone()})}
+function openRelicChoice(tier,onDone){paused=true;let pool=[...relicPools[tier]].sort(()=>Math.random()-.5).slice(0,3),x=document.createElement('div');x.className='result';x.id='relicChoice';x.innerHTML='<div class="resultbox"><div class="muted">BOSS REWARD · TIER '+tier+'</div><h2>유물 1개 선택</h2>'+pool.map((r,i)=>'<button class="btn relicpick" data-i="'+i+'"><b>'+r.n+'</b><br><span style="font-size:12px">'+r.d+'</span></button>').join('')+'</div>';document.body.appendChild(x);x.querySelectorAll('.relicpick').forEach(b=>b.onclick=()=>{let r=pool[+b.dataset.i];x.remove();let finish=()=>{if(r.f)r.f();paused=false;toast('유물 획득 · '+r.n);render();onDone()};if(r.chooseClass)openRelicClassChoice(r,()=>{paused=false;render();onDone()});else finish()})}
 function clearStage(){if(currentMode==='normal'){meta.stageClear=Math.max(meta.stageClear,currentStage);if(currentStage===5){meta.hardUnlocked=true;meta.infinityUnlocked=true}}
 else if(currentMode==='hard'){meta.hardClear=Math.max(meta.hardClear,currentStage)}
 else{meta.infinityBest=Math.max(meta.infinityBest,currentFloor);meta.infinityFloor=Math.min(99,currentFloor+1)}
@@ -292,7 +295,7 @@ else if(cls==='마법사'){m*=row===1?.82:row===2?.98:row===3?1.12:1.18}
 else if(cls==='치유사'){m*=row===1?.78:row===2?.95:row===3?1.08:1.15}
 return m}
 function rowRoleText(u,i){let row=unitRow(i),cls=combatClass[u.name],r=attackRange[cls]||3;return row+'열 · '+(row<=r?'유효 사거리':'사거리 불리')+(cls==='전사'&&row===1?' · 전열 보너스':cls==='마법사'&&row===4?' · 후열 화력':cls==='치유사'&&row>=3?' · 후열 지원':'')}
-function unitMaxHp(u){let base=34+u.lv*18,cls=combatClass[u.name];if(cls==='전사')base*=1.35;if(u.name==='아델')base*=1.3;if(cls==='치유사')base*=.92;base*=permanentStatMult(u.name,'hp');let cs=costumeBook[u.costume||costumeKey(u.name)];if(cs)base*=cs.hp;return Math.round(base)}
+function unitMaxHp(u){let base=34+u.lv*18,cls=combatClass[u.name];if(cls==='전사')base*=1.35;if(u.name==='아델')base*=1.3;if(cls==='치유사')base*=.92;base*=permanentStatMult(u.name,'hp')*runHp;let cs=costumeBook[u.costume||costumeKey(u.name)];if(cs)base*=cs.hp;return Math.round(base)}
 function ensureUnitHp(u){if(u.maxHp==null)u.maxHp=unitMaxHp(u);if(u.hp==null)u.hp=u.maxHp;return u}
 function frontlineUnits(){let out=[];for(let i=0;i<4;i++)if(units[i])out.push({u:units[i],i});return out}
 function firstOccupiedRow(){for(let row=0;row<4;row++){let out=[];for(let i=row*4;i<row*4+4;i++)if(units[i])out.push({u:units[i],i});if(out.length)return out}return[]}
@@ -315,8 +318,8 @@ const enemyAttackProfiles={
 function occupiedByRows(rows){let out=[];rows.forEach(r=>{for(let i=(r-1)*4;i<r*4;i++)if(units[i])out.push({u:units[i],i})});return out}
 function damageUnitAt(hit,amount,source,guardable=true){if(!hit||!hit.u)return false;let u=ensureUnitHp(hit.u),mit=combatClass[u.name]==='전사'?.72:1;
 let frontGuards=frontlineUnits().filter(x=>combatClass[x.u.name]==='전사'),guardAura=guardable&&frontGuards.length?Math.min(.24,frontGuards.length*.06+(frontGuards.some(x=>x.u.name==='아델')?.08:0)):0;
-if(u.name==='아델')mit*=.72;if(!guardable)mit=Math.max(mit,.88);mit/=permanentStatMult(u.name,'def');let cs=costumeBook[u.costume||costumeKey(u.name)];if(cs)mit/=cs.def;mit*=1-guardAura;let dmg=Math.max(1,Math.round(amount*mit));u.hp-=dmg;u.hitUntil=Date.now()+320;impact(dmg>=18?'heavy':'light','enemy');$('msg').textContent='💥 '+source+' · '+u.name+' -'+dmg+' HP'+(guardAura>0?' · 가드 '+Math.round(guardAura*100)+'%':'');
-if(u.hp<=0){let dead=units[hit.i];units[hit.i]=null;onAllyDefeated(dead)}render();return true}
+if(u.name==='아델')mit*=.72;if(!guardable)mit=Math.max(mit,.88);mit/=permanentStatMult(u.name,'def')*runDef;let cs=costumeBook[u.costume||costumeKey(u.name)];if(cs)mit/=cs.def;mit*=1-guardAura;let dmg=Math.max(1,Math.round(amount*mit));u.hp-=dmg;u.hitUntil=Date.now()+320;impact(dmg>=18?'heavy':'light','enemy');$('msg').textContent='💥 '+source+' · '+u.name+' -'+dmg+' HP'+(guardAura>0?' · 가드 '+Math.round(guardAura*100)+'%':'');
+if(u.hp<=0&&runUndyingReady){runUndyingReady=false;u.hp=Math.max(1,Math.round(u.maxHp*.30));u.hitUntil=Date.now()+650;toast('💠 불굴의 핵 발동 · '+u.name+' HP 30% 생존')}else if(u.hp<=0){let dead=units[hit.i];units[hit.i]=null;onAllyDefeated(dead)}render();return true}
 let specialAttackLock=false,moveSelected=-1,touchMoved=false;
 function clearDanger(){document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dangerTarget'))}
 function telegraphRows(rows,label,cb){if(specialAttackLock)return;specialAttackLock=true;clearDanger();rows.forEach(r=>{for(let i=(r-1)*4;i<r*4;i++){let el=document.querySelector('.slot[data-idx="'+i+'"]');if(el)el.classList.add('dangerTarget')}});let host=document.querySelector('.battle')||document.body,t=document.createElement('div');t.className='enemyTelegraph';t.textContent='⚠ '+label;host.appendChild(t);haptic([18,35,18]);setTimeout(()=>{clearDanger();t.remove();cb();specialAttackLock=false},620)}
@@ -408,10 +411,10 @@ function fx(txt){let f=$('field');if(txt){let q=document.createElement('b');q.cl
 function synergy(){let names=activeUnits().map(u=>u.name),tags=[];if(names.includes('아리아')&&names.includes('아델'))tags.push(['🛡 KNIGHT LINK',1.18]);if(names.includes('리엘')&&names.includes('비올라'))tags.push(['✦ ARCANE LINK',1.2]);if(names.includes('루비')&&names.includes('네온'))tags.push(['⌁ TECH LINK',1.2]);if(names.includes('유나')&&names.includes('루나'))tags.push(['☾ BLESS LINK',1.16]);if(names.includes('에리카')&&names.includes('니아'))tags.push(['◆ BLOOD LINK',1.25]);return tags}
 function skillPower(){let p=0,n=[],now=Date.now(),globalBuff=1,defBreak=0;
 let sera=units.some(u=>u&&u.name==='세라'&&u.lv>=1),chloe=units.some(u=>u&&u.name==='클로에'&&u.lv>=1);
-units.forEach((u,ui)=>{if(!u)return;let m=rowCombatMod(u,ui);
+units.forEach((u,ui)=>{if(!u)return;let m=rowCombatMod(u,ui),skillTriggered=false;
 for(const k of unlockedSkills(u)){if(!skillReady(u,k))continue;let proc=false;
 if(k.s===1)proc=Math.random()<.22;else if(k.s===3)proc=Math.random()<.14;else proc=Math.random()<.08;
-if(!proc)continue;markSkill(u,k);n.push(k.n);skillImpactVisual(u,ui,k);if(combatClass[u.name]==='암살자'&&unitRow(ui)>=2)showAssassinStrike(ui);if(k.s===5)playUltimateCutin(u,k);else if(k.s===3&&Math.random()<.35)impact('light','ally');
+if(!proc)continue;skillTriggered=true;markSkill(u,k);n.push(k.n);skillImpactVisual(u,ui,k);if(combatClass[u.name]==='암살자'&&unitRow(ui)>=2)showAssassinStrike(ui);if(k.s===5)playUltimateCutin(u,k);else if(k.s===3&&Math.random()<.35)impact('light','ally');
 if(u.name==='아리아'){if(k.s===1)m+=.6;if(k.s===3)globalBuff*=1.08;if(k.s===5)m+=4}
 else if(u.name==='유나'){if(k.s===1)m+=.25;if(k.s===3)m+=.35;if(k.s===5)m+=.6}
 else if(u.name==='리엘'){if(k.s===1)m+=.8;if(k.s===3)m+=1.2;if(k.s===5)m+=5.5}
@@ -433,8 +436,8 @@ else if(u.name==='니아'){if(k.s===1)m+=.9;if(k.s===3){m+=2;life=Math.max(1,lif
 else if(u.name==='오로라'){if(k.s===1)m+=.9;if(k.s===3)m+=1.5;if(k.s===5)m+=6.2}
 else if(u.name==='이브'){if(k.s===1)m+=.3;if(k.s===3)m+=1.0;if(k.s===5)m+=2.5}
 }
-if(sera)m*=1.05;if(chloe)m*=1.04;m*=permanentStatMult(u.name,'atk');let cs=costumeBook[u.costume||costumeKey(u.name)];if(cs)m*=cs.atk;p+=u.lv*m});
-p*=globalBuff*(1+Math.min(.5,defBreak));p*=1+meta.atkLv*.03;p*=runAtk;if(Date.now()<jackpotUntil)p*=2;return [p,n[0]]}
+if(sera)m*=1.05;if(chloe)m*=1.04;if(runDominantClass&&combatClass[u.name]===runDominantClass)m*=1.12;if(runResonance&&units.filter(x=>x&&combatClass[x.name]===combatClass[u.name]).length>=3)m*=1.25;if(skillTriggered&&runSkillClass&&combatClass[u.name]===runSkillClass)m*=1.18;m*=permanentStatMult(u.name,'atk');let cs=costumeBook[u.costume||costumeKey(u.name)];if(cs)m*=cs.atk;p+=u.lv*m});
+p*=globalBuff*(1+Math.min(.5,defBreak));p*=1+meta.atkLv*.03;p*=runAtk*runAttackSpeed*(1+runCritChance);if(Date.now()<jackpotUntil)p*=2;return [p,n[0]]}
 function closePauseMenu(resume=true){let p=$('pauseOverlay');if(p)p.remove();if(resume&&currentScreen==='battle'){paused=false;$('pause').textContent='Ⅱ';$('msg').textContent='▶ 전투 재개';startLoop()}}
 function openPauseMenu(){paused=true;if(timer)clearInterval(timer);$('pause').textContent='▶';let old=$('pauseOverlay');if(old)return;let p=document.createElement('div');p.id='pauseOverlay';p.className='pauseOverlay';let mode=currentMode==='infinite'?currentFloor+'F':currentMode.toUpperCase()+' S'+currentStage;p.innerHTML='<div class="pauseBox"><small class="muted">BATTLE PAUSED</small><h2>일시정지</h2><div class="pauseMeta"><div>진행<b>W'+wave+'/20</b></div><div>처치<b>'+kills+'</b></div><div>모드<b>'+mode+'</b></div></div><div class="pauseActions"><button class="btn" id="pauseResume">계속하기</button><button class="btn secondary" id="pauseRestart">처음부터 다시</button><button class="btn secondary" id="pauseSettings">전투 설정</button><button class="btn secondary pauseDanger" id="pauseExit">전투 나가기</button></div></div>';document.body.appendChild(p);p.querySelector('#pauseResume').onclick=()=>closePauseMenu(true);p.querySelector('#pauseRestart').onclick=()=>{p.remove();paused=false;$('start').click()};p.querySelector('#pauseSettings').onclick=()=>{toast('전투 설정은 메뉴 > 설정에서 변경할 수 있습니다.');renderSettings()};p.querySelector('#pauseExit').onclick=()=>{p.remove();paused=false;leaveBattleToPrep()}}
 function haptic(pattern){if(meta.settings&&meta.settings.haptic===false)return;try{if(navigator.vibrate)navigator.vibrate(pattern)}catch(e){}}
@@ -466,12 +469,12 @@ function onAllyDefeated(unit){moveSelected=-1;dragFrom=-1;allyDeathFeedback();if
 function enemySkin(){beginWave()}
 function startLoop(){if(timer)clearInterval(timer);running=true;timer=setInterval(()=>{if(!running||paused)return;
 waveTime+=2.2;let target=swarmTarget(),spawn=Math.max(2,Math.ceil((target-enemyCount)*.52));enemyCount=Math.min(target,enemyCount+spawn);
-let sp=skillPower(),power=sp[0];animateCombatVolley();let modeMult=currentMode==='hard'?1.72:currentMode==='infinite'?(1.42+Math.max(0,currentFloor-1)*.095):1;
+if(runRegenPct>0&&Date.now()-lastRegenAt>=8000){units.forEach((u,i)=>{if(!u)return;ensureUnitHp(u);let h=Math.max(1,Math.round(u.maxHp*runRegenPct));u.hp=Math.min(u.maxHp,u.hp+h);u.healUntil=Date.now()+500;showHealTarget(i,h)});lastRegenAt=Date.now()}let sp=skillPower(),power=sp[0];animateCombatVolley();let modeMult=currentMode==='hard'?1.72:currentMode==='infinite'?(1.42+Math.max(0,currentFloor-1)*.095):1;
 let profile=stageProfile(),sixteenSlotMult=1.28,need=(3+Math.floor(wave*.61)+Math.pow(wave,1.21)*.13)*stages[currentStage].power*modeMult*sixteenSlotMult*profile.armor;if(Date.now()<combatSlowUntil)power*=.78;
 bossTick++;if(wave%5===0&&bossTick%3===0)bossSkill();if(bossTick%4===0&&enemyCount>=Math.max(5,Math.floor(target*.45)))enemySpecialAttack(need);
-let killPower=Math.max(0,Math.floor(power/Math.max(1,need*.72)));let minionKills=Math.min(enemyCount,killPower);enemyCount-=minionKills;kills+=minionKills;showKillBurst(minionKills);gold+=minionKills*(3+Math.floor(wave/3)+runGoldBonus);luck=Math.min(100,luck+minionKills*(1+runLuckBonus));
+let killPower=Math.max(0,Math.floor((power*runAoeChain)/Math.max(1,need*.72)));let minionKills=Math.min(enemyCount,killPower);enemyCount-=minionKills;kills+=minionKills;showKillBurst(minionKills);gold+=minionKills*(3+Math.floor(wave/3)+runGoldBonus);luck=Math.min(100,luck+minionKills*(1+runLuckBonus));
 if(sp[1])fx(sp[1]);
-if(wave%5===0){let bossDmg=Math.max(1.5,power/Math.max(1,need)*6.2);if(bossShield>0){let absorb=Math.min(bossShield,bossDmg);bossShield-=absorb;bossDmg-=absorb}$('bossbar').title=bossShield>0?'보호막 '+Math.ceil(bossShield):'';bossHp=Math.max(0,bossHp-bossDmg);showBossDamage(bossDmg);$('bosshp').style.width=bossHp+'%';
+if(wave%5===0){let bossDmg=Math.max(1.5,power/Math.max(1,need)*6.2)*runBossDamage;if(bossShield>0){let absorb=Math.min(bossShield,bossDmg);bossShield-=absorb;bossDmg-=absorb}$('bossbar').title=bossShield>0?'보호막 '+Math.ceil(bossShield):'';bossHp=Math.max(0,bossHp-bossDmg);showBossDamage(bossDmg);$('bosshp').style.width=bossHp+'%';
 if(enemyCount>=target-1&&power<need*(.90+.06*profile.pressure)){breachDamage(10+wave*1.35,'졸병 돌파')}
 else $('msg').textContent='👹 '+stages[currentStage].bosses[wave]+' HP '+Math.ceil(bossHp)+'%'+(bossShield>0?' · 보호막 '+Math.ceil(bossShield):'')+' · 졸병 '+enemyCount+'/'+target;
 if(bossHp<=0){let cleared=wave;if(cleared===20){running=false;clearInterval(timer);$('msg').textContent='🏆 '+stages[currentStage].name+' 클리어!';setTimeout(clearStage,450);render();return}let tier=cleared===5?1:cleared===10?2:3;paused=true;openRelicChoice(tier,()=>{advanceWave()});render();return}}
@@ -499,8 +502,8 @@ $('menuHelp').onclick=()=>{renderHelpHub();show('helpHub')};$('settingsBack').on
 $('storyChapters').onclick=e=>{let b=e.target.closest('.storyEnter,.storyEnterWide');if(b&&!b.disabled)prepareStory(+b.dataset.stage)};
 $('summonOne').onclick=$('summonTen').onclick=()=>toast('소환 비용·확률·천장 정책 확정 후 실제 소환을 연결합니다.');$('summonRates').onclick=()=>toast('확률표는 정책 확정 후 표시합니다.');$('summonHistory').onclick=()=>toast('소환 기록 화면 준비중입니다.');$('summonMileage').onclick=()=>toast('보유 별의 가루 '+meta.starDust+'개');
 $('infiniteStart').onclick=()=>{if(!meta.infinityUnlocked){toast('STAGE 5 클리어 후 무한성이 해금됩니다.');return}openBattlePrep('infinite',selectedInfiniteFloor,'infiniteHub')};
-$('prepBack').onclick=()=>goBackFlow();$('prepRosterEdit').onclick=()=>{window._collectionReturn='battlePrep';renderCollection();show('col')};$('prepStart').onclick=()=>{$('start').click()};$('start').addEventListener('click',()=>{currentMode=$('modeSelect').value;currentFloor=currentMode==='infinite'?(+$('stageSelect').value||1):1;currentStage=currentMode==='infinite'?((currentFloor-1)%5)+1:(+$('stageSelect').value||1);gold=140+(meta.goldLv*10);life=20;wave=1;luck=0;kills=0;waveKills=0;enemyCount=0;waveTime=0;runAtk=1;runGoldBonus=0;runLuckBonus=0;units=Array(16).fill(null);let po=$('pauseOverlay');if(po)po.remove();bossHp=100;bossTick=0;jackpotUntil=0;summonCount=0;speed=1;paused=false;collapseLevel=0;lastCollapseWarn=0;$('summon').textContent='소환 10G';$('speed').textContent='×1';$('speed').classList.remove('speedon');$('pause').textContent='Ⅱ';normalizeBoard();show('battle');enemySkin();$('msg').textContent=(currentMode==='infinite'?('무한성 '+currentFloor+'층'):currentMode.toUpperCase())+' · '+stages[currentStage].name+' · WAVE 1';render();startLoop()});$('pause').onclick=()=>{if($('pauseOverlay'))closePauseMenu(true);else openPauseMenu()};$('speed').onclick=()=>{speed=speed===1?2:1;$('speed').textContent='×'+speed;$('speed').classList.toggle('speedon',speed===2);if(running)startLoop();};$('back').onclick=()=>goBackFlow();$('modeSelect').onchange=()=>renderStageSelect();$('stageSelect').onchange=()=>{};$('collection').onclick=()=>{renderCollection();show('col')};$('colback').onclick=()=>goBackFlow();$('shop').onclick=()=>{renderShop();show('store')};$('shopback').onclick=()=>goBackFlow();document.querySelectorAll('.shopTabs button').forEach(b=>b.onclick=()=>setShopTab(b.dataset.shopTab));$('daily').onclick=()=>{let d=new Date().toDateString();if(meta.daily===d){toast('오늘 보상은 이미 받았습니다.');return}meta.daily=d;meta.coins+=500;save();metaRender();toast('출석 보상 +500 코인!')};
-$('summon').onclick=()=>{let cost=summonCost();if(gold<cost){$('msg').textContent='골드가 부족합니다.';toast('전투 골드가 부족합니다.');return}if(occupiedCount()>=16){$('msg').textContent='전투 슬롯 16칸이 가득 찼습니다.';toast('캐릭터를 눌러 소환 해제하거나 합성하세요.');return}gold-=cost;summonCount++;let pool=meta.owned.filter(i=>!meta.banned.includes(i));if(!pool.length)pool=[0];let pick=pool[Math.floor(Math.random()*pool.length)],c=chars[pick],p=c.split(' ');let nu={name:p[0],icon:p[1],lv:baseStar(p[0]),paid:cost,costume:costumeKey(p[0])};ensureUnitHp(nu);let slot=firstEmptySlot();if(slot<0){toast('빈 슬롯을 찾지 못했습니다.');return}units[slot]=nu;summonFx(nu);luck=Math.min(100,luck+8);$('msg').textContent=p[0]+' '+nu.lv+'성 소환! · 다음 비용 '+summonCost()+'G';$('summon').textContent='소환 '+summonCost()+'G';render()};
+$('prepBack').onclick=()=>goBackFlow();$('prepRosterEdit').onclick=()=>{window._collectionReturn='battlePrep';renderCollection();show('col')};$('prepStart').onclick=()=>{$('start').click()};$('start').addEventListener('click',()=>{currentMode=$('modeSelect').value;currentFloor=currentMode==='infinite'?(+$('stageSelect').value||1):1;currentStage=currentMode==='infinite'?((currentFloor-1)%5)+1:(+$('stageSelect').value||1);gold=140+(meta.goldLv*10);life=20;wave=1;luck=0;kills=0;waveKills=0;enemyCount=0;waveTime=0;runAtk=1;runDef=1;runHp=1;runAttackSpeed=1;runCritChance=0;runAoeChain=1;runCooldownRate=1;runBossDamage=1;runDominantClass='';runSkillClass='';runRegenPct=0;lastRegenAt=0;runUndyingReady=false;runResonance=false;summonCostExtra=0;luckyCoinCharges=0;runGoldBonus=0;runLuckBonus=0;units=Array(16).fill(null);let po=$('pauseOverlay');if(po)po.remove();bossHp=100;bossTick=0;jackpotUntil=0;summonCount=0;speed=1;paused=false;collapseLevel=0;lastCollapseWarn=0;$('summon').textContent='소환 10G';$('speed').textContent='×1';$('speed').classList.remove('speedon');$('pause').textContent='Ⅱ';normalizeBoard();show('battle');enemySkin();$('msg').textContent=(currentMode==='infinite'?('무한성 '+currentFloor+'층'):currentMode.toUpperCase())+' · '+stages[currentStage].name+' · WAVE 1';render();startLoop()});$('pause').onclick=()=>{if($('pauseOverlay'))closePauseMenu(true);else openPauseMenu()};$('speed').onclick=()=>{speed=speed===1?2:1;$('speed').textContent='×'+speed;$('speed').classList.toggle('speedon',speed===2);if(running)startLoop();};$('back').onclick=()=>goBackFlow();$('modeSelect').onchange=()=>renderStageSelect();$('stageSelect').onchange=()=>{};$('collection').onclick=()=>{renderCollection();show('col')};$('colback').onclick=()=>goBackFlow();$('shop').onclick=()=>{renderShop();show('store')};$('shopback').onclick=()=>goBackFlow();document.querySelectorAll('.shopTabs button').forEach(b=>b.onclick=()=>setShopTab(b.dataset.shopTab));$('daily').onclick=()=>{let d=new Date().toDateString();if(meta.daily===d){toast('오늘 보상은 이미 받았습니다.');return}meta.daily=d;meta.coins+=500;save();metaRender();toast('출석 보상 +500 코인!')};
+$('summon').onclick=()=>{let cost=summonCost();if(gold<cost){$('msg').textContent='골드가 부족합니다.';toast('전투 골드가 부족합니다.');return}if(occupiedCount()>=16){$('msg').textContent='전투 슬롯 16칸이 가득 찼습니다.';toast('캐릭터를 눌러 소환 해제하거나 합성하세요.');return}gold-=cost;summonCount++;summonCostExtra+=luckyCoinCharges>0?1:2;if(luckyCoinCharges>0)luckyCoinCharges--;let pool=meta.owned.filter(i=>!meta.banned.includes(i));if(!pool.length)pool=[0];let pick=pool[Math.floor(Math.random()*pool.length)],c=chars[pick],p=c.split(' ');let nu={name:p[0],icon:p[1],lv:baseStar(p[0]),paid:cost,costume:costumeKey(p[0])};ensureUnitHp(nu);let slot=firstEmptySlot();if(slot<0){toast('빈 슬롯을 찾지 못했습니다.');return}units[slot]=nu;summonFx(nu);luck=Math.min(100,luck+8);$('msg').textContent=p[0]+' '+nu.lv+'성 소환! · 다음 비용 '+summonCost()+'G';$('summon').textContent='소환 '+summonCost()+'G';render()};
 let lastMergeCandidates=[];
 function availableMergeGroups(){let out=[];for(let lv=1;lv<5;lv++){for(const cls of ['전사','암살자','마법사','치유사']){let ids=[];units.forEach((u,i)=>{if(u&&u.lv===lv&&combatClass[u.name]===cls)ids.push(i)});if(ids.length>=3){for(let g=0;g<Math.floor(ids.length/3);g++)out.push({lv,cls,ids:ids.slice(g*3,g*3+3)})}}}return out}
 function openMergeGroupChoice(groups){let old=$('mergeGroupChoice');if(old)old.remove();let x=document.createElement('div');x.id='mergeGroupChoice';x.className='result';let cards=groups.map((g,idx)=>{let members=g.ids.map(i=>'<span class="mergeGroupUnit">'+units[i].icon+' '+units[i].name+' · '+(i+1)+'번</span>').join('');return '<button class="mergeGroupCard" data-g="'+idx+'"><b>'+g.lv+'★ '+g.cls+' 3체</b><div class="mergeGroupHint">이 3명을 소비해 '+(g.lv+1)+'★ 후보를 생성합니다.</div><div class="mergeGroupUnits">'+members+'</div></button>'}).join('');x.innerHTML='<div class="resultbox"><div class="muted">MERGE GROUP</div><h2>승급할 조합 선택</h2><p>동일 직업군 · 동일 전투 성급 조합 중 하나를 선택하세요.</p><div class="mergeGroupGrid">'+cards+'</div><button class="btn secondary" id="mergeGroupCancel">취소</button></div>';document.body.appendChild(x);x.querySelector('#mergeGroupCancel').onclick=()=>x.remove();x.querySelectorAll('.mergeGroupCard').forEach(b=>b.onclick=()=>{let g=groups[+b.dataset.g];x.remove();openMergeChoice(g.ids,g.lv)})}
