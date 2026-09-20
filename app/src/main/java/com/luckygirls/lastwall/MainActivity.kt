@@ -4,13 +4,19 @@ import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 class MainActivity : Activity() {
+ private lateinit var webView: WebView
  override fun onCreate(savedInstanceState: Bundle?) {
   super.onCreate(savedInstanceState)
-  val w=WebView(this)
-  w.webViewClient=WebViewClient()
-  w.settings.javaScriptEnabled=true
-  w.settings.domStorageEnabled=true
-  w.loadUrl("file:///android_asset/index.html")
-  setContentView(w)
+  webView=WebView(this)
+  webView.webViewClient=WebViewClient()
+  webView.settings.javaScriptEnabled=true
+  webView.settings.domStorageEnabled=true
+  webView.loadUrl("file:///android_asset/index.html")
+  setContentView(webView)
+ }
+ override fun onBackPressed() {
+  webView.evaluateJavascript("typeof handleNativeBack==='function' ? handleNativeBack() : false") { handled ->
+   if (handled != "true") super.onBackPressed()
+  }
  }
 }
