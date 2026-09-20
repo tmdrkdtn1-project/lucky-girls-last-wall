@@ -16,7 +16,7 @@ must("speed toggle keeps persistent timer", "if(running&&!paused)startLoop();" n
 must("watchdog detects stalled tick", "LG_BATTLE_TICK_STALL" in html and "lastBattleTickAt" in html)
 must("watchdog repairs combat locks", "specialAttackLock=false;lastBattleTickAt=now;startLoop()" in html)
 must("watchdog is not aggressive", "Math.max(5200,3200/speed)" in html)
-must("hitstop cleanup cannot be cancelled by battle session", "setTimeout(()=>host.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'))" in html)
+must("hitstop cleanup cannot be cancelled by battle session", "setTimeout(()=>host.classList.remove('combatHitstop')" in html)
 must("new battle resets loop counters", "lastBattleTickAt=Date.now();battleTickCount=0;installBattleWatchdog()" in html)
 must("invalid session stops watchdog", "lastBattleTickAt=0;stopBattleWatchdog()" in html)
 
