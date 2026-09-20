@@ -11,7 +11,7 @@ checks={
  "defeat is session guarded":"battleTimeout(()=>result(false),500)" in loop,
  "single interval source":"},intervalMs)}" in loop,
  "lane cleanup session guarded":"battleTimeout(()=>{if(lines[lane])" in html,
- "hitstop cleanup independent fail-safe":"setTimeout(()=>host.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'))" in html,
+ "hitstop cleanup independent fail-safe":"setTimeout(()=>host.classList.remove('combatHitstop')" in html,
  "stability snapshot":"function battleStabilitySnapshot()" in html,
  "heartbeat result invariant":"validateResultState();" in loop,
 }
