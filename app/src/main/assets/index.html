@@ -429,7 +429,7 @@ function breachDamage(amount,source='적 돌파'){let targets=frontlineUnits();i
 let guards=targets.filter(x=>combatClass[x.u.name]==='전사'),guarded=guards.length&&Math.random()<.62,hit=guarded?guards[Math.floor(Math.random()*guards.length)]:targets[Math.floor(Math.random()*targets.length)];if(guarded)showTaunt(hit.i,hit.u.name);highlightBreachLane(hit.i);damageUnitAt(hit,amount,source,true);updateCollapseState()}
 let dragFrom=-1;
 function resetBattlePointerState(){dragFrom=-1;moveSelected=-1;touchMoved=false;document.querySelectorAll('#grid .slot').forEach(x=>{clearTimeout(x._hold);try{if(x.hasPointerCapture&&x._pointerId!=null&&x.hasPointerCapture(x._pointerId))x.releasePointerCapture(x._pointerId)}catch(_){ }x._pointerId=null;x.classList.remove('dragging','dragover','selectedMove')})}
-window.addEventListener('pointerup',e=>{if(currentScreen!=='battle'||dragFrom<0)return;let from=dragFrom,el=document.elementFromPoint(e.clientX,e.clientY)?.closest?.('.slot');if(touchMoved&&el){let to=+el.dataset.idx;if(from>=0&&to!==from)swapFormation(from,to)}resetBattlePointerState()},{passive:true});
+window.addEventListener('pointerup',()=>{if(currentScreen==='battle'&&dragFrom>=0)resetBattlePointerState()},{passive:true});
 window.addEventListener('pointercancel',()=>{if(currentScreen==='battle')resetBattlePointerState()},{passive:true});
 let appBackgroundAt=0,appAutoPaused=false;
 function shiftBattleDeadlines(delta){
@@ -456,15 +456,12 @@ window.addEventListener('blur',()=>{if(currentScreen==='battle')resetBattlePoint
 window.addEventListener('focus',()=>{if(currentScreen==='battle'&&!document.hidden)handleAppVisible()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)handleAppHidden();else handleAppVisible()});
 
-function bindSlotDrag(d,i){d.draggable=!!units[i];
-d.addEventListener('dragstart',e=>{if(!units[i]){e.preventDefault();return}dragFrom=i;touchMoved=true;d.classList.add('dragging');e.dataTransfer.effectAllowed='move'});
-d.addEventListener('dragend',()=>{dragFrom=-1;document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dragging','dragover'))});
-d.addEventListener('dragover',e=>{e.preventDefault();d.classList.add('dragover')});d.addEventListener('dragleave',()=>d.classList.remove('dragover'));
-d.addEventListener('drop',e=>{e.preventDefault();d.classList.remove('dragover');if(dragFrom>=0)swapFormation(dragFrom,i);dragFrom=-1});
-d.addEventListener('pointerdown',e=>{touchMoved=false;if(!units[i]){if(moveSelected>=0){swapFormation(moveSelected,i);e.preventDefault()}return}dragFrom=i;d._pointerId=e.pointerId;d.setPointerCapture?.(e.pointerId);d._sx=e.clientX;d._sy=e.clientY;d._hold=setTimeout(()=>{moveSelected=i;d.classList.add('selectedMove');haptic([14])},220)});
-d.addEventListener('pointermove',e=>{if(dragFrom<0)return;let dist=Math.hypot(e.clientX-(d._sx||e.clientX),e.clientY-(d._sy||e.clientY));if(dist<8)return;touchMoved=true;clearTimeout(d._hold);d.classList.add('dragging');let el=document.elementFromPoint(e.clientX,e.clientY)?.closest?.('.slot');document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dragover'));if(el)el.classList.add('dragover');e.preventDefault()});
-d.addEventListener('pointerup',e=>{clearTimeout(d._hold);d._pointerId=null;let from=dragFrom;dragFrom=-1;let el=document.elementFromPoint(e.clientX,e.clientY)?.closest?.('.slot');document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dragging','dragover','selectedMove'));if(touchMoved&&el){let to=+el.dataset.idx;if(from>=0&&to!==from)swapFormation(from,to);e.preventDefault()}else if(moveSelected>=0&&moveSelected!==i){swapFormation(moveSelected,i);e.preventDefault()}});
-d.addEventListener('pointercancel',()=>{clearTimeout(d._hold);d._pointerId=null;dragFrom=-1;document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dragging','dragover'))})}
+function bindSlotDrag(d,i){d.draggable=false;
+d.addEventListener('pointerdown',e=>{touchMoved=false;if(!units[i]){if(moveSelected>=0){swapFormation(moveSelected,i);e.preventDefault()}return}dragFrom=i;d._pointerId=e.pointerId;d.setPointerCapture?.(e.pointerId);d._sx=e.clientX;d._sy=e.clientY;clearTimeout(d._hold);d._hold=setTimeout(()=>{if(dragFrom!==i)return;moveSelected=i;d.classList.add('selectedMove');haptic([14])},220)});
+d.addEventListener('pointermove',e=>{if(dragFrom!==i)return;let dist=Math.hypot(e.clientX-(d._sx??e.clientX),e.clientY-(d._sy??e.clientY));if(dist<8)return;touchMoved=true;clearTimeout(d._hold);d.classList.add('dragging');let el=document.elementFromPoint(e.clientX,e.clientY)?.closest?.('.slot');document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dragover'));if(el)el.classList.add('dragover');e.preventDefault()});
+let finish=e=>{clearTimeout(d._hold);d._pointerId=null;let from=dragFrom;let el=e&&Number.isFinite(e.clientX)?document.elementFromPoint(e.clientX,e.clientY)?.closest?.('.slot'):null;document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dragging','dragover','selectedMove'));if(from>=0&&touchMoved&&el){let to=+el.dataset.idx;if(to!==from)swapFormation(from,to)}dragFrom=-1;touchMoved=false};
+d.addEventListener('pointerup',e=>{finish(e);e.preventDefault()});
+d.addEventListener('pointercancel',()=>finish(null))}
 function mergeReadyGroups(){return availableMergeGroups().length}
 function renderRelicStrip(){let h=$('relicStrip');if(!h)return;if(!acquiredRelics.length){h.innerHTML='<span class="relicEmpty">획득 유물 없음</span>';return}h.innerHTML=acquiredRelics.map(r=>'<span class="relicChip t'+r.tier+'" title="'+r.desc+'">T'+r.tier+' · '+r.name+'</span>').join('')}
 function battleStabilitySnapshot(){
