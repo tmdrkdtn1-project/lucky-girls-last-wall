@@ -7,8 +7,9 @@ await page.goto('http://127.0.0.1:8765/index.html',{waitUntil:'domcontentloaded'
 await page.waitForFunction(()=>!!window.__LG_TEST__);
 assert.equal(await page.evaluate(()=>__LG_TEST__.prep('normal',1)),'battlePrep');
 assert.equal(await page.evaluate(()=>__LG_TEST__.prepStart()),'battlePrep');
-await page.locator('[data-prep-hero]').first().click();
-await page.locator('[data-prep-slot="0"]').click();
+let placed=await page.evaluate(()=>__LG_TEST__.prepPlace(0,0));
+assert.equal(placed.count,1);
+assert.ok(placed.units[0]);
 assert.equal(await page.locator('#prepDeployCount').textContent(),'1 / 5');
 assert.equal(await page.evaluate(()=>__LG_TEST__.prepStart()),'battle');
 let s=await page.evaluate(()=>__LG_TEST__.snapshot()); assert.equal(s.running,true); assert.equal(s.timerAlive,true); assert.equal(s.wave,1);
