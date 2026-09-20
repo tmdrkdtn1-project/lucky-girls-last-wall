@@ -8,7 +8,7 @@ def must(label, cond):
     if not cond: failures.append(label)
 
 failures=[]
-must("rapid summon stays direct", "bindFastAction($('summon'),performSummon)" in html)
+must("summon uses cooldown gate", "bindFastAction($('summon'),cooledSummon)" in html and "summonCooldown" in html)
 must("summon never restarts loop", "function performSummon()" in html and "scheduleBattleRender()" in html and "function performSummon(){if" in html)
 must("boss wave resets stale input/hitstop", "function beginWave()" in html and "document.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'));resetBattlePointerState()" in html)
 must("boss skill is session guarded", "warnBossSkill(p.n,()=>{" in html and "battleTimeout(()=>{if(w.isConnected)w.remove();if(!running||paused)return;cb()},650,session)" in html)
@@ -23,7 +23,11 @@ must("invalid session stops watchdog", "lastBattleTickAt=0;stopBattleWatchdog()"
 # Static stress matrix: all high-risk event paths must coexist without direct raw timer mutation.
 start=html.find("function startLoop()")
 end=html.find("$('enter').onclick",start)
-loop=html[start:end]\nstep_start=html.find("function runBattleStep()")\nstep_end=html.find("function startLoop()",step_start)\nstep=html[step_start:step_end]\nmust("single timer source in combat loop", loop.count("setInterval(")==1)
+loop=html[start:end]
+step_start=html.find("function runBattleStep()")
+step_end=html.find("function startLoop()",step_start)
+step=html[step_start:step_end]
+must("single timer source in combat loop", loop.count("setInterval(")==1)
 must("no raw clearInterval inside combat loop", "clearInterval(timer)" not in loop)
 must("boss handling present in simulation step", "bossSkill()" in step and "wave%5===0" in step)
 must("scheduler delegates simulation", "runBattleStep()" in loop and "bossSkill()" not in loop)
