@@ -59,7 +59,7 @@ html.battleNoScroll,body.battleNoScroll{overflow:hidden!important;overscroll-beh
 <button id="daily" class="btn secondary">출석 보상 받기</button>
 <div id="account" class="upgrade" style="display:none"></div><div id="homeStats" style="display:none"></div>
 <div style="display:none"><select id="modeSelect"><option value="normal">NORMAL</option><option value="hard">HARD</option><option value="infinite">무한성</option></select><select id="stageSelect"></select><div id="modeStatus"></div><button id="start"></button><button id="collection"></button><button id="shop"></button><button id="collectionMain"></button></div>
-<div class="portraitOnlyNote">MILESTONE 2.54.0 · PORTRAIT LOBBY</div>
+<div class="portraitOnlyNote">MILESTONE 2.55.0 · PORTRAIT LOBBY</div>
 </section>
 <section id="storyHub" class="screen"><div class="hubHeader"><button class="hudbtn backTop" id="storyBack">←</button><div class="hubTitle">스토리</div><span id="storyProgressText">0/5</span></div><div class="storyMap" id="storyChapters"></div></section>
 <section id="characterHub" class="screen"><div class="hubHeader"><button class="hudbtn backTop" id="characterBack">←</button><div class="hubTitle">캐릭터</div><span id="characterCount">0/20</span></div>
@@ -421,9 +421,9 @@ else if(r<p.assassin+p.ranged+p.aoe)telegraphRows([1,2,3,4],'광역 공격',()=>
 let collapseLevel=0,lastCollapseWarn=0;
 function warningTone(level=1){if(meta.settings&&meta.settings.sfx===false)return;try{let AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;let ctx=new AC(),o=ctx.createOscillator(),g=ctx.createGain();o.type='square';o.frequency.value=level>=3?130:level===2?180:240;g.gain.setValueAtTime(.0001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.055,ctx.currentTime+.015);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.16);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.18);setTimeout(()=>ctx.close(),250)}catch(e){}}
 function laneIndexForSlot(i){return i%4}
-function highlightBreachLane(i,ms=850){let lane=laneIndexForSlot(i),lines=document.querySelectorAll('#laneOverlay .laneLine');if(lines[lane])lines[lane].classList.add('hot');for(let row=0;row<4;row++){let el=document.querySelector('.slot[data-idx="'+(row*4+lane)+'"]');if(el)el.classList.add('breachLane')}setTimeout(()=>{if(lines[lane])lines[lane].classList.remove('hot');document.querySelectorAll('.slot.breachLane').forEach(x=>x.classList.remove('breachLane'))},ms)}
+function highlightBreachLane(i,ms=850){let lane=laneIndexForSlot(i),lines=document.querySelectorAll('#laneOverlay .laneLine');if(lines[lane])lines[lane].classList.add('hot');for(let row=0;row<4;row++){let el=document.querySelector('.slot[data-idx="'+(row*4+lane)+'"]');if(el)el.classList.add('breachLane')}battleTimeout(()=>{if(lines[lane])lines[lane].classList.remove('hot');document.querySelectorAll('.slot.breachLane').forEach(x=>x.classList.remove('breachLane'))},ms)}
 function formationHealth(){let alive=occupiedCount(),front=frontlineUnits().length,low=activeUnits().filter(u=>ensureUnitHp(u).hp/u.maxHp<.35).length;if(alive===0)return 3;if(front===0&&alive>0)return 3;if(front<=1||low>=Math.max(2,Math.ceil(alive*.4)))return 2;if(front===2||low>=2)return 1;return 0}
-function updateCollapseState(force=false){let lv=formationHealth();collapseLevel=lv;let grid=$('grid');if(grid){grid.classList.remove('collapse1','collapse2','collapse3');if(lv)grid.classList.add('collapse'+lv)}if(!lv)return;let now=Date.now();if(!force&&now-lastCollapseWarn<5000)return;lastCollapseWarn=now;let old=$('collapseBanner');if(old)old.remove();let host=$('field')||document.body,b=document.createElement('div');b.id='collapseBanner';b.className='collapseBanner';b.textContent=lv===3?'⚠ 진형 붕괴! 전열을 즉시 복구하세요':lv===2?'⚠ 전열 위험 · 진형 재배치 권장':'⚠ 전열 약화';host.appendChild(b);warningTone(lv);haptic(lv===3?[80,45,110,45,110]:lv===2?[55,35,70]:[28,25,28]);impact(lv===3?'heavy':'light','enemy');setTimeout(()=>b.remove(),1400)}
+function updateCollapseState(force=false){let lv=formationHealth();collapseLevel=lv;let grid=$('grid');if(grid){grid.classList.remove('collapse1','collapse2','collapse3');if(lv)grid.classList.add('collapse'+lv)}if(!lv)return;let now=Date.now();if(!force&&now-lastCollapseWarn<5000)return;lastCollapseWarn=now;let old=$('collapseBanner');if(old)old.remove();let host=$('field')||document.body,b=document.createElement('div');b.id='collapseBanner';b.className='collapseBanner';b.textContent=lv===3?'⚠ 진형 붕괴! 전열을 즉시 복구하세요':lv===2?'⚠ 전열 위험 · 진형 재배치 권장':'⚠ 전열 약화';host.appendChild(b);warningTone(lv);haptic(lv===3?[80,45,110,45,110]:lv===2?[55,35,70]:[28,25,28]);impact(lv===3?'heavy':'light','enemy');battleTimeout(()=>{if(b.isConnected)b.remove()},1400)}
 function breachDamage(amount,source='적 돌파'){let targets=frontlineUnits();if(!targets.length)targets=firstOccupiedRow();if(!targets.length){life=Math.max(0,life-1);updateCollapseState(true);return}
 let guards=targets.filter(x=>combatClass[x.u.name]==='전사'),guarded=guards.length&&Math.random()<.62,hit=guarded?guards[Math.floor(Math.random()*guards.length)]:targets[Math.floor(Math.random()*targets.length)];if(guarded)showTaunt(hit.i,hit.u.name);highlightBreachLane(hit.i);damageUnitAt(hit,amount,source,true);updateCollapseState()}
 let dragFrom=-1;
@@ -466,6 +466,12 @@ d.addEventListener('pointerup',e=>{clearTimeout(d._hold);d._pointerId=null;let f
 d.addEventListener('pointercancel',()=>{clearTimeout(d._hold);d._pointerId=null;dragFrom=-1;document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dragging','dragover'))})}
 function mergeReadyGroups(){return availableMergeGroups().length}
 function renderRelicStrip(){let h=$('relicStrip');if(!h)return;if(!acquiredRelics.length){h.innerHTML='<span class="relicEmpty">획득 유물 없음</span>';return}h.innerHTML=acquiredRelics.map(r=>'<span class="relicChip t'+r.tier+'" title="'+r.desc+'">T'+r.tier+' · '+r.name+'</span>').join('')}
+function battleStabilitySnapshot(){
+ return {session:battleSessionId,loopGeneration:battleLoopGeneration,running,paused,speed,
+ slots:Array.isArray(units)?units.length:-1,occupied:occupiedCount(),modal:activeBattleModal()?.id||'none',
+ transientFx:document.querySelectorAll('.combatTransient').length,
+ telegraphs:document.querySelectorAll('.enemyTelegraph,.skillWarn').length};
+}
 function validateResultState(){let r=document.querySelector('.result:not(#mergeGroupChoice):not(#mergeChoice):not(#relicClassChoice):not(#relicChoice)');if(r&&running){console.error('LG_RESULT_RUNNING_CONFLICT');running=false;stopBattleLoop()}return !r||!running}
 function validateBattleLoop(){let ok=!running||!!timer;if(!ok){console.error('LG_BATTLE_LOOP_MISSING',{running,paused,speed});if(currentScreen==='battle'&&!paused)startLoop()}return ok}
 function validateAppLifecycle(){if(!Number.isFinite(appBackgroundAt)||appBackgroundAt<0){console.error('LG_APP_LIFECYCLE_INVALID',{appBackgroundAt});appBackgroundAt=0}return true}
@@ -507,7 +513,7 @@ function trimTransientFx(host,limit=56){if(!host)return;let nodes=[...host.query
 function addCombatNode(cls,x,y,life=600){let host=$('combatFxLayer')||$('field');trimTransientFx(host);let n=document.createElement('i');n.className=cls+' combatTransient';n.style.left=x+'%';n.style.top=y+'%';host.appendChild(n);setTimeout(()=>{if(n.isConnected)n.remove()},life);return n}
 function showTargetPing(t){let p=addCombatNode('targetPing',t.x,t.y,480);return p}
 let lastHitstop=0;
-function microHitstop(ms=45){if(meta.settings&&meta.settings.hitstop===false)return;let now=Date.now();if(now-lastHitstop<180)return;lastHitstop=now;let host=$('field');if(!host)return;host.querySelectorAll('*').forEach(x=>x.classList.add('combatHitstop'));setTimeout(()=>host.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop')),ms)}
+function microHitstop(ms=45){if(meta.settings&&meta.settings.hitstop===false)return;let now=Date.now();if(now-lastHitstop<180)return;lastHitstop=now;let host=$('field');if(!host)return;host.querySelectorAll('*').forEach(x=>x.classList.add('combatHitstop'));battleTimeout(()=>host.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop')),ms)}
 function enemyImpactPoint(crit=false,label=''){let t=randomEnemyPoint(),p=addCombatNode('enemyHitSpark',t.x,t.y,380),d=addCombatNode('damagePop'+(crit?' crit':''),t.x,t.y,650);d.textContent=label||(crit?'CRIT!':'HIT');microHitstop(crit?72:42);return t}
 function showKillBurst(count){if(count<=0)return;let crit=count>=4;enemyImpactPoint(crit,crit?'+'+count+' KILL':'+'+count);if(count>=3){impact('light','ally');haptic([18,12,26])}}
 function showBossDamage(amount){let boss=$('boss');if(boss){boss.classList.remove('bossHit');void boss.offsetWidth;boss.classList.add('bossHit');setTimeout(()=>boss.classList.remove('bossHit'),220)}let crit=amount>=8;enemyImpactPoint(crit,'-'+Math.max(1,Math.round(amount)));if(crit){impact('heavy','ally');haptic([28,18,48])}}
@@ -618,7 +624,7 @@ function onAllyDefeated(unit){moveSelected=-1;dragFrom=-1;allyDeathFeedback();if
 function enemySkin(){beginWave()}
 let battleLoopGeneration=0;
 function stopBattleLoop(){battleLoopGeneration++;if(timer){clearInterval(timer);timer=null}}
-function startLoop(){stopBattleLoop();running=true;let gen=battleLoopGeneration,intervalMs=2200/speed;timer=setInterval(()=>{if(gen!==battleLoopGeneration)return;if(!running)return;validateBattleState(true);validateBattleSession();validateAppLifecycle();validateBattleLoop();if(paused){validateExclusiveModalState();recoverOrphanPause();if(paused)return;}
+function startLoop(){stopBattleLoop();running=true;let gen=battleLoopGeneration,intervalMs=2200/speed;timer=setInterval(()=>{if(gen!==battleLoopGeneration)return;if(!running)return;validateBattleState(true);validateBattleSession();validateAppLifecycle();validateBattleLoop();validateResultState();if(paused){validateExclusiveModalState();recoverOrphanPause();if(paused)return;}
 waveTime+=2.2;let target=swarmTarget(),spawn=Math.max(2,Math.ceil((target-enemyCount)*.52));enemyCount=Math.min(target,enemyCount+spawn);
 if(runRegenPct>0&&Date.now()-lastRegenAt>=8000){units.forEach((u,i)=>{if(!u)return;ensureUnitHp(u);let h=Math.max(1,Math.round(u.maxHp*runRegenPct));u.hp=Math.min(u.maxHp,u.hp+h);u.healUntil=Date.now()+500;showHealTarget(i,h)});lastRegenAt=Date.now()}let sp=skillPower(),power=sp[0];animateCombatVolley();let modeMult=currentMode==='hard'?1.72:currentMode==='infinite'?(1.42+Math.max(0,currentFloor-1)*.095):1;
 let profile=stageProfile(),sixteenSlotMult=1.28,need=(3+Math.floor(wave*.61)+Math.pow(wave,1.21)*.13)*stages[currentStage].power*modeMult*sixteenSlotMult*profile.armor;if(Date.now()<combatSlowUntil)power*=.78;
@@ -628,13 +634,13 @@ if(sp[1])fx(sp[1]);
 if(wave%5===0){let bossDmg=Math.max(1.5,power/Math.max(1,need)*6.2)*runBossDamage;if(bossShield>0){let absorb=Math.min(bossShield,bossDmg);bossShield-=absorb;bossDmg-=absorb}$('bossbar').title=bossShield>0?'보호막 '+Math.ceil(bossShield):'';bossHp=Math.max(0,bossHp-bossDmg);showBossDamage(bossDmg);$('bosshp').style.width=bossHp+'%';
 if(enemyCount>=target-1&&power<need*(.90+.06*profile.pressure)){breachDamage(10+wave*1.35,'졸병 돌파')}
 else $('msg').textContent='👹 '+stages[currentStage].bosses[wave]+' HP '+Math.ceil(bossHp)+'%'+(bossShield>0?' · 보호막 '+Math.ceil(bossShield):'')+' · 졸병 '+enemyCount+'/'+target;
-if(bossHp<=0){let cleared=wave;if(cleared===20){running=false;clearInterval(timer);$('msg').textContent='🏆 '+stages[currentStage].name+' 클리어!';setTimeout(clearStage,450);render();return}let tier=cleared===5?1:cleared===10?2:3;paused=true;openRelicChoice(tier,()=>{advanceWave()});render();return}}
+if(bossHp<=0){let cleared=wave;if(cleared===20){running=false;stopBattleLoop();$('msg').textContent='🏆 '+stages[currentStage].name+' 클리어!';battleTimeout(clearStage,450);render();return}let tier=cleared===5?1:cleared===10?2:3;paused=true;openRelicChoice(tier,()=>{advanceWave()});render();return}}
 else{
 if(enemyCount>=target-1&&power<need*(.86+.06*profile.pressure)){breachDamage(8+wave*1.15,'적 돌파')}
 else $('msg').textContent=([4,9,14,19].includes(wave)?'🔥 보스 전초 러시 ':'⚔️ '+profile.mob+' · '+profile.trait+' / 특수공격 ')+enemyCount+'/'+target+' · '+Math.ceil(Math.max(0,waveDuration-waveTime))+'초';
 if(waveTime>=waveDuration){advanceWave();render();return}}
-if(life<=0){life=0;running=false;clearInterval(timer);$('msg').textContent='☠️ 방어선 붕괴';battleTimeout(()=>result(false),500);render();return}
-renderSwarm();render();updateCollapseState()},2200/speed)}
+if(life<=0){life=0;running=false;stopBattleLoop();$('msg').textContent='☠️ 방어선 붕괴';battleTimeout(()=>result(false),500);render();return}
+renderSwarm();render();updateCollapseState()},intervalMs)}
 $('enter').onclick=()=>{$('splash').style.display='none';metaRender();renderStoryHub();renderInfiniteHub();show('home')};
 document.querySelectorAll('#bottomNav button').forEach(b=>b.onclick=()=>{let id=b.dataset.go;if(id==='characterHub')renderCharacterHub();if(id==='summonHub')renderSummonHub();if(id==='store'){renderShop();setShopTab('guardian')}if(id==='menuHub')renderMenuHub();show(id)});
 $('storyMain').onclick=()=>{renderStoryHub();show('storyHub')};$('changeLobbyHero').onclick=e=>{e.stopPropagation();openLobbyHeroPicker()};$('lobbyNotice').onclick=()=>openLobbySheet('notice');$('lobbyMail').onclick=()=>openLobbySheet('mail');$('lobbyMission').onclick=()=>openLobbySheet('mission');$('eventMain').onclick=()=>toast('이벤트 콘텐츠는 시즌 시스템 단계에서 연결합니다.');$('infiniteMain').onclick=()=>{renderLobbyMeta();renderInfiniteHub();show('infiniteHub')};$('summonMain').onclick=()=>{renderSummonHub();show('summonHub')};$('shopMain').onclick=()=>{renderShop();show('store')};$('collectionMain').onclick=()=>{renderCollection();show('col')};
