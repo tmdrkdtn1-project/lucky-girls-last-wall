@@ -9,8 +9,8 @@ android {
         applicationId = "com.luckygirls.lastwall"
         minSdk = 26
         targetSdk = 35
-        versionCode = 76
-        versionName = "2.53.0"
+        versionCode = 77
+        versionName = "2.54.0"
     }
 
     compileOptions {
