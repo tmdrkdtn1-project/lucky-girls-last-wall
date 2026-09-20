@@ -26,7 +26,8 @@ end=html.find("$('enter').onclick",start)
 loop=html[start:end]
 must("single timer source in combat loop", loop.count("setInterval(")==1)
 must("no raw clearInterval inside combat loop", "clearInterval(timer)" not in loop)
-must("boss handling present in same heartbeat", "bossSkill()" in loop and "wave%5===0" in loop)
+must("boss handling present in simulation step", "bossSkill()" in step and "wave%5===0" in step)
+must("scheduler delegates simulation", "runBattleStep()" in loop and "bossSkill()" not in loop)
 must("wave advance does not create second timer", "function advanceWave()" in html and "beginWave();" in html)
 
 scenarios=[
