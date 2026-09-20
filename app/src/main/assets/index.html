@@ -13,7 +13,7 @@
 <button id="daily" class="btn secondary">출석 보상 받기</button>
 <div id="account" class="upgrade" style="display:none"></div><div id="homeStats" style="display:none"></div>
 <div style="display:none"><select id="modeSelect"><option value="normal">NORMAL</option><option value="hard">HARD</option><option value="infinite">무한성</option></select><select id="stageSelect"></select><div id="modeStatus"></div><button id="start"></button><button id="collection"></button><button id="shop"></button><button id="collectionMain"></button></div>
-<div class="portraitOnlyNote">MILESTONE 2.34.0 · PORTRAIT LOBBY</div>
+<div class="portraitOnlyNote">MILESTONE 2.35.0 · PORTRAIT LOBBY</div>
 </section>
 <section id="storyHub" class="screen"><div class="hubHeader"><button class="hudbtn backTop" id="storyBack">←</button><div class="hubTitle">스토리</div><span id="storyProgressText">0/5</span></div><div class="storyMap" id="storyChapters"></div></section>
 <section id="characterHub" class="screen"><div class="hubHeader"><button class="hudbtn backTop" id="characterBack">←</button><div class="hubTitle">캐릭터</div><span id="characterCount">0/20</span></div>
@@ -82,26 +82,26 @@ const canRank=n=>{let g=growthOf(n);return g.atk>=5&&g.def>=5&&g.hp>=5&&baseStar
 const convertDust=()=>{let made=Math.floor(meta.starDust/100);if(made>0){meta.starDust-=made*100;meta.starShards+=made;save();toast('별의 조각 +'+made+' 획득!');metaRender();renderShop()}};
 const summonCost=()=>10+summonCount*2;
 const skillBook={
-'아리아':[{s:1,n:'성광참',cd:5},{s:3,n:'수호의 맹세',cd:10},{s:5,n:'라스트 세이크리드',cd:18}],
-'유나':[{s:1,n:'봉인의 부적',cd:7},{s:3,n:'결계진',cd:12},{s:5,n:'천지봉인',cd:20}],
-'리엘':[{s:1,n:'엘리멘탈 볼트',cd:5},{s:3,n:'원소 공명',cd:9},{s:5,n:'엘리멘탈 카타스트로피',cd:19}],
-'루비':[{s:1,n:'리코셰 샷',cd:4},{s:3,n:'오버히트',cd:11},{s:5,n:'불릿 카니발',cd:18}],
-'에리카':[{s:1,n:'드래곤 클로',cd:5},{s:3,n:'용혈 각성',cd:12},{s:5,n:'용왕강림',cd:20}],
-'세라':[{s:1,n:'천사의 축복',cd:8},{s:3,n:'세라핌 오라',cd:13},{s:5,n:'천상의 찬가',cd:22}],
-'레이나':[{s:1,n:'프로스트 랜스',cd:5},{s:3,n:'빙결연쇄',cd:10},{s:5,n:'앱솔루트 제로',cd:20}],
-'카린':[{s:1,n:'그림자 베기',cd:4},{s:3,n:'분신술',cd:11},{s:5,n:'월하섬',cd:18}],
-'벨':[{s:1,n:'마리오네트',cd:6},{s:3,n:'인형극',cd:12},{s:5,n:'그랜드 퍼펫 쇼',cd:20}],
-'미아':[{s:1,n:'골드 러시',cd:6},{s:3,n:'보물 냄새',cd:11},{s:5,n:'잭팟 스틸',cd:20}],
-'아이린':[{s:1,n:'티타임',cd:8},{s:3,n:'퍼펙트 서비스',cd:12},{s:5,n:'마스터를 위하여',cd:22}],
-'네온':[{s:1,n:'해킹',cd:6},{s:3,n:'바이러스',cd:10},{s:5,n:'SYSTEM CRASH',cd:20}],
-'샤샤':[{s:1,n:'폭탄 받아!',cd:5},{s:3,n:'연쇄 폭파',cd:9},{s:5,n:'MEGA BOOM!',cd:19}],
-'루나':[{s:1,n:'별의 축복',cd:7},{s:3,n:'운명의 인도',cd:12},{s:5,n:'운명의 재작성',cd:22}],
-'비올라':[{s:1,n:'베놈 키스',cd:5},{s:3,n:'맹독 증식',cd:10},{s:5,n:'퍼플 헤이즈',cd:20}],
-'클로에':[{s:1,n:'비트 업!',cd:8},{s:3,n:'앙코르!',cd:13},{s:5,n:'STARLIGHT LIVE',cd:22}],
-'아델':[{s:1,n:'철벽',cd:7},{s:3,n:'불굴',cd:12},{s:5,n:'여긴 내가 막는다',cd:22}],
-'니아':[{s:1,n:'블러드 클로',cd:5},{s:3,n:'피의 계약',cd:11},{s:5,n:'DEMONIC ECSTASY',cd:20}],
-'오로라':[{s:1,n:'스타 샤워',cd:5},{s:3,n:'오비탈',cd:10},{s:5,n:'CELESTIAL FALL',cd:20}],
-'이브':[{s:1,n:'타임 딜레이',cd:6},{s:3,n:'리와인드',cd:12},{s:5,n:'WORLD STOP',cd:24}]
+'아리아':[{s:1,n:'성광참',cd:5},{s:3,n:'수호의 맹세',cd:10},{s:5,n:'심판의 성검',cd:18}],
+'유나':[{s:1,n:'봉인의 부적',cd:7},{s:3,n:'월령 결계',cd:12},{s:5,n:'천월대봉인',cd:20}],
+'리엘':[{s:1,n:'원소 연쇄',cd:5},{s:3,n:'삼원소 공명',cd:9},{s:5,n:'엘리멘탈 노바',cd:19}],
+'루비':[{s:1,n:'리코셰 샷',cd:4},{s:3,n:'퀵드로우',cd:11},{s:5,n:'붉은 황야의 결투',cd:18}],
+'에리카':[{s:1,n:'용혈 격동',cd:5},{s:3,n:'용린 폭주',cd:12},{s:5,n:'적룡해방',cd:20}],
+'세라':[{s:1,n:'축복의 빛',cd:8},{s:3,n:'천상의 찬가',cd:13},{s:5,n:'세라핌의 기도',cd:22}],
+'레이나':[{s:1,n:'서리창',cd:5},{s:3,n:'빙결영역',cd:10},{s:5,n:'영원의 백야',cd:20}],
+'카린':[{s:1,n:'그림자 베기',cd:4},{s:3,n:'잔영난무',cd:11},{s:5,n:'월하절명',cd:18}],
+'벨':[{s:1,n:'실 끊기',cd:6},{s:3,n:'마리오네트 행진',cd:12},{s:5,n:'인형극의 막',cd:20}],
+'미아':[{s:1,n:'황금 손재주',cd:6},{s:3,n:'보물사냥꾼의 감',cd:11},{s:5,n:'잭팟 러시',cd:20}],
+'아이린':[{s:1,n:'응급 처치',cd:8},{s:3,n:'전투 정비',cd:12},{s:5,n:'퍼펙트 서비스',cd:22}],
+'네온':[{s:1,n:'취약점 해킹',cd:6},{s:3,n:'오버클럭',cd:10},{s:5,n:'시스템 크래시',cd:20}],
+'샤샤':[{s:1,n:'깡통 폭탄',cd:5},{s:3,n:'연쇄 기폭',cd:9},{s:5,n:'초대형 기폭작전',cd:19}],
+'루나':[{s:1,n:'달의 가호',cd:7},{s:3,n:'운명의 편린',cd:12},{s:5,n:'월식의 예언',cd:22}],
+'비올라':[{s:1,n:'맹독 한 방울',cd:5},{s:3,n:'독성 증류',cd:10},{s:5,n:'보랏빛 안식',cd:20}],
+'클로에':[{s:1,n:'비트 업!',cd:8},{s:3,n:'앙코르',cd:13},{s:5,n:'스타라이트 라이브',cd:22}],
+'아델':[{s:1,n:'철벽 전개',cd:7},{s:3,n:'수호 반격',cd:12},{s:5,n:'불락의 성벽',cd:22}],
+'니아':[{s:1,n:'혈마의 갈증',cd:5},{s:3,n:'계약의 낙인',cd:11},{s:5,n:'심연의 포옹',cd:20}],
+'오로라':[{s:1,n:'유성편',cd:5},{s:3,n:'행성 정렬',cd:10},{s:5,n:'초신성',cd:20}],
+'이브':[{s:1,n:'초침 절단',cd:6},{s:3,n:'시간 지연',cd:12},{s:5,n:'제로 아워',cd:24}]
 };
 const unlockedSkills=u=>(skillBook[u.name]||[]).filter(k=>u.lv>=k.s);
 const skillReady=(u,k)=>!u.skillCd||!u.skillCd[k.n]||Date.now()>=u.skillCd[k.n];
@@ -245,7 +245,7 @@ function renderHelpHub(){let topics=[
 ['승급','동일 직업군·동일 전투 성급 3명을 소비해 상위 성급의 중복 없는 후보 3명 중 하나를 선택합니다.'],
 ['참전 금지','보유 캐릭터가 11명 이상이면 최대 5명을 전투 소환 풀에서 제외할 수 있습니다.'],
 ['성장','ATK·DEF·HP를 각 5단계까지 강화한 뒤 별의 조각을 사용해 영구 성급을 올립니다.'],
-['스킬','1★/3★/5★에서 캐릭터별 스킬이 순차적으로 해금됩니다.'],
+['스킬','1★/3★/5★에서 캐릭터별 고유 스킬 1·2·3이 순차적으로 해금됩니다.'],
 ['무한성','STAGE 5 클리어 후 해금되며 99층, 각 층 20 WAVE로 구성됩니다.']];$('helpGrid').innerHTML=topics.map(x=>'<div class="helpTopic"><b>'+x[0]+'</b><small class="muted">'+x[1]+'</small></div>').join('')}
 function renderSettings(){let v=meta.settings||{};[['setSfx','sfx'],['setHaptic','haptic'],['setShake','shake'],['setHitstop','hitstop']].forEach(([id,key])=>{let b=$(id);if(!b)return;b.classList.toggle('on',v[key]!==false);b.setAttribute('aria-pressed',v[key]!==false?'true':'false')})}
 function toggleSetting(key){meta.settings[key]=!(meta.settings[key]!==false);save();renderSettings();toast((meta.settings[key]?'ON · ':'OFF · ')+({sfx:'효과음',haptic:'진동',shake:'화면 흔들림',hitstop:'히트스톱'}[key]||key))}
