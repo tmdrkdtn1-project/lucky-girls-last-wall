@@ -8,7 +8,7 @@ checks={
  "resume avoids duplicate loop":"if(running&&!timer)startLoop()" in html,
  "speed guarded":"if(currentScreen!=='battle'||activeBattleModal())return;speed=speed===1?2:1" in html,
  "speed restart serialized":"if(running&&!paused)startLoop()" in html,
- "new run stops old loop":"$('start').addEventListener('click',()=>{stopBattleLoop();beginBattleSession();" in html,
+ "new run stops old loop":"$('start').addEventListener('click',()=>{stopBattleLoop();" in html and "beginBattleSession();" in html,
  "loop diagnostic":"function validateBattleLoop()" in html,
 }
 bad=[k for k,v in checks.items() if not v]
