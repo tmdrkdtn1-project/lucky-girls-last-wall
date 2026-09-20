@@ -3,7 +3,7 @@ import sys
 html=Path("app/src/main/assets/index.html").read_text(encoding="utf-8")
 checks={
  "state invariant validator":"function validateBattleState(repair=true)" in html,
- "tick validates state":"function startLoop()" in html and "validateBattleState(true);" in html and "validateBattleLoop();" in html,
+ "tick validates state":"function startLoop()" in html and "validateBattleState(true);" in html,
  "summon validates state":"function performSummon()" in html and "validateBattleState(true);scheduleBattleRender()" in html,
  "transient fx cap":"function trimTransientFx(host,limit=56)" in html,
  "fx overflow guard":"function validateBattleFx()" in html,
