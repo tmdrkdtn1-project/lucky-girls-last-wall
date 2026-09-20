@@ -46,6 +46,8 @@ jobs:
         run: python3 scripts/check_luck_system.py
       - name: Check battle stress guards
         run: python3 scripts/check_battle_stress_guards.py
+      - name: Check battle session guards
+        run: python3 scripts/check_battle_session_guards.py
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
