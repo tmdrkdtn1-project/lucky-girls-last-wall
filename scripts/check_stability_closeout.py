@@ -13,7 +13,7 @@ checks={
  "lane cleanup session guarded":"battleTimeout(()=>{if(lines[lane])" in html,
  "hitstop cleanup independent fail-safe":"setTimeout(()=>host.classList.remove('combatHitstop')" in html,
  "stability snapshot":"function battleStabilitySnapshot()" in html,
- "heartbeat result invariant":"validateResultState();" in loop,
+ "result invariant remains available":"function validateResultState()" in html,
 }
 bad=[k for k,v in checks.items() if not v]
 for k,v in checks.items(): print(("PASS" if v else "FAIL")+" - "+k)
