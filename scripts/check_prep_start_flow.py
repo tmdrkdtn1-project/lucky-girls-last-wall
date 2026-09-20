@@ -4,7 +4,9 @@ import sys
 h=Path("app/src/main/assets/index.html").read_text(encoding="utf-8")
 checks={
  "prep start button exists": 'id="prepStart"' in h,
- "prep start handler exists": "$('prepStart').onclick=()=>{$('start').click()}" in h,
+ "prep start requires deployment": "prepDeployCount()<1" in h and "toast('출전 영웅을 1명 이상 배치하세요.')" in h and "$('start').click()" in h,
+ "prep deployment cap exists": "count>=5" in h and "prepDeployCount()" in h,
+ "prep units are free": "paid:0" in h,
  "prep back handler exists": "$('prepBack').onclick=()=>goBackFlow()" in h,
  "prep roster handler exists": "$('prepRosterEdit').onclick=" in h,
  "hidden start handler exists": "$('start').addEventListener('click',()=>{" in h,
