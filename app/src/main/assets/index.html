@@ -162,7 +162,10 @@ const enemyAttackProfiles={
 5:{ranged:.18,assassin:.20,aoe:.20}
 };
 function occupiedByRows(rows){let out=[];rows.forEach(r=>{for(let i=(r-1)*4;i<r*4;i++)if(units[i])out.push({u:units[i],i})});return out}
-function damageUnitAt(hit,amount,source,guardable=true){if(!hit)return false;let u=ensureUnitHp(hit.u),mit=combatClass[u.name]==='전사'?.72:1;if(u.name==='아델')mit*=.72;if(!guardable)mit=Math.max(mit,.88);let dmg=Math.max(1,Math.round(amount*mit));u.hp-=dmg;impact(dmg>=18?'heavy':'light','enemy');$('msg').textContent='💥 '+source+' · '+u.name+' -'+dmg+' HP';if(u.hp<=0){let dead=units.splice(hit.i,1)[0];onAllyDefeated(dead)}render();return true}
+function damageUnitAt(hit,amount,source,guardable=true){if(!hit||!hit.u)return false;let u=ensureUnitHp(hit.u),mit=combatClass[u.name]==='전사'?.72:1;
+let frontGuards=frontlineUnits().filter(x=>combatClass[x.u.name]==='전사'),guardAura=guardable&&frontGuards.length?Math.min(.24,frontGuards.length*.06+(frontGuards.some(x=>x.u.name==='아델')?.08:0)):0;
+if(u.name==='아델')mit*=.72;if(!guardable)mit=Math.max(mit,.88);mit*=1-guardAura;let dmg=Math.max(1,Math.round(amount*mit));u.hp-=dmg;u.hitUntil=Date.now()+320;impact(dmg>=18?'heavy':'light','enemy');$('msg').textContent='💥 '+source+' · '+u.name+' -'+dmg+' HP'+(guardAura>0?' · 가드 '+Math.round(guardAura*100)+'%':'');
+if(u.hp<=0){let dead=units[hit.i];units[hit.i]=null;onAllyDefeated(dead)}render();return true}
 let specialAttackLock=false,moveSelected=-1,touchMoved=false;
 function clearDanger(){document.querySelectorAll('.slot').forEach(x=>x.classList.remove('dangerTarget'))}
 function telegraphRows(rows,label,cb){if(specialAttackLock)return;specialAttackLock=true;clearDanger();rows.forEach(r=>{for(let i=(r-1)*4;i<r*4;i++){let el=document.querySelector('.slot[data-idx="'+i+'"]');if(el)el.classList.add('dangerTarget')}});let host=document.querySelector('.battle')||document.body,t=document.createElement('div');t.className='enemyTelegraph';t.textContent='⚠ '+label;host.appendChild(t);haptic([18,35,18]);setTimeout(()=>{clearDanger();t.remove();cb();specialAttackLock=false},620)}
