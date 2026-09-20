@@ -58,6 +58,19 @@ jobs:
         run: python3 scripts/check_stability_closeout.py
       - name: Automated battle play stress matrix
         run: python3 scripts/check_auto_play_stress.py
+      - name: Check executable battle core boundary
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          h=Path('app/src/main/assets/index.html').read_text(encoding='utf-8')
+          assert 'function runBattleStep()' in h
+          loop=h[h.index('function startLoop()'):h.index("$('enter').onclick")]
+          assert 'runBattleStep()' in loop
+          assert 'waveTime+=1.1*speed' not in loop
+          assert 'animateCombatVolley()' not in loop
+          print('PASS - scheduler delegates one battle simulation step')
+          PY
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
