@@ -341,6 +341,7 @@ function prepareExclusiveBattleModal(){resetBattlePointerState();paused=true;$('
 
 function validateExclusiveModalState(){let nodes=[...document.querySelectorAll('.pauseOverlay,.result#mergeGroupChoice,.result#mergeChoice,.result#relicClassChoice,.result#relicChoice')];if(nodes.length>1){console.error('LG_DUPLICATE_BATTLE_MODAL',nodes.map(x=>x.id||x.className));nodes.slice(1).forEach(x=>x.remove());return false}return true}
 function recoverOrphanPause(){if(currentScreen!=='battle'||!running||!paused)return false;if(activeBattleModal())return false;paused=false;$('pause').textContent='Ⅱ';$('msg').textContent='▶ 전투 상태 자동 복구';if(running&&!timer)startLoop();toast('전투 정지 상태를 자동으로 복구했습니다.');return true}
+function recoverFrozenBattleState(){if(currentScreen!=='battle'||!running||activeBattleModal())return false;let repaired=false;if(paused){paused=false;$('pause').textContent='Ⅱ';repaired=true}if(!timer){startLoop();repaired=true}if(repaired){resetBattlePointerState();specialAttackLock=false;document.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'));lastBattleTickAt=Date.now();console.warn('LG_BATTLE_STATE_RECOVERED',battleStabilitySnapshot())}return repaired}
 
 function installChoiceBackLock(node,message){node._onBack=()=>toast(message||'선택을 완료해야 전투를 계속할 수 있습니다.')}
 
@@ -428,7 +429,7 @@ function breachDamage(amount,source='적 돌파'){let targets=frontlineUnits();i
 let guards=targets.filter(x=>combatClass[x.u.name]==='전사'),guarded=guards.length&&Math.random()<.62,hit=guarded?guards[Math.floor(Math.random()*guards.length)]:targets[Math.floor(Math.random()*targets.length)];if(guarded)showTaunt(hit.i,hit.u.name);highlightBreachLane(hit.i);damageUnitAt(hit,amount,source,true);updateCollapseState()}
 let dragFrom=-1;
 function resetBattlePointerState(){dragFrom=-1;moveSelected=-1;touchMoved=false;document.querySelectorAll('#grid .slot').forEach(x=>{clearTimeout(x._hold);try{if(x.hasPointerCapture&&x._pointerId!=null&&x.hasPointerCapture(x._pointerId))x.releasePointerCapture(x._pointerId)}catch(_){ }x._pointerId=null;x.classList.remove('dragging','dragover','selectedMove')})}
-window.addEventListener('pointerup',()=>{if(currentScreen==='battle'&&dragFrom>=0)resetBattlePointerState()},{passive:true});
+window.addEventListener('pointerup',e=>{if(currentScreen!=='battle'||dragFrom<0)return;let from=dragFrom,el=document.elementFromPoint(e.clientX,e.clientY)?.closest?.('.slot');if(touchMoved&&el){let to=+el.dataset.idx;if(from>=0&&to!==from)swapFormation(from,to)}resetBattlePointerState()},{passive:true});
 window.addEventListener('pointercancel',()=>{if(currentScreen==='battle')resetBattlePointerState()},{passive:true});
 let appBackgroundAt=0,appAutoPaused=false;
 function shiftBattleDeadlines(delta){
@@ -624,7 +625,7 @@ function onAllyDefeated(unit){moveSelected=-1;dragFrom=-1;allyDeathFeedback();if
 function enemySkin(){beginWave()}
 let battleLoopGeneration=0;
 function stopBattleWatchdog(){if(battleWatchdogTimer){clearInterval(battleWatchdogTimer);battleWatchdogTimer=null}}
-function installBattleWatchdog(){stopBattleWatchdog();battleWatchdogTimer=setInterval(()=>{if(currentScreen!=='battle'||!running||paused||activeBattleModal())return;let now=Date.now();if(lastBattleTickAt&&now-lastBattleTickAt>Math.max(5200,3200/speed)){console.error('LG_BATTLE_TICK_STALL',{age:now-lastBattleTickAt,wave,speed,session:battleSessionId,ticks:battleTickCount});document.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'));resetBattlePointerState();specialAttackLock=false;lastBattleTickAt=now;startLoop()}},900)}
+function installBattleWatchdog(){stopBattleWatchdog();battleWatchdogTimer=setInterval(()=>{if(currentScreen!=='battle'||!running||activeBattleModal())return;if(paused){recoverFrozenBattleState();return;}let now=Date.now();if(lastBattleTickAt&&now-lastBattleTickAt>Math.max(5200,3200/speed)){console.error('LG_BATTLE_TICK_STALL',{age:now-lastBattleTickAt,wave,speed,session:battleSessionId,ticks:battleTickCount});document.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'));resetBattlePointerState();specialAttackLock=false;lastBattleTickAt=now;startLoop()}},900)}
 function stopBattleLoop(){battleLoopGeneration++;if(timer){clearInterval(timer);timer=null}}
 function startLoop(){stopBattleLoop();running=true;lastBattleTickAt=Date.now();let gen=battleLoopGeneration,intervalMs=1100;timer=setInterval(()=>{if(gen!==battleLoopGeneration)return;if(!running)return;lastBattleTickAt=Date.now();battleTickCount++;try{validateBattleState(true);validateBattleSession();validateAppLifecycle();validateBattleLoop();validateResultState();if(paused){validateExclusiveModalState();recoverOrphanPause();if(paused)return;}
 waveTime+=1.1*speed;let target=swarmTarget(),spawn=Math.max(2,Math.ceil((target-enemyCount)*.52));enemyCount=Math.min(target,enemyCount+spawn);
