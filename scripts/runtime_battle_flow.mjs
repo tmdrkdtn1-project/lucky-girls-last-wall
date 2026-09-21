@@ -74,6 +74,15 @@ await page.waitForTimeout(2400);
 let speedEnd=await guarded('snapshot-after-speed-stress',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
 assert.equal(speedEnd.running,true); assert.equal(speedEnd.timerAlive,true); assert.ok(speedEnd.tick>stressEnd.tick);
 // Extended idle soak: exercise battle/VFX/render paths without user input.
+// Force Ruby's signature VFX repeatedly before the autonomous soak. This is the exact path that previously froze Chromium.
+mark('ruby-signature-stress:start');
+for(let i=0;i<24;i++){
+  await guarded('ruby-signature-step-'+i,()=>page.evaluate(()=>__LG_TEST__.step()),5000);
+  if(i%4===3) await page.waitForTimeout(180);
+}
+let rubyStress=await guarded('ruby-signature-stress-snapshot',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+assert.equal(rubyStress.running,true); assert.equal(rubyStress.timerAlive,true); assert.ok(rubyStress.transientFx<=72);
+mark('ruby-signature-stress:end');
 mark('idle-soak:start');
 let soak0=await guarded('idle-soak-before',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
 let soakPrev=soak0,soakTicks=[soak0.tick],soakSeries=[{sec:0,...soak0}];
