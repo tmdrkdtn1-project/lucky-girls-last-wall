@@ -101,6 +101,9 @@ jobs:
         run: |
           echo "Last Chromium runtime checkpoint:"
           cat /tmp/lg-runtime-state.json 2>/dev/null || cat /tmp/lg-runtime-marker.txt 2>/dev/null || echo "No checkpoint recorded"
+          if [ -f /tmp/lg-runtime-state.json ]; then
+            echo "LG_RUNTIME_STATE=$(base64 -w0 /tmp/lg-runtime-state.json)"
+          fi
 
       - name: Upload runtime diagnostics
         if: failure()
