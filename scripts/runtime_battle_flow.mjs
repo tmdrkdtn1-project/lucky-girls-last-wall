@@ -159,6 +159,24 @@ for(const hero of skillMatrix){
 assert.equal(matrixCases,100,'20 heroes x 5 star states');
 assert.equal(unlockedChecks,180,'expected repeated unlocked-skill executions across star states');
 mark('skill-matrix:ok');
+// Execute every unlocked skill in every current-star context deterministically.
+let executedSkillCases=0;
+for(const hero of skillMatrix){
+  for(const c of hero.cases){
+    for(const sk of c.skills){
+      const label='skill-exec-'+hero.i+'-'+c.star+'-'+sk.s;
+      let r=await guarded(label,()=>page.evaluate(([i,star,n])=>__LG_TEST__.skillCase(i,star,n),[hero.i,c.star,sk.name]),5000);
+      assert.equal(r.name,hero.name,label+' hero');
+      assert.equal(r.star,c.star,label+' star');
+      assert.ok(Number.isFinite(r.power)&&r.power>=0,label+' finite power');
+      assert.equal(r.cooldown,true,label+' cooldown');
+      executedSkillCases++;
+      if(executedSkillCases%20===0) await page.waitForTimeout(80);
+    }
+  }
+}
+assert.equal(executedSkillCases,180,'all star-context skill executions');
+mark('skill-execution-180:ok');
 // Diagnostic persistence must survive a reload, matching the real-device freeze/restart workflow.
 let savedDiag=await guarded('diag-saved-before-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
 assert.ok(savedDiag.length>0);
