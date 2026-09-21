@@ -111,6 +111,31 @@ console.log('[SOAK_DOM]',JSON.stringify({start:soak0.domNodes,end:soak1.domNodes
 if(!(soak1.domNodes-soak0.domNodes<80)){publishState({phase:'dom-growth',start:soak0,end:soak1});throw new Error('IDLE_SOAK_DOM_GROWTH '+(soak1.domNodes-soak0.domNodes))}
 if(!(soak1.transientFx<=72)){publishState({phase:'fx-overflow',start:soak0,end:soak1});throw new Error('IDLE_SOAK_FX_OVERFLOW '+soak1.transientFx)}
 mark('idle-soak:end');
+// Boss milestone cross-validation: real defeat branch, relic tiers 1/2/3, then final clear.
+for(const [bossWave,nextWave,tier] of [[5,6,1],[10,11,2],[15,16,3]]){
+  mark('boss-boundary-'+bossWave+':start');
+  await guarded('boss-boundary-'+bossWave+':setup',()=>page.evaluate(w=>__LG_TEST__.bossBoundary(w),bossWave),5000);
+  await guarded('boss-boundary-'+bossWave+':step',()=>page.evaluate(()=>__LG_TEST__.step()),5000);
+  let b=await guarded('boss-boundary-'+bossWave+':modal',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+  assert.equal(b.modal,'relicChoice','Wave '+bossWave+' must open tier '+tier+' relic choice');
+  await guarded('boss-boundary-'+bossWave+':pick',()=>page.evaluate(()=>{let x=document.querySelector('#relicChoice .relicpick');if(!x)throw new Error('relic pick missing');x.click();return __LG_TEST__.snapshot()}),5000);
+  await page.waitForTimeout(250);
+  b=await guarded('boss-boundary-'+bossWave+':after',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+  if(b.modal==='relicClassChoice'){
+    await guarded('boss-boundary-'+bossWave+':class-pick',()=>page.evaluate(()=>{let x=document.querySelector('#relicClassChoice button');if(!x)throw new Error('class relic pick missing');x.click();return __LG_TEST__.snapshot()}),5000);
+    await page.waitForTimeout(250);b=await page.evaluate(()=>__LG_TEST__.snapshot());
+  }
+  assert.equal(b.wave,nextWave,'Wave '+bossWave+' relic completion must advance');
+  assert.equal(b.paused,false,'Wave '+bossWave+' must resume after relic');
+  mark('boss-boundary-'+bossWave+':ok');
+}
+mark('boss-boundary-20:start');
+await guarded('boss-boundary-20:setup',()=>page.evaluate(()=>__LG_TEST__.bossBoundary(20)),5000);
+await guarded('boss-boundary-20:step',()=>page.evaluate(()=>__LG_TEST__.step()),5000);
+let b20=await guarded('boss-boundary-20:after',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+assert.equal(b20.running,false,'Wave 20 boss defeat must stop battle');
+assert.notEqual(b20.modal,'relicChoice','Wave 20 must not open relic choice');
+mark('boss-boundary-20:ok');
 // Post-soak recovery: interactions must still respond after one minute of autonomous combat.
 let postSpeed=await guarded('post-soak-speed',()=>page.evaluate(()=>__LG_TEST__.speed()),5000);
 assert.ok(postSpeed===1||postSpeed===2);
