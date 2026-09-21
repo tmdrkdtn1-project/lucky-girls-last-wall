@@ -13,7 +13,7 @@ let lastMarker='boot';
 const stateFile='/tmp/lg-runtime-state.json';
 const mark=name=>{lastMarker=name;try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString()}))}catch(_){}console.log('[RUNTIME]',new Date().toISOString(),name)};
 const publishState=(extra={})=>{try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString(),...extra}))}catch(_){}};
-process.on('exit',code=>{if(code!==0)publishState({exitCode:code})});
+process.on('exit',code=>{if(code!==0)publishState({exitCode:code,lastMarker})});
 process.on('uncaughtException',err=>{publishState({fatal:String(err&&err.stack||err)});console.error(err);process.exit(1)});
 process.on('unhandledRejection',err=>{publishState({fatal:String(err&&err.stack||err)});console.error(err);process.exit(1)});
 const guarded=async(name,fn,ms=15000)=>{
@@ -23,7 +23,7 @@ const guarded=async(name,fn,ms=15000)=>{
   const value=await Promise.race([fn(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('TIMEOUT '+name)),ms)})]);
   mark(name+':ok'); return value;
  }catch(err){
-  publishState({guard:name,fatal:String(err&&err.stack||err)});
+  publishState({phase:'guard-failure',guard:name,lastMarker,fatal:String(err&&err.stack||err)});
   throw err;
  }finally{clearTimeout(timer)}
 };
