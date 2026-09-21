@@ -98,11 +98,21 @@ jobs:
           node scripts/runtime_battle_flow.mjs
       - name: Show runtime checkpoint on failure
         if: failure()
+        shell: bash
         run: |
           echo "Last Chromium runtime checkpoint:"
           cat /tmp/lg-runtime-state.json 2>/dev/null || cat /tmp/lg-runtime-marker.txt 2>/dev/null || echo "No checkpoint recorded"
+          {
+            echo "## Chromium runtime failure"
+            echo
+            echo '~~~json'
+            cat /tmp/lg-runtime-state.json 2>/dev/null || echo '{"error":"No checkpoint recorded"}'
+            echo
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
           if [ -f /tmp/lg-runtime-state.json ]; then
-            echo "LG_RUNTIME_STATE=$(base64 -w0 /tmp/lg-runtime-state.json)"
+            STATE="$(cat /tmp/lg-runtime-state.json)"
+            printf '::error title=LG_RUNTIME_DIAGNOSTIC::%s\n' "$STATE"
           fi
 
       - name: Upload runtime diagnostics
