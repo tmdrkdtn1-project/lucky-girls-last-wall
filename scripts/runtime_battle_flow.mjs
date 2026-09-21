@@ -9,10 +9,19 @@ page.on('pageerror',e=>{pageErrors.push(String(e));publishState({phase:'pageerro
 page.on('console',m=>{if(m.type()==='error'||m.type()==='warning'){consoleErrors.push(m.type()+': '+m.text());if(consoleErrors.length>24)consoleErrors.shift()}});
 page.on('crash',()=>publishState({phase:'page-crash',pageErrors:pageErrors.slice(-8),consoleErrors:consoleErrors.slice(-8)}));
 browser.on('disconnected',()=>publishState({phase:'browser-disconnected',pageErrors:pageErrors.slice(-8),consoleErrors:consoleErrors.slice(-8)}));
-let lastMarker='boot';
+let lastMarker='boot',lastBattleDiag=null,battleDiagTail=[];
 const stateFile='/tmp/lg-runtime-state.json';
+await page.exposeFunction('__lgNodeDiag',entry=>{
+  lastBattleDiag=entry;
+  battleDiagTail.push(entry);
+  if(battleDiagTail.length>24)battleDiagTail.shift();
+  try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString(),phase:'browser-live-diag',lastBattleDiag,battleDiagTail}))}catch(_){}
+});
+await page.addInitScript(()=>{
+  window.__LG_NODE_DIAG__=entry=>window.__lgNodeDiag(entry).catch(()=>{});
+});
 const mark=name=>{lastMarker=name;try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString()}))}catch(_){}console.log('[RUNTIME]',new Date().toISOString(),name)};
-const publishState=(extra={})=>{try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString(),...extra}))}catch(_){}};
+const publishState=(extra={})=>{try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString(),lastBattleDiag,battleDiagTail,...extra}))}catch(_){}};
 process.on('exit',code=>{if(code!==0)publishState({exitCode:code,lastMarker})});
 process.on('uncaughtException',err=>{publishState({fatal:String(err&&err.stack||err)});console.error(err);process.exit(1)});
 process.on('unhandledRejection',err=>{publishState({fatal:String(err&&err.stack||err)});console.error(err);process.exit(1)});
