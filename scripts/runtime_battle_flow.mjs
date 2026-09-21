@@ -68,6 +68,9 @@ let soak1=soakPrev;
 let deltas=soakTicks.slice(1).map((v,i)=>v-soakTicks[i]);
 console.log('[SOAK_TICKS]',JSON.stringify({ticks:soakTicks,deltas}));
 assert.ok(deltas.every(d=>d>=3),'battle tick cadence degraded during idle soak');
+console.log('[SOAK_DOM]',JSON.stringify({start:soak0.domNodes,end:soak1.domNodes,fxStart:soak0.transientFx,fxEnd:soak1.transientFx}));
+assert.ok(soak1.domNodes-soak0.domNodes<80,'battle DOM grew unexpectedly during idle soak');
+assert.ok(soak1.transientFx<=72,'transient battle FX exceeded guard');
 mark('idle-soak:end');
 // Post-soak recovery: interactions must still respond after one minute of autonomous combat.
 let postSpeed=await guarded('post-soak-speed',()=>page.evaluate(()=>__LG_TEST__.speed()),5000);
