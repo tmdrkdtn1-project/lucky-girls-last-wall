@@ -127,15 +127,16 @@ jobs:
             STATE='{"error":"missing runtime state"}'
           fi
           echo "RUNTIME_DIAGNOSTIC_JSON=$STATE"
+          export STATE_FOR_ISSUE="$STATE"
           BODY="$(python3 - <<'PY'
-import json, os
+import os
 state=os.environ.get('STATE_FOR_ISSUE','{}')
 run=os.environ.get('GITHUB_RUN_ID','')
 sha=os.environ.get('GITHUB_SHA','')
 print("Automated Chromium runtime failure diagnostic.\n\nRun: "+run+"\nCommit: "+sha+"\n\n~~~json\n"+state+"\n~~~")
 PY
 )"
-          STATE_FOR_ISSUE="$STATE" gh issue create --title "Runtime diagnostic run ${GITHUB_RUN_NUMBER}" --body "$BODY" --label "runtime-diagnostic" 2>/dev/null ||           STATE_FOR_ISSUE="$STATE" gh issue create --title "Runtime diagnostic run ${GITHUB_RUN_NUMBER}" --body "$BODY"
+          gh issue create --title "Runtime diagnostic run ${GITHUB_RUN_NUMBER}" --body "$BODY" --label "runtime-diagnostic" 2>/dev/null ||           gh issue create --title "Runtime diagnostic run ${GITHUB_RUN_NUMBER}" --body "$BODY"
 
       - name: Upload runtime diagnostics
         if: failure()
