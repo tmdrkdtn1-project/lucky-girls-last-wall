@@ -188,8 +188,13 @@ for(let i=0;i<160;i++){
  if(!q.busy&&q.pending===0&&!q.cutin){drained=true;break}
 }
 assert.equal(drained,true,'20-hero serialized skill queue must fully drain');
+const serialFinal=await page.evaluate(()=>__LG_TEST__.skillQueue());
 assert.ok(maxPending>=18,'stress must build a real multi-skill backlog');
 assert.ok(maxCutins<=1,'maximum concurrent cutscene must be one');
+assert.equal(serialFinal.maxConcurrent,1,'maximum concurrent skill execution must be one');
+assert.equal(serialFinal.started,20,'all 20 queued skills must start exactly once');
+assert.equal(serialFinal.finished,20,'all 20 queued skills must finish exactly once');
+assert.equal(serialFinal.active,0,'no skill may remain active after drain');
 mark('skill-serial-20:ok');
 // Diagnostic persistence must survive a reload, matching the real-device freeze/restart workflow.
 let savedDiag=await guarded('diag-saved-before-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
