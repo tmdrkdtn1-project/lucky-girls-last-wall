@@ -5,7 +5,10 @@ import assert from 'node:assert/strict';
 const browser=await chromium.launch({headless:true});
 const page=await browser.newPage({viewport:{width:412,height:915},isMobile:true,hasTouch:true});
 const pageErrors=[]; page.on('pageerror',e=>pageErrors.push(String(e)));
-const mark=(name)=>console.log('[RUNTIME]',new Date().toISOString(),name);
+let lastMarker='boot';
+const stateFile='/tmp/lg-runtime-state.json';
+const mark=name=>{lastMarker=name;try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString()}))}catch(_){}console.log('[RUNTIME]',new Date().toISOString(),name)};
+process.on('exit',code=>{if(code!==0){try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,exitCode:code,time:new Date().toISOString()}))}catch(_){}}});
 const guarded=async(name,fn,ms=15000)=>{
  mark(name+':start');
  let timer;
