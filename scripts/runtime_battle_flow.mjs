@@ -57,6 +57,12 @@ await page.waitForTimeout(60000);
 let soak1=await guarded('idle-soak-after',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
 assert.equal(soak1.running,true); assert.equal(soak1.timerAlive,true); assert.ok(soak1.tick>soak0.tick);
 mark('idle-soak:end');
+// Post-soak recovery: interactions must still respond after one minute of autonomous combat.
+let postSpeed=await guarded('post-soak-speed',()=>page.evaluate(()=>__LG_TEST__.speed()),5000);
+assert.ok(postSpeed===1||postSpeed===2);
+await guarded('post-soak-summon',()=>page.evaluate(()=>__LG_TEST__.summon()),5000);
+let postSoak=await guarded('post-soak-snapshot',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+assert.equal(postSoak.running,true); assert.equal(postSoak.timerAlive,true);
 assert.deepEqual(pageErrors,[]);
 console.log('PASS - Chromium battle prep/start/summon cooldown/swap/speed/tick + rapid-input stress');
 await browser.close();
