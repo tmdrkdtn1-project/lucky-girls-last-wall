@@ -96,6 +96,12 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID' EXIT
           node scripts/runtime_battle_flow.mjs
+      - name: Show runtime checkpoint on failure
+        if: failure()
+        run: |
+          echo "Last Chromium runtime checkpoint:"
+          cat /tmp/lg-runtime-marker.txt 2>/dev/null || echo "No checkpoint recorded"
+
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
