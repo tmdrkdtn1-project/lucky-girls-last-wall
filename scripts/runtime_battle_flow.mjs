@@ -18,6 +18,9 @@ const guarded=async(name,fn,ms=15000)=>{
  try{
   const value=await Promise.race([fn(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('TIMEOUT '+name)),ms)})]);
   mark(name+':ok'); return value;
+ }catch(err){
+  publishState({guard:name,fatal:String(err&&err.stack||err)});
+  throw err;
  }finally{clearTimeout(timer)}
 };
 await guarded('page.goto',()=>page.goto('http://127.0.0.1:8765/index.html',{waitUntil:'domcontentloaded'}));
