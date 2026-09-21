@@ -179,6 +179,7 @@ assert.equal(executedSkillCases,180,'all star-context skill executions');
 mark('skill-execution-180:ok');
 const preStressGen=await page.evaluate(()=>__LG_TEST__.skillQueue().generation);
 const stress=await guarded('skill-serial-20-start',()=>page.evaluate(()=>__LG_TEST__.skillStressStart()),5000);
+let cutinPauseChecked=false;
 assert.equal(stress.accepted.length,20,'all 20 heroes accepted into serialized skill stress');
 const stressGen=await page.evaluate(()=>__LG_TEST__.skillQueue().generation);
 assert.equal(stressGen,preStressGen+1,'skill stress must start in a fresh scheduler generation');
@@ -188,9 +189,11 @@ for(let i=0;i<160;i++){
  const q=await page.evaluate(()=>__LG_TEST__.skillQueue());
  maxCutins=Math.max(maxCutins,q.cutins);maxPending=Math.max(maxPending,q.pending);
  assert.ok(q.cutins<=1,'ultimate cutscenes must never overlap');
+ if(q.cutin&&!cutinPauseChecked){const t0=await page.evaluate(()=>__LG_TEST__.battleTicks());await page.waitForTimeout(500);const t1=await page.evaluate(()=>__LG_TEST__.battleTicks());assert.equal(t1,t0,'battle ticks must remain frozen throughout an ultimate cutscene');cutinPauseChecked=true}
  if(!q.busy&&q.pending===0&&!q.cutin){drained=true;break}
 }
 assert.equal(drained,true,'20-hero serialized skill queue must fully drain');
+assert.equal(cutinPauseChecked,true,'stress must observe and verify at least one ultimate cutscene pause');
 const serialFinal=await page.evaluate(()=>__LG_TEST__.skillQueue());
 assert.ok(maxPending>=18,'stress must build a real multi-skill backlog');
 assert.ok(maxCutins<=1,'maximum concurrent cutscene must be one');
