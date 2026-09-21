@@ -504,12 +504,11 @@ let battleRenderQueued=false,lastFastPointerAt=0;
 function scheduleBattleRender(){if(battleRenderQueued)return;battleRenderQueued=true;requestAnimationFrame(()=>{battleRenderQueued=false;render()})}
 function bindFastAction(el,fn){if(!el)return;el.onpointerdown=e=>{if(e.button!=null&&e.button!==0)return;lastFastPointerAt=performance.now();e.preventDefault();fn(e)};el.onclick=e=>{if(performance.now()-lastFastPointerAt<420){e.preventDefault();return}fn(e)}}
 function ensureGridSlots(){let g=$('grid');if(!g)return[];if(g._slots&&g._slots.length===16)return g._slots;resetBattlePointerState();g.innerHTML='';g._slots=[];for(let i=0;i<16;i++){let d=document.createElement('div'),row=unitRow(i);d.className='slot row'+row+(i<4?' frontline':'');d.dataset.idx=i;d.onclick=()=>{if(touchMoved){touchMoved=false;return}if(moveSelected>=0&&moveSelected!==i){swapFormation(moveSelected,i);return}if(dragFrom<0&&units[i])unitInfo(i)};bindSlotDrag(d,i);g.appendChild(d);g._slots.push(d)}return g._slots}
-function mergeReadyAt(i,u){if(!u||u.lv>=5)return false;let cls=combatClass[u.name],count=0;for(let j=0;j<units.length;j++){let x=units[j];if(x&&x.lv===u.lv&&combatClass[x.name]===cls&&++count>=3)return true}return false}
 function renderSlot(i,d){let u=units[i];d.className='slot row'+unitRow(i)+(i<4?' frontline':'');if(!u){if(d._sig!=='empty'){d.innerHTML='';d._sig='empty'}return}
 u=ensureUnitHp(u);let v=looks[u.name]||['#ddd','#777',u.icon],cp=costumeBook[u.costume||costumeKey(u.name)],hair=cp?cp.p[0]:v[0],body=cp?cp.p[1]:v[1],hp=Math.max(0,Math.round(u.hp/u.maxHp*100)),sig=[u.name,u.lv,u.costume||'',hair,body].join('|');
 if(d._sig!==sig){d.innerHTML='<div class="chibi"><div class="hair" style="background:'+hair+'"></div><div class="head"></div><div class="body" style="background:'+body+'"></div><div class="weapon">'+v[2]+'</div><div class="star">'+('★'.repeat(Math.min(5,u.lv)))+'</div></div><div class="unithp"><i></i></div>';d._sig=sig}
 let bar=d.querySelector('.unithp i');if(bar)bar.style.width=hp+'%';
-if(mergeReadyAt(i,u))d.classList.add('ready');
+if(u.lv<5&&units.filter(x=>x&&x.lv===u.lv&&combatClass[x.name]===combatClass[u.name]).length>=3)d.classList.add('ready');
 if(u.hitUntil>Date.now()){d.classList.add('unitHit');d.classList.add(classHitClass(u))}
 if(u.healUntil>Date.now())d.classList.add('healGlow');
 if(i<4&&combatClass[u.name]==='전사')d.classList.add('guardGlow')
