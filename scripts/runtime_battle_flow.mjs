@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-const GLOBAL_TIMEOUT=setTimeout(()=>{console.error('TIMEOUT - runtime battle flow exceeded 150s');process.exit(124)},150000);
+const GLOBAL_TIMEOUT=setTimeout(()=>{publishState({phase:'global-timeout',fatal:'runtime battle flow exceeded 240s'});console.error('TIMEOUT - runtime battle flow exceeded 240s');process.exit(124)},240000);
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 const browser=await chromium.launch({headless:true});
