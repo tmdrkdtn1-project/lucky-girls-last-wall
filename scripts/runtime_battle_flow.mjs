@@ -7,6 +7,8 @@ const page=await browser.newPage({viewport:{width:412,height:915},isMobile:true,
 const pageErrors=[],consoleErrors=[];
 page.on('pageerror',e=>{pageErrors.push(String(e));publishState({phase:'pageerror',pageErrors:pageErrors.slice(-8),consoleErrors:consoleErrors.slice(-8)})});
 page.on('console',m=>{if(m.type()==='error'||m.type()==='warning'){consoleErrors.push(m.type()+': '+m.text());if(consoleErrors.length>24)consoleErrors.shift()}});
+page.on('crash',()=>publishState({phase:'page-crash',pageErrors:pageErrors.slice(-8),consoleErrors:consoleErrors.slice(-8)}));
+browser.on('disconnected',()=>publishState({phase:'browser-disconnected',pageErrors:pageErrors.slice(-8),consoleErrors:consoleErrors.slice(-8)}));
 let lastMarker='boot';
 const stateFile='/tmp/lg-runtime-state.json';
 const mark=name=>{lastMarker=name;try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString()}))}catch(_){}console.log('[RUNTIME]',new Date().toISOString(),name)};
