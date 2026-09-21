@@ -1,4 +1,4 @@
-const GLOBAL_TIMEOUT=setTimeout(()=>{console.error('TIMEOUT - runtime battle flow exceeded 90s');process.exit(124)},90000);
+const GLOBAL_TIMEOUT=setTimeout(()=>{console.error('TIMEOUT - runtime battle flow exceeded 150s');process.exit(124)},150000);
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 const browser=await chromium.launch({headless:true});
@@ -53,7 +53,7 @@ assert.equal(speedEnd.running,true); assert.equal(speedEnd.timerAlive,true); ass
 // Extended idle soak: exercise battle/VFX/render paths without user input.
 mark('idle-soak:start');
 let soak0=await guarded('idle-soak-before',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
-await page.waitForTimeout(12000);
+await page.waitForTimeout(60000);
 let soak1=await guarded('idle-soak-after',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
 assert.equal(soak1.running,true); assert.equal(soak1.timerAlive,true); assert.ok(soak1.tick>soak0.tick);
 mark('idle-soak:end');
