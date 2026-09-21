@@ -143,6 +143,22 @@ assert.equal(b20.running,false,'Wave 20 boss defeat must stop battle');
 assert.notEqual(b20.modal,'relicChoice','Wave 20 must not open relic choice');
 mark('boss-boundary-20:ok');
 // Wave 20 intentionally stops the battle. Validate post-soak interaction recovery before the milestone suite instead of after final clear.
+// Validate the complete 20-hero x 1..5-star unlock matrix before skill execution stress.
+let skillMatrix=await guarded('skill-matrix',()=>page.evaluate(()=>__LG_TEST__.skillMatrix()),5000);
+assert.equal(skillMatrix.length,20,'exactly 20 heroes required');
+let matrixCases=0,unlockedChecks=0;
+for(const hero of skillMatrix){
+  assert.equal(hero.cases.length,5,hero.name+' must cover stars 1..5');
+  for(const c of hero.cases){
+    matrixCases++;
+    const expected=c.star<3?1:c.star<5?2:3;
+    assert.equal(c.skills.length,expected,hero.name+' '+c.star+'★ unlocked skill count');
+    for(const sk of c.skills){assert.ok(sk.s<=c.star,hero.name+' '+c.star+'★ illegal skill '+sk.name);unlockedChecks++}
+  }
+}
+assert.equal(matrixCases,100,'20 heroes x 5 star states');
+assert.equal(unlockedChecks,180,'expected repeated unlocked-skill executions across star states');
+mark('skill-matrix:ok');
 // Diagnostic persistence must survive a reload, matching the real-device freeze/restart workflow.
 let savedDiag=await guarded('diag-saved-before-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
 assert.ok(savedDiag.length>0);
