@@ -67,16 +67,19 @@ let soakPrev=soak0,soakTicks=[soak0.tick];
 for(let sec=10;sec<=60;sec+=10){
   await page.waitForTimeout(10000);
   let snap=await guarded('idle-soak-'+sec+'s',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
-  assert.equal(snap.running,true); assert.equal(snap.timerAlive,true); assert.ok(snap.tick>soakPrev.tick);
+  if(!(snap.running===true&&snap.timerAlive===true&&snap.tick>soakPrev.tick)){
+    publishState({phase:'idle-soak',sec,previous:soakPrev,current:snap});
+    throw new Error('IDLE_SOAK_LIVENESS '+sec+'s');
+  }
   soakTicks.push(snap.tick); soakPrev=snap;
 }
 let soak1=soakPrev;
 let deltas=soakTicks.slice(1).map((v,i)=>v-soakTicks[i]);
 console.log('[SOAK_TICKS]',JSON.stringify({ticks:soakTicks,deltas}));
-assert.ok(deltas.every(d=>d>=3),'battle tick cadence degraded during idle soak');
+if(!deltas.every(d=>d>=3)){publishState({phase:'idle-cadence',ticks:soakTicks,deltas});throw new Error('IDLE_SOAK_CADENCE '+JSON.stringify(deltas))}
 console.log('[SOAK_DOM]',JSON.stringify({start:soak0.domNodes,end:soak1.domNodes,fxStart:soak0.transientFx,fxEnd:soak1.transientFx}));
-assert.ok(soak1.domNodes-soak0.domNodes<80,'battle DOM grew unexpectedly during idle soak');
-assert.ok(soak1.transientFx<=72,'transient battle FX exceeded guard');
+if(!(soak1.domNodes-soak0.domNodes<80)){publishState({phase:'dom-growth',start:soak0,end:soak1});throw new Error('IDLE_SOAK_DOM_GROWTH '+(soak1.domNodes-soak0.domNodes))}
+if(!(soak1.transientFx<=72)){publishState({phase:'fx-overflow',start:soak0,end:soak1});throw new Error('IDLE_SOAK_FX_OVERFLOW '+soak1.transientFx)}
 mark('idle-soak:end');
 // Post-soak recovery: interactions must still respond after one minute of autonomous combat.
 let postSpeed=await guarded('post-soak-speed',()=>page.evaluate(()=>__LG_TEST__.speed()),5000);
