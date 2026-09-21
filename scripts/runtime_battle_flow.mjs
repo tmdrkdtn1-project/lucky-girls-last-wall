@@ -111,6 +111,12 @@ console.log('[SOAK_DOM]',JSON.stringify({start:soak0.domNodes,end:soak1.domNodes
 if(!(soak1.domNodes-soak0.domNodes<80)){publishState({phase:'dom-growth',start:soak0,end:soak1});throw new Error('IDLE_SOAK_DOM_GROWTH '+(soak1.domNodes-soak0.domNodes))}
 if(!(soak1.transientFx<=72)){publishState({phase:'fx-overflow',start:soak0,end:soak1});throw new Error('IDLE_SOAK_FX_OVERFLOW '+soak1.transientFx)}
 mark('idle-soak:end');
+// Post-soak recovery must be checked while battle is still running, before the intentional Wave 20 stop.
+let postSpeed=await guarded('post-soak-speed',()=>page.evaluate(()=>__LG_TEST__.speed()),5000);
+assert.ok(postSpeed===1||postSpeed===2);
+await guarded('post-soak-summon',()=>page.evaluate(()=>__LG_TEST__.summon()),5000);
+let postSoak=await guarded('post-soak-snapshot',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+assert.equal(postSoak.running,true); assert.equal(postSoak.timerAlive,true);
 // Boss milestone cross-validation: real defeat branch, relic tiers 1/2/3, then final clear.
 for(const [bossWave,nextWave,tier] of [[5,6,1],[10,11,2],[15,16,3]]){
   mark('boss-boundary-'+bossWave+':start');
@@ -136,12 +142,7 @@ let b20=await guarded('boss-boundary-20:after',()=>page.evaluate(()=>__LG_TEST__
 assert.equal(b20.running,false,'Wave 20 boss defeat must stop battle');
 assert.notEqual(b20.modal,'relicChoice','Wave 20 must not open relic choice');
 mark('boss-boundary-20:ok');
-// Post-soak recovery: interactions must still respond after one minute of autonomous combat.
-let postSpeed=await guarded('post-soak-speed',()=>page.evaluate(()=>__LG_TEST__.speed()),5000);
-assert.ok(postSpeed===1||postSpeed===2);
-await guarded('post-soak-summon',()=>page.evaluate(()=>__LG_TEST__.summon()),5000);
-let postSoak=await guarded('post-soak-snapshot',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
-assert.equal(postSoak.running,true); assert.equal(postSoak.timerAlive,true);
+// Wave 20 intentionally stops the battle. Validate post-soak interaction recovery before the milestone suite instead of after final clear.
 // Diagnostic persistence must survive a reload, matching the real-device freeze/restart workflow.
 let savedDiag=await guarded('diag-saved-before-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
 assert.ok(savedDiag.length>0);
