@@ -63,7 +63,7 @@ assert.equal(speedEnd.running,true); assert.equal(speedEnd.timerAlive,true); ass
 // Extended idle soak: exercise battle/VFX/render paths without user input.
 mark('idle-soak:start');
 let soak0=await guarded('idle-soak-before',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
-let soakPrev=soak0,soakTicks=[soak0.tick];
+let soakPrev=soak0,soakTicks=[soak0.tick],soakSeries=[{sec:0,...soak0}];
 for(let sec=10;sec<=60;sec+=10){
   await page.waitForTimeout(10000);
   let snap=await guarded('idle-soak-'+sec+'s',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
@@ -71,11 +71,12 @@ for(let sec=10;sec<=60;sec+=10){
     publishState({phase:'idle-soak',sec,previous:soakPrev,current:snap});
     throw new Error('IDLE_SOAK_LIVENESS '+sec+'s');
   }
-  soakTicks.push(snap.tick); soakPrev=snap;
+  soakTicks.push(snap.tick); soakSeries.push({sec,...snap}); publishState({phase:'idle-soak-progress',sec,soakSeries}); soakPrev=snap;
 }
 let soak1=soakPrev;
 let deltas=soakTicks.slice(1).map((v,i)=>v-soakTicks[i]);
 console.log('[SOAK_TICKS]',JSON.stringify({ticks:soakTicks,deltas}));
+publishState({phase:'idle-soak-complete',soakSeries,deltas});
 if(!deltas.every(d=>d>=3)){publishState({phase:'idle-cadence',ticks:soakTicks,deltas});throw new Error('IDLE_SOAK_CADENCE '+JSON.stringify(deltas))}
 console.log('[SOAK_DOM]',JSON.stringify({start:soak0.domNodes,end:soak1.domNodes,fxStart:soak0.transientFx,fxEnd:soak1.transientFx}));
 if(!(soak1.domNodes-soak0.domNodes<80)){publishState({phase:'dom-growth',start:soak0,end:soak1});throw new Error('IDLE_SOAK_DOM_GROWTH '+(soak1.domNodes-soak0.domNodes))}
