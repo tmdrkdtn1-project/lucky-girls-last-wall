@@ -13,6 +13,8 @@ checks={
  "watchdog repairs stalled loop":"specialAttackLock=false;lastBattleTickAt=now;startLoop()" in html,
  "boss wave clears stale hitstop":"function beginWave()" in html and "document.querySelectorAll('.combatHitstop').forEach(x=>x.classList.remove('combatHitstop'));resetBattlePointerState()" in html,
  "hitstop cleanup independent":"setTimeout(()=>host.classList.remove('combatHitstop')" in html,
+ "signature vfx avoids forced style read":"getComputedStyle(n).fontSize" not in html,
+ "ruby ricochet uses session timeout":"if(u.name==='루비'){let ricochetCount=" in html and "battleTimeout(()=>{if(!running||paused||currentScreen!=='battle')return;showSignature" in html,
 }
 bad=[k for k,v in checks.items() if not v]
 for k,v in checks.items(): print(("PASS" if v else "FAIL")+" - "+k)
