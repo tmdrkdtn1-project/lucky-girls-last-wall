@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 const GLOBAL_TIMEOUT=setTimeout(()=>{console.error('TIMEOUT - runtime battle flow exceeded 150s');process.exit(124)},150000);
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
