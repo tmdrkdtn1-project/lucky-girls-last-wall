@@ -538,14 +538,14 @@ const signatureFx={
 '아델':{glyph:'▣',cls:'shield',color:'#d8dce8'},'니아':{glyph:'▲',cls:'dragon',color:'#c88cff'},'오로라':{glyph:'✦',cls:'star',color:'#9bdcff'},'이브':{glyph:'◷',cls:'clock',color:'#e5e0ff'}
 };
 function signaturePoint(t){return{x:t.x,y:t.y}}
-function showSignature(u,t,scale=1){let cfg=signatureFx[u.name]||{glyph:'✦',cls:'orb',color:'#fff'},n=addCombatNode('sigFx '+cfg.cls,t.x,t.y,720);n.textContent=cfg.glyph;n.style.color=cfg.color;n.style.fontSize=(parseFloat(getComputedStyle(n).fontSize||'24')*scale)+'px';return n}
+function showSignature(u,t,scale=1){let cfg=signatureFx[u.name]||{glyph:'✦',cls:'orb',color:'#fff'},n=addCombatNode('sigFx '+cfg.cls,t.x,t.y,720);n.textContent=cfg.glyph;n.style.color=cfg.color;n.style.setProperty('--sig-scale',String(Math.max(.5,Math.min(2,scale||1))));return n}
 function showSkillTierLabel(u,k){let host=$('field')||document.body,x=document.createElement('b');x.className='skillTierLabel t'+k.s;x.textContent=(k.s===1?'SKILL I':k.s===3?'SKILL II':'ULTIMATE')+' · '+u.name+' · '+k.n;host.appendChild(x);setTimeout(()=>x.remove(),720)}
 function tierFieldFx(u,k){let cfg=signatureFx[u.name]||{color:'#fff'},host=$('combatFxLayer')||$('field');if(k.s===1)return;
 if(k.s===3){let x=document.createElement('i');x.className='tierSweep';x.style.color=cfg.color;x.style.top='58%';host.appendChild(x);setTimeout(()=>x.remove(),620)}
 if(k.s===5){let x=document.createElement('i');x.className='tierField';x.style.color=cfg.color;host.appendChild(x);setTimeout(()=>x.remove(),900)}}
 function tierChainFx(u,k,t){let cfg=signatureFx[u.name]||{color:'#fff'},count=k.s===1?1:k.s===3?3:6;for(let q=0;q<count;q++)setTimeout(()=>{let p={x:t.x+(Math.random()*12-6),y:t.y+(Math.random()*8-4)},d=addCombatNode('skillChainDot',p.x,p.y,600);d.style.color=cfg.color},q*(k.s===5?55:85))}
 function tierHaptic(k){if(k.s===1)haptic([14]);else if(k.s===3)haptic([24,16,34]);else haptic([42,20,66,20,82])}
-function signatureSkillVisual(u,i,k,t){let cfg=signatureFx[u.name];if(!cfg)return;showSkillTierLabel(u,k);tierFieldFx(u,k);tierChainFx(u,k,t);tierHaptic(k);showSignature(u,t,k.s===5?1.65:k.s===3?1.25:1);
+function signatureSkillVisual(u,i,k,t){let cfg=signatureFx[u.name];if(!cfg)return;lgDiag('signature:tierLabel:start',{name:u.name,skill:k.n},true);showSkillTierLabel(u,k);lgDiag('signature:tierLabel:end',{name:u.name,skill:k.n},true);lgDiag('signature:field:start',{name:u.name,skill:k.n},true);tierFieldFx(u,k);lgDiag('signature:field:end',{name:u.name,skill:k.n},true);lgDiag('signature:chain:start',{name:u.name,skill:k.n},true);tierChainFx(u,k,t);lgDiag('signature:chain:end',{name:u.name,skill:k.n},true);tierHaptic(k);lgDiag('signature:base:start',{name:u.name,skill:k.n},true);showSignature(u,t,k.s===5?1.65:k.s===3?1.25:1);lgDiag('signature:base:end',{name:u.name,skill:k.n},true);
 if(u.name==='루비'){for(let q=0;q<k.s===5?8:k.s===3?4:2;q++)setTimeout(()=>showSignature(u,{x:t.x+q*4-5,y:t.y+(q%2?3:-2)},.8),q*70)}
 else if(u.name==='샤샤'){setTimeout(()=>{let x=showSignature(u,t,1.4);x.textContent='💣'},90)}
 else if(u.name==='레이나'){for(let q=-(k.s===5?3:k.s===3?2:1);q<=(k.s===5?3:k.s===3?2:1);q++)setTimeout(()=>showSignature(u,{x:t.x+q*4,y:t.y+Math.abs(q)*1.5},k.s===5?1.05:.9),55*(q+(k.s===5?3:k.s===3?2:1)))}
