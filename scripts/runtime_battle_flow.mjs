@@ -169,7 +169,7 @@ for(const hero of skillMatrix){
       assert.equal(r.name,hero.name,label+' hero');
       assert.equal(r.star,c.star,label+' star');
       assert.ok(Number.isFinite(r.power)&&r.power>=0,label+' finite power');
-      assert.equal(r.cooldown,true,label+' cooldown');
+      assert.equal(r.accepted,true,label+' scheduler accepted');
       executedSkillCases++;
       if(executedSkillCases%20===0) await page.waitForTimeout(80);
     }
