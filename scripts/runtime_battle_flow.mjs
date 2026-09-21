@@ -177,6 +177,20 @@ for(const hero of skillMatrix){
 }
 assert.equal(executedSkillCases,180,'all star-context skill executions');
 mark('skill-execution-180:ok');
+const stress=await guarded('skill-serial-20-start',()=>page.evaluate(()=>__LG_TEST__.skillStressStart()),5000);
+assert.equal(stress.accepted.length,20,'all 20 heroes accepted into serialized skill stress');
+let maxCutins=stress.cutins,maxPending=stress.pending,drained=false;
+for(let i=0;i<160;i++){
+ await page.waitForTimeout(200);
+ const q=await page.evaluate(()=>__LG_TEST__.skillQueue());
+ maxCutins=Math.max(maxCutins,q.cutins);maxPending=Math.max(maxPending,q.pending);
+ assert.ok(q.cutins<=1,'ultimate cutscenes must never overlap');
+ if(!q.busy&&q.pending===0&&!q.cutin){drained=true;break}
+}
+assert.equal(drained,true,'20-hero serialized skill queue must fully drain');
+assert.ok(maxPending>=18,'stress must build a real multi-skill backlog');
+assert.ok(maxCutins<=1,'maximum concurrent cutscene must be one');
+mark('skill-serial-20:ok');
 // Diagnostic persistence must survive a reload, matching the real-device freeze/restart workflow.
 let savedDiag=await guarded('diag-saved-before-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
 assert.ok(savedDiag.length>0);
