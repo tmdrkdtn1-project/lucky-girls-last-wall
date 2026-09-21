@@ -89,6 +89,12 @@ let soakPrev=soak0,soakTicks=[soak0.tick],soakSeries=[{sec:0,...soak0}];
 for(let sec=10;sec<=60;sec+=10){
   await page.waitForTimeout(10000);
   let snap=await guarded('idle-soak-'+sec+'s',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+  if(snap.modal==='relicChoice'){
+    mark('idle-soak-'+sec+'s:relic-select');
+    await guarded('idle-soak-'+sec+'s:relic-select',()=>page.evaluate(()=>{let b=document.querySelector('#relicChoice .relicpick');if(!b)throw new Error('relic pick missing');b.click();return __LG_TEST__.snapshot()}),5000);
+    await page.waitForTimeout(250);
+    snap=await guarded('idle-soak-'+sec+'s:after-relic',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+  }
   if(!(snap.running===true&&snap.timerAlive===true&&snap.tick>soakPrev.tick)){
     publishState({phase:'idle-soak',sec,previous:soakPrev,current:snap});
     throw new Error('IDLE_SOAK_LIVENESS '+sec+'s');
