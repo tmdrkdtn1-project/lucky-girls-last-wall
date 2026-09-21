@@ -53,9 +53,14 @@ assert.equal(speedEnd.running,true); assert.equal(speedEnd.timerAlive,true); ass
 // Extended idle soak: exercise battle/VFX/render paths without user input.
 mark('idle-soak:start');
 let soak0=await guarded('idle-soak-before',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
-await page.waitForTimeout(60000);
-let soak1=await guarded('idle-soak-after',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
-assert.equal(soak1.running,true); assert.equal(soak1.timerAlive,true); assert.ok(soak1.tick>soak0.tick);
+let soakPrev=soak0;
+for(let sec=10;sec<=60;sec+=10){
+  await page.waitForTimeout(10000);
+  let snap=await guarded('idle-soak-'+sec+'s',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
+  assert.equal(snap.running,true); assert.equal(snap.timerAlive,true); assert.ok(snap.tick>soakPrev.tick);
+  soakPrev=snap;
+}
+let soak1=soakPrev;
 mark('idle-soak:end');
 // Post-soak recovery: interactions must still respond after one minute of autonomous combat.
 let postSpeed=await guarded('post-soak-speed',()=>page.evaluate(()=>__LG_TEST__.speed()),5000);
