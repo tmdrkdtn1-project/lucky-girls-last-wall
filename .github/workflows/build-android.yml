@@ -115,6 +115,17 @@ jobs:
             printf '::error title=LG_RUNTIME_DIAGNOSTIC::%s\n' "$STATE"
           fi
 
+      - name: Publish runtime diagnostic check
+        if: failure()
+        shell: bash
+        run: |
+          if [ -f /tmp/lg-runtime-state.json ]; then
+            STATE="$(cat /tmp/lg-runtime-state.json)"
+            echo "RUNTIME_DIAGNOSTIC_JSON=$STATE"
+          else
+            echo 'RUNTIME_DIAGNOSTIC_JSON={"error":"missing runtime state"}'
+          fi
+
       - name: Upload runtime diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
