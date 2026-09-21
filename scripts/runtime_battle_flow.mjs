@@ -63,6 +63,13 @@ assert.ok(postSpeed===1||postSpeed===2);
 await guarded('post-soak-summon',()=>page.evaluate(()=>__LG_TEST__.summon()),5000);
 let postSoak=await guarded('post-soak-snapshot',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
 assert.equal(postSoak.running,true); assert.equal(postSoak.timerAlive,true);
+// Diagnostic persistence must survive a reload, matching the real-device freeze/restart workflow.
+let savedDiag=await guarded('diag-saved-before-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
+assert.ok(savedDiag.length>0);
+await guarded('diagnostic-reload',()=>page.reload({waitUntil:'domcontentloaded'}),15000);
+await guarded('diagnostic-api-after-reload',()=>page.waitForFunction(()=>!!window.__LG_DIAG__),10000);
+let reloadedDiag=await guarded('diag-saved-after-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
+assert.ok(reloadedDiag.length>0);
 assert.deepEqual(pageErrors,[]);
 console.log('PASS - Chromium battle prep/start/summon cooldown/swap/speed/tick + rapid-input stress');
 await browser.close();
