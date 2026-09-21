@@ -209,6 +209,15 @@ assert.equal(lateFinal.active,0,'late callbacks must not resurrect active skill 
 assert.equal(lateFinal.pending,0,'late callbacks must not repopulate the queue');
 await page.evaluate(()=>__LG_TEST__.skillStressStop());
 mark('skill-serial-20:ok');
+const defeatStart=await guarded('defeat-start',()=>page.evaluate(()=>__LG_TEST__.forceDefeat()),5000);
+assert.equal(defeatStart.life,0,'forced defeat must clamp life to zero');
+assert.equal(defeatStart.running,false,'defeat must stop battle immediately');
+await page.waitForTimeout(700);
+const defeatFinal=await page.evaluate(()=>({result:document.querySelector('.result')?.textContent||'',running:__LG_TEST__.snapshot().running,timer:__LG_TEST__.snapshot().timerAlive}));
+assert.match(defeatFinal.result,/DEFEAT/,'defeat must render the DEFEAT result UI');
+assert.equal(defeatFinal.running,false,'battle must remain stopped on defeat result');
+assert.equal(defeatFinal.timer,false,'battle timer must remain stopped after defeat');
+mark('game-over-defeat:ok');
 // Diagnostic persistence must survive a reload, matching the real-device freeze/restart workflow.
 let savedDiag=await guarded('diag-saved-before-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
 assert.ok(savedDiag.length>0);
