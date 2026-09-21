@@ -50,6 +50,13 @@ mark('speed-toggle:end');
 await page.waitForTimeout(2400);
 let speedEnd=await guarded('snapshot-after-speed-stress',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
 assert.equal(speedEnd.running,true); assert.equal(speedEnd.timerAlive,true); assert.ok(speedEnd.tick>stressEnd.tick);
+// Extended idle soak: exercise battle/VFX/render paths without user input.
+mark('idle-soak:start');
+let soak0=await guarded('idle-soak-before',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
+await page.waitForTimeout(12000);
+let soak1=await guarded('idle-soak-after',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
+assert.equal(soak1.running,true); assert.equal(soak1.timerAlive,true); assert.ok(soak1.tick>soak0.tick);
+mark('idle-soak:end');
 assert.deepEqual(pageErrors,[]);
 console.log('PASS - Chromium battle prep/start/summon cooldown/swap/speed/tick + rapid-input stress');
 await browser.close();
