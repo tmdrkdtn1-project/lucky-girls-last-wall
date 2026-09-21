@@ -8,7 +8,10 @@ const pageErrors=[]; page.on('pageerror',e=>pageErrors.push(String(e)));
 let lastMarker='boot';
 const stateFile='/tmp/lg-runtime-state.json';
 const mark=name=>{lastMarker=name;try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString()}))}catch(_){}console.log('[RUNTIME]',new Date().toISOString(),name)};
-process.on('exit',code=>{if(code!==0){try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,exitCode:code,time:new Date().toISOString()}))}catch(_){}}});
+const publishState=(extra={})=>{try{fs.writeFileSync(stateFile,JSON.stringify({lastMarker,time:new Date().toISOString(),...extra}))}catch(_){}};
+process.on('exit',code=>{if(code!==0)publishState({exitCode:code})});
+process.on('uncaughtException',err=>{publishState({fatal:String(err&&err.stack||err)});console.error(err);process.exit(1)});
+process.on('unhandledRejection',err=>{publishState({fatal:String(err&&err.stack||err)});console.error(err);process.exit(1)});
 const guarded=async(name,fn,ms=15000)=>{
  mark(name+':start');
  let timer;
