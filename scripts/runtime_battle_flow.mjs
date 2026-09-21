@@ -76,7 +76,7 @@ assert.equal(speedEnd.running,true); assert.equal(speedEnd.timerAlive,true); ass
 // Extended idle soak: exercise battle/VFX/render paths without user input.
 // Force Ruby's signature VFX repeatedly before the autonomous soak. This is the exact path that previously froze Chromium.
 mark('ruby-signature-stress:start');
-for(let i=0;i<24;i++){
+for(let i=0;i<48;i++){
   await guarded('ruby-signature-step-'+i,()=>page.evaluate(()=>__LG_TEST__.step()),5000);
   if(i%4===3) await page.waitForTimeout(180);
 }
