@@ -100,7 +100,15 @@ jobs:
         if: failure()
         run: |
           echo "Last Chromium runtime checkpoint:"
-          cat /tmp/lg-runtime-marker.txt 2>/dev/null || echo "No checkpoint recorded"
+          cat /tmp/lg-runtime-state.json 2>/dev/null || cat /tmp/lg-runtime-marker.txt 2>/dev/null || echo "No checkpoint recorded"
+
+      - name: Upload runtime diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-failure-diagnostics
+          path: /tmp/lg-runtime-state.json
+          if-no-files-found: warn
 
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
