@@ -57,14 +57,17 @@ assert.equal(speedEnd.running,true); assert.equal(speedEnd.timerAlive,true); ass
 // Extended idle soak: exercise battle/VFX/render paths without user input.
 mark('idle-soak:start');
 let soak0=await guarded('idle-soak-before',()=>page.evaluate(()=>__LG_TEST__.snapshot()));
-let soakPrev=soak0;
+let soakPrev=soak0,soakTicks=[soak0.tick];
 for(let sec=10;sec<=60;sec+=10){
   await page.waitForTimeout(10000);
   let snap=await guarded('idle-soak-'+sec+'s',()=>page.evaluate(()=>__LG_TEST__.snapshot()),5000);
   assert.equal(snap.running,true); assert.equal(snap.timerAlive,true); assert.ok(snap.tick>soakPrev.tick);
-  soakPrev=snap;
+  soakTicks.push(snap.tick); soakPrev=snap;
 }
 let soak1=soakPrev;
+let deltas=soakTicks.slice(1).map((v,i)=>v-soakTicks[i]);
+console.log('[SOAK_TICKS]',JSON.stringify({ticks:soakTicks,deltas}));
+assert.ok(deltas.every(d=>d>=3),'battle tick cadence degraded during idle soak');
 mark('idle-soak:end');
 // Post-soak recovery: interactions must still respond after one minute of autonomous combat.
 let postSpeed=await guarded('post-soak-speed',()=>page.evaluate(()=>__LG_TEST__.speed()),5000);
