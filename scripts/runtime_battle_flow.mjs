@@ -59,6 +59,7 @@ let tick0=(await page.evaluate(()=>__LG_TEST__.snapshot())).tick; mark('idle-spe
 await page.evaluate(()=>__LG_TEST__.fund(0)); await page.waitForTimeout(550); let fail=await page.evaluate(()=>__LG_TEST__.summon()); assert.equal(fail.ok,false); assert.equal(fail.cooldown,false);
 // Sustained rapid-input stress: 30 attempts, only cooldown-eligible summons may succeed.
 await page.evaluate(()=>__LG_TEST__.fund(100000));
+await guarded('stability-survival-hook',()=>page.evaluate(()=>__LG_TEST__.stabilize()),5000);
 let stressStart=await page.evaluate(()=>__LG_TEST__.snapshot());
 mark('rapid-summon:start');
 for(let i=0;i<30;i++){ await guarded('rapid-summon-'+i,()=>page.evaluate(()=>__LG_TEST__.summon()),5000); await page.waitForTimeout(25); }
