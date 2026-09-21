@@ -177,8 +177,11 @@ for(const hero of skillMatrix){
 }
 assert.equal(executedSkillCases,180,'all star-context skill executions');
 mark('skill-execution-180:ok');
+const preStressGen=await page.evaluate(()=>__LG_TEST__.skillQueue().generation);
 const stress=await guarded('skill-serial-20-start',()=>page.evaluate(()=>__LG_TEST__.skillStressStart()),5000);
 assert.equal(stress.accepted.length,20,'all 20 heroes accepted into serialized skill stress');
+const stressGen=await page.evaluate(()=>__LG_TEST__.skillQueue().generation);
+assert.equal(stressGen,preStressGen+1,'skill stress must start in a fresh scheduler generation');
 let maxCutins=stress.cutins,maxPending=stress.pending,drained=false;
 for(let i=0;i<160;i++){
  await page.waitForTimeout(200);
