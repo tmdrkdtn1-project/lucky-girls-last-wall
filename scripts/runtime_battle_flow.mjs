@@ -195,6 +195,12 @@ assert.equal(serialFinal.maxConcurrent,1,'maximum concurrent skill execution mus
 assert.equal(serialFinal.started,20,'all 20 queued skills must start exactly once');
 assert.equal(serialFinal.finished,20,'all 20 queued skills must finish exactly once');
 assert.equal(serialFinal.active,0,'no skill may remain active after drain');
+await page.waitForTimeout(1500);
+const lateFinal=await page.evaluate(()=>__LG_TEST__.skillQueue());
+assert.equal(lateFinal.started,20,'late callbacks must not start duplicate skills');
+assert.equal(lateFinal.finished,20,'late callbacks must not finish a skill twice');
+assert.equal(lateFinal.active,0,'late callbacks must not resurrect active skill state');
+assert.equal(lateFinal.pending,0,'late callbacks must not repopulate the queue');
 mark('skill-serial-20:ok');
 // Diagnostic persistence must survive a reload, matching the real-device freeze/restart workflow.
 let savedDiag=await guarded('diag-saved-before-reload',()=>page.evaluate(()=>__LG_DIAG__.saved()),5000);
