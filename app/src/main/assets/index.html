@@ -581,7 +581,7 @@ let sera=units.some(u=>u&&u.name==='세라'&&u.lv>=1),chloe=units.some(u=>u&&u.n
 units.forEach((u,ui)=>{if(!u)return;lgDiag('skill:unit:start',{ui,name:u.name,lv:u.lv},true);let m=rowCombatMod(u,ui),skillTriggered=false;
 let _skills=unlockedSkills(u);lgDiag('skill:unit:skills',{ui,name:u.name,count:_skills.length},true);for(const k of _skills){lgDiag('skill:check',{ui,name:u.name,skill:k.n,s:k.s},true);if(!skillReady(u,k))continue;let proc=false;
 if(k.s===1)proc=Math.random()<.22;else if(k.s===3)proc=Math.random()<.14;else proc=Math.random()<.08;
-if(!proc)continue;skillTriggered=true;markSkill(u,k);n.push(k.n);skillImpactVisual(u,ui,k);if(combatClass[u.name]==='암살자'&&unitRow(ui)>=2)showAssassinStrike(ui);if(k.s===5)playUltimateCutin(u,k);else if(k.s===3&&Math.random()<.35)impact('light','ally');
+if(!proc){lgDiag('skill:proc:miss',{ui,name:u.name,skill:k.n},true);continue}lgDiag('skill:proc:hit',{ui,name:u.name,skill:k.n},true);skillTriggered=true;markSkill(u,k);n.push(k.n);lgDiag('skill:vfx:start',{ui,name:u.name,skill:k.n},true);skillImpactVisual(u,ui,k);lgDiag('skill:vfx:end',{ui,name:u.name,skill:k.n},true);if(combatClass[u.name]==='암살자'&&unitRow(ui)>=2)showAssassinStrike(ui);if(k.s===5)playUltimateCutin(u,k);else if(k.s===3&&Math.random()<.35)impact('light','ally');
 if(u.name==='아리아'){if(k.s===1)m+=.6;if(k.s===3)globalBuff*=1.08;if(k.s===5)m+=4}
 else if(u.name==='유나'){if(k.s===1)m+=.25;if(k.s===3)m+=.35;if(k.s===5)m+=.6}
 else if(u.name==='리엘'){if(k.s===1)m+=.8;if(k.s===3)m+=1.2;if(k.s===5)m+=5.5}
