@@ -52,3 +52,11 @@ assert "if(wave===10)spawnWave10BossNow();" in js
 assert "Wave 10 must always contain exactly one TD boss" in js
 assert "bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length" in js
 print("PASS - Wave 10 boss spawns synchronously and is runtime-verifiable")
+
+# Wave 10 mid-wave boss timing guards
+assert "WAVE10_BOSS_SPAWN_AT=15" in js
+assert "waveClock<WAVE10_BOSS_SPAWN_AT" in js
+assert "BOSS APPROACHING · 3 SEC" in js
+assert "spawnWave10BossNow" not in js
+assert "spawnWave10BossMidWave" in js
+print("PASS - Wave 10 boss enters at the middle of the 30 second wave")
