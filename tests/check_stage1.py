@@ -244,7 +244,7 @@ print("PASS - Aria TD S1/S2/S3 execute through shared effect primitives with sou
 
 # Full RPG translation matrix V1 guards
 rpg_translation=json.loads((root/"data/rpg_skill_translation_v1.json").read_text(encoding="utf-8"))
-assert rpg_translation["schema"]=="LG_RPG_SKILL_TRANSLATION_V1_1"
+assert rpg_translation["schema"]=="LG_RPG_SKILL_TRANSLATION_V1_2"
 assert rpg_translation["counts"]["hero_skills"]==60
 assert rpg_translation["counts"]["boss_skills"]==150
 assert rpg_translation["counts"]["total"]==210
@@ -258,9 +258,18 @@ print("PASS - all 60 hero and 150 boss skills have RPG translation records; unre
 
 # Provisional boss definition closure guards
 assert rpg_translation["counts"]["manual_boss_definitions"]==0
-assert rpg_translation["counts"]["provisional_boss_definitions"]==43
+assert rpg_translation["counts"]["approved_provisional_boss_definitions"]==43
+assert rpg_translation["counts"]["provisional_boss_definitions"]==0
 assert all(x["rpg_rules"] for x in rpg_translation["boss_skills"])
-assert all(x.get("definition_origin")=="PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE" for x in rpg_translation["boss_skills"] if x["status"]=="DESIGN_V1_PROVISIONAL")
+assert all(x.get("definition_origin")=="PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE" for x in rpg_translation["boss_skills"] if x["status"]=="APPROVED_PROVISIONAL_V1")
 assert any(x["character"]=="침식의 근원, 사룡 발테리옹" and x["skill"]=="LAST WALL 파괴" and any("즉사" in r for r in x["rpg_rules"]) for x in rpg_translation["boss_skills"])
-assert rpg_issues["schema"]=="LG_RPG_SKILL_ISSUE_REGISTRY_V1_2"
+assert rpg_issues["schema"]=="LG_RPG_SKILL_ISSUE_REGISTRY_V1_3"
 print("PASS - all 43 name-only boss skills have explicit provisional RPG behavior and remain clearly separated from source-backed definitions")
+
+# Master approval gate guards
+boss_approval=json.loads((root/"data/boss_rpg_skill_approval_v1.json").read_text(encoding="utf-8"))
+assert boss_approval["status"]=="APPROVED_FOR_RUNTIME"
+assert boss_approval["approved_count"]==43
+assert all(x["approval_status"]=="APPROVED_FOR_RUNTIME" for x in boss_approval["items"])
+assert all(x["mutable"] is True for x in boss_approval["items"])
+print("PASS - all 43 provisional boss RPG skills are approved for runtime while remaining explicitly mutable")
