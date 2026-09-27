@@ -341,7 +341,7 @@ print("PASS - all 210 RPG skills now have machine-readable runtime bindings; spe
 runtime_bindings=json.loads((root/"data/rpg_runtime_bindings_v1.json").read_text(encoding="utf-8"))
 adapter_backlog=json.loads((root/"data/rpg_runtime_adapter_backlog_v1.json").read_text(encoding="utf-8"))
 assert runtime_bindings["schema"]=="LG_RPG_RUNTIME_BINDINGS_V1_2"
-assert adapter_backlog["schema"]=="LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1_1"
+assert adapter_backlog["schema"]=="LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1_2"
 assert adapter_backlog["implemented_count"]==11 and adapter_backlog["pending_count"]==0
 assert all(a["status"]=="IMPLEMENTED_V1" for a in adapter_backlog["adapters"])
 assert "const RPG_ADAPTER_RUNTIME_VERSION='LG_RPG_ADAPTER_RUNTIME_V1'" in js
