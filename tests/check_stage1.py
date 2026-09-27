@@ -280,7 +280,7 @@ assert effect_runtime["schema"] in ("LG_COMBAT_EFFECT_RUNTIME_V1","LG_COMBAT_EFF
 assert "const RPG_EFFECT_RUNTIME_VERSION='LG_RPG_EFFECT_RUNTIME_V1'" in js
 assert "function applyRpgEffect(effect,ctx={})" in js
 assert "function applyRpgEffects(effects,ctx={})" in js
-assert "function selectRpgTargets(spec,source)" in js
+assert "function selectRpgTargets(spec,source,effect={})" in js
 assert "effect.type==='DAMAGE'" in js and "effect.type==='HEAL'" in js
 assert "effect.type==='ATK_MULT'" in js and "effect.type==='RATE_MULT'" in js
 assert "effect.type==='DAMAGE_REDUCTION'" in js and "effect.type==='STUN'" in js
@@ -322,3 +322,17 @@ assert len(braum)==3 and all(x["runtime_status"]=="CONNECTED_STAGE1_V1" for x in
 assert next(x for x in braum if x["skill"]=="암반 붕괴")["source_preserved_values"]=={"target_count":2,"duration_sec":6}
 assert next(x for x in braum if x["skill"]=="분쇄 포효")["source_preserved_values"]=={"damage_taken_mult":1.4,"duration_sec":8}
 print("PASS - Stage 1 Braum S1/S2/S3 are connected through shared RPG effects with source values separated from prototype timing")
+
+# Full 210-skill runtime binding matrix guards
+runtime_bindings=json.loads((root/"data/rpg_runtime_bindings_v1.json").read_text(encoding="utf-8"))
+adapter_backlog=json.loads((root/"data/rpg_runtime_adapter_backlog_v1.json").read_text(encoding="utf-8"))
+assert runtime_bindings["schema"]=="LG_RPG_RUNTIME_BINDINGS_V1"
+assert runtime_bindings["total"]==210
+assert len(runtime_bindings["items"])==210
+assert sum(runtime_bindings["counts"].values())==210
+assert not any(x["runtime_status"]=="BLOCKED_UNSUPPORTED_PRIMITIVE" for x in runtime_bindings["items"])
+assert all(x["unsupported_primitives"]==[] for x in runtime_bindings["items"])
+assert len([x for x in runtime_bindings["items"] if x["runtime_status"]=="LIVE_STAGE1"])==3
+assert any(x["character"]=="아리아" and x["skill"]=="성광 참격" and x["primitive_options"]["ignoreDefense"] for x in runtime_bindings["items"])
+assert adapter_backlog["count"]==len(adapter_backlog["adapters"])
+print("PASS - all 210 RPG skills now have machine-readable runtime bindings; special semantics are isolated in an adapter backlog")

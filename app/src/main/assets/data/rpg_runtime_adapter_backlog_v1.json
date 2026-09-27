@@ -1,0 +1,378 @@
+{
+  "schema": "LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1",
+  "count": 11,
+  "adapters": [
+    {
+      "id": "CHANCE_TRIGGER",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "카린",
+          "skill": "홍련 처형",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "벨",
+          "skill": "대인형극",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "루나",
+          "skill": "운명개변",
+          "stage": null
+        },
+        {
+          "side": "BOSS",
+          "character": "종말을 걷는 자 에레보스",
+          "skill": "공포의천막",
+          "stage": 49
+        }
+      ]
+    },
+    {
+      "id": "CONDITIONAL_EXECUTE",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "루비",
+          "skill": "DEAD OR ALIVE",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "카린",
+          "skill": "홍련 처형",
+          "stage": null
+        },
+        {
+          "side": "BOSS",
+          "character": "불꽃도적 카심",
+          "skill": "광폭화",
+          "stage": 7
+        },
+        {
+          "side": "BOSS",
+          "character": "반역장군 드라켄",
+          "skill": "처형창",
+          "stage": 27
+        },
+        {
+          "side": "BOSS",
+          "character": "침식된 반역장군 드라켄",
+          "skill": "처형창진",
+          "stage": 47
+        }
+      ]
+    },
+    {
+      "id": "COPY_EFFECT",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "네온",
+          "skill": "형상복제",
+          "stage": null
+        }
+      ]
+    },
+    {
+      "id": "DEATH_PREVENTION",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "아델",
+          "skill": "불락의 성채",
+          "stage": null
+        },
+        {
+          "side": "BOSS",
+          "character": "동토광왕 브란",
+          "skill": "죽음거부",
+          "stage": 19
+        }
+      ]
+    },
+    {
+      "id": "ECONOMY_DISABLED_IN_RPG",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "미아",
+          "skill": "행운의 함정",
+          "stage": null
+        }
+      ]
+    },
+    {
+      "id": "MULTI_HIT_SEQUENCE",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "리엘",
+          "skill": "홍련지옥",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "루비",
+          "skill": "도탄사격",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "카린",
+          "skill": "잔영난무",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "미아",
+          "skill": "보물탄",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "미아",
+          "skill": "왕의 보물고",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "아이린",
+          "skill": "퍼펙트 클리닝",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "샤샤",
+          "skill": "접착 폭약",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "샤샤",
+          "skill": "연쇄기폭",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "니아",
+          "skill": "혈창",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "이브",
+          "skill": "되감기",
+          "stage": null
+        },
+        {
+          "side": "BOSS",
+          "character": "침식의 근원, 사룡 발테리옹",
+          "skill": "재앙의날갯짓",
+          "stage": 50
+        }
+      ]
+    },
+    {
+      "id": "RPG_SLOW_TO_ACTION_RATE",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "유나",
+          "skill": "봉인의 부적",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "유나",
+          "skill": "결계진",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "레이나",
+          "skill": "서리창",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "레이나",
+          "skill": "빙결감옥",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "레이나",
+          "skill": "절대영도",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "카린",
+          "skill": "그림자 베기",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "벨",
+          "skill": "마리오네트",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "루나",
+          "skill": "운명개변",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "클로에",
+          "skill": "라스트 앙코르",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "아델",
+          "skill": "수호의 일격",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "이브",
+          "skill": "시간지연",
+          "stage": null
+        },
+        {
+          "side": "BOSS",
+          "character": "붉은협곡의 바르칸",
+          "skill": "협곡 질주",
+          "stage": 3
+        },
+        {
+          "side": "BOSS",
+          "character": "심해무녀 우미",
+          "skill": "심해의 노래",
+          "stage": 13
+        },
+        {
+          "side": "BOSS",
+          "character": "황실골렘 아르카논",
+          "skill": "중력파",
+          "stage": 26
+        }
+      ]
+    },
+    {
+      "id": "SUMMON_AWARE_TARGETING",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "리엘",
+          "skill": "홍련지옥",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "레이나",
+          "skill": "절대영도",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "니아",
+          "skill": "진홍월식",
+          "stage": null
+        },
+        {
+          "side": "BOSS",
+          "character": "순교자 세베라",
+          "skill": "순교찬가",
+          "stage": 23
+        },
+        {
+          "side": "BOSS",
+          "character": "검은대주교 말키엘",
+          "skill": "광신폭주",
+          "stage": 43
+        },
+        {
+          "side": "BOSS",
+          "character": "사룡숭배 대성상",
+          "skill": "성상분열",
+          "stage": 44
+        }
+      ]
+    },
+    {
+      "id": "TIME_REWIND",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "이브",
+          "skill": "되감기",
+          "stage": null
+        }
+      ]
+    },
+    {
+      "id": "TRANSFER_CHAIN",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "루비",
+          "skill": "도탄사격",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "벨",
+          "skill": "저주인형",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "루나",
+          "skill": "운명의 표식",
+          "stage": null
+        },
+        {
+          "side": "HERO",
+          "character": "비올라",
+          "skill": "역병 전염",
+          "stage": null
+        }
+      ]
+    },
+    {
+      "id": "ULT_GAUGE_MOD",
+      "status": "PENDING_IMPLEMENTATION",
+      "affected_skills": [
+        {
+          "side": "HERO",
+          "character": "이브",
+          "skill": "되감기",
+          "stage": null
+        },
+        {
+          "side": "BOSS",
+          "character": "침식의 근원, 사룡 발테리옹",
+          "skill": "재앙의날갯짓",
+          "stage": 50
+        }
+      ]
+    }
+  ]
+}
