@@ -39,7 +39,7 @@ const HERO_RECIPES=[
 ];
 
 const cells=[], units=new Map(), enemies=[];
-let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now();
+let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
 let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false;
 
 const $=id=>document.getElementById(id);
@@ -255,7 +255,7 @@ function advanceWave(){
 function loop(ts){
  const raw=Math.min(.05,(ts-last)/1000);last=ts;
  if(running){
-  const dt=raw*speed;waveClock+=dt;updateEnemies(dt,ts/1000);updateUnits(ts/1000);
+  const dt=raw*speed;simTime+=dt;waveClock+=dt;updateEnemies(dt,simTime);updateUnits(simTime);
   if(wave<10&&waveClock>=WAVE_DURATION)advanceWave();
   renderEnemies();syncHUD();
  }
@@ -273,7 +273,7 @@ buildGrid();renderUnits();syncHUD();updateComboHighlights();requestAnimationFram
 
 window.__LG_STAGE1_TEST__={
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
- state:()=>({wave,gold,gHp,oHp,units:[...units.values()],enemies:enemies.length,bottomVisible:bottom.classList.contains('on'),rpgPending}),
+ state:()=>({wave,gold,gHp,oHp,speed,simTime,units:[...units.values()],enemies:enemies.length,bottomVisible:bottom.classList.contains('on'),rpgPending}),
  select:(x,y)=>onCellTap(x,y),
  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
  route:()=>route.slice(),
