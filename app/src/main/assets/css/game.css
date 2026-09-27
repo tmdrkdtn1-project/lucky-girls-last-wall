@@ -86,3 +86,17 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 .rpgUltBtn.ready{box-shadow:0 0 12px #ffd64f;animation:topAlertBlink .55s steps(2,end) infinite}
 .rpgUltBtn:disabled{opacity:.4}
 .rpgStatus{margin-top:4px;min-height:14px;font-size:10px;color:#c9d2d8}
+
+.rpgTransition{position:absolute;inset:0;z-index:20;pointer-events:none;display:none}
+.rpgTransition.on{display:block}
+#rpgTransitionMessage{position:absolute;left:50%;top:calc(var(--top) + 10px);transform:translateX(-50%);padding:8px 18px;border-radius:10px;background:#121820f2;border:1px solid #8ea49a;font-weight:1000;letter-spacing:.04em;animation:topAlertBlink .55s steps(2,end) infinite;white-space:nowrap}
+#rpgTransition.centerFlash #rpgTransitionMessage{top:50%;transform:translate(-50%,-50%);font-size:clamp(24px,4vw,48px);padding:14px 24px;border:2px solid #ffcc73;background:#1a1212f2;box-shadow:0 0 30px #ff6d3d66}
+#rpgScreen.prep #rpgBoss{top:10%;transform:translateX(-50%) scale(.28)}
+#rpgScreen.approach #rpgBoss{top:9%;transform:translateX(-50%) scale(.58)}
+#rpgScreen.battle #rpgBoss{top:11%;transform:translateX(-50%) scale(1)}
+#rpgScreen.prep #rpgHeroRow{bottom:6%}
+#rpgScreen.prep .rpgHeroFigure{transform:rotateY(0deg) scale(1.02)}
+#rpgScreen.approach .rpgHeroFigure,#rpgScreen.battle .rpgHeroFigure{transform:rotateY(180deg)}
+#rpgScreen.transitionLock .rpgUltBtn{pointer-events:none}
+#rpgBoss{transition:transform .45s ease,top .45s ease}
+.rpgHeroFigure{transition:transform .35s ease}

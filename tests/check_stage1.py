@@ -119,3 +119,20 @@ assert "RPG BATTLE FAILED" in js
 assert "PHASE 3 · ENRAGED" in js
 assert ".rpgHeroCard" in css and "#rpgBossBody" in css
 print("PASS - TD boss now hands off to playable RPG boss prototype with 1-5 TD heroes")
+
+# RPG cinematic intro guards
+assert 'id="rpgTransition"' in html
+assert "function playRpgIntroSequence()" in js
+assert "name+'이 다가온다'" in js
+assert "그대들이 바로 마지막 보루, LAST WALL이다." in js
+assert "최후의 전투, 개전!" in js
+assert "rpgTransitioning=true" in js
+assert "running=false;" in js
+assert "rpgScreen.classList.add('prep','transitionLock')" in js
+assert "rpgScreen.classList.add('approach')" in js
+assert "rpgScreen.classList.add('battle')" in js
+assert "#rpgScreen.prep #rpgBoss" in css
+assert "#rpgScreen.approach #rpgBoss" in css
+assert "#rpgScreen.battle #rpgBoss" in css
+assert "centerFlash" in css
+print("PASS - RPG intro uses front-prep, distant boss, approach beat, LAST WALL line, center start flash, then combat")
