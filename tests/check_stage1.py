@@ -110,7 +110,7 @@ assert "const RPG_BOSS_DEF" in js
 assert "function enterRpgBattle()" in js
 assert "function startRpgBattle(tdHeroes)" in js
 assert "function updateRpg(dt)" in js
-assert "function useRpgUltimate(heroId)" in js
+assert "function useRpgUltimate(heroId,fromAuto=false)" in js
 assert "function finishRpgVictory()" in js
 assert "function finishRpgDefeat(reason)" in js
 assert "gameMode==='RPG'" in js
