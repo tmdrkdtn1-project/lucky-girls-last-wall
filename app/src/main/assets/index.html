@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Lucky Girls Stage 1 Playable</title>
+<link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<div id="app">
+<header id="topHUD">
+  <div class="hudBox">STAGE 1</div>
+  <div class="hudBox">WAVE <span id="wave">1</span>/10</div>
+  <div class="hudBox">🪙 <span id="gold">500</span></div>
+  <div class="hudBox">G <span id="gHp">100</span>/100</div>
+  <div class="hudBox">O <span id="oHp">120</span>/120</div>
+  <div class="hudGrow"></div>
+  <button class="hudBtn" id="speed">×1</button>
+  <button class="hudBtn" id="pause">Ⅱ</button>
+</header>
+<main id="battlefield">
+  <div id="stageBanner">서부 왕국 · 산악 초입 · 18×10 PLAYABLE BLOCKOUT</div>
+  <div id="legend">S 스폰 <span>P 경로</span><span>D 배치</span><span>W 수역</span><span>X 장애물</span><span>G 최종방어벽</span><span>O 성문</span></div>
+  <div id="mapFrame">
+    <div id="grid"><div id="unitLayer"></div><div id="enemyLayer"></div><div id="fxLayer"></div></div>
+  </div>
+</main>
+<div id="bottomUI">
+  <button id="closeBottom">✕</button>
+  <div id="contextTitle"></div>
+  <div id="actions"></div>
+</div>
+<div id="toast"></div>\n<div id="bossWarning"><div id="bossWarningTitle">⚠ WARNING</div><div id="bossWarningSub"></div></div>
+</div>
+<script src="js/game.js"></script>
+</body>
+</html>

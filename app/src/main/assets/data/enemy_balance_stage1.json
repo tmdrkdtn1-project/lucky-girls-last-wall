@@ -1,0 +1,27 @@
+{
+  "schema": "LG_STAGE1_ENEMY_PRESSURE_V2",
+  "stage": 1,
+  "normal": {
+    "count_multiplier": 2,
+    "hp_multiplier": 1.2,
+    "reward_gold_per_kill": 12
+  },
+  "wave5": {
+    "type": "MIDBOSS",
+    "count": 1,
+    "hp_multiplier_vs_normal": 5.5,
+    "warning_overlay": true,
+    "warning_text": "WARNING · MID BOSS"
+  },
+  "wave10": {
+    "type": "BOSS",
+    "count": 1,
+    "hp_multiplier_vs_normal": 9,
+    "warning_overlay": true,
+    "warning_text": "WARNING · BOSS"
+  },
+  "boss_rpg": {
+    "implemented": false,
+    "status": "NOT_IMPLEMENTED_IN_GITHUB_ALPHA_YET"
+  }
+}
