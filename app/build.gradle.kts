@@ -2,6 +2,11 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val githubRunNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull()
+val buildNumber = githubRunNumber ?: 1
+val baseVersionName = "0.2.0-stage1-alpha-fix"
+
 android {
     namespace = "com.luckygirls.lastwall"
     compileSdk = 35
@@ -9,8 +14,8 @@ android {
         applicationId = "com.luckygirls.lastwall"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "0.2.0-stage1-alpha-fix"
+        versionCode = 2000 + buildNumber
+        versionName = "$baseVersionName-r$buildNumber"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
