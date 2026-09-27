@@ -342,16 +342,16 @@ runtime_bindings=json.loads((root/"data/rpg_runtime_bindings_v1.json").read_text
 adapter_backlog=json.loads((root/"data/rpg_runtime_adapter_backlog_v1.json").read_text(encoding="utf-8"))
 assert runtime_bindings["schema"]=="LG_RPG_RUNTIME_BINDINGS_V1_2"
 assert adapter_backlog["schema"]=="LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1_2"
-assert adapter_backlog["implemented_count"]==11 and adapter_backlog["pending_count"]==0
-assert all(a["status"]=="IMPLEMENTED_V1" for a in adapter_backlog["adapters"])
-assert "const RPG_ADAPTER_RUNTIME_VERSION='LG_RPG_ADAPTER_RUNTIME_V1'" in js
+assert adapter_backlog["implemented_count"]==13 and adapter_backlog["pending_count"]==0
+assert all(a["status"] in {"IMPLEMENTED_V1","IMPLEMENTED_V1_1"} for a in adapter_backlog["adapters"])
+assert "const RPG_ADAPTER_RUNTIME_VERSION='LG_RPG_ADAPTER_RUNTIME_V1_1'" in js
 assert "function runRpgAdapter(id,params={},ctx={})" in js
-for adapter_id in ["CHANCE_TRIGGER","CONDITIONAL_EXECUTE","COPY_EFFECT","DEATH_PREVENTION","ECONOMY_DISABLED_IN_RPG","MULTI_HIT_SEQUENCE","RPG_SLOW_TO_ACTION_RATE","SUMMON_AWARE_TARGETING","TIME_REWIND","TRANSFER_CHAIN","ULT_GAUGE_MOD"]:
+for adapter_id in ["CHANCE_TRIGGER","CONDITIONAL_EXECUTE","COPY_EFFECT","DEATH_PREVENTION","ECONOMY_DISABLED_IN_RPG","MULTI_HIT_SEQUENCE","RPG_SLOW_TO_ACTION_RATE","SUMMON_AWARE_TARGETING","TIME_REWIND","TRANSFER_CHAIN","ULT_GAUGE_MOD","CONDITIONAL_EFFECT","TELEGRAPH_SEQUENCE"]:
     assert "id==='"+adapter_id+"'" in js, adapter_id
 assert runtime_bindings["counts"].get("NEEDS_ADAPTER",0)==0
 assert runtime_bindings["counts"].get("ADAPTER_READY",0)==43
 assert "tryRpgDeathPrevention(t)" in js
-print("PASS - all 11 RPG adapters are implemented and all 43 adapter-dependent skills are runtime-ready")
+print("PASS - all 13 RPG adapters are implemented and all 43 adapter-dependent skills are runtime-ready")
 
 # Five explicit RPG effect plans close the remaining definition gap
 explicit_plans=json.loads((root/"data/rpg_explicit_effect_plans_v1.json").read_text(encoding="utf-8"))
