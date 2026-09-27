@@ -98,5 +98,5 @@ assert "top:calc(var(--top) + 8px)" in css
 assert "@keyframes topAlertBlink" in css
 assert "#bossWarning.on{opacity:1;animation:topAlertBlink" in css
 assert "#toast{position:fixed" in css and "animation:topAlertBlink" in css
-assert "\\n.enemyToken.boss" not in css
+assert "\\\\n.enemyToken.boss" not in css
 print("PASS - boss matches midboss scale and all alerts stay in blinking top HUD area")
