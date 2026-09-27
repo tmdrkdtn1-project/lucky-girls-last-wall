@@ -289,3 +289,19 @@ assert "{type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.50,duration:5}" in j
 assert "{type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.20,duration:8}" in js
 assert all(x["status"]=="IMPLEMENTED" for x in effect_runtime["rpg_primitives"][:8])
 print("PASS - Stage 1 RPG now uses a shared effect dispatcher for damage, buffs, mitigation, delays, stun, and DEF modifiers")
+
+# RPG advanced primitives V1.1 guards
+effect_runtime=json.loads((root/"data/combat_effect_runtime_v1.json").read_text(encoding="utf-8"))
+assert effect_runtime["schema"]=="LG_COMBAT_EFFECT_RUNTIME_V1_1"
+assert "effect.type==='DOT'" in js
+assert "effect.type==='SUMMON'" in js
+assert "effect.type==='INVULNERABLE'" in js
+assert "effect.type==='SKILL_BLOCK'" in js
+assert "effect.type==='REFLECT'" in js
+assert "function updateRpgDots(dt)" in js
+assert "function updateRpgSummons()" in js
+assert "rpgState.summons=rpgState.summons||[]" in js
+assert "(h.skillBlockUntil||0)<=rpgSimTime" in js
+assert "if((t.invulnerableUntil||0)>rpgSimTime)continue;" in js
+assert all(x["status"]=="IMPLEMENTED" for x in effect_runtime["rpg_primitives"])
+print("PASS - DOT, summon, invulnerability, skill block, and reflect are now implemented as shared RPG primitives")

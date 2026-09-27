@@ -1,5 +1,5 @@
 {
-  "schema": "LG_COMBAT_EFFECT_RUNTIME_V1",
+  "schema": "LG_COMBAT_EFFECT_RUNTIME_V1_1",
   "purpose": "Shared effect primitives for TD/RPG stabilization before PlayerProfile/Save work.",
   "rpg_primitives": [
     {
@@ -76,23 +76,28 @@
     },
     {
       "type": "DOT",
-      "status": "NEXT"
+      "status": "IMPLEMENTED",
+      "notes": "duration/tick/amount queue; numeric tuning remains skill data"
     },
     {
       "type": "SUMMON",
-      "status": "NEXT"
+      "status": "IMPLEMENTED",
+      "notes": "generic timed or persistent boss add with HP/ATK/attackGap"
     },
     {
       "type": "INVULNERABLE",
-      "status": "NEXT"
+      "status": "IMPLEMENTED",
+      "notes": "damage ignored until expiry"
     },
     {
       "type": "SKILL_BLOCK",
-      "status": "NEXT"
+      "status": "IMPLEMENTED",
+      "notes": "blocks hero Skill1/Skill2/Ultimate; basic attacks continue"
     },
     {
       "type": "REFLECT",
-      "status": "NEXT"
+      "status": "IMPLEMENTED",
+      "notes": "returns ratio of dealt damage to attacker"
     }
   ],
   "stage1_connected": {
@@ -103,5 +108,6 @@
     "boss": "철각왕 브라움",
     "boss_basic": "DAMAGE"
   },
-  "validation_rule": "Approved definitions may be connected only through declared runtime primitives; unsupported primitives remain data-only until implemented."
+  "validation_rule": "All currently planned core RPG primitives are implemented. Skill-specific numbers remain data/balance responsibility.",
+  "next_step": "Connect approved hero/boss skill definitions to these primitives and add per-skill regression fixtures."
 }
