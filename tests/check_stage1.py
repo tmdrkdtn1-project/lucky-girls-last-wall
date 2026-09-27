@@ -252,7 +252,7 @@ assert all(x["rpg_rules"] for x in rpg_translation["hero_skills"])
 assert all(x["rpg_rules"] for x in rpg_translation["boss_skills"])
 assert any(x["character"]=="미아" and x["skill"]=="보물탄" and any("DEF 100% 무시" in r for r in x["rpg_rules"]) for x in rpg_translation["hero_skills"])
 assert any(x["character"]=="아리아" and x["skill"]=="수호의 맹세" and "받는 피해 -20%" in x["rpg_rules"][0] for x in rpg_translation["hero_skills"])
-assert rpg_issues["schema"]=="LG_RPG_SKILL_ISSUE_REGISTRY_V1_1"
+assert rpg_issues["schema"]=="LG_RPG_SKILL_ISSUE_REGISTRY_V1_3"
 assert all(x.get("mapping") for x in rpg_issues["items"])
 print("PASS - all 60 hero and 150 boss skills have RPG translation records; unresolved source gaps are explicitly marked")
 
@@ -273,3 +273,19 @@ assert boss_approval["approved_count"]==43
 assert all(x["approval_status"]=="APPROVED_FOR_RUNTIME" for x in boss_approval["items"])
 assert all(x["mutable"] is True for x in boss_approval["items"])
 print("PASS - all 43 provisional boss RPG skills are approved for runtime while remaining explicitly mutable")
+
+# Shared RPG Effect Runtime V1 guards
+effect_runtime=json.loads((root/"data/combat_effect_runtime_v1.json").read_text(encoding="utf-8"))
+assert effect_runtime["schema"]=="LG_COMBAT_EFFECT_RUNTIME_V1"
+assert "const RPG_EFFECT_RUNTIME_VERSION='LG_RPG_EFFECT_RUNTIME_V1'" in js
+assert "function applyRpgEffect(effect,ctx={})" in js
+assert "function applyRpgEffects(effects,ctx={})" in js
+assert "function selectRpgTargets(spec,source)" in js
+assert "effect.type==='DAMAGE'" in js and "effect.type==='HEAL'" in js
+assert "effect.type==='ATK_MULT'" in js and "effect.type==='RATE_MULT'" in js
+assert "effect.type==='DAMAGE_REDUCTION'" in js and "effect.type==='STUN'" in js
+assert "ignoreDefense:skill1.skill1DamageType==='관통'" in js
+assert "{type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.50,duration:5}" in js
+assert "{type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.20,duration:8}" in js
+assert all(x["status"]=="IMPLEMENTED" for x in effect_runtime["rpg_primitives"][:8])
+print("PASS - Stage 1 RPG now uses a shared effect dispatcher for damage, buffs, mitigation, delays, stun, and DEF modifiers")

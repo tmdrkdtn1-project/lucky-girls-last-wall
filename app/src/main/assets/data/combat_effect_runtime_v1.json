@@ -1,0 +1,107 @@
+{
+  "schema": "LG_COMBAT_EFFECT_RUNTIME_V1",
+  "purpose": "Shared effect primitives for TD/RPG stabilization before PlayerProfile/Save work.",
+  "rpg_primitives": [
+    {
+      "type": "DAMAGE",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "BOSS",
+        "SELF",
+        "ALL_HEROES",
+        "LOWEST_HP_HERO",
+        "RANDOM_HERO"
+      ],
+      "notes": "ignoreDefense supported for penetration mapping"
+    },
+    {
+      "type": "HEAL",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "SELF",
+        "ALL_HEROES",
+        "LOWEST_HP_HERO"
+      ]
+    },
+    {
+      "type": "ATK_MULT",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "SELF",
+        "ALL_HEROES"
+      ]
+    },
+    {
+      "type": "RATE_MULT",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "SELF",
+        "ALL_HEROES"
+      ]
+    },
+    {
+      "type": "DAMAGE_REDUCTION",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "SELF",
+        "ALL_HEROES"
+      ]
+    },
+    {
+      "type": "ACTION_DELAY",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "SELF",
+        "ALL_HEROES",
+        "RANDOM_HERO"
+      ]
+    },
+    {
+      "type": "STUN",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "SELF",
+        "ALL_HEROES",
+        "RANDOM_HERO"
+      ]
+    },
+    {
+      "type": "DEF_MOD",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "SELF",
+        "ALL_HEROES",
+        "RANDOM_HERO"
+      ]
+    },
+    {
+      "type": "DOT",
+      "status": "NEXT"
+    },
+    {
+      "type": "SUMMON",
+      "status": "NEXT"
+    },
+    {
+      "type": "INVULNERABLE",
+      "status": "NEXT"
+    },
+    {
+      "type": "SKILL_BLOCK",
+      "status": "NEXT"
+    },
+    {
+      "type": "REFLECT",
+      "status": "NEXT"
+    }
+  ],
+  "stage1_connected": {
+    "hero": "아리아",
+    "hero_skill1": "DAMAGE + ignoreDefense (관통)",
+    "hero_skill2": "ATK_MULT + RATE_MULT + DAMAGE_REDUCTION",
+    "hero_skill3": "DAMAGE + DAMAGE_REDUCTION",
+    "boss": "철각왕 브라움",
+    "boss_basic": "DAMAGE"
+  },
+  "validation_rule": "Approved definitions may be connected only through declared runtime primitives; unsupported primitives remain data-only until implemented."
+}
