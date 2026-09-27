@@ -2,7 +2,7 @@ name: Build Android APK
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ main, stage1-playable-v01 ]
 permissions:
   contents: read
   issues: write
@@ -25,6 +25,8 @@ jobs:
         run: |
           VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
           echo "code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
+      - name: Check Stage 1 playable baseline
+        run: python3 scripts/check_stage1_playable.py
       - name: Validate inline JavaScript
         shell: bash
         run: |
