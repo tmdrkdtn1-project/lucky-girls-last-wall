@@ -170,3 +170,15 @@ assert "rpgAutoBattle=!rpgAutoBattle" in js
 assert "useRpgUltimate(ready.id,true)" in js
 assert "AUTO ON" in js and "AUTO OFF" in js
 print("PASS - RPG V1.2 shows real boss charge, destroys TD defense, targets ~60s 1x combat, and adds auto ultimate toggle")
+
+# UI spacing V1 / mobile landscape safe-area guards
+assert "--safe-left:env(safe-area-inset-left,0px)" in css
+assert "--safe-bottom:env(safe-area-inset-bottom,0px)" in css
+assert "left:calc(4% + var(--safe-left))" in css
+assert "#grid{width:min(90vw,calc(84vh * 1.8))}" in css
+assert ".unitToken{width:4.25%" in css
+assert ".enemyToken{width:3.05%" in css
+assert "left:calc(10% + var(--safe-left))" in css
+assert "bottom:calc(7% + var(--safe-bottom))" in css
+assert ".rpgHeroCard{width:min(14.5vw,156px)" in css
+print("PASS - UI spacing V1 preserves full-bleed backgrounds while giving TD/RPG combatants safe breathing room")
