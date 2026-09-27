@@ -7,7 +7,14 @@
   },
   "wave": {
     "count": 10,
-    "duration_sec": 30
+    "duration_sec": 40,
+    "wave10": {
+      "warning_at_sec": 3,
+      "boss_spawn_at_sec": 6,
+      "enrage_at_sec": 40,
+      "ends_on_timer": false,
+      "td_end_condition": "BOSS_DEFEATED"
+    }
   },
   "route": [
     [

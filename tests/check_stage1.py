@@ -46,13 +46,19 @@ assert "nearCastleFront" in js
 assert "gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'" in js
 print("PASS - castle defenders can keep firing after G breaks and enemies engage O")
 
-# Wave 10 mid-wave boss timing guards
-assert "WAVE10_BOSS_SPAWN_AT=15" in js
+# Wave timing / Wave 10 boss / enrage guards
+assert "const WAVE_DURATION=40;" in js
+assert "WAVE10_WARNING_AT=3" in js
+assert "WAVE10_BOSS_SPAWN_AT=6" in js
+assert "WAVE10_ENRAGE_AT=40" in js
 assert "waveClock<WAVE10_BOSS_SPAWN_AT" in js
 assert "BOSS APPROACHING · 3 SEC" in js
-assert "spawnWave10BossNow" not in js
 assert "spawnWave10BossMidWave" in js
-print("PASS - Wave 10 boss enters at the middle of the 30 second wave")
+assert "function triggerWave10Enrage()" in js
+assert "boss.enraged=true" in js
+assert "baseHitGap/1.25" in js
+assert "Math.round(baseDmg*1.5)" in js
+print("PASS - all waves are 40s; W10 warns at 3s, boss spawns at 6s, enrages at 40s")
 
 # Early wave clear bonus guards
 assert "function waveSpawnComplete()" in js

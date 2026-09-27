@@ -18,10 +18,19 @@
     "count": 1,
     "hp_multiplier_vs_normal": 9,
     "warning_overlay": true,
-    "warning_text": "WARNING · BOSS"
+    "warning_text": "WARNING · BOSS",
+    "warning_at_sec": 3,
+    "boss_spawn_at_sec": 6,
+    "enrage": {
+      "trigger_sec": 40,
+      "damage_multiplier": 1.5,
+      "attack_speed_multiplier": 1.25,
+      "timer_end_does_not_advance_phase": true
+    }
   },
   "boss_rpg": {
     "implemented": false,
     "status": "NOT_IMPLEMENTED_IN_GITHUB_ALPHA_YET"
-  }
+  },
+  "wave_duration_sec": 40
 }

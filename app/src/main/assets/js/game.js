@@ -2,7 +2,7 @@
 'use strict';
 
 const COLS=18, ROWS=10, CELL_COUNT=COLS*ROWS;
-const WAVE_DURATION=30;
+const WAVE_DURATION=40;
 const route=[[1,5],[2,5],[3,5],[4,5],[5,5],[6,5],[6,4],[6,3],[7,3],[8,3],[9,3],[10,3],[10,4],[10,5],[11,5],[12,5],[13,5],[14,5],[15,5],[16,5],[17,5],[18,5]];
 const TILE_ROWS=[
  'WWTTXDDDDDTTTTTTTT','TWTTDDDDDDXTTTTTTT','DDDDDPPPPPDDDDDDDD','DDDDDPDDDPDDDDDDCC',
@@ -178,7 +178,7 @@ function showWarning(text,sub='',hold=1400){
 }
 function startWaveNotice(){
  if(wave===5)showWarning('⚠ WARNING','MID BOSS · WAVE 5');
- if(wave===10)toast('Wave 10 · 보스는 웨이브 중반에 등장합니다');
+ if(wave===10)toast('Wave 10 · 3초 경고 / 6초 보스 등장 / 40초 광폭화');
 }
 function updateSpawning(dt){
  spawnClock+=dt;
@@ -187,11 +187,12 @@ function updateSpawning(dt){
   if(spawnClock>=waveSpawnInterval()&&waveSpawned<preBossNormalLimit){
    spawnClock=0;spawnEnemy('normal');waveSpawned++;
   }
-  if(!wave10WarningShown&&waveClock>=12){
+  if(!wave10WarningShown&&waveClock>=WAVE10_WARNING_AT){
    wave10WarningShown=true;
    showWarning('⚠ WARNING','BOSS APPROACHING · 3 SEC',1200);
   }
   spawnWave10BossMidWave();
+  triggerWave10Enrage();
   return;
  }
  const limit=normalCountForWave(wave);
@@ -226,9 +227,12 @@ function updateEnemies(dt,now){
   if(e.hp<=0)continue;
   if(e.pathPos<route.length-2){e.pathPos=Math.min(route.length-2,e.pathPos+e.speed*dt);continue}
   const allowed=e.kind==='normal'?gateNormals.includes(e):e===gateSpecial;if(!allowed)continue;
-  const hitGap=e.kind==='boss'?2.2:e.kind==='midboss'?1.9:1.5;
+  const baseHitGap=e.kind==='boss'?2.2:e.kind==='midboss'?1.9:1.5;
+  const hitGap=e.kind==='boss'&&e.enraged?baseHitGap/1.25:baseHitGap;
   if(now-e.lastStructureHit>=hitGap){
-   e.lastStructureHit=now;const dmg=e.kind==='boss'?40:e.kind==='midboss'?24:10;
+   e.lastStructureHit=now;
+   const baseDmg=e.kind==='boss'?40:e.kind==='midboss'?24:10;
+   const dmg=e.kind==='boss'&&e.enraged?Math.round(baseDmg*1.5):baseDmg;
    if(gHp>0)gHp=Math.max(0,gHp-dmg);else oHp=Math.max(0,oHp-dmg);
    if(oHp<=0){running=false;showWarning('DEFEAT','GATE CORE DESTROYED',999999)}
   }
@@ -268,13 +272,23 @@ function renderEnemies(){
   d.innerHTML+='<span class="hpbar"><i style="width:'+Math.max(0,e.hp/e.maxHp*100)+'%"></i></span>';enemyLayer.appendChild(d);
  }
 }
-const WAVE10_BOSS_SPAWN_AT=15;
-let wave10WarningShown=false;
+const WAVE10_BOSS_SPAWN_AT=6;
+const WAVE10_WARNING_AT=3;
+const WAVE10_ENRAGE_AT=40;
+let wave10WarningShown=false,wave10EnrageTriggered=false;
 function spawnWave10BossMidWave(){
  if(wave!==10||specialSpawned||waveClock<WAVE10_BOSS_SPAWN_AT)return;
  spawnEnemy('boss');
  specialSpawned=true;
  showWarning('⚠ BOSS','FINAL TD BOSS · WAVE 10',1700);
+}
+function triggerWave10Enrage(){
+ if(wave!==10||wave10EnrageTriggered||waveClock<WAVE10_ENRAGE_AT)return;
+ const boss=enemies.find(e=>e.hp>0&&e.kind==='boss');
+ if(!boss)return;
+ boss.enraged=true;
+ wave10EnrageTriggered=true;
+ showWarning('⚠ BOSS ENRAGED','40초 경과 · 공격력 1.5배 / 공격속도 1.25배',1800);
 }
 function waveSpawnComplete(){
  if(wave===10)return false;
@@ -298,7 +312,7 @@ function tryEarlyWaveClear(){
 }
 function advanceWave(){
  if(wave>=10)return;
- wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;wave10WarningShown=false;
+ wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;wave10WarningShown=false;wave10EnrageTriggered=false;
  startWaveNotice();
 }
 function loop(ts){
@@ -322,7 +336,7 @@ buildGrid();renderUnits();syncHUD();updateComboHighlights();requestAnimationFram
 
 window.__LG_STAGE1_TEST__={
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
- state:()=>({wave,gold,gHp,oHp,speed,simTime,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bottomVisible:bottom.classList.contains('on'),rpgPending,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
+ state:()=>({wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
  route:()=>route.slice(),
