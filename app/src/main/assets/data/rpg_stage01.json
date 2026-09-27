@@ -1,13 +1,13 @@
 {
-  "schema": "LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_1",
+  "schema": "LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_2",
   "stage": 1,
-  "intent": "Stage 1 must be clearable with one legendary hero when ultimate is used reasonably.",
+  "intent": "Stage 1 one-legendary clear target with approximately 60 seconds of RPG combat at 1x speed.",
   "boss": {
     "id": "BRAUM",
     "name": "철각왕 브라움",
     "prototype_stats": {
-      "hp": 9000,
-      "atk": 170,
+      "hp": 16000,
+      "atk": 110,
       "def": 60,
       "attack_gap_sec": 3
     }
@@ -32,7 +32,8 @@
       "fall",
       "1.5s later rise with red eyes",
       "1s roar",
-      "charge to castle front"
+      "destroy all TD units and castle defenses as roar ends",
+      "visible 1.35s charge motion to castle front"
     ],
     "rpg_intro": [
       {
@@ -88,5 +89,9 @@
     "RPG_ACTIVE",
     "RPG_VICTORY",
     "STAGE_CLEAR"
-  ]
+  ],
+  "auto_battle": {
+    "default": false,
+    "effect": "basic attacks and normal skills remain automatic; when ON, ready ultimates are also activated automatically"
+  }
 }

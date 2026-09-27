@@ -127,3 +127,25 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 #rpgScreen.prep #rpgBoss{top:15%}
 #rpgScreen.approach #rpgBoss{top:14%}
 #rpgScreen.battle #rpgBoss{top:14%}
+
+/* RPG V1.2 boss charge / destruction / auto */
+.rpgOnlyControl{display:none}
+#autoBattle.on{border-color:#e6bd4b;background:#4a3a18;box-shadow:0 0 10px #e6bd4b66}
+.enemyToken.bossCharge{
+ transition:left 1.35s cubic-bezier(.12,.82,.25,1),top 1.35s cubic-bezier(.12,.82,.25,1),transform .2s ease !important;
+ transform:translate(-50%,-50%) scale(1.18) !important;
+ animation:bossChargePulse .16s linear infinite;
+}
+@keyframes bossChargePulse{0%,100%{filter:brightness(1.1)}50%{filter:brightness(1.55)}}
+.unitToken.tdDestroyed{animation:tdUnitBreak .7s ease forwards}
+.cell.tdStructureDestroyed{animation:tdStructureBreak .85s ease forwards}
+@keyframes tdUnitBreak{
+ 0%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+ 45%{opacity:1;transform:translate(-50%,-50%) scale(1.25) rotate(12deg);filter:brightness(1.8)}
+ 100%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(55deg);filter:brightness(.5)}
+}
+@keyframes tdStructureBreak{
+ 0%{filter:brightness(1);box-shadow:inset 0 0 0 #0000}
+ 45%{filter:brightness(1.9);box-shadow:inset 0 0 22px #ff6b35}
+ 100%{filter:brightness(.35);box-shadow:inset 0 0 30px #160705}
+}

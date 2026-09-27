@@ -145,9 +145,9 @@ assert "boss.cinematicState='fallen'" in js
 assert "boss.cinematicState='rise'" in js
 assert "boss.cinematicState='roar'" in js
 assert "boss.cinematicState='charge'" in js
-assert "setTimeout(()=>{\n  startRpgBattle(tdHeroes);\n },4100);" in js
+assert "setTimeout(()=>{\n  startRpgBattle(tdHeroes);\n },4700);" in js
 assert "if(gameMode!=='TD'||rpgPending)return;" in js
-assert "hp:9000,atk:170,def:60,baseAttackGap:3.0" in js
+assert "hp:16000,atk:110,def:60,baseAttackGap:3.0" in js
 assert "setTimeout(fadeRpgSceneOut,1650)" in js
 assert "},2000);" in js and "},5000);" in js and "},8000);" in js
 assert 'id="rpgBossStatus"' in html
@@ -156,3 +156,17 @@ assert html.count('id="rpgBossHpText"') == 1
 assert "#rpgBossStatus{" in css
 assert ".enemyToken.bossFallen" in css and ".enemyToken.bossRoar" in css and ".enemyToken.bossCharge" in css
 print("PASS - RPG V1.1 locks TD commands, adds boss revival cinematic, 2/3/3 fade intro, readable top boss status, and one-legendary Stage 1 tuning")
+
+# RPG V1.2 charge motion / destruction / 60s target / auto battle guards
+assert 'id="autoBattle"' in html
+assert "rpgAutoBattle=false" in js
+assert "function destroyTdDefenseForBossCharge()" in js
+assert "tdDestroyed" in js and "tdStructureDestroyed" in js
+assert "const from=posPct(start.x,start.y),to=posPct(16.75,5)" in js
+assert "requestAnimationFrame(()=>requestAnimationFrame" in js
+assert ".enemyToken.bossCharge" in css and "1.35s" in css
+assert "@keyframes tdUnitBreak" in css and "@keyframes tdStructureBreak" in css
+assert "rpgAutoBattle=!rpgAutoBattle" in js
+assert "useRpgUltimate(ready.id,true)" in js
+assert "AUTO ON" in js and "AUTO OFF" in js
+print("PASS - RPG V1.2 shows real boss charge, destroys TD defense, targets ~60s 1x combat, and adds auto ultimate toggle")
