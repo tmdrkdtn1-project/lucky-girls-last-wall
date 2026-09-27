@@ -41,6 +41,7 @@ const HERO_RECIPES=[
 const cells=[], units=new Map(), enemies=[];
 let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
 let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false,waveEnding=false;
+let moveModeUnitId=null,comboPlacement=null,manualPaused=false;
 
 const $=id=>document.getElementById(id);
 const grid=$('grid'), unitLayer=$('unitLayer'), enemyLayer=$('enemyLayer'), bottom=$('bottomUI'), actions=$('actions'), title=$('contextTitle');
@@ -69,6 +70,8 @@ function clearSelection(hide=true){
  if(hide)bottom.classList.remove('on');
 }
 function onCellTap(x,y){
+ if(comboPlacement){chooseHeroPlacement(x,y);return}
+ if(moveModeUnitId){completeMove(x,y);return}
  const cell=cells[cellIndex(x,y)],u=units.get(tileKey(x,y));
  if(u){selectUnit(u);return}
  if(cell.code==='D'||cell.code==='C'){selectCell(x,y);return}
@@ -91,25 +94,35 @@ function renderBottomForEmpty(x,y){
  showBottom('빈 배치칸 '+x+','+y+' · 기본 아군 배치');
  STAGE1_BASE_IDS.map(id=>UNIT_DEFS[id]).forEach(t=>actionButton(t.name,t.cost+'G · ATK '+t.atk,()=>placeUnit(x,y,t),false,gold<t.cost));
 }
+function moveCooldownRemaining(u){return Math.max(0,(u.moveCooldownUntil||0)-simTime)}
+function renderMoveAction(u){
+ const remain=moveCooldownRemaining(u);
+ actionButton('이동',remain>0?'재이동 대기 '+remain.toFixed(1)+'초':'빈 자리 이동 / 점유 자리와 교대',()=>beginMove(u),false,remain>0);
+}
 function renderBottomForUnit(u){
- if(u.type==='hero_aria'){showBottom('전설 영웅 · 아리아');actionButton('이동','영웅 이동은 다음 알파 단계에서 연결',()=>toast('이동 시스템 준비 중'),false,true);return}
+ if(u.type==='hero_aria'){
+  showBottom('전설 영웅 · 아리아');
+  renderMoveAction(u);
+  return;
+ }
  const t=UNIT_DEFS[u.type];showBottom(t.name+' · '+u.x+','+u.y+' · T'+t.tier);
  if(t.next.length){
   t.next.map(id=>UNIT_DEFS[id]).forEach(n=>actionButton('업그레이드 → '+n.name,n.cost+'G · 같은 '+t.family+' 계열',()=>upgradeUnit(u,n),false,gold<n.cost));
  }else{
   actionButton('최종 전문화','이 유닛은 현재 최종 단계',()=>{},false,true);
  }
+ renderMoveAction(u);
  actionButton('판매','구매/업그레이드 누적비용의 일부 회수',()=>sellUnit(u));
 }
 function renderBottomForCombo(u,recipe){
  const t=UNIT_DEFS[u.type];showBottom(t.name+' · 전설 조합 가능');
- actionButton('★ '+recipe.name+' 조합','기사단장 2명 소모 · 선택한 기사단장 위치에 배치',()=>summonHeroFromRecipe(u,recipe),true,false);
+ actionButton('★ '+recipe.name+' 조합','재료 자리 중 영웅 배치 위치를 직접 선택',()=>beginHeroSummon(u,recipe),true,false);
  actionButton('유닛 정보',t.name+' · KNIGHT T3',()=>{},false,true);
  actionButton('판매','현재 유닛 판매',()=>sellUnit(u));
 }
 function placeUnit(x,y,t){
  if(units.has(tileKey(x,y))||gold<t.cost)return;
- gold-=t.cost;units.set(tileKey(x,y),{id:'u'+Date.now()+Math.random(),x,y,type:t.id,lastShot:0,spent:t.cost});
+ gold-=t.cost;units.set(tileKey(x,y),{id:'u'+Date.now()+Math.random(),x,y,type:t.id,lastShot:0,spent:t.cost,moveCooldownUntil:0});
  cells[cellIndex(x,y)].el.classList.add('occupied');postUnitChange();toast(t.name+' 배치');
 }
 function upgradeUnit(u,next){
@@ -142,13 +155,72 @@ function updateComboHighlights(){
  document.querySelectorAll('.cell.combo').forEach(e=>e.classList.remove('combo'));
  HERO_RECIPES.forEach(r=>{const mats=recipeMaterials(r);if(mats)mats.forEach(m=>cells[cellIndex(m.x,m.y)].el.classList.add('combo'))});
 }
-function summonHeroFromRecipe(selectedMaterial,recipe){
+function beginHeroSummon(selectedMaterial,recipe){
  if(heroCount>=5){toast('영웅 슬롯 5/5');return}
- const mats=recipeMaterials(recipe);if(!mats||!mats.some(m=>m.id===selectedMaterial.id))return;
- const sx=selectedMaterial.x,sy=selectedMaterial.y;
+ const mats=recipeMaterials(recipe);
+ if(!mats||!mats.some(m=>m.id===selectedMaterial.id))return;
+ moveModeUnitId=null;clearMoveTargets();
+ comboPlacement={recipe,materialIds:mats.map(m=>m.id),positions:mats.map(m=>({x:m.x,y:m.y})),wasRunning:running};
+ running=false;
+ clearSelection(true);
+ document.querySelectorAll('.cell.comboPlacement').forEach(e=>e.classList.remove('comboPlacement'));
+ comboPlacement.positions.forEach(p=>cells[cellIndex(p.x,p.y)].el.classList.add('comboPlacement'));
+ showWarning(recipe.name+'이 출전했다!','재료 유닛이 있던 자리 중 배치할 위치를 선택하세요',999999);
+}
+function chooseHeroPlacement(x,y){
+ if(!comboPlacement)return;
+ const pos=comboPlacement.positions.find(p=>p.x===x&&p.y===y);
+ if(!pos){toast('영웅은 조합 재료가 있던 자리에만 배치할 수 있습니다');return}
+ const {recipe,materialIds,wasRunning}=comboPlacement;
+ const mats=[...units.values()].filter(u=>materialIds.includes(u.id));
+ if(mats.length!==materialIds.length){cancelHeroPlacement('조합 재료 상태가 변경되었습니다');return}
  mats.forEach(m=>{units.delete(tileKey(m.x,m.y));cells[cellIndex(m.x,m.y)].el.classList.remove('occupied')});
- units.set(tileKey(sx,sy),{id:'h'+Date.now(),x:sx,y:sy,type:'hero_aria',hero:'아리아',atk:recipe.atk,range:recipe.range,rate:recipe.rate,lastShot:0,spent:0});
- cells[cellIndex(sx,sy)].el.classList.add('occupied');heroCount++;postUnitChange();toast('전설 영웅 아리아 조합 완료');
+ const hero={id:'h'+Date.now(),x,y,type:'hero_aria',hero:recipe.name,atk:recipe.atk,range:recipe.range,rate:recipe.rate,lastShot:0,spent:0,moveCooldownUntil:simTime+5};
+ units.set(tileKey(x,y),hero);cells[cellIndex(x,y)].el.classList.add('occupied');heroCount++;
+ comboPlacement=null;document.querySelectorAll('.cell.comboPlacement').forEach(e=>e.classList.remove('comboPlacement'));
+ clearTimeout(showWarning.t);$('bossWarning').classList.remove('on');
+ renderUnits();syncHUD();updateComboHighlights();clearSelection(true);
+ running=wasRunning&&!manualPaused&&!rpgPending;
+ toast(recipe.name+' 배치 완료 · 이동 재사용 5초');
+}
+function cancelHeroPlacement(msg){
+ comboPlacement=null;document.querySelectorAll('.cell.comboPlacement').forEach(e=>e.classList.remove('comboPlacement'));
+ clearTimeout(showWarning.t);$('bossWarning').classList.remove('on');if(msg)toast(msg);
+}
+function clearMoveTargets(){document.querySelectorAll('.cell.moveTarget').forEach(e=>e.classList.remove('moveTarget'))}
+function findUnitById(id){return [...units.values()].find(u=>u.id===id)}
+function beginMove(u){
+ if(moveCooldownRemaining(u)>0){toast('이동 재사용 대기 중');return}
+ moveModeUnitId=u.id;comboPlacement=null;clearMoveTargets();clearSelection(true);
+ cells.forEach(c=>{if(c&&(c.code==='D'||c.code==='C'))c.el.classList.add('moveTarget')});
+ showBottom((u.hero||UNIT_DEFS[u.type].name)+' 이동 · 목적지를 선택하세요');
+ actionButton('이동 취소','현재 위치 유지',cancelMove);
+}
+function cancelMove(){moveModeUnitId=null;clearMoveTargets();clearSelection(true)}
+function completeMove(x,y){
+ const moving=findUnitById(moveModeUnitId);
+ if(!moving){cancelMove();return}
+ const cell=cells[cellIndex(x,y)];
+ if(!cell||(cell.code!=='D'&&cell.code!=='C')){toast('배치 가능한 칸만 이동할 수 있습니다');return}
+ if(moving.x===x&&moving.y===y){cancelMove();return}
+ if(moveCooldownRemaining(moving)>0){toast('이동 재사용 대기 중');cancelMove();return}
+ const target=units.get(tileKey(x,y));
+ if(target&&moveCooldownRemaining(target)>0){toast('교대할 유닛이 이동 재사용 대기 중입니다');return}
+ const sx=moving.x,sy=moving.y;
+ units.delete(tileKey(sx,sy));
+ if(target){
+  units.delete(tileKey(x,y));
+  target.x=sx;target.y=sy;target.moveCooldownUntil=simTime+5;
+  units.set(tileKey(sx,sy),target);
+ }else{
+  cells[cellIndex(sx,sy)].el.classList.remove('occupied');
+ }
+ moving.x=x;moving.y=y;moving.moveCooldownUntil=simTime+5;
+ units.set(tileKey(x,y),moving);
+ cells[cellIndex(x,y)].el.classList.add('occupied');
+ if(target)cells[cellIndex(sx,sy)].el.classList.add('occupied');
+ moveModeUnitId=null;clearMoveTargets();renderUnits();updateComboHighlights();clearSelection(true);
+ toast(target?'유닛 교대 완료 · 양쪽 5초 이동 잠금':'이동 완료 · 5초 이동 잠금');
 }
 
 function renderUnits(){
@@ -330,13 +402,21 @@ function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block'
 $('closeBottom').onclick=()=>clearSelection(true);
 $('battlefield').addEventListener('click',()=>clearSelection(true));
 $('speed').onclick=()=>{speed=speed===1?2:speed===2?3:1;$('speed').textContent='×'+speed};
-$('pause').onclick=()=>{if(rpgPending)return;running=!running;$('pause').textContent=running?'Ⅱ':'▶'};
+function syncPauseButton(){$('pause').textContent=manualPaused?'▶ 계속':'Ⅱ 일시정지'}
+$('pause').onclick=()=>{
+ if(rpgPending||comboPlacement)return;
+ manualPaused=!manualPaused;
+ running=!manualPaused;
+ syncPauseButton();
+ if(manualPaused)showWarning('일시정지','전투 시간이 멈췄습니다',900);
+};
+syncPauseButton();
 
 buildGrid();renderUnits();syncHUD();updateComboHighlights();requestAnimationFrame(loop);
 
 window.__LG_STAGE1_TEST__={
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
- state:()=>({wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
+ state:()=>({wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
  route:()=>route.slice(),

@@ -55,3 +55,6 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 @media (max-height:520px){:root{--top:46px;--bottom:100px}.hudBox{padding:4px 8px;font-size:12px}.hudBtn{padding:4px 8px}.action{min-width:126px;padding:6px}.action b{font-size:12px}.action small{font-size:10px}}
 
 #bossWarning{position:fixed;z-index:120;left:50%;top:50%;transform:translate(-50%,-50%) scale(.88);min-width:42vw;text-align:center;padding:20px 32px;border:2px solid #ffb25e;background:#140d0de8;box-shadow:0 0 60px #ff3d2477;opacity:0;pointer-events:none;border-radius:16px;transition:.18s ease}#bossWarning.on{opacity:1;transform:translate(-50%,-50%) scale(1)}#bossWarningTitle{font-size:clamp(28px,5vw,64px);font-weight:1000;letter-spacing:.08em;color:#ffcf77;text-shadow:0 0 18px #ff5522}#bossWarningSub{margin-top:6px;font-size:clamp(12px,1.6vw,22px);font-weight:900;color:#fff}
+
+.cell.moveTarget{box-shadow:inset 0 0 0 3px #72d8ff,0 0 12px #72d8ffaa;z-index:4}
+.cell.comboPlacement{outline:4px solid #ffd84d;outline-offset:-4px;box-shadow:inset 0 0 18px #ffd84d99,0 0 18px #ffd84dcc;z-index:7}

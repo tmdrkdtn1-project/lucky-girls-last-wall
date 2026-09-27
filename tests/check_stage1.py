@@ -67,3 +67,18 @@ assert "remaining*5" in js
 assert "적 전멸 보너스" in js
 assert "wave>=10" in js
 print("PASS - early enemy wipe ends non-boss waves and grants explicit bonus gold")
+
+# Unit movement / hero placement / pause guards
+assert "moveCooldownUntil:simTime+5" in js
+assert "function beginMove(u)" in js and "function completeMove(x,y)" in js
+assert "target.moveCooldownUntil=simTime+5" in js
+assert "유닛 교대 완료 · 양쪽 5초 이동 잠금" in js
+assert "function beginHeroSummon" in js and "function chooseHeroPlacement" in js
+assert "이 출전했다!" in js
+assert "running=false;" in js
+assert "comboPlacement.positions.find" in js
+assert "영웅은 조합 재료가 있던 자리에만 배치할 수 있습니다" in js
+assert "Ⅱ 일시정지" in html
+assert "manualPaused" in js and "▶ 계속" in js
+assert ".cell.moveTarget" in css and ".cell.comboPlacement" in css
+print("PASS - all units move/swap with 5s lock; hero placement pauses and uses material slots; manual pause is explicit")
