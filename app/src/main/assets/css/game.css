@@ -64,3 +64,25 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 
 .cell.moveTarget{box-shadow:inset 0 0 0 3px #72d8ff,0 0 12px #72d8ffaa;z-index:4}
 .cell.comboPlacement{outline:4px solid #ffd84d;outline-offset:-4px;box-shadow:inset 0 0 18px #ffd84d99,0 0 18px #ffd84dcc;z-index:7}
+
+.rpgHud{display:none}
+#rpgScreen{position:absolute;left:0;right:0;top:var(--top);bottom:0;display:none;overflow:hidden;background:linear-gradient(#301f23,#1c1820 52%,#11151c)}
+#rpgScreen.on{display:block}
+#rpgArena{position:absolute;inset:0;background:radial-gradient(circle at 50% 22%,#8c4e3e55,transparent 28%),linear-gradient(180deg,#402b31,#171a20 65%,#0d1117)}
+#rpgPhaseLabel{position:absolute;top:3%;left:50%;transform:translateX(-50%);font-size:clamp(12px,1.4vw,18px);font-weight:1000;letter-spacing:.12em;color:#ffce8a}
+#rpgBoss{position:absolute;left:50%;top:11%;transform:translateX(-50%);width:min(35vw,360px);text-align:center}
+#rpgBossBody{margin:auto;width:42%;aspect-ratio:.72;border-radius:48% 48% 32% 32%;background:linear-gradient(#9e4b3b,#4c1f24);border:3px solid #e18a62;box-shadow:0 0 40px #db503966;display:flex;align-items:center;justify-content:center;font-weight:1000;font-size:clamp(18px,2.4vw,34px)}
+#rpgBossBar{height:12px;margin-top:10px;background:#251316;border:1px solid #9d5e56;border-radius:8px;overflow:hidden}
+#rpgBossBar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#b72f31,#e86a3d)}
+#rpgHeroRow{position:absolute;left:6%;right:6%;bottom:5%;display:flex;justify-content:center;align-items:flex-end;gap:2%}
+.rpgHeroCard{width:min(16vw,170px);min-width:100px;padding:8px;border:1px solid #6f7d86;border-radius:12px;background:#141b22e8;box-shadow:0 5px 18px #0009;text-align:center}
+.rpgHeroCard.ko{opacity:.35;filter:grayscale(1)}
+.rpgHeroFigure{margin:0 auto 5px;width:48%;aspect-ratio:.75;border-radius:45% 45% 28% 28%;background:linear-gradient(#d9b56e,#735028);border:2px solid #f0d18c;display:flex;align-items:center;justify-content:center;font-weight:1000;color:#251b08}
+.rpgHeroName{font-weight:1000;font-size:13px}
+.rpgHp,.rpgUlt{height:8px;margin-top:5px;background:#242b30;border-radius:5px;overflow:hidden}
+.rpgHp i{display:block;height:100%;background:#5bd06a}
+.rpgUlt i{display:block;height:100%;background:#e2bc46}
+.rpgUltBtn{margin-top:6px;width:100%;padding:6px;border-radius:8px;border:1px solid #8d7940;background:#3d3219;color:#fff;font-weight:900}
+.rpgUltBtn.ready{box-shadow:0 0 12px #ffd64f;animation:topAlertBlink .55s steps(2,end) infinite}
+.rpgUltBtn:disabled{opacity:.4}
+.rpgStatus{margin-top:4px;min-height:14px;font-size:10px;color:#c9d2d8}

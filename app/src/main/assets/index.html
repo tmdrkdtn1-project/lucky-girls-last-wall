@@ -10,10 +10,12 @@
 <div id="app">
 <header id="topHUD">
   <div class="hudBox">STAGE 1</div>
-  <div class="hudBox">WAVE <span id="wave">1</span>/10</div>
-  <div class="hudBox">🪙 <span id="gold">500</span></div>
-  <div class="hudBox">G <span id="gHp">100</span>/100</div>
-  <div class="hudBox">O <span id="oHp">120</span>/120</div>
+  <div class="hudBox tdHud">WAVE <span id="wave">1</span>/10</div>
+  <div class="hudBox tdHud">🪙 <span id="gold">500</span></div>
+  <div class="hudBox tdHud">G <span id="gHp">100</span>/100</div>
+  <div class="hudBox tdHud">O <span id="oHp">120</span>/120</div>
+  <div class="hudBox rpgHud" id="rpgBossName">철각왕 브라움</div>
+  <div class="hudBox rpgHud rpgBossHpBox">BOSS <span id="rpgBossHpText">0/0</span></div>
   <div class="hudGrow"></div>
   <button class="hudBtn" id="speed">×1</button>
   <button class="hudBtn" id="pause">Ⅱ 일시정지</button>
@@ -25,6 +27,16 @@
     <div id="grid"><div id="unitLayer"></div><div id="enemyLayer"></div><div id="fxLayer"></div></div>
   </div>
 </main>
+<section id="rpgScreen" aria-hidden="true">
+  <div id="rpgArena">
+    <div id="rpgPhaseLabel">PHASE 1</div>
+    <div id="rpgBoss">
+      <div id="rpgBossBody">BOSS</div>
+      <div id="rpgBossBar"><i id="rpgBossBarFill"></i></div>
+    </div>
+    <div id="rpgHeroRow"></div>
+  </div>
+</section>
 <div id="bottomUI">
   <button id="closeBottom">✕</button>
   <div id="contextTitle"></div>

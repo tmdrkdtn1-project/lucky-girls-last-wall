@@ -5,7 +5,7 @@ plugins {
 
 val githubRunNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull()
 val buildNumber = githubRunNumber ?: 1
-val baseVersionName = "0.3.2a-stage1-top-alerts-boss-scale-fix"
+val baseVersionName = "0.4.0-stage1-rpg-boss-prototype"
 
 android {
     namespace = "com.luckygirls.lastwall"

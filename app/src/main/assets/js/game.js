@@ -42,9 +42,11 @@ const cells=[], units=new Map(), enemies=[];
 let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
 let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false,waveEnding=false;
 let moveModeUnitId=null,comboPlacement=null,manualPaused=false;
+let gameMode='TD',rpgState=null,rpgSimTime=0;
 
 const $=id=>document.getElementById(id);
 const grid=$('grid'), unitLayer=$('unitLayer'), enemyLayer=$('enemyLayer'), bottom=$('bottomUI'), actions=$('actions'), title=$('contextTitle');
+const rpgScreen=$('rpgScreen'),rpgHeroRow=$('rpgHeroRow');
 
 function tileKey(x,y){return x+','+y}
 function cellIndex(x,y){return (y-1)*COLS+(x-1)}
@@ -334,9 +336,133 @@ function updateUnits(now){
   }
  }
 }
-function enterRpgPlaceholder(){
- if(rpgPending)return;rpgPending=true;running=false;
- showWarning('TD BOSS DOWN','RPG BOSS BATTLE · NOT IMPLEMENTED YET',999999);
+const RPG_HERO_DEFS={
+ ARIA:{
+  name:'아리아',hp:2600,atk:175,def:125,
+  basicGap:1.0,skill1Gap:9,skill2Gap:16,
+  skill1Name:'성광 참격',skill2Name:'수호의 맹세',ultimateName:'최후의 성역'
+ }
+};
+const RPG_BOSS_DEF={name:'철각왕 브라움',hp:15000,atk:360,def:80,baseAttackGap:2.5};
+
+function enterRpgPlaceholder(){enterRpgBattle()}
+function enterRpgBattle(){
+ if(rpgPending)return;
+ rpgPending=true;running=false;clearSelection(true);cancelMove();
+ const tdHeroes=[...units.values()].filter(u=>u.type==='hero_aria').slice(0,5);
+ showWarning('TD BOSS DOWN','RPG BOSS BATTLE',900);
+ setTimeout(()=>startRpgBattle(tdHeroes),650);
+}
+function startRpgBattle(tdHeroes){
+ gameMode='RPG';rpgPending=false;manualPaused=false;rpgSimTime=0;
+ const heroes=tdHeroes.map((u,i)=>{
+  const d=RPG_HERO_DEFS.ARIA;
+  return {id:'rpg_'+u.id,heroId:'ARIA',name:d.name,maxHp:d.hp,hp:d.hp,atk:d.atk,def:d.def,
+   basicGap:d.basicGap,skill1Gap:d.skill1Gap,skill2Gap:d.skill2Gap,lastBasic:-999,lastSkill1:0,lastSkill2:0,
+   buffUntil:0,ult:0,ko:false,slot:i};
+ });
+ rpgState={
+  heroes,
+  boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,lastAttack:0,phase:1,enraged:false},
+  result:null
+ };
+ $('battlefield').style.display='none';
+ rpgScreen.classList.add('on');rpgScreen.setAttribute('aria-hidden','false');
+ document.querySelectorAll('.tdHud').forEach(e=>e.style.display='none');
+ document.querySelectorAll('.rpgHud').forEach(e=>e.style.display='flex');
+ $('rpgBossName').textContent=rpgState.boss.name;
+ syncPauseButton();renderRpg();
+ if(!heroes.length){finishRpgDefeat('출전 가능한 영웅이 없습니다');return}
+ running=true;
+ showWarning('RPG BOSS BATTLE',rpgState.boss.name,1100);
+}
+function rpgDamageToBoss(raw){
+ const b=rpgState.boss;
+ return Math.max(1,Math.round(raw-Math.max(0,b.def*.35)));
+}
+function rpgDamageToHero(hero,raw){
+ return Math.max(1,Math.round(raw-Math.max(0,hero.def*.45)));
+}
+function rpgAliveHeroes(){return rpgState.heroes.filter(h=>!h.ko&&h.hp>0)}
+function updateRpg(dt){
+ if(!rpgState||rpgState.result)return;
+ rpgSimTime+=dt;
+ const b=rpgState.boss;
+ for(const h of rpgAliveHeroes()){
+  const buff=h.buffUntil>rpgSimTime?1.15:1;
+  if(rpgSimTime-h.lastBasic>=h.basicGap){
+   h.lastBasic=rpgSimTime;b.hp-=rpgDamageToBoss(h.atk*buff);h.ult=Math.min(100,h.ult+6);
+  }
+  if(rpgSimTime-h.lastSkill1>=h.skill1Gap){
+   h.lastSkill1=rpgSimTime;b.hp-=rpgDamageToBoss(h.atk*1.65*buff);h.ult=Math.min(100,h.ult+12);
+  }
+  if(rpgSimTime-h.lastSkill2>=h.skill2Gap){
+   h.lastSkill2=rpgSimTime;h.buffUntil=rpgSimTime+8;
+  }
+ }
+ if(b.hp<=0){b.hp=0;finishRpgVictory();return}
+ const ratio=b.hp/b.maxHp;
+ const nextPhase=ratio<=.35?3:ratio<=.70?2:1;
+ if(nextPhase!==b.phase){
+  b.phase=nextPhase;
+  if(nextPhase===3)b.enraged=true;
+  showWarning(nextPhase===3?'⚠ BOSS ENRAGED':'BOSS PHASE '+nextPhase,nextPhase===3?'HP 35% · 최종 광폭화':'공격 패턴 강화',1200);
+ }
+ const attackGap=b.baseAttackGap/(b.phase===1?1:b.phase===2?1.18:1.4);
+ if(rpgSimTime-b.lastAttack>=attackGap){
+  b.lastAttack=rpgSimTime;
+  const alive=rpgAliveHeroes();
+  if(alive.length){
+   const count=b.phase===1?1:Math.min(alive.length,b.phase);
+   const targets=alive.slice().sort(()=>Math.random()-.5).slice(0,count);
+   targets.forEach(h=>{
+    const raw=b.atk*(b.phase===1?1:b.phase===2?1.15:1.35);
+    h.hp=Math.max(0,h.hp-rpgDamageToHero(h,raw));h.ult=Math.min(100,h.ult+10);
+    if(h.hp<=0)h.ko=true;
+   });
+  }
+ }
+ if(!rpgAliveHeroes().length){finishRpgDefeat('모든 영웅이 전투불능');return}
+ renderRpg();
+}
+function useRpgUltimate(heroId){
+ if(gameMode!=='RPG'||!rpgState||rpgState.result||manualPaused)return;
+ const h=rpgState.heroes.find(x=>x.id===heroId);
+ if(!h||h.ko||h.ult<100)return;
+ h.ult=0;
+ const dmg=rpgDamageToBoss(h.atk*4);
+ rpgState.boss.hp=Math.max(0,rpgState.boss.hp-dmg);
+ showWarning(h.name+' · '+RPG_HERO_DEFS[h.heroId].ultimateName,'ULTIMATE · '+dmg+' DAMAGE',850);
+ if(rpgState.boss.hp<=0)finishRpgVictory();else renderRpg();
+}
+function finishRpgVictory(){
+ if(!rpgState||rpgState.result)return;
+ rpgState.result='VICTORY';running=false;
+ showWarning('STAGE CLEAR','RPG BOSS DEFEATED',999999);renderRpg();
+}
+function finishRpgDefeat(reason){
+ if(!rpgState||rpgState.result)return;
+ rpgState.result='DEFEAT';running=false;
+ showWarning('RPG BATTLE FAILED',reason,999999);renderRpg();
+}
+function renderRpg(){
+ if(!rpgState)return;
+ const b=rpgState.boss;
+ $('rpgBossHpText').textContent=Math.ceil(b.hp)+'/'+b.maxHp;
+ $('rpgBossBarFill').style.width=Math.max(0,b.hp/b.maxHp*100)+'%';
+ $('rpgPhaseLabel').textContent=b.enraged?'PHASE 3 · ENRAGED':'PHASE '+b.phase;
+ rpgHeroRow.innerHTML='';
+ for(const h of rpgState.heroes){
+  const card=document.createElement('div');card.className='rpgHeroCard'+(h.ko?' ko':'');
+  const hpPct=Math.max(0,h.hp/h.maxHp*100),ultPct=Math.max(0,h.ult);
+  card.innerHTML='<div class="rpgHeroFigure">아</div><div class="rpgHeroName">'+h.name+'</div>'+
+   '<div class="rpgHp"><i style="width:'+hpPct+'%"></i></div>'+
+   '<div class="rpgUlt"><i style="width:'+ultPct+'%"></i></div>'+
+   '<button class="rpgUltBtn '+(h.ult>=100&&!h.ko?'ready':'')+'" '+(h.ult>=100&&!h.ko?'':'disabled')+'>ULT '+Math.floor(h.ult)+'%</button>'+
+   '<div class="rpgStatus">'+(h.ko?'K.O.':h.buffUntil>rpgSimTime?'수호의 맹세':'AUTO ATTACK')+'</div>';
+  const btn=card.querySelector('.rpgUltBtn');btn.onclick=()=>useRpgUltimate(h.id);
+  rpgHeroRow.appendChild(card);
+ }
 }
 function renderEnemies(){
  enemyLayer.innerHTML='';
@@ -393,9 +519,14 @@ function advanceWave(){
 function loop(ts){
  const raw=Math.min(.05,(ts-last)/1000);last=ts;
  if(running){
-  const dt=raw*speed;simTime+=dt;waveClock+=dt;updateEnemies(dt,simTime);updateUnits(simTime);
-  if(!tryEarlyWaveClear()&&wave<10&&waveClock>=WAVE_DURATION)advanceWave();
-  renderEnemies();syncHUD();
+  const dt=raw*speed;
+  if(gameMode==='TD'){
+   simTime+=dt;waveClock+=dt;updateEnemies(dt,simTime);updateUnits(simTime);
+   if(!tryEarlyWaveClear()&&wave<10&&waveClock>=WAVE_DURATION)advanceWave();
+   renderEnemies();syncHUD();
+  }else if(gameMode==='RPG'){
+   updateRpg(dt);
+  }
  }
  requestAnimationFrame(loop);
 }
@@ -407,7 +538,7 @@ $('battlefield').addEventListener('click',()=>clearSelection(true));
 $('speed').onclick=()=>{speed=speed===1?2:speed===2?3:1;$('speed').textContent='×'+speed};
 function syncPauseButton(){$('pause').textContent=manualPaused?'▶ 계속':'Ⅱ 일시정지'}
 $('pause').onclick=()=>{
- if(rpgPending||comboPlacement)return;
+ if(rpgPending||comboPlacement||(rpgState&&rpgState.result))return;
  manualPaused=!manualPaused;
  running=!manualPaused;
  syncPauseButton();
@@ -419,12 +550,13 @@ buildGrid();renderUnits();syncHUD();updateComboHighlights();requestAnimationFram
 
 window.__LG_STAGE1_TEST__={
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
- state:()=>({wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
+ state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossHp:rpgState.boss.hp,bossPhase:rpgState.boss.phase,heroes:rpgState.heroes.map(h=>({name:h.name,hp:h.hp,ult:h.ult,ko:h.ko})),result:rpgState.result}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
  route:()=>route.slice(),
  recipes:()=>HERO_RECIPES,
  unitDefs:()=>UNIT_DEFS,
- standard:'LG_STAGE1_ALPHA_FIX_V2'
+ startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.type==='hero_aria').slice(0,5)),
+ standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1'
 };
 })();

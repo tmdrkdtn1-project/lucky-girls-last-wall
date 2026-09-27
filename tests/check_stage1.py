@@ -27,7 +27,7 @@ assert "replaceUnit" not in js
 assert "wave===5" in js and "midboss" in js
 assert "normalCountForWave(w){return (10+w*2)*2}" in js
 assert "*1.2" in js
-assert "RPG BOSS BATTLE · NOT IMPLEMENTED YET" in js
+assert "RPG BOSS BATTLE" in js
 assert "bossWarning" in html
 print("PASS - V2 unit tree / hero recipe / midboss / pressure / boss warning guards")
 
@@ -100,3 +100,22 @@ assert "#bossWarning.on{opacity:1;animation:topAlertBlink" in css
 assert "#toast{position:fixed" in css and "animation:topAlertBlink" in css
 assert "\\\\n.enemyToken.boss" not in css
 print("PASS - boss matches midboss scale and all alerts stay in blinking top HUD area")
+
+# RPG boss prototype guards
+assert 'id="rpgScreen"' in html
+assert 'id="rpgHeroRow"' in html
+assert "const RPG_HERO_DEFS" in js
+assert "ARIA:{" in js and "hp:2600,atk:175,def:125" in js
+assert "const RPG_BOSS_DEF" in js
+assert "function enterRpgBattle()" in js
+assert "function startRpgBattle(tdHeroes)" in js
+assert "function updateRpg(dt)" in js
+assert "function useRpgUltimate(heroId)" in js
+assert "function finishRpgVictory()" in js
+assert "function finishRpgDefeat(reason)" in js
+assert "gameMode==='RPG'" in js
+assert "STAGE CLEAR" in js
+assert "RPG BATTLE FAILED" in js
+assert "PHASE 3 · ENRAGED" in js
+assert ".rpgHeroCard" in css and "#rpgBossBody" in css
+print("PASS - TD boss now hands off to playable RPG boss prototype with 1-5 TD heroes")

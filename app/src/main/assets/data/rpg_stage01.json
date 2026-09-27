@@ -1,0 +1,65 @@
+{
+  "schema": "LG_STAGE1_RPG_BOSS_PROTOTYPE_V1",
+  "stage": 1,
+  "boss": {
+    "id": "BRAUM",
+    "name": "철각왕 브라움",
+    "prototype_stats": {
+      "hp": 15000,
+      "atk": 360,
+      "def": 80,
+      "attack_gap_sec": 2.5
+    }
+  },
+  "phases": [
+    {
+      "hp_range": "100-70%",
+      "phase": 1
+    },
+    {
+      "hp_range": "70-35%",
+      "phase": 2
+    },
+    {
+      "hp_range": "35-0%",
+      "phase": 3,
+      "enraged": true
+    }
+  ],
+  "party": {
+    "source": "TD_SUMMONED_HEROES_ONLY",
+    "max": 5,
+    "layout": "ONE_HORIZONTAL_ROW"
+  },
+  "heroes": {
+    "ARIA": {
+      "source_stats": {
+        "hp": 2600,
+        "atk": 175,
+        "def": 125
+      },
+      "auto_basic": true,
+      "auto_skill1": {
+        "name": "성광 참격",
+        "cooldown_sec": 9
+      },
+      "auto_skill2": {
+        "name": "수호의 맹세",
+        "cooldown_sec": 16,
+        "buff_sec": 8
+      },
+      "manual_ultimate": {
+        "name": "최후의 성역",
+        "gauge_max": 100
+      },
+      "note": "RPG damage multipliers are prototype-only and not final balance."
+    }
+  },
+  "state_flow": [
+    "TD_BOSS_DEAD",
+    "RPG_TRANSITION",
+    "RPG_ACTIVE",
+    "RPG_VICTORY",
+    "STAGE_CLEAR"
+  ]
+}
