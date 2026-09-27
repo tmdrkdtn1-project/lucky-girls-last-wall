@@ -5,12 +5,13 @@
     "소스 원문을 그대로 보존하고, 게임 내 최신 사용자 확정 규칙이 충돌 시 우선한다.",
     "아리아 조합은 USER_LOCKED 2×기사단장이다.",
     "RPG 관통 영웅 스킬은 DEF 100% 무시로 확정한다.",
-    "TD same-cell 판정은 적 논리 스프라이트 footprint가 해당 칸과 조금이라도 겹치면 성립한다."
+    "TD same-cell 판정은 적 논리 스프라이트 footprint가 해당 칸과 조금이라도 겹치면 성립한다.",
+    "skill_enemies는 적군 캐릭터 시트의 특수효과 또는 명시적 특수 TD 역할이 있는 적만 포함한다."
   ],
   "counts": {
     "heroes": 20,
     "bosses": 50,
-    "skill_enemies": 65
+    "skill_enemies": 35
   },
   "effect_taxonomy": [
     "DAMAGE",
@@ -3413,60 +3414,9 @@
     {
       "region": "서부 왕국",
       "category": "인간형",
-      "name": "산악 약탈자",
-      "td_role": "기본 보병",
-      "special_effect": "불가능",
-      "note": "정규군 아님",
-      "stats": {
-        "hp": 110,
-        "def": 0,
-        "move_speed": 1,
-        "wall_atk": 12,
-        "wall_attack_gap": 1.2
-      },
-      "air": "1.2",
-      "source_gap": null
-    },
-    {
-      "region": "서부 왕국",
-      "category": "인간형",
-      "name": "협곡 강도",
-      "td_role": "고속 근접",
-      "special_effect": "불가능",
-      "note": "정규군 아님",
-      "stats": {
-        "hp": 86,
-        "def": 0,
-        "move_speed": 1.35,
-        "wall_atk": 11,
-        "wall_attack_gap": 1.02
-      },
-      "air": "1.02",
-      "source_gap": null
-    },
-    {
-      "region": "서부 왕국",
-      "category": "인간형",
-      "name": "탈영 철갑병",
-      "td_role": "고방어",
-      "special_effect": "불가능",
-      "note": "변절/탈영 설정",
-      "stats": {
-        "hp": 148,
-        "def": 12,
-        "move_speed": 0.82,
-        "wall_atk": 14,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
-      "source_gap": null
-    },
-    {
-      "region": "서부 왕국",
-      "category": "인간형",
       "name": "화약 밀수꾼",
       "td_role": "사망 시 폭발",
-      "special_effect": "불가능",
+      "special_effect": "없음",
       "note": "폭발형",
       "stats": {
         "hp": 94,
@@ -3475,15 +3425,15 @@
         "wall_atk": 12,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
+      "air": "불가능",
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음"
     },
     {
       "region": "서부 왕국",
       "category": "인간형",
       "name": "광산 파괴자",
       "td_role": "방어벽 특화",
-      "special_effect": "불가능",
+      "special_effect": "방어벽 대상 피해 증가",
       "note": "방어벽 압박",
       "stats": {
         "hp": 116,
@@ -3492,24 +3442,7 @@
         "wall_atk": 21,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "서부 왕국",
-      "category": "비인간형",
-      "name": "협곡 늑대",
-      "td_role": "고속 물량",
-      "special_effect": "불가능",
-      "note": "야수",
-      "stats": {
-        "hp": 79,
-        "def": 0,
-        "move_speed": 1.42,
-        "wall_atk": 10,
-        "wall_attack_gap": 0.96
-      },
-      "air": "0.96",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -3517,7 +3450,7 @@
       "category": "비인간형",
       "name": "뿔멧돼지",
       "td_role": "돌진",
-      "special_effect": "불가능",
+      "special_effect": "없음",
       "note": "야수",
       "stats": {
         "hp": 104,
@@ -3526,32 +3459,15 @@
         "wall_atk": 16,
         "wall_attack_gap": 0.96
       },
-      "air": "0.96",
-      "source_gap": null
-    },
-    {
-      "region": "서부 왕국",
-      "category": "비인간형",
-      "name": "바위등 도마뱀",
-      "td_role": "고방어",
-      "special_effect": "불가능",
-      "note": "장갑형",
-      "stats": {
-        "hp": 148,
-        "def": 12,
-        "move_speed": 0.82,
-        "wall_atk": 14,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
-      "source_gap": null
+      "air": "불가능",
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음"
     },
     {
       "region": "서부 왕국",
       "category": "비인간형",
       "name": "절벽 매",
       "td_role": "공중",
-      "special_effect": "가능",
+      "special_effect": "지형 무시 비행",
       "note": "공중형",
       "stats": {
         "hp": 86,
@@ -3560,7 +3476,7 @@
         "wall_atk": 9,
         "wall_attack_gap": 1.02
       },
-      "air": "1.02",
+      "air": "가능",
       "source_gap": null
     },
     {
@@ -3568,7 +3484,7 @@
       "category": "비인간형",
       "name": "암석 골렘",
       "td_role": "고HP",
-      "special_effect": "불가능",
+      "special_effect": "빙결 지속시간 40% 감소",
       "note": "중장형",
       "stats": {
         "hp": 170,
@@ -3577,7 +3493,7 @@
         "wall_atk": 15,
         "wall_attack_gap": 1.38
       },
-      "air": "1.38",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -3585,7 +3501,7 @@
       "category": "비인간형",
       "name": "최초의 골렘 아즈로",
       "td_role": "고HP/고방어",
-      "special_effect": "불가능",
+      "special_effect": "빙결 지속시간 40% 감소",
       "note": "중장형",
       "stats": {
         "hp": 2376,
@@ -3594,24 +3510,7 @@
         "wall_atk": 50,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "아자르 삼국연합",
-      "category": "인간형",
-      "name": "사막 약탈자",
-      "td_role": "기본 보병",
-      "special_effect": "불가능",
-      "note": "정규군 아님",
-      "stats": {
-        "hp": 165,
-        "def": 2,
-        "move_speed": 1.03,
-        "wall_atk": 15,
-        "wall_attack_gap": 1.2
-      },
-      "air": "1.2",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -3619,7 +3518,7 @@
       "category": "인간형",
       "name": "독침 암살자",
       "td_role": "독 지속피해",
-      "special_effect": "불가능",
+      "special_effect": "없음",
       "note": "상태이상형",
       "stats": {
         "hp": 148,
@@ -3628,32 +3527,15 @@
         "wall_atk": 15,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "아자르 삼국연합",
-      "category": "인간형",
-      "name": "오아시스 밀수꾼",
-      "td_role": "특수 공격",
-      "special_effect": "불가능",
-      "note": "범죄조직",
-      "stats": {
-        "hp": 145,
-        "def": 3,
-        "move_speed": 1.11,
-        "wall_atk": 16,
-        "wall_attack_gap": 1.08
-      },
-      "air": "1.08",
-      "source_gap": null
+      "air": "불가능",
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음"
     },
     {
       "region": "아자르 삼국연합",
       "category": "인간형",
       "name": "사막 주술사",
       "td_role": "주변 적 버프",
-      "special_effect": "불가능",
+      "special_effect": "주변 적 이동속도/방어 소폭 증가",
       "note": "버퍼",
       "stats": {
         "hp": 157,
@@ -3662,7 +3544,7 @@
         "wall_atk": 12,
         "wall_attack_gap": 1.32
       },
-      "air": "1.32",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -3670,7 +3552,7 @@
       "category": "비인간형",
       "name": "모래 전갈",
       "td_role": "독 지속피해",
-      "special_effect": "불가능",
+      "special_effect": "없음",
       "note": "독충",
       "stats": {
         "hp": 148,
@@ -3679,49 +3561,15 @@
         "wall_atk": 15,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "아자르 삼국연합",
-      "category": "비인간형",
-      "name": "사막 늑대",
-      "td_role": "고속 물량",
-      "special_effect": "불가능",
-      "note": "야수",
-      "stats": {
-        "hp": 119,
-        "def": 2,
-        "move_speed": 1.46,
-        "wall_atk": 12,
-        "wall_attack_gap": 0.96
-      },
-      "air": "0.96",
-      "source_gap": null
-    },
-    {
-      "region": "아자르 삼국연합",
-      "category": "비인간형",
-      "name": "갑각 풍뎅이",
-      "td_role": "고방어",
-      "special_effect": "불가능",
-      "note": "장갑형",
-      "stats": {
-        "hp": 223,
-        "def": 14,
-        "move_speed": 0.84,
-        "wall_atk": 17,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
-      "source_gap": null
+      "air": "불가능",
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음"
     },
     {
       "region": "아자르 삼국연합",
       "category": "비인간형",
       "name": "모래망령",
       "td_role": "회피/물리저항",
-      "special_effect": "불가능",
+      "special_effect": "물리 피해 20% 경감",
       "note": "영체",
       "stats": {
         "hp": 140,
@@ -3730,92 +3578,7 @@
         "wall_atk": 14,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "아자르 삼국연합",
-      "category": "비인간형",
-      "name": "화염 정령",
-      "td_role": "화염 저항",
-      "special_effect": "불가능",
-      "note": "정령",
-      "stats": {
-        "hp": 173,
-        "def": 10,
-        "move_speed": 1.05,
-        "wall_atk": 15,
-        "wall_attack_gap": 1.2
-      },
-      "air": "1.2",
-      "source_gap": null
-    },
-    {
-      "region": "아자르 삼국연합",
-      "category": "비인간형",
-      "name": "고위 정령 이프리트",
-      "td_role": "화염 저항 / 고방어",
-      "special_effect": "불가능",
-      "note": "정령",
-      "stats": {
-        "hp": 3267,
-        "def": 44,
-        "move_speed": 0.91,
-        "wall_atk": 60,
-        "wall_attack_gap": 1.08
-      },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "해륜왕국",
-      "category": "인간형",
-      "name": "해적 검객",
-      "td_role": "기본 보병",
-      "special_effect": "불가능",
-      "note": "해적",
-      "stats": {
-        "hp": 230,
-        "def": 4,
-        "move_speed": 1.05,
-        "wall_atk": 18,
-        "wall_attack_gap": 1.2
-      },
-      "air": "1.2",
-      "source_gap": null
-    },
-    {
-      "region": "해륜왕국",
-      "category": "인간형",
-      "name": "파도 도적",
-      "td_role": "고속",
-      "special_effect": "불가능",
-      "note": "고속형",
-      "stats": {
-        "hp": 175,
-        "def": 4,
-        "move_speed": 1.45,
-        "wall_atk": 15,
-        "wall_attack_gap": 1.02
-      },
-      "air": "1.02",
-      "source_gap": null
-    },
-    {
-      "region": "해륜왕국",
-      "category": "인간형",
-      "name": "밀수 궁수",
-      "td_role": "원거리",
-      "special_effect": "불가능",
-      "note": "원거리형",
-      "stats": {
-        "hp": 189,
-        "def": 5,
-        "move_speed": 1.1,
-        "wall_atk": 19,
-        "wall_attack_gap": 1.38
-      },
-      "air": "1.38",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -3823,7 +3586,7 @@
       "category": "인간형",
       "name": "폭약 해적",
       "td_role": "광역 폭발",
-      "special_effect": "불가능",
+      "special_effect": "사망/접촉 시 소규모 폭발",
       "note": "폭발형",
       "stats": {
         "hp": 207,
@@ -3832,7 +3595,7 @@
         "wall_atk": 25,
         "wall_attack_gap": 1.26
       },
-      "air": "1.26",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -3840,7 +3603,7 @@
       "category": "인간형",
       "name": "그림자 닌자",
       "td_role": "일시 은신",
-      "special_effect": "불가능",
+      "special_effect": "없음",
       "note": "은신형",
       "stats": {
         "hp": 184,
@@ -3849,32 +3612,15 @@
         "wall_atk": 17,
         "wall_attack_gap": 1.02
       },
-      "air": "1.02",
-      "source_gap": null
-    },
-    {
-      "region": "해륜왕국",
-      "category": "비인간형",
-      "name": "철갑 바다게",
-      "td_role": "고방어",
-      "special_effect": "불가능",
-      "note": "장갑형",
-      "stats": {
-        "hp": 310,
-        "def": 16,
-        "move_speed": 0.86,
-        "wall_atk": 21,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
-      "source_gap": null
+      "air": "불가능",
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음"
     },
     {
       "region": "해륜왕국",
       "category": "비인간형",
       "name": "해룡 치어",
       "td_role": "공중/고속",
-      "special_effect": "가능",
+      "special_effect": "지형 무시 비행",
       "note": "공중형",
       "stats": {
         "hp": 156,
@@ -3883,7 +3629,7 @@
         "wall_atk": 13,
         "wall_attack_gap": 0.96
       },
-      "air": "0.96",
+      "air": "가능",
       "source_gap": null
     },
     {
@@ -3891,7 +3637,7 @@
       "category": "비인간형",
       "name": "물귀신",
       "td_role": "특수 이동",
-      "special_effect": "불가능",
+      "special_effect": "물리 피해 20% 경감",
       "note": "영체",
       "stats": {
         "hp": 189,
@@ -3900,7 +3646,7 @@
         "wall_atk": 16,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -3908,7 +3654,7 @@
       "category": "비인간형",
       "name": "해파리 정령",
       "td_role": "감속/마비",
-      "special_effect": "불가능",
+      "special_effect": "없음",
       "note": "상태이상형",
       "stats": {
         "hp": 212,
@@ -3917,15 +3663,15 @@
         "wall_atk": 15,
         "wall_attack_gap": 1.32
       },
-      "air": "1.32",
-      "source_gap": null
+      "air": "불가능",
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음"
     },
     {
       "region": "해륜왕국",
       "category": "비인간형",
       "name": "심해 촉수수",
       "td_role": "방어벽 압박",
-      "special_effect": "불가능",
+      "special_effect": "방어벽 대상 피해 증가",
       "note": "방어벽 압박",
       "stats": {
         "hp": 264,
@@ -3934,7 +3680,7 @@
         "wall_atk": 30,
         "wall_attack_gap": 1.14
       },
-      "air": "1.14",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -3942,7 +3688,7 @@
       "category": "비인간형",
       "name": "심연의 고르라켄",
       "td_role": "방어벽 무효 / 고HP",
-      "special_effect": "불가능",
+      "special_effect": "방어벽 대상 피해 증가",
       "note": "방어벽 압박",
       "stats": {
         "hp": 4968,
@@ -3951,58 +3697,7 @@
         "wall_atk": 83,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "벨로자르 제국",
-      "category": "인간형",
-      "name": "설원 약탈자",
-      "td_role": "기본 보병",
-      "special_effect": "불가능",
-      "note": "정규군 아님",
-      "stats": {
-        "hp": 310,
-        "def": 6,
-        "move_speed": 0.98,
-        "wall_atk": 22,
-        "wall_attack_gap": 1.2
-      },
-      "air": "1.2",
-      "source_gap": null
-    },
-    {
-      "region": "벨로자르 제국",
-      "category": "인간형",
-      "name": "탈영 중갑병",
-      "td_role": "중갑",
-      "special_effect": "불가능",
-      "note": "변절/탈영 설정",
-      "stats": {
-        "hp": 418,
-        "def": 20,
-        "move_speed": 0.84,
-        "wall_atk": 26,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
-      "source_gap": null
-    },
-    {
-      "region": "벨로자르 제국",
-      "category": "인간형",
-      "name": "빙원 사냥꾼",
-      "td_role": "원거리",
-      "special_effect": "불가능",
-      "note": "원거리형",
-      "stats": {
-        "hp": 254,
-        "def": 7,
-        "move_speed": 1.03,
-        "wall_atk": 23,
-        "wall_attack_gap": 1.38
-      },
-      "air": "1.38",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4010,7 +3705,7 @@
       "category": "인간형",
       "name": "동토 광전사",
       "td_role": "저HP 광폭",
-      "special_effect": "불가능",
+      "special_effect": "HP 40% 이하에서 이속·방벽피해 +25%",
       "note": "광폭형",
       "stats": {
         "hp": 223,
@@ -4019,7 +3714,7 @@
         "wall_atk": 33,
         "wall_attack_gap": 0.9
       },
-      "air": "0.9",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4027,7 +3722,7 @@
       "category": "인간형",
       "name": "금단 주술사",
       "td_role": "적 버프",
-      "special_effect": "불가능",
+      "special_effect": "주변 적 이동속도/방어 소폭 증가",
       "note": "버퍼",
       "stats": {
         "hp": 285,
@@ -4036,58 +3731,7 @@
         "wall_atk": 19,
         "wall_attack_gap": 1.32
       },
-      "air": "1.32",
-      "source_gap": null
-    },
-    {
-      "region": "벨로자르 제국",
-      "category": "비인간형",
-      "name": "설원 늑대",
-      "td_role": "고속 물량",
-      "special_effect": "불가능",
-      "note": "야수",
-      "stats": {
-        "hp": 223,
-        "def": 6,
-        "move_speed": 1.39,
-        "wall_atk": 18,
-        "wall_attack_gap": 0.96
-      },
-      "air": "0.96",
-      "source_gap": null
-    },
-    {
-      "region": "벨로자르 제국",
-      "category": "비인간형",
-      "name": "동토 곰",
-      "td_role": "고HP",
-      "special_effect": "불가능",
-      "note": "탱커",
-      "stats": {
-        "hp": 480,
-        "def": 11,
-        "move_speed": 0.76,
-        "wall_atk": 28,
-        "wall_attack_gap": 1.38
-      },
-      "air": "1.38",
-      "source_gap": null
-    },
-    {
-      "region": "벨로자르 제국",
-      "category": "비인간형",
-      "name": "빙갑 정령",
-      "td_role": "고방어",
-      "special_effect": "불가능",
-      "note": "장갑형",
-      "stats": {
-        "hp": 418,
-        "def": 18,
-        "move_speed": 0.8,
-        "wall_atk": 25,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4095,7 +3739,7 @@
       "category": "비인간형",
       "name": "설산 독수리",
       "td_role": "공중",
-      "special_effect": "가능",
+      "special_effect": "지형 무시 비행",
       "note": "공중형",
       "stats": {
         "hp": 242,
@@ -4104,7 +3748,7 @@
         "wall_atk": 16,
         "wall_attack_gap": 1.02
       },
-      "air": "1.02",
+      "air": "가능",
       "source_gap": null
     },
     {
@@ -4112,7 +3756,7 @@
       "category": "비인간형",
       "name": "서리 골렘",
       "td_role": "방어벽 파괴",
-      "special_effect": "불가능",
+      "special_effect": "빙결 지속시간 40% 감소",
       "note": "방어벽 압박",
       "stats": {
         "hp": 388,
@@ -4121,7 +3765,7 @@
         "wall_atk": 41,
         "wall_attack_gap": 1.14
       },
-      "air": "1.14",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4129,7 +3773,7 @@
       "category": "비인간형",
       "name": "무언의 사로스",
       "td_role": "방어벽 무효 / 고hp / 캐릭터 빙결",
-      "special_effect": "불가능",
+      "special_effect": "방어벽 대상 피해 증가",
       "note": "방어벽 압박",
       "stats": {
         "hp": 6975,
@@ -4138,41 +3782,7 @@
         "wall_atk": 106,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "생트아르크 교황령",
-      "category": "인간형",
-      "name": "이단 광신도",
-      "td_role": "기본 물량",
-      "special_effect": "불가능",
-      "note": "이단자",
-      "stats": {
-        "hp": 353,
-        "def": 8,
-        "move_speed": 1.12,
-        "wall_atk": 24,
-        "wall_attack_gap": 1.02
-      },
-      "air": "1.02",
-      "source_gap": null
-    },
-    {
-      "region": "생트아르크 교황령",
-      "category": "인간형",
-      "name": "배교 기사",
-      "td_role": "중갑",
-      "special_effect": "불가능",
-      "note": "변절자",
-      "stats": {
-        "hp": 554,
-        "def": 22,
-        "move_speed": 0.86,
-        "wall_atk": 32,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4180,7 +3790,7 @@
       "category": "인간형",
       "name": "금단 심문관",
       "td_role": "방어벽 특화",
-      "special_effect": "불가능",
+      "special_effect": "방어벽 대상 피해 증가",
       "note": "방어벽 압박",
       "stats": {
         "hp": 430,
@@ -4189,7 +3799,7 @@
         "wall_atk": 47,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4197,7 +3807,7 @@
       "category": "인간형",
       "name": "타락 사제",
       "td_role": "적 회복/버프",
-      "special_effect": "불가능",
+      "special_effect": "주변 적 이동속도/방어 소폭 증가",
       "note": "버퍼",
       "stats": {
         "hp": 410,
@@ -4206,7 +3816,7 @@
         "wall_atk": 27,
         "wall_attack_gap": 1.2
       },
-      "air": "1.2",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4214,7 +3824,7 @@
       "category": "인간형",
       "name": "순교 광신자",
       "td_role": "사망 시 주변 적 강화",
-      "special_effect": "불가능",
+      "special_effect": "없음",
       "note": "사망 버프형",
       "stats": {
         "hp": 361,
@@ -4223,15 +3833,15 @@
         "wall_atk": 27,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
+      "air": "불가능",
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음"
     },
     {
       "region": "생트아르크 교황령",
       "category": "비인간형",
       "name": "성당 가고일",
       "td_role": "공중",
-      "special_effect": "가능",
+      "special_effect": "지형 무시 비행",
       "note": "공중형",
       "stats": {
         "hp": 320,
@@ -4240,7 +3850,7 @@
         "wall_atk": 20,
         "wall_attack_gap": 1.02
       },
-      "air": "1.02",
+      "air": "가능",
       "source_gap": null
     },
     {
@@ -4248,7 +3858,7 @@
       "category": "비인간형",
       "name": "광휘 망령",
       "td_role": "물리저항",
-      "special_effect": "불가능",
+      "special_effect": "물리 피해 20% 경감",
       "note": "영체",
       "stats": {
         "hp": 410,
@@ -4257,7 +3867,7 @@
         "wall_atk": 26,
         "wall_attack_gap": 1.2
       },
-      "air": "1.2",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4265,7 +3875,7 @@
       "category": "비인간형",
       "name": "성유물 골렘",
       "td_role": "고방어",
-      "special_effect": "불가능",
+      "special_effect": "빙결 지속시간 40% 감소",
       "note": "장갑형",
       "stats": {
         "hp": 554,
@@ -4274,7 +3884,7 @@
         "wall_atk": 31,
         "wall_attack_gap": 1.32
       },
-      "air": "1.32",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4282,7 +3892,7 @@
       "category": "비인간형",
       "name": "타락 천사 파편체",
       "td_role": "고속 공중",
-      "special_effect": "가능",
+      "special_effect": "지형 무시 비행",
       "note": "공중형",
       "stats": {
         "hp": 287,
@@ -4291,7 +3901,7 @@
         "wall_atk": 19,
         "wall_attack_gap": 0.96
       },
-      "air": "0.96",
+      "air": "가능",
       "source_gap": null
     },
     {
@@ -4299,7 +3909,7 @@
       "category": "비인간형",
       "name": "저주받은 성상",
       "td_role": "고HP",
-      "special_effect": "불가능",
+      "special_effect": "빙결 지속시간 40% 감소",
       "note": "중장형",
       "stats": {
         "hp": 636,
@@ -4308,7 +3918,7 @@
         "wall_atk": 34,
         "wall_attack_gap": 1.38
       },
-      "air": "1.38",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4316,7 +3926,7 @@
       "category": "비인간형",
       "name": "기원의 대성상",
       "td_role": "침묵무효/방어벽무효/고방어",
-      "special_effect": "불가능",
+      "special_effect": "빙결 지속시간 40% 감소",
       "note": "중장형",
       "stats": {
         "hp": 9594,
@@ -4325,58 +3935,7 @@
         "wall_atk": 132,
         "wall_attack_gap": 1.08
       },
-      "air": "1.08",
-      "source_gap": null
-    },
-    {
-      "region": "상드라크 제국",
-      "category": "인간형",
-      "name": "제국 변절자",
-      "td_role": "밸런스형",
-      "special_effect": "불가능",
-      "note": "변절자",
-      "stats": {
-        "hp": 567,
-        "def": 14,
-        "move_speed": 1.02,
-        "wall_atk": 33,
-        "wall_attack_gap": 1.2
-      },
-      "air": "1.2",
-      "source_gap": null
-    },
-    {
-      "region": "상드라크 제국",
-      "category": "인간형",
-      "name": "탈영 석궁수",
-      "td_role": "장거리",
-      "special_effect": "불가능",
-      "note": "탈영병",
-      "stats": {
-        "hp": 454,
-        "def": 12,
-        "move_speed": 1.02,
-        "wall_atk": 35,
-        "wall_attack_gap": 1.44
-      },
-      "air": "1.44",
-      "source_gap": null
-    },
-    {
-      "region": "상드라크 제국",
-      "category": "인간형",
-      "name": "암시장 마도사",
-      "td_role": "마법 원거리",
-      "special_effect": "불가능",
-      "note": "불법 마도사",
-      "stats": {
-        "hp": 475,
-        "def": 13,
-        "move_speed": 1.02,
-        "wall_atk": 36,
-        "wall_attack_gap": 1.38
-      },
-      "air": "1.38",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4384,7 +3943,7 @@
       "category": "인간형",
       "name": "폭주 연금술사",
       "td_role": "광역",
-      "special_effect": "불가능",
+      "special_effect": "사망/접촉 시 소규모 폭발",
       "note": "폭발형",
       "stats": {
         "hp": 513,
@@ -4393,24 +3952,7 @@
         "wall_atk": 38,
         "wall_attack_gap": 1.32
       },
-      "air": "1.32",
-      "source_gap": null
-    },
-    {
-      "region": "상드라크 제국",
-      "category": "인간형",
-      "name": "반역 중갑병",
-      "td_role": "고방어",
-      "special_effect": "불가능",
-      "note": "반역자",
-      "stats": {
-        "hp": 729,
-        "def": 22,
-        "move_speed": 0.84,
-        "wall_atk": 38,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4418,7 +3960,7 @@
       "category": "비인간형",
       "name": "마도 폭주체",
       "td_role": "고속/폭발",
-      "special_effect": "불가능",
+      "special_effect": "사망/접촉 시 소규모 폭발",
       "note": "폭주형",
       "stats": {
         "hp": 400,
@@ -4427,7 +3969,7 @@
         "wall_atk": 41,
         "wall_attack_gap": 0.9
       },
-      "air": "0.9",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4435,7 +3977,7 @@
       "category": "비인간형",
       "name": "마력 골렘",
       "td_role": "고HP",
-      "special_effect": "불가능",
+      "special_effect": "빙결 지속시간 40% 감소",
       "note": "중장형",
       "stats": {
         "hp": 837,
@@ -4444,24 +3986,7 @@
         "wall_atk": 41,
         "wall_attack_gap": 1.38
       },
-      "air": "1.38",
-      "source_gap": null
-    },
-    {
-      "region": "상드라크 제국",
-      "category": "비인간형",
-      "name": "변이 사냥개",
-      "td_role": "고속 물량",
-      "special_effect": "불가능",
-      "note": "야수",
-      "stats": {
-        "hp": 389,
-        "def": 10,
-        "move_speed": 1.45,
-        "wall_atk": 26,
-        "wall_attack_gap": 0.96
-      },
-      "air": "0.96",
+      "air": "불가능",
       "source_gap": null
     },
     {
@@ -4469,7 +3994,7 @@
       "category": "비인간형",
       "name": "마도 비행체",
       "td_role": "공중",
-      "special_effect": "가능",
+      "special_effect": "지형 무시 비행",
       "note": "공중형",
       "stats": {
         "hp": 421,
@@ -4478,41 +4003,7 @@
         "wall_atk": 25,
         "wall_attack_gap": 1.02
       },
-      "air": "1.02",
-      "source_gap": null
-    },
-    {
-      "region": "상드라크 제국",
-      "category": "비인간형",
-      "name": "균열 괴수",
-      "td_role": "후반 정예",
-      "special_effect": "불가능",
-      "note": "정예형",
-      "stats": {
-        "hp": 891,
-        "def": 26,
-        "move_speed": 0.97,
-        "wall_atk": 48,
-        "wall_attack_gap": 1.32
-      },
-      "air": "1.32",
-      "source_gap": null
-    },
-    {
-      "region": "상드라크 제국",
-      "category": "비인간형",
-      "name": "종말의 인도자",
-      "td_role": "후반 정예",
-      "special_effect": "불가능",
-      "note": "정예형",
-      "stats": {
-        "hp": 4010,
-        "def": 38,
-        "move_speed": 0.97,
-        "wall_atk": 96,
-        "wall_attack_gap": 1.19
-      },
-      "air": "1.19",
+      "air": "가능",
       "source_gap": null
     }
   ]

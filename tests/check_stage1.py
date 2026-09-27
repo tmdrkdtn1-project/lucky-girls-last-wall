@@ -221,3 +221,8 @@ assert aria["skills"][0]["rpg_mapping"]["rule"]=="RPG_PENETRATION_IGNORE_DEF"
 assert len(rpg_issues["items"])>0
 assert any(x["character"]=="아리아" and x["skill"]=="성광 참격" for x in rpg_issues["items"])
 print("PASS - full combat registry contains 20 heroes, 50 bosses, skill-bearing enemies, and RPG review inventory")
+
+assert combat_registry["counts"]["skill_enemies"]==len(combat_registry["skill_enemies"])
+assert combat_registry["counts"]["skill_enemies"]<65
+assert all(e["special_effect"]!="불가능" for e in combat_registry["skill_enemies"])
+print("PASS - skill-bearing enemy inventory excludes ordinary enemies and reads the correct source special-effect column")
