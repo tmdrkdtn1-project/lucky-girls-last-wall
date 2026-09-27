@@ -241,3 +241,17 @@ assert "wallShieldReduction=.50" not in js  # reduction comes from data definiti
 assert "wallDamageReduction:.50" in js
 assert "updateHeroSkills(u,now)" in js
 print("PASS - Aria TD S1/S2/S3 execute through shared effect primitives with source-backed effects and marked prototype gaps")
+
+# Full RPG translation matrix V1 guards
+rpg_translation=json.loads((root/"data/rpg_skill_translation_v1.json").read_text(encoding="utf-8"))
+assert rpg_translation["schema"]=="LG_RPG_SKILL_TRANSLATION_V1"
+assert rpg_translation["counts"]["hero_skills"]==60
+assert rpg_translation["counts"]["boss_skills"]==150
+assert rpg_translation["counts"]["total"]==210
+assert all(x["rpg_rules"] for x in rpg_translation["hero_skills"])
+assert all(x["rpg_rules"] for x in rpg_translation["boss_skills"])
+assert any(x["character"]=="미아" and x["skill"]=="보물탄" and any("DEF 100% 무시" in r for r in x["rpg_rules"]) for x in rpg_translation["hero_skills"])
+assert any(x["character"]=="아리아" and x["skill"]=="수호의 맹세" and "받는 피해 -20%" in x["rpg_rules"][0] for x in rpg_translation["hero_skills"])
+assert rpg_issues["schema"]=="LG_RPG_SKILL_ISSUE_REGISTRY_V1_1"
+assert all(x.get("mapping") for x in rpg_issues["items"])
+print("PASS - all 60 hero and 150 boss skills have RPG translation records; unresolved source gaps are explicitly marked")

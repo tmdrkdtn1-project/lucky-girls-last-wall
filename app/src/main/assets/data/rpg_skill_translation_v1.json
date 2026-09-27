@@ -1,0 +1,3407 @@
+{
+  "schema": "LG_RPG_SKILL_TRANSLATION_V1",
+  "counts": {
+    "hero_skills": 60,
+    "boss_skills": 150,
+    "total": 210,
+    "manual_boss_definitions": 43
+  },
+  "global_rules": {
+    "hero_penetration": "RPG에서 관통 속성 공격은 대상 DEF 100% 무시",
+    "td_spatial": "TD의 경로/칸/방어벽/사거리 개념은 RPG에서 직접 재사용하지 않고 명시적 RPG 규칙으로 변환",
+    "source_gaps": "원본에 효과 수치가 없으면 임의 확정하지 않고 BALANCE_PENDING 또는 NEEDS_MANUAL_DEFINITION으로 유지"
+  },
+  "hero_skills": [
+    {
+      "side": "HERO",
+      "character": "아리아",
+      "slot": 1,
+      "skill": "성광 참격",
+      "source": "성광 참격 — 3칸 직선 관통 피해. 방어벽에 붙은 적에게 피해 +25%.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "PENETRATION",
+        "DEF_MOD",
+        "DAMAGE_TAKEN_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "관통 공격은 RPG에서 대상 DEF 100% 무시",
+        "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "아리아",
+      "slot": 2,
+      "skill": "수호의 맹세",
+      "source": "수호의 맹세 — 인근 2칸 아군 ATK·공속 +15%, 가장 가까운 방어벽 DEF +20% (8초).",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD",
+        "ATK_MOD",
+        "DEF_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 생존 영웅 전원 ATK·공속 +15% 8초; 방어벽 DEF +20% 부분은 파티 받는 피해 -20% 8초로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "아리아",
+      "slot": 3,
+      "skill": "최후의 성역",
+      "source": "최후의 성역 — 전 경로 성광 피해 + 방어벽에 5초간 피해 50% 감소 보호막.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "AOE",
+        "DEF_MOD",
+        "SHIELD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 보스에게 성광 피해 + 생존 영웅 전원 5초간 받는 피해 50% 감소"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "유나",
+      "slot": 1,
+      "skill": "봉인의 부적",
+      "source": "봉인의 부적 — 단일 적 3초 속박, 보스는 35% 둔화.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "CC",
+        "SLOW"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "유나",
+      "slot": 2,
+      "skill": "결계진",
+      "source": "결계진 — 경로 2칸에 6초 결계, 적 이속 -35%·스킬 사용 지연.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "SLOW",
+        "SKILL_CONTROL",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
+        "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "유나",
+      "slot": 3,
+      "skill": "대봉인술",
+      "source": "대봉인술 — 화면 내 정예/보스 스킬을 4초 봉인하고 일반 적 2초 행동불능.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "CC",
+        "SKILL_CONTROL"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "리엘",
+      "slot": 1,
+      "skill": "화염창",
+      "source": "화염창 — 단일 고화력 + 6초 화상.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "리엘",
+      "slot": 2,
+      "skill": "용암지대",
+      "source": "용암지대 — 경로 2칸에 8초 지속 광역 화염.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "AOE",
+        "DOT",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "리엘",
+      "slot": 3,
+      "skill": "홍련지옥",
+      "source": "홍련지옥 — 화면 내 적 전체 3회 폭발 피해, 화상 중인 적 추가 피해 +40%.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "AOE",
+        "DOT",
+        "DAMAGE_TAKEN_MOD",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "루비",
+      "slot": 1,
+      "skill": "현상표식",
+      "source": "현상표식 — 가장 HP 높은 적에게 표식, 해당 적이 받는 피해 +15%.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DAMAGE_TAKEN_MOD"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "루비",
+      "slot": 2,
+      "skill": "도탄사격",
+      "source": "도탄사격 — 최대 5대상으로 피해 이전, 이전마다 피해 -10%.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "TRANSFER",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "루비",
+      "slot": 3,
+      "skill": "DEAD OR ALIVE",
+      "source": "DEAD OR ALIVE — 보스/정예에게 강력한 단일 사격. HP 30% 이하 대상 추가 피해 +60%.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DAMAGE_TAKEN_MOD",
+        "EXECUTE"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "에리카",
+      "slot": 1,
+      "skill": "용혈참",
+      "source": "용혈참 — 전방 2칸 광역 베기.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "AOE",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "에리카",
+      "slot": 2,
+      "skill": "혈룡폭주",
+      "source": "혈룡폭주 — 10초 ATK +30%·공속 +25%, 종료 후 3초 공속 -15%.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD",
+        "ATK_MOD"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "에리카",
+      "slot": 3,
+      "skill": "용의 숨결",
+      "source": "용의 숨결 — 넓은 부채꼴 화염 지속피해, 방어 높은 적에게 방어무시 25%.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "AOE",
+        "DOT",
+        "DEF_MOD"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "세라",
+      "slot": 1,
+      "skill": "천상의 노래",
+      "source": "천상의 노래 — 인근 2칸 아군 ATK·공속 +12%.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD",
+        "ATK_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG에서는 생존 중인 영웅 파티 전체에 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "세라",
+      "slot": 2,
+      "skill": "치유의 광휘",
+      "source": "치유의 광휘 — 가장 손상된 방어벽 HP 20% 회복 + 5초 DEF +20%.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "HEAL",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환",
+        "RPG에서는 HP 비율이 가장 낮은 생존 영웅 HP 20% 회복"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "세라",
+      "slot": 3,
+      "skill": "세라핌 앙코르",
+      "source": "세라핌 앙코르 — 모든 아군 ATK·공속 +18%, 모든 방어벽 10% 즉시 회복.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD",
+        "ATK_MOD",
+        "DEF_MOD",
+        "HEAL",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환",
+        "RPG에서는 생존 중인 영웅 파티 전체에 적용",
+        "RPG에서는 모든 생존 영웅 HP 10% 회복"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "레이나",
+      "slot": 1,
+      "skill": "서리창",
+      "source": "서리창 — 단일 피해 + 이속 -25% 4초.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "SLOW"
+      ],
+      "rpg_rules": [
+        "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "레이나",
+      "slot": 2,
+      "skill": "빙결감옥",
+      "source": "빙결감옥 — 경로 2칸 적 2초 빙결, 보스는 40% 둔화 3초.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "CC",
+        "SLOW",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "레이나",
+      "slot": 3,
+      "skill": "절대영도",
+      "source": "절대영도 — 화면 전체 1.5초 정지 후 강한 냉기 피해, 이후 6초 이속 -30%.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "AOE",
+        "CC",
+        "SLOW"
+      ],
+      "rpg_rules": [
+        "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
+        "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "카린",
+      "slot": 1,
+      "skill": "그림자 베기",
+      "source": "그림자 베기 — 가장 앞선 적에게 순간이동 베기 후 원위치, 방어 20% 무시.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD"
+      ],
+      "rpg_rules": [
+        "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
+        "RPG 단일보스에서는 보스 자신을 대상으로 처리"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "카린",
+      "slot": 2,
+      "skill": "잔영난무",
+      "source": "잔영난무 — 4초간 공격이 2회 추가 타격, 보스에게 추가 피해 +20%.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DAMAGE_TAKEN_MOD",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "카린",
+      "slot": 3,
+      "skill": "홍련 처형",
+      "source": "홍련 처형 — 보스/정예 단일 초고화력. HP 25% 이하 대상에게 치명 피해 보정.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "EXECUTE"
+      ],
+      "rpg_rules": [
+        "RPG에서도 동일 확률/강화효과 계수로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "벨",
+      "slot": 1,
+      "skill": "저주인형",
+      "source": "저주인형 — 가장 HP 높은 적과 인형 연결, 받은 피해의 25%를 주변 2명에게 이전.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "TRANSFER"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "벨",
+      "slot": 2,
+      "skill": "마리오네트",
+      "source": "마리오네트 — 6초간 경로 2칸 적의 이속 -40%, 정예 1체를 2초 행동불능.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "CC",
+        "SLOW",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
+        "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "벨",
+      "slot": 3,
+      "skill": "대인형극",
+      "source": "대인형극 — 10초간 주변 아군 공격 시 35% 확률로 인형이 추가타.",
+      "status": "TRANSLATED",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG에서는 생존 중인 영웅 파티 전체에 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "미아",
+      "slot": 1,
+      "skill": "보물탄",
+      "source": "보물탄 — 3대상 관통, 마지막 대상 추가 피해.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "PENETRATION",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "관통 공격은 RPG에서 대상 DEF 100% 무시"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "미아",
+      "slot": 2,
+      "skill": "행운의 함정",
+      "source": "행운의 함정 — 경로 1칸에 8초 함정, 최초 6명에게 기절 1초 + 추가 골드 소량.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "STUN",
+        "TD_SPATIAL",
+        "ECONOMY"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 1초 기절. 추가 골드 효과는 RPG에서 비활성"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "미아",
+      "slot": 3,
+      "skill": "왕의 보물고",
+      "source": "왕의 보물고 — 8초간 발리스타/감시탑 계열 ATK +30%, 자신은 연속 포격.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATK_MOD",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "RPG: 미아 자신 ATK +30% 8초 + 연속 포격 유지"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "아이린",
+      "slot": 1,
+      "skill": "클린 스위프",
+      "source": "클린 스위프 — 전방 부채꼴 광역 피해.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "AOE"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "아이린",
+      "slot": 2,
+      "skill": "전술 봉사",
+      "source": "전술 봉사 — 인근 2칸 아군 공격속도 +20%, 방어벽 수리속도/회복효과 +20%.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD",
+        "DEF_MOD",
+        "HEAL",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환",
+        "RPG에서는 생존 중인 영웅 파티 전체에 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "아이린",
+      "slot": 3,
+      "skill": "퍼펙트 클리닝",
+      "source": "퍼펙트 클리닝 — 화면 내 가장 강한 적 5체를 순차 타격, 처치 시 다음 타격 피해 증가.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "네온",
+      "slot": 1,
+      "skill": "형상복제",
+      "source": "형상복제 — 인접 아군 1명의 피해종류를 8초 복제.",
+      "status": "TRANSLATED",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 다른 생존 영웅 1명의 공격 속성/피해 타입을 8초 복제"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "네온",
+      "slot": 2,
+      "skill": "프리즘 왜곡",
+      "source": "프리즘 왜곡 — 경로 2칸에 랜덤 화염/빙결/번개 효과.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DOT",
+        "CC",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "네온",
+      "slot": 3,
+      "skill": "무한 프리즘",
+      "source": "무한 프리즘 — 12초간 3개의 환영 생성, 기본공격 45% 위력으로 동시 공격.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "샤샤",
+      "slot": 1,
+      "skill": "접착 폭약",
+      "source": "접착 폭약 — 경로 1칸에 지뢰 설치, 5체까지 광역.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "AOE",
+        "TD_SPATIAL",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "샤샤",
+      "slot": 2,
+      "skill": "연쇄기폭",
+      "source": "연쇄기폭 — 현재 설치된 폭약을 연속 폭발, 방어 높은 적 방어 20% 무시.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DEF_MOD",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "샤샤",
+      "slot": 3,
+      "skill": "최종 폭파계획",
+      "source": "최종 폭파계획 — 3개 경로 핵심지점에 대폭발, 보스에게 별도 단일 추가폭발.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "루나",
+      "slot": 1,
+      "skill": "운명의 표식",
+      "source": "운명의 표식 — 적 1체가 받는 피해 +18%, 처치 시 다음 적에게 이전.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "TRANSFER",
+        "DAMAGE_TAKEN_MOD"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "루나",
+      "slot": 2,
+      "skill": "역행의 별",
+      "source": "역행의 별 — 가장 앞선 적 3체를 경로 1칸 뒤로 되돌림, 보스는 1.5초 정지.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "CC",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
+        "RPG 단일보스에서는 보스 자신을 대상으로 처리"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "루나",
+      "slot": 3,
+      "skill": "운명개변",
+      "source": "운명개변 — 8초간 아군 치명/강화효과 발동률 상승, 적의 이동·스킬 주기 20% 지연.",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
+        "RPG에서도 동일 확률/강화효과 계수로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "비올라",
+      "slot": 1,
+      "skill": "독화살비",
+      "source": "독화살비 — 경로 2칸 독 지속피해.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DOT",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "비올라",
+      "slot": 2,
+      "skill": "역병 전염",
+      "source": "역병 전염 — 독 걸린 적 사망 시 주변 2명에게 독 이전.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT",
+        "TRANSFER"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "비올라",
+      "slot": 3,
+      "skill": "죽음의 정원",
+      "source": "죽음의 정원 — 10초간 넓은 독지대. 보스에게 중첩 5회 시 방어 -20%.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT",
+        "DEF_MOD"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "클로에",
+      "slot": 1,
+      "skill": "비트 업",
+      "source": "비트 업 — 인근 2칸 아군 공속 +18% 6초.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG에서는 생존 중인 영웅 파티 전체에 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "클로에",
+      "slot": 2,
+      "skill": "소닉 웨이브",
+      "source": "소닉 웨이브 — 넓은 직선 광역 + 1초 기절.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "AOE",
+        "STUN"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "클로에",
+      "slot": 3,
+      "skill": "라스트 앙코르",
+      "source": "라스트 앙코르 — 10초간 전 아군 공속 +15%, 적 이속 -20%, 스킬 쿨다운 10% 단축.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "SLOW",
+        "ATTACK_SPEED_MOD",
+        "SKILL_CONTROL"
+      ],
+      "rpg_rules": [
+        "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
+        "RPG에서는 생존 중인 영웅 파티 전체에 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "아델",
+      "slot": 1,
+      "skill": "수호의 일격",
+      "source": "수호의 일격 — 단일 강타 + 주변 적 20% 둔화.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SLOW"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "아델",
+      "slot": 2,
+      "skill": "미스릴 가호",
+      "source": "미스릴 가호 — 가장 가까운 방어벽이 8초간 받는 피해 -35%.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "DAMAGE_TAKEN_MOD",
+        "SHIELD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "아델",
+      "slot": 3,
+      "skill": "불락의 성채",
+      "source": "불락의 성채 — 6초간 방어벽 파괴를 1회 무효화하고 주변 아군 ATK +15%.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATK_MOD",
+        "DEF_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환",
+        "RPG에서는 생존 중인 영웅 파티 전체에 적용",
+        "RPG에서는 아군 1회 치명타/전투불능 피해를 무효화하는 파티 보호막으로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "니아",
+      "slot": 1,
+      "skill": "혈창",
+      "source": "혈창 — 3대상 관통, 대상 현재 HP 비례 추가피해.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "PENETRATION",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "관통 공격은 RPG에서 대상 DEF 100% 무시"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "니아",
+      "slot": 2,
+      "skill": "피의 저주",
+      "source": "피의 저주 — 보스/정예 방어 -18%, 받는 지속피해 +30% 8초.",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT",
+        "DEF_MOD",
+        "DAMAGE_TAKEN_MOD"
+      ],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "니아",
+      "slot": 3,
+      "skill": "진홍월식",
+      "source": "진홍월식 — 화면 전체 지속피해 8초, HP가 높은 적일수록 첫 타격 강화.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "AOE",
+        "DOT"
+      ],
+      "rpg_rules": [
+        "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "오로라",
+      "slot": 1,
+      "skill": "유성낙하",
+      "source": "유성낙하 — 지정 경로 1칸 강한 광역.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "AOE",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "오로라",
+      "slot": 2,
+      "skill": "별자리 결속",
+      "source": "별자리 결속 — 서로 다른 직업 아군이 인접할수록 ATK·사거리 소폭 증가.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATK_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 서로 다른 직업의 생존 영웅 수에 따라 오로라 ATK 증가; 사거리 증가는 공격주기 소폭 감소로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "오로라",
+      "slot": 3,
+      "skill": "천구붕괴",
+      "source": "천구붕괴 — 5개의 유성이 순차 낙하, 마지막은 보스 위치 고정 타격.",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "이브",
+      "slot": 1,
+      "skill": "시간지연",
+      "source": "시간지연 — 경로 2칸 이속 -35% 5초.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "SLOW",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
+        "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "이브",
+      "slot": 2,
+      "skill": "되감기",
+      "source": "되감기 — 가장 앞선 적 4체를 1~2칸 뒤로 이동, 보스는 스킬 게이지 감소.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL",
+        "MULTI_HIT"
+      ],
+      "rpg_rules": [
+        "RPG: 보스의 다음 스킬 게이지/발동 진행도를 감소"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    },
+    {
+      "side": "HERO",
+      "character": "이브",
+      "slot": 3,
+      "skill": "멈춰버린 세계",
+      "source": "멈춰버린 세계 — 3초간 일반 적 완전 정지, 보스 1초 정지 + 아군 공속 20% 증가.",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "CC",
+        "ATTACK_SPEED_MOD"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 1초 행동 정지 + 생존 영웅 전원 공속 +20%; 일반 적 3초 정지 부분은 소환물이 있을 때만 적용"
+      ],
+      "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+    }
+  ],
+  "boss_skills": [
+    {
+      "side": "BOSS",
+      "character": "철각왕 브라움",
+      "stage": 1,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "뿔박치기",
+      "source": "뿔박치기: 직선 경로 가속",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "철각왕 브라움",
+      "stage": 1,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "암반 붕괴",
+      "source": "암반 붕괴: 배치칸 2곳 6초 비활성",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "철각왕 브라움",
+      "stage": 1,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "분쇄 포효",
+      "source": "분쇄 포효: 방어벽 피해 +40% 8초",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "DAMAGE_TAKEN_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "광산왕 모르겐",
+      "stage": 2,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "파쇄 타격",
+      "source": "파쇄 타격: 방어벽 추가피해",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "광산왕 모르겐",
+      "stage": 2,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "낙석 지대",
+      "source": "낙석 지대: 경로 2곳 피해",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "광산왕 모르겐",
+      "stage": 2,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "광맥 폭주",
+      "source": "광맥 폭주: DEF 상승",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DEF_MOD"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "붉은협곡의 바르칸",
+      "stage": 3,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "협곡 질주",
+      "source": "협곡 질주: 이속 급상승",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "SLOW"
+      ],
+      "rpg_rules": [
+        "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "붉은협곡의 바르칸",
+      "stage": 3,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "도적 소집",
+      "source": "도적 소집: 약탈자 증원",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "붉은협곡의 바르칸",
+      "stage": 3,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "피의 검격",
+      "source": "피의 검격: 성문 피해 증가",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "철익 그라핀",
+      "stage": 4,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "급강하",
+      "source": "급강하: 방어벽 우회",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "철익 그라핀",
+      "stage": 4,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "철깃 폭우",
+      "source": "철깃 폭우: 배치칸 공격속도 저하",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환",
+        "RPG: 영웅 기본공격 및 자동스킬 행동주기 증가",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "철익 그라핀",
+      "stage": 4,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "폭풍 날갯짓",
+      "source": "폭풍 날갯짓: 원거리 명중률 저하",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "산맥포식자 가르도스",
+      "stage": 5,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "석화갑피",
+      "source": "석화갑피: 피해감소",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SHIELD"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "산맥포식자 가르도스",
+      "stage": 5,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "꼬리휩쓸기",
+      "source": "꼬리휩쓸기: 경로 광역",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "AOE",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "산맥포식자 가르도스",
+      "stage": 5,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "암반잠복",
+      "source": "암반잠복: 짧은 무적",
+      "status": "DIRECT",
+      "effect_tags": [
+        "INVULNERABLE"
+      ],
+      "rpg_rules": [
+        "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사구왕 자하르",
+      "stage": 6,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "독침 폭우",
+      "source": "독침 폭우: 지속피해",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사구왕 자하르",
+      "stage": 6,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "모래잠행",
+      "source": "모래잠행: 타겟팅 해제",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사구왕 자하르",
+      "stage": 6,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "황금갑각",
+      "source": "황금갑각: DEF 증가",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DEF_MOD"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "불꽃도적 카심",
+      "stage": 7,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "화염질주",
+      "source": "화염질주",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "불꽃도적 카심",
+      "stage": 7,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "불꽃궤적",
+      "source": "불꽃궤적: 지속장판",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT"
+      ],
+      "rpg_rules": [],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "불꽃도적 카심",
+      "stage": 7,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "광폭화",
+      "source": "광폭화: HP 40% 이하 공속 상승",
+      "status": "DIRECT",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD",
+        "EXECUTE"
+      ],
+      "rpg_rules": [
+        "RPG: HP 임계치 기반 강화 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "유리사막의 네프라",
+      "stage": 8,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "유리장막",
+      "source": "유리장막: 원거리 피해 일부 반사",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 조건부 피해 반사"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "유리사막의 네프라",
+      "stage": 8,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "사막폭풍",
+      "source": "사막폭풍: 사거리 -1",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 사거리 감소는 영웅 공격주기 증가로 변환",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "유리사막의 네프라",
+      "stage": 8,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "파편폭발",
+      "source": "파편폭발: 광역",
+      "status": "DIRECT",
+      "effect_tags": [
+        "AOE"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "오아시스의 배신자 라지르",
+      "stage": 9,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "독안개",
+      "source": "독안개: 경로 지속피해",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DOT",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "오아시스의 배신자 라지르",
+      "stage": 9,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "밀수단 호출",
+      "source": "밀수단 호출: 증원",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "오아시스의 배신자 라지르",
+      "stage": 9,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "가짜 오아시스",
+      "source": "가짜 오아시스: 이동경로 착시 연출",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "태양먹는 아누라",
+      "stage": 10,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "일식",
+      "source": "일식: 아군 공속 감소",
+      "status": "DIRECT",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 기본공격 및 자동스킬 행동주기 증가"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "태양먹는 아누라",
+      "stage": 10,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "열사병",
+      "source": "열사병: 공격력 감소",
+      "status": "DIRECT",
+      "effect_tags": [
+        "ATK_MOD"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 ATK 감소"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "태양먹는 아누라",
+      "stage": 10,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "그림자 분열",
+      "source": "그림자 분열: 분신 2체",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "해적왕 쿠로가네",
+      "stage": 11,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "해적선 포격",
+      "source": "해적선 포격",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "해적왕 쿠로가네",
+      "stage": 11,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "부하 소환",
+      "source": "부하 소환",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "해적왕 쿠로가네",
+      "stage": 11,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "파도베기",
+      "source": "파도베기: 직선 광역",
+      "status": "DIRECT",
+      "effect_tags": [
+        "AOE"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "청룡치어왕 류가",
+      "stage": 12,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "해무",
+      "source": "해무: 사거리 감소",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 사거리 감소는 영웅 공격주기 증가로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "청룡치어왕 류가",
+      "stage": 12,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "용오름",
+      "source": "용오름: 경로 넉백",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "청룡치어왕 류가",
+      "stage": 12,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "해룡비상",
+      "source": "해룡비상: 타겟팅 해제",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심해무녀 우미",
+      "stage": 13,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "수령결계",
+      "source": "수령결계: 공격속도 감소",
+      "status": "DIRECT",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD"
+      ],
+      "rpg_rules": [],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심해무녀 우미",
+      "stage": 13,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "익사자의 손",
+      "source": "익사자의 손: 1칸 봉쇄",
+      "status": "DIRECT",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심해무녀 우미",
+      "stage": 13,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "심해의 노래",
+      "source": "심해의 노래: 이속 감소",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "SLOW"
+      ],
+      "rpg_rules": [
+        "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "대갑각왕 카니바",
+      "stage": 14,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "집게분쇄",
+      "source": "집게분쇄",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "대갑각왕 카니바",
+      "stage": 14,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "갑각수복",
+      "source": "갑각수복: HP 회복",
+      "status": "DIRECT",
+      "effect_tags": [
+        "HEAL"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 HP 회복/흡혈로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "대갑각왕 카니바",
+      "stage": 14,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "옆걸음 돌진",
+      "source": "옆걸음 돌진: 경로변경 없이 가속",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "폭풍닌자 시구레",
+      "stage": 15,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "연막",
+      "source": "연막: 은신",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "폭풍닌자 시구레",
+      "stage": 15,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "분신술",
+      "source": "분신술: 3체",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "폭풍닌자 시구레",
+      "stage": 15,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "천뢰수리검",
+      "source": "천뢰수리검: 광역 기절",
+      "status": "DIRECT",
+      "effect_tags": [
+        "AOE",
+        "STUN"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 행동불능",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "백야왕 펜리르",
+      "stage": 16,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "빙설질주",
+      "source": "빙설질주",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "백야왕 펜리르",
+      "stage": 16,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "늑대무리 소환",
+      "source": "늑대무리 소환",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "백야왕 펜리르",
+      "stage": 16,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "동결포효",
+      "source": "동결포효: 공속 감소",
+      "status": "DIRECT",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 기본공격 및 자동스킬 행동주기 증가"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "빙벽거인 요툰",
+      "stage": 17,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "빙벽생성",
+      "source": "빙벽생성: 경로 일시 좁힘",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "빙벽거인 요툰",
+      "stage": 17,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "빙하분쇄",
+      "source": "빙하분쇄: 방어벽 피해",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "빙벽거인 요툰",
+      "stage": 17,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "서리갑피",
+      "source": "서리갑피: 피해감소",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SHIELD"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "설해마녀 스카디아",
+      "stage": 18,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "서리폭풍",
+      "source": "서리폭풍",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "설해마녀 스카디아",
+      "stage": 18,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "빙결표식",
+      "source": "빙결표식",
+      "status": "DIRECT",
+      "effect_tags": [
+        "CC"
+      ],
+      "rpg_rules": [],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "설해마녀 스카디아",
+      "stage": 18,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "절대빙결",
+      "source": "절대빙결: 2칸 3초 정지",
+      "status": "DIRECT",
+      "effect_tags": [
+        "CC",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 행동불능"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "동토광왕 브란",
+      "stage": 19,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "피의광폭",
+      "source": "피의광폭",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: HP 임계치 기반 강화 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "동토광왕 브란",
+      "stage": 19,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "도끼회전",
+      "source": "도끼회전",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "동토광왕 브란",
+      "stage": 19,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "죽음거부",
+      "source": "죽음거부: 1회 HP 20% 회복",
+      "status": "DIRECT",
+      "effect_tags": [
+        "HEAL"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 HP 회복/흡혈로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "설산군주 아르켄",
+      "stage": 20,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "폭풍날개",
+      "source": "폭풍날개",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "설산군주 아르켄",
+      "stage": 20,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "급강하",
+      "source": "급강하",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "설산군주 아르켄",
+      "stage": 20,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "백야",
+      "source": "백야: 원거리 사거리 -1",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 사거리 감소는 영웅 공격주기 증가로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "배교성기사 라미엘",
+      "stage": 21,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "타락성광",
+      "source": "타락성광",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "배교성기사 라미엘",
+      "stage": 21,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "신성방패",
+      "source": "신성방패",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SHIELD"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "배교성기사 라미엘",
+      "stage": 21,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "징벌검",
+      "source": "징벌검: 방어벽 추가피해",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "성당의 가고일왕 그레고르",
+      "stage": 22,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "석화시선",
+      "source": "석화시선: 공속 감소",
+      "status": "DIRECT",
+      "effect_tags": [
+        "ATTACK_SPEED_MOD"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 기본공격 및 자동스킬 행동주기 증가"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "성당의 가고일왕 그레고르",
+      "stage": 22,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "첨탑낙하",
+      "source": "첨탑낙하",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "성당의 가고일왕 그레고르",
+      "stage": 22,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "석상화",
+      "source": "석상화: 일시 무적",
+      "status": "DIRECT",
+      "effect_tags": [
+        "INVULNERABLE"
+      ],
+      "rpg_rules": [
+        "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "순교자 세베라",
+      "stage": 23,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "순교찬가",
+      "source": "순교찬가",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "순교자 세베라",
+      "stage": 23,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "광신도 소환",
+      "source": "광신도 소환",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "순교자 세베라",
+      "stage": 23,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "성흔폭발",
+      "source": "성흔폭발",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "성유물폭주체 렐릭스",
+      "stage": 24,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "성유물장벽",
+      "source": "성유물장벽",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "성유물폭주체 렐릭스",
+      "stage": 24,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "성광포",
+      "source": "성광포",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "성유물폭주체 렐릭스",
+      "stage": 24,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "봉인파동",
+      "source": "봉인파동: 스킬 쿨다운 증가",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SKILL_CONTROL"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 스킬 사용 차단/지연",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은대주교 말키엘",
+      "stage": 25,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "침묵선고",
+      "source": "침묵선고",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SKILL_CONTROL"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 스킬 사용 차단/지연"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은대주교 말키엘",
+      "stage": 25,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "광신강화",
+      "source": "광신강화",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은대주교 말키엘",
+      "stage": 25,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "흑성광",
+      "source": "흑성광: 광역 피해",
+      "status": "DIRECT",
+      "effect_tags": [
+        "AOE"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "황실골렘 아르카논",
+      "stage": 26,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "마도포격",
+      "source": "마도포격",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "황실골렘 아르카논",
+      "stage": 26,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "자기수복",
+      "source": "자기수복",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 HP 회복/흡혈로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "황실골렘 아르카논",
+      "stage": 26,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "중력파",
+      "source": "중력파: 이속 감소",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "SLOW"
+      ],
+      "rpg_rules": [
+        "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "반역장군 드라켄",
+      "stage": 27,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "돌격명령",
+      "source": "돌격명령",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "반역장군 드라켄",
+      "stage": 27,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "방패진",
+      "source": "방패진",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SHIELD"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "반역장군 드라켄",
+      "stage": 27,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "처형창",
+      "source": "처형창: 방어벽 추가피해",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "실험체 제로",
+      "stage": 28,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "마력폭주",
+      "source": "마력폭주",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "실험체 제로",
+      "stage": 28,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "세포재생",
+      "source": "세포재생",
+      "status": "DIRECT",
+      "effect_tags": [
+        "HEAL"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 HP 회복/흡혈로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "실험체 제로",
+      "stage": 28,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "불안정폭발",
+      "source": "불안정폭발",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "공중요새 코르부스",
+      "stage": 29,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "마력폭격",
+      "source": "마력폭격",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "공중요새 코르부스",
+      "stage": 29,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "드론증원",
+      "source": "드론증원",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "공중요새 코르부스",
+      "stage": 29,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "방벽무시 포격",
+      "source": "방벽무시 포격",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "균열군주 네메시스",
+      "stage": 30,
+      "mode": "NORMAL",
+      "slot": 1,
+      "skill": "균열소환",
+      "source": "균열소환",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "균열군주 네메시스",
+      "stage": 30,
+      "mode": "NORMAL",
+      "slot": 2,
+      "skill": "공포파동",
+      "source": "공포파동",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "균열군주 네메시스",
+      "stage": 30,
+      "mode": "NORMAL",
+      "slot": 3,
+      "skill": "심연포식",
+      "source": "심연포식: HP 흡수",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 HP 회복/흡혈로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "타락한 철각왕 브라움",
+      "stage": 31,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연돌진",
+      "source": "심연돌진",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "타락한 철각왕 브라움",
+      "stage": 31,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "방어벽 붕괴",
+      "source": "방어벽 붕괴",
+      "status": "TRANSLATED",
+      "effect_tags": [
+        "DEF_MOD",
+        "TD_SPATIAL"
+      ],
+      "rpg_rules": [
+        "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "타락한 철각왕 브라움",
+      "stage": 31,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "검은뿔 폭발",
+      "source": "검은뿔 폭발",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 광산왕 모르겐",
+      "stage": 32,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "침식파쇄",
+      "source": "침식파쇄",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 광산왕 모르겐",
+      "stage": 32,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "검은낙석",
+      "source": "검은낙석",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 광산왕 모르겐",
+      "stage": 32,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "광맥폭주",
+      "source": "광맥폭주",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 서부의 설화",
+      "stage": 33,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연갑피",
+      "source": "심연갑피",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 서부의 설화",
+      "stage": 33,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "지각파열",
+      "source": "지각파열",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 서부의 설화",
+      "stage": 33,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "포식재생",
+      "source": "포식재생",
+      "status": "DIRECT",
+      "effect_tags": [
+        "HEAL"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 HP 회복/흡혈로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 백야왕 펜리르",
+      "stage": 34,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연질주",
+      "source": "심연질주",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 백야왕 펜리르",
+      "stage": 34,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "흑설포효",
+      "source": "흑설포효",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 백야왕 펜리르",
+      "stage": 34,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "빙혈분신",
+      "source": "빙혈분신",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SUMMON"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은 빙벽거인 요툰",
+      "stage": 35,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "흑빙벽",
+      "source": "흑빙벽",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은 빙벽거인 요툰",
+      "stage": 35,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "대지분쇄",
+      "source": "대지분쇄",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은 빙벽거인 요툰",
+      "stage": 35,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "빙하재생",
+      "source": "빙하재생",
+      "status": "DIRECT",
+      "effect_tags": [
+        "HEAL"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 HP 회복/흡혈로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 북부의 설화",
+      "stage": 36,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "흑서리폭풍",
+      "source": "흑서리폭풍",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 북부의 설화",
+      "stage": 36,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "빙결봉인",
+      "source": "빙결봉인",
+      "status": "DIRECT",
+      "effect_tags": [
+        "CC"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 스킬 사용 차단/지연"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 북부의 설화",
+      "stage": 36,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "절대영도",
+      "source": "절대영도",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "타락한 사구왕 자하르",
+      "stage": 37,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연독침",
+      "source": "심연독침",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "타락한 사구왕 자하르",
+      "stage": 37,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "사막잠행",
+      "source": "사막잠행",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "타락한 사구왕 자하르",
+      "stage": 37,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "갑각폭주",
+      "source": "갑각폭주",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 태양먹는 아누라",
+      "stage": 38,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "검은일식",
+      "source": "검은일식",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 태양먹는 아누라",
+      "stage": 38,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "영혼흡수",
+      "source": "영혼흡수",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 HP 회복/흡혈로 적용"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 태양먹는 아누라",
+      "stage": 38,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "그림자분열",
+      "source": "그림자분열",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 남부의 설화",
+      "stage": 39,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연화염",
+      "source": "심연화염",
+      "status": "DIRECT",
+      "effect_tags": [
+        "DOT"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 남부의 설화",
+      "stage": 39,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "불꽃분열",
+      "source": "불꽃분열",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 남부의 설화",
+      "stage": 39,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "청흑폭발",
+      "source": "청흑폭발",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 해적왕 쿠로가네",
+      "stage": 40,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "침식포격",
+      "source": "침식포격",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 해적왕 쿠로가네",
+      "stage": 40,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "망령선원",
+      "source": "망령선원",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 해적왕 쿠로가네",
+      "stage": 40,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "파도참",
+      "source": "파도참",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심연해룡 류가",
+      "stage": 41,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연해무",
+      "source": "심연해무",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심연해룡 류가",
+      "stage": 41,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "흑룡오름",
+      "source": "흑룡오름",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심연해룡 류가",
+      "stage": 41,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "해륜폭풍",
+      "source": "해륜폭풍",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 동부의 설화",
+      "stage": 42,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "촉수압살",
+      "source": "촉수압살",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 동부의 설화",
+      "stage": 42,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "심해흡입",
+      "source": "심해흡입",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 동부의 설화",
+      "stage": 42,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "심연파도",
+      "source": "심연파도",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은대주교 말키엘",
+      "stage": 43,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "영구침묵선고",
+      "source": "영구침묵선고",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SKILL_CONTROL"
+      ],
+      "rpg_rules": [
+        "RPG: 영웅 스킬 사용 차단/지연"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은대주교 말키엘",
+      "stage": 43,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "광신폭주",
+      "source": "광신폭주",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "검은대주교 말키엘",
+      "stage": 43,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "흑성광강림",
+      "source": "흑성광강림",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사룡숭배 대성상",
+      "stage": 44,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "사룡가호",
+      "source": "사룡가호",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사룡숭배 대성상",
+      "stage": 44,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "성상분열",
+      "source": "성상분열",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사룡숭배 대성상",
+      "stage": 44,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "흑성광포",
+      "source": "흑성광포",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 용살자의 설화",
+      "stage": 45,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "검은깃폭우",
+      "source": "검은깃폭우",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 용살자의 설화",
+      "stage": 45,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "타락성가",
+      "source": "타락성가",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 용살자의 설화",
+      "stage": 45,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "천벌역전",
+      "source": "천벌역전",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심연황실골렘 아르카논",
+      "stage": 46,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연마도포",
+      "source": "심연마도포",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심연황실골렘 아르카논",
+      "stage": 46,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "중력붕괴",
+      "source": "중력붕괴",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "심연황실골렘 아르카논",
+      "stage": 46,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "자가복원",
+      "source": "자가복원",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 반역장군 드라켄",
+      "stage": 47,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연돌격명령",
+      "source": "심연돌격명령",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 반역장군 드라켄",
+      "stage": 47,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "검은방패진",
+      "source": "검은방패진",
+      "status": "DIRECT",
+      "effect_tags": [
+        "SHIELD"
+      ],
+      "rpg_rules": [
+        "RPG: 보스 피해감소/DEF 증가 상태"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 반역장군 드라켄",
+      "stage": 47,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "처형창진",
+      "source": "처형창진",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사룡의 화신 네메시스",
+      "stage": 48,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "사룡의포효",
+      "source": "사룡의포효",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사룡의 화신 네메시스",
+      "stage": 48,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "균열군세",
+      "source": "균열군세",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 전용 소환물/add 생성"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "사룡의 화신 네메시스",
+      "stage": 48,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "성벽파멸",
+      "source": "성벽파멸",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "종말을 걷는 자 에레보스",
+      "stage": 49,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "종말의발걸음",
+      "source": "종말의발걸음",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "종말을 걷는 자 에레보스",
+      "stage": 49,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "시간붕괴",
+      "source": "시간붕괴",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "종말을 걷는 자 에레보스",
+      "stage": 49,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "공포의천막",
+      "source": "공포의천막",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식의 근원, 사룡 발테리옹",
+      "stage": 50,
+      "mode": "HARD",
+      "slot": 1,
+      "skill": "심연브레스",
+      "source": "심연브레스",
+      "status": "DIRECT",
+      "effect_tags": [],
+      "rpg_rules": [
+        "RPG: 보스 공격 스킬로 구현"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식의 근원, 사룡 발테리옹",
+      "stage": 50,
+      "mode": "HARD",
+      "slot": 2,
+      "skill": "재앙의날갯짓",
+      "source": "재앙의날갯짓",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    },
+    {
+      "side": "BOSS",
+      "character": "침식의 근원, 사룡 발테리옹",
+      "stage": 50,
+      "mode": "HARD",
+      "slot": 3,
+      "skill": "LAST WALL 파괴",
+      "source": "LAST WALL 파괴",
+      "status": "NEEDS_MANUAL_DEFINITION",
+      "effect_tags": [],
+      "rpg_rules": [
+        "소스에 스킬명만 있고 구체 효과/수치가 없어 RPG 효과 정의 필요"
+      ],
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+    }
+  ]
+}
