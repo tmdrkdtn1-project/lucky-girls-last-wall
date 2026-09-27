@@ -178,13 +178,20 @@ function showWarning(text,sub='',hold=1400){
 }
 function startWaveNotice(){
  if(wave===5)showWarning('⚠ WARNING','MID BOSS · WAVE 5');
- if(wave===10)showWarning('⚠ BOSS','FINAL TD BOSS · WAVE 10',1700);
+ if(wave===10)toast('Wave 10 · 보스는 웨이브 중반에 등장합니다');
 }
 function updateSpawning(dt){
  spawnClock+=dt;
  if(wave===10){
-  // Fallback guard: Wave 10 must always contain exactly one TD boss.
-  spawnWave10BossNow();
+  const preBossNormalLimit=Math.ceil(normalCountForWave(wave)*0.5);
+  if(spawnClock>=waveSpawnInterval()&&waveSpawned<preBossNormalLimit){
+   spawnClock=0;spawnEnemy('normal');waveSpawned++;
+  }
+  if(!wave10WarningShown&&waveClock>=12){
+   wave10WarningShown=true;
+   showWarning('⚠ WARNING','BOSS APPROACHING · 3 SEC',1200);
+  }
+  spawnWave10BossMidWave();
   return;
  }
  const limit=normalCountForWave(wave);
@@ -261,17 +268,18 @@ function renderEnemies(){
   d.innerHTML+='<span class="hpbar"><i style="width:'+Math.max(0,e.hp/e.maxHp*100)+'%"></i></span>';enemyLayer.appendChild(d);
  }
 }
-function spawnWave10BossNow(){
- if(wave!==10||specialSpawned)return;
+const WAVE10_BOSS_SPAWN_AT=15;
+let wave10WarningShown=false;
+function spawnWave10BossMidWave(){
+ if(wave!==10||specialSpawned||waveClock<WAVE10_BOSS_SPAWN_AT)return;
  spawnEnemy('boss');
  specialSpawned=true;
  showWarning('⚠ BOSS','FINAL TD BOSS · WAVE 10',1700);
 }
 function advanceWave(){
  if(wave>=10)return;
- wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;
- if(wave===10)spawnWave10BossNow();
- else startWaveNotice();
+ wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;wave10WarningShown=false;
+ startWaveNotice();
 }
 function loop(ts){
  const raw=Math.min(.05,(ts-last)/1000);last=ts;
