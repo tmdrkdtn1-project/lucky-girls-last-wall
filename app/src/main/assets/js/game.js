@@ -560,6 +560,7 @@ function startRpgBattle(tdHeroes){
   heroes,
   boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,rateBuffMult:1,rateBuffUntil:0,deathPreventionCharges:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]},
   summons:[],
+  pendingEvents:[],
   result:null
  };
  $('battlefield').style.display='none';$('battlefield').classList.remove('tdLocked');
@@ -718,7 +719,26 @@ function updateRpgSummons(){
   }
  }
 }
-const RPG_ADAPTER_RUNTIME_VERSION='LG_RPG_ADAPTER_RUNTIME_V1';
+function scheduleRpgEvent(delay,fn,label=''){
+ if(!rpgState)return;
+ rpgState.pendingEvents=rpgState.pendingEvents||[];
+ rpgState.pendingEvents.push({at:rpgSimTime+Math.max(0,delay),fn,label});
+}
+function updateRpgPendingEvents(){
+ if(!rpgState?.pendingEvents?.length)return;
+ const due=rpgState.pendingEvents.filter(e=>e.at<=rpgSimTime);
+ rpgState.pendingEvents=rpgState.pendingEvents.filter(e=>e.at>rpgSimTime);
+ for(const e of due)e.fn();
+}
+function rpgConditionMet(condition,source){
+ if(!condition)return true;
+ if(condition.type==='HP_LTE'){
+  const actor=condition.target==='SELF'?source:rpgState?.boss;
+  return !!actor&&(actor.hp/Math.max(1,actor.maxHp))<=condition.ratio;
+ }
+ return false;
+}
+const RPG_ADAPTER_RUNTIME_VERSION='LG_RPG_ADAPTER_RUNTIME_V1_1';
 function tryRpgDeathPrevention(actor){
  if((actor.deathPreventionCharges||0)<=0)return false;
  actor.deathPreventionCharges--;actor.hp=Math.max(1,Math.round(actor.maxHp*(actor.deathPreventionHealRatio||.20)));
@@ -812,6 +832,25 @@ function runRpgAdapter(id,params={},ctx={}){
   for(const t of targets)if(typeof t.ult==='number')t.ult=Math.max(0,Math.min(100,t.ult+delta));
   return {triggered:targets.length>0,count:targets.length};
  }
+ if(id==='CONDITIONAL_EFFECT'){
+  if(!rpgConditionMet(params.condition,source))return {triggered:false};
+  if(params.effects)applyRpgEffects(params.effects,{source});
+  return {triggered:true};
+ }
+ if(id==='TELEGRAPH_SEQUENCE'){
+  const count=Math.max(1,params.count||1),gap=Math.max(.1,params.gap||.7),warning=Math.max(0,params.warning||.6);
+  for(let i=0;i<count;i++){
+   scheduleRpgEvent(i*gap,()=>showWarning(params.label||'⚠ TARGETED ATTACK',params.warningText||'곧 공격이 도착합니다',Math.round(warning*1000)));
+   scheduleRpgEvent(i*gap+warning,()=>{
+    const targets=selectRpgTargets(params.target||'RANDOM_HERO',source,{count:params.targetCount||1});
+    for(const t of targets){
+     const amount=typeof params.amount==='function'?params.amount(source,t):params.amount;
+     applyRpgEffects([{type:'DAMAGE',target:'SELF',amount:amount||1}],{source:t});
+    }
+   });
+  }
+  return {triggered:true,count};
+ }
  return {triggered:false,unsupported:true};
 }
 function effectiveHeroAtk(h){
@@ -868,7 +907,7 @@ function updateRpgBossSkills(b){
 function updateRpg(dt){
  if(!rpgState||rpgState.result)return;
  rpgSimTime+=dt;
- updateRpgDots(dt);updateRpgSummons();
+ updateRpgPendingEvents();updateRpgDots(dt);updateRpgSummons();
  const b=rpgState.boss;
  for(const h of rpgAliveHeroes()){
   if((h.stunUntil||0)>rpgSimTime)continue;

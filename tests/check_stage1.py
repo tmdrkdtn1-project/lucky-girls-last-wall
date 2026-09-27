@@ -326,7 +326,7 @@ print("PASS - Stage 1 Braum S1/S2/S3 are connected through shared RPG effects wi
 # Full 210-skill runtime binding matrix guards
 runtime_bindings=json.loads((root/"data/rpg_runtime_bindings_v1.json").read_text(encoding="utf-8"))
 adapter_backlog=json.loads((root/"data/rpg_runtime_adapter_backlog_v1.json").read_text(encoding="utf-8"))
-assert runtime_bindings["schema"]=="LG_RPG_RUNTIME_BINDINGS_V1"
+assert runtime_bindings["schema"] in ("LG_RPG_RUNTIME_BINDINGS_V1","LG_RPG_RUNTIME_BINDINGS_V1_1","LG_RPG_RUNTIME_BINDINGS_V1_2")
 assert runtime_bindings["total"]==210
 assert len(runtime_bindings["items"])==210
 assert sum(runtime_bindings["counts"].values())==210
@@ -352,3 +352,21 @@ assert runtime_bindings["counts"].get("NEEDS_ADAPTER",0)==0
 assert runtime_bindings["counts"].get("ADAPTER_READY",0)==43
 assert "tryRpgDeathPrevention(t)" in js
 print("PASS - all 11 RPG adapters are implemented and all 43 adapter-dependent skills are runtime-ready")
+
+# Five explicit RPG effect plans close the remaining definition gap
+explicit_plans=json.loads((root/"data/rpg_explicit_effect_plans_v1.json").read_text(encoding="utf-8"))
+runtime_bindings=json.loads((root/"data/rpg_runtime_bindings_v1.json").read_text(encoding="utf-8"))
+adapter_backlog=json.loads((root/"data/rpg_runtime_adapter_backlog_v1.json").read_text(encoding="utf-8"))
+assert explicit_plans["schema"]=="LG_RPG_EXPLICIT_EFFECT_PLANS_V1"
+assert explicit_plans["count"]==5 and len(explicit_plans["items"])==5
+assert all(x["status"]=="READY_FOR_RUNTIME" for x in explicit_plans["items"])
+assert next(x for x in explicit_plans["items"] if x["character"]=="루나" and x["skill"]=="역행의 별")["plan"]["effects"][0]["duration"]==1.5
+assert runtime_bindings["schema"]=="LG_RPG_RUNTIME_BINDINGS_V1_2"
+assert runtime_bindings["counts"].get("NEEDS_EXPLICIT_EFFECT_PLAN",0)==0
+assert runtime_bindings["counts"].get("EXPLICIT_PLAN_READY",0)==5
+assert sum(runtime_bindings["counts"].values())==210
+assert adapter_backlog["count"]==13 and adapter_backlog["pending_count"]==0
+assert "id==='CONDITIONAL_EFFECT'" in js and "id==='TELEGRAPH_SEQUENCE'" in js
+assert "function updateRpgPendingEvents()" in js
+assert "updateRpgPendingEvents();updateRpgDots(dt)" in js
+print("PASS - the final five ambiguous skills have explicit runtime plans; all 210 RPG skill definitions are structurally runtime-ready")

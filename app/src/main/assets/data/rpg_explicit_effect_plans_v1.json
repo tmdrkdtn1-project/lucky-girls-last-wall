@@ -1,0 +1,135 @@
+{
+  "schema": "LG_RPG_EXPLICIT_EFFECT_PLANS_V1",
+  "count": 5,
+  "policy": "Source-backed values are preserved; source gaps are marked PROTOTYPE_MUTABLE and may be changed later.",
+  "items": [
+    {
+      "character": "루나",
+      "skill": "역행의 별",
+      "side": "HERO",
+      "status": "READY_FOR_RUNTIME",
+      "source": "가장 앞선 적 3체를 경로 1칸 뒤로 되돌림, 보스는 1.5초 정지.",
+      "plan": {
+        "effects": [
+          {
+            "type": "STUN",
+            "target": "BOSS",
+            "duration": 1.5
+          }
+        ]
+      },
+      "value_origin": {
+        "duration_1_5_sec": "SOURCE_BACKED"
+      },
+      "notes": "RPG 단일보스에서는 소스에 명시된 보스 1.5초 정지를 그대로 사용."
+    },
+    {
+      "character": "심해무녀 우미",
+      "skill": "익사자의 손",
+      "side": "BOSS",
+      "stage": 13,
+      "status": "READY_FOR_RUNTIME",
+      "source": "1칸 봉쇄",
+      "plan": {
+        "effects": [
+          {
+            "type": "SKILL_BLOCK",
+            "target": "RANDOM_HERO",
+            "duration": 3
+          }
+        ]
+      },
+      "value_origin": {
+        "target": "RPG_TRANSLATION_PROTOTYPE",
+        "duration_3_sec": "PROTOTYPE_MUTABLE"
+      },
+      "notes": "TD의 1칸 봉쇄를 RPG에서 무작위 영웅 1명의 스킬 사용 봉쇄로 임시 변환."
+    },
+    {
+      "character": "설해마녀 스카디아",
+      "skill": "빙결표식",
+      "side": "BOSS",
+      "stage": 18,
+      "status": "READY_FOR_RUNTIME",
+      "source": "빙결표식",
+      "plan": {
+        "effects": [
+          {
+            "type": "STUN",
+            "target": "RANDOM_HERO",
+            "duration": 2
+          }
+        ]
+      },
+      "value_origin": {
+        "target": "PROJECT_DESIGN_PROTOTYPE",
+        "duration_2_sec": "PROTOTYPE_MUTABLE"
+      },
+      "notes": "원본은 스킬명만 있어 RPG에서는 무작위 영웅 1명 빙결/행동불능으로 1차 정의."
+    },
+    {
+      "character": "동토광왕 브란",
+      "skill": "피의광폭",
+      "side": "BOSS",
+      "stage": 19,
+      "status": "READY_FOR_RUNTIME",
+      "source": "피의광폭 / RPG: HP 임계치 기반 강화 상태",
+      "plan": {
+        "adapter": "CONDITIONAL_EFFECT",
+        "params": {
+          "condition": {
+            "type": "HP_LTE",
+            "target": "SELF",
+            "ratio": 0.4
+          },
+          "effects": [
+            {
+              "type": "ATK_MULT",
+              "target": "SELF",
+              "mult": 1.35,
+              "duration": 9999
+            },
+            {
+              "type": "RATE_MULT",
+              "target": "SELF",
+              "mult": 1.25,
+              "duration": 9999
+            }
+          ]
+        }
+      },
+      "value_origin": {
+        "hp_threshold_40": "PROTOTYPE_MUTABLE",
+        "atk_35": "PROTOTYPE_MUTABLE",
+        "rate_25": "PROTOTYPE_MUTABLE"
+      },
+      "notes": "원본에 임계치/강화수치가 없어 모두 변경 가능한 V1 프로토타입."
+    },
+    {
+      "character": "공중요새 코르부스",
+      "skill": "마력폭격",
+      "side": "BOSS",
+      "stage": 29,
+      "status": "READY_FOR_RUNTIME",
+      "source": "마력폭격 / 승인된 V1: 복수 영웅 순차 폭격 + 각 폭격 사이 짧은 경고",
+      "plan": {
+        "adapter": "TELEGRAPH_SEQUENCE",
+        "params": {
+          "count": 3,
+          "gap": 1,
+          "warning": 0.6,
+          "target": "RANDOM_HERO",
+          "amount_ratio_to_boss_atk": 0.85,
+          "label": "공중요새 코르부스 · 마력폭격"
+        }
+      },
+      "value_origin": {
+        "count_3": "PROTOTYPE_MUTABLE",
+        "gap_1_0": "PROTOTYPE_MUTABLE",
+        "warning_0_6": "PROTOTYPE_MUTABLE",
+        "damage_ratio_0_85": "PROTOTYPE_MUTABLE"
+      },
+      "notes": "마스터 승인된 V1 동작을 유지하되 세부 수치는 밸런스 보류."
+    }
+  ]
+}

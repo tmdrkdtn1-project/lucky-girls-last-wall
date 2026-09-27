@@ -1,6 +1,6 @@
 {
-  "schema": "LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1_1",
-  "count": 11,
+  "schema": "LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1_2",
+  "count": 13,
   "adapters": [
     {
       "id": "CHANCE_TRIGGER",
@@ -384,8 +384,20 @@
         }
       ],
       "runtime": "runRpgAdapter"
+    },
+    {
+      "id": "CONDITIONAL_EFFECT",
+      "status": "IMPLEMENTED_V1",
+      "runtime": "runRpgAdapter",
+      "affected_skills": []
+    },
+    {
+      "id": "TELEGRAPH_SEQUENCE",
+      "status": "IMPLEMENTED_V1",
+      "runtime": "runRpgAdapter",
+      "affected_skills": []
     }
   ],
-  "implemented_count": 11,
+  "implemented_count": 13,
   "pending_count": 0
 }

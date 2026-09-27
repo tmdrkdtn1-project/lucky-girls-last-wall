@@ -1,12 +1,12 @@
 {
-  "schema": "LG_RPG_RUNTIME_BINDINGS_V1_1",
+  "schema": "LG_RPG_RUNTIME_BINDINGS_V1_2",
   "source_translation_schema": "LG_RPG_SKILL_TRANSLATION_V1_3",
   "runtime_schema": "LG_COMBAT_EFFECT_RUNTIME_V1_2",
   "total": 210,
   "counts": {
     "BINDABLE_CORE": 159,
     "ADAPTER_READY": 43,
-    "NEEDS_EXPLICIT_EFFECT_PLAN": 5,
+    "EXPLICIT_PLAN_READY": 5,
     "LIVE_STAGE1": 3
   },
   "policy": {
@@ -15,7 +15,8 @@
     "NEEDS_ADAPTER": "core primitives exist but special sequencing/condition/target adapter is still required",
     "NEEDS_EXPLICIT_EFFECT_PLAN": "translation text exists but cannot be safely converted to primitive calls without an explicit per-skill effect plan",
     "BLOCKED_UNSUPPORTED_PRIMITIVE": "requires a primitive not yet present",
-    "ADAPTER_READY": "all required adapters exist in runtime; skill-specific numeric/effect payloads still come from binding data"
+    "ADAPTER_READY": "all required adapters exist in runtime; skill-specific numeric/effect payloads still come from binding data",
+    "EXPLICIT_PLAN_READY": "previously ambiguous skill now has an explicit runtime plan; prototype values remain mutable"
   },
   "items": [
     {
@@ -1058,7 +1059,7 @@
       "slot": 2,
       "skill": "역행의 별",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_EXPLICIT_EFFECT_PLAN",
+      "runtime_status": "EXPLICIT_PLAN_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -1070,7 +1071,18 @@
       "rpg_rules": [
         "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
         "RPG 단일보스에서는 보스 자신을 대상으로 처리"
-      ]
+      ],
+      "explicit_plan_ref": "루나/역행의 별",
+      "explicit_plan": {
+        "effects": [
+          {
+            "type": "STUN",
+            "target": "BOSS",
+            "duration": 1.5
+          }
+        ]
+      },
+      "prototype_mutable": true
     },
     {
       "side": "HERO",
@@ -2462,7 +2474,7 @@
       "slot": 2,
       "skill": "익사자의 손",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_EXPLICIT_EFFECT_PLAN",
+      "runtime_status": "EXPLICIT_PLAN_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -2473,7 +2485,18 @@
       "source": "익사자의 손: 1칸 봉쇄",
       "rpg_rules": [
         "원본 설명을 RPG 전투 효과로 직접 구현; 세부 수치는 밸런스 패스에서 확정"
-      ]
+      ],
+      "explicit_plan_ref": "심해무녀 우미/익사자의 손",
+      "explicit_plan": {
+        "effects": [
+          {
+            "type": "SKILL_BLOCK",
+            "target": "RANDOM_HERO",
+            "duration": 3
+          }
+        ]
+      },
+      "prototype_mutable": true
     },
     {
       "side": "BOSS",
@@ -2820,7 +2843,7 @@
       "slot": 2,
       "skill": "빙결표식",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_EXPLICIT_EFFECT_PLAN",
+      "runtime_status": "EXPLICIT_PLAN_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -2831,7 +2854,18 @@
       "source": "빙결표식",
       "rpg_rules": [
         "원본 설명을 RPG 전투 효과로 직접 구현; 세부 수치는 밸런스 패스에서 확정"
-      ]
+      ],
+      "explicit_plan_ref": "설해마녀 스카디아/빙결표식",
+      "explicit_plan": {
+        "effects": [
+          {
+            "type": "STUN",
+            "target": "RANDOM_HERO",
+            "duration": 2
+          }
+        ]
+      },
+      "prototype_mutable": true
     },
     {
       "side": "BOSS",
@@ -2864,7 +2898,7 @@
       "slot": 1,
       "skill": "피의광폭",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_EXPLICIT_EFFECT_PLAN",
+      "runtime_status": "EXPLICIT_PLAN_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -2875,7 +2909,33 @@
       "source": "피의광폭",
       "rpg_rules": [
         "RPG: HP 임계치 기반 강화 상태"
-      ]
+      ],
+      "explicit_plan_ref": "동토광왕 브란/피의광폭",
+      "explicit_plan": {
+        "adapter": "CONDITIONAL_EFFECT",
+        "params": {
+          "condition": {
+            "type": "HP_LTE",
+            "target": "SELF",
+            "ratio": 0.4
+          },
+          "effects": [
+            {
+              "type": "ATK_MULT",
+              "target": "SELF",
+              "mult": 1.35,
+              "duration": 9999
+            },
+            {
+              "type": "RATE_MULT",
+              "target": "SELF",
+              "mult": 1.25,
+              "duration": 9999
+            }
+          ]
+        }
+      },
+      "prototype_mutable": true
     },
     {
       "side": "BOSS",
@@ -3590,7 +3650,7 @@
       "slot": 1,
       "skill": "마력폭격",
       "source_status": "APPROVED_PROVISIONAL_V1",
-      "runtime_status": "NEEDS_EXPLICIT_EFFECT_PLAN",
+      "runtime_status": "EXPLICIT_PLAN_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -3602,7 +3662,20 @@
       "rpg_rules": [
         "영웅 파티 중 복수 대상을 순차 폭격",
         "각 폭격 사이에 짧은 경고 시간을 둔다"
-      ]
+      ],
+      "explicit_plan_ref": "공중요새 코르부스/마력폭격",
+      "explicit_plan": {
+        "adapter": "TELEGRAPH_SEQUENCE",
+        "params": {
+          "count": 3,
+          "gap": 1,
+          "warning": 0.6,
+          "target": "RANDOM_HERO",
+          "amount_ratio_to_boss_atk": 0.85,
+          "label": "공중요새 코르부스 · 마력폭격"
+        }
+      },
+      "prototype_mutable": true
     },
     {
       "side": "BOSS",
@@ -5198,5 +5271,5 @@
       ]
     }
   ],
-  "adapter_runtime_version": "LG_RPG_ADAPTER_RUNTIME_V1"
+  "adapter_runtime_version": "LG_RPG_ADAPTER_RUNTIME_V1_1"
 }
