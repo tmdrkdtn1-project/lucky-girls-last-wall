@@ -244,7 +244,7 @@ print("PASS - Aria TD S1/S2/S3 execute through shared effect primitives with sou
 
 # Full RPG translation matrix V1 guards
 rpg_translation=json.loads((root/"data/rpg_skill_translation_v1.json").read_text(encoding="utf-8"))
-assert rpg_translation["schema"]=="LG_RPG_SKILL_TRANSLATION_V1"
+assert rpg_translation["schema"]=="LG_RPG_SKILL_TRANSLATION_V1_1"
 assert rpg_translation["counts"]["hero_skills"]==60
 assert rpg_translation["counts"]["boss_skills"]==150
 assert rpg_translation["counts"]["total"]==210
@@ -255,3 +255,12 @@ assert any(x["character"]=="아리아" and x["skill"]=="수호의 맹세" and "�
 assert rpg_issues["schema"]=="LG_RPG_SKILL_ISSUE_REGISTRY_V1_1"
 assert all(x.get("mapping") for x in rpg_issues["items"])
 print("PASS - all 60 hero and 150 boss skills have RPG translation records; unresolved source gaps are explicitly marked")
+
+# Provisional boss definition closure guards
+assert rpg_translation["counts"]["manual_boss_definitions"]==0
+assert rpg_translation["counts"]["provisional_boss_definitions"]==43
+assert all(x["rpg_rules"] for x in rpg_translation["boss_skills"])
+assert all(x.get("definition_origin")=="PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE" for x in rpg_translation["boss_skills"] if x["status"]=="DESIGN_V1_PROVISIONAL")
+assert any(x["character"]=="침식의 근원, 사룡 발테리옹" and x["skill"]=="LAST WALL 파괴" and any("즉사" in r for r in x["rpg_rules"]) for x in rpg_translation["boss_skills"])
+assert rpg_issues["schema"]=="LG_RPG_SKILL_ISSUE_REGISTRY_V1_2"
+print("PASS - all 43 name-only boss skills have explicit provisional RPG behavior and remain clearly separated from source-backed definitions")

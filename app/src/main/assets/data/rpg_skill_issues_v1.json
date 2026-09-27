@@ -1,5 +1,5 @@
 {
-  "schema": "LG_RPG_SKILL_ISSUE_REGISTRY_V1_1",
+  "schema": "LG_RPG_SKILL_ISSUE_REGISTRY_V1_2",
   "count": 104,
   "items": [
     {
@@ -18,7 +18,8 @@
           "관통 공격은 RPG에서 대상 DEF 100% 무시",
           "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -36,7 +37,8 @@
         "rules": [
           "RPG: 생존 영웅 전원 ATK·공속 +15% 8초; 방어벽 DEF +20% 부분은 파티 받는 피해 -20% 8초로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -55,7 +57,8 @@
         "rules": [
           "RPG: 보스에게 성광 피해 + 생존 영웅 전원 5초간 받는 피해 50% 감소"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -71,7 +74,8 @@
         "rules": [
           "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -90,7 +94,8 @@
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
           "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -107,7 +112,8 @@
         "rules": [
           "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -124,7 +130,8 @@
         "rules": [
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -140,7 +147,8 @@
         "rules": [
           "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -156,7 +164,8 @@
         "rules": [
           "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -172,7 +181,8 @@
         "rules": [
           "RPG에서는 생존 중인 영웅 파티 전체에 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -190,7 +200,8 @@
           "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환",
           "RPG에서는 HP 비율이 가장 낮은 생존 영웅 HP 20% 회복"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -209,7 +220,8 @@
           "RPG에서는 생존 중인 영웅 파티 전체에 적용",
           "RPG에서는 모든 생존 영웅 HP 10% 회복"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -225,7 +237,8 @@
         "rules": [
           "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -243,7 +256,8 @@
         "rules": [
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -262,7 +276,8 @@
           "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
           "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -280,7 +295,8 @@
           "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
           "RPG 단일보스에서는 보스 자신을 대상으로 처리"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -298,7 +314,8 @@
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
           "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -314,7 +331,8 @@
         "rules": [
           "관통 공격은 RPG에서 대상 DEF 100% 무시"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -331,7 +349,8 @@
         "rules": [
           "RPG: 보스 1초 기절. 추가 골드 효과는 RPG에서 비활성"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -349,7 +368,8 @@
           "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환",
           "RPG에서는 생존 중인 영웅 파티 전체에 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -365,7 +385,8 @@
         "rules": [
           "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -383,7 +404,8 @@
         "rules": [
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -399,7 +421,8 @@
         "rules": [
           "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -416,7 +439,8 @@
         "rules": [
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -433,7 +457,8 @@
         "rules": [
           "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -452,7 +477,8 @@
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
           "RPG 단일보스에서는 보스 자신을 대상으로 처리"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -470,7 +496,8 @@
           "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
           "RPG에서도 동일 확률/강화효과 계수로 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -487,7 +514,8 @@
         "rules": [
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -503,7 +531,8 @@
         "rules": [
           "RPG에서는 생존 중인 영웅 파티 전체에 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -522,7 +551,8 @@
           "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
           "RPG에서는 생존 중인 영웅 파티 전체에 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -539,7 +569,8 @@
         "rules": [
           "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -558,7 +589,8 @@
           "RPG에서는 생존 중인 영웅 파티 전체에 적용",
           "RPG에서는 아군 1회 치명타/전투불능 피해를 무효화하는 파티 보호막으로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -574,7 +606,8 @@
         "rules": [
           "관통 공격은 RPG에서 대상 DEF 100% 무시"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -590,7 +623,8 @@
         "rules": [
           "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -607,7 +641,8 @@
         "rules": [
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -623,7 +658,8 @@
         "rules": [
           "RPG: 서로 다른 직업의 생존 영웅 수에 따라 오로라 ATK 증가; 사거리 증가는 공격주기 소폭 감소로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -641,7 +677,8 @@
           "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
           "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -659,7 +696,8 @@
         "rules": [
           "RPG: 보스의 다음 스킬 게이지/발동 진행도를 감소"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -675,7 +713,8 @@
         "rules": [
           "RPG: 보스 1초 행동 정지 + 생존 영웅 전원 공속 +20%; 일반 적 3초 정지 부분은 소환물이 있을 때만 적용"
         ],
-        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING"
+        "numeric_status": "SOURCE_VALUES_ONLY_OR_BALANCE_PENDING",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -693,7 +732,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -710,7 +750,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -729,7 +770,8 @@
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -748,7 +790,8 @@
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -766,7 +809,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -782,7 +826,8 @@
         "rules": [
           "RPG: 보스 피해감소/DEF 증가 상태"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -798,7 +843,8 @@
         "rules": [
           "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -814,7 +860,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -831,7 +878,8 @@
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -849,7 +897,8 @@
         "rules": [
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -868,7 +917,8 @@
           "RPG: 영웅 기본공격 및 자동스킬 행동주기 증가",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -884,7 +934,8 @@
         "rules": [
           "RPG: 보스 피해감소/DEF 증가 상태"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -902,7 +953,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -918,7 +970,8 @@
         "rules": [
           "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -934,7 +987,8 @@
         "rules": [
           "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -950,7 +1004,8 @@
         "rules": [
           "RPG: 보스 피해감소/DEF 증가 상태"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -966,7 +1021,8 @@
         "rules": [
           "RPG: HP 임계치 기반 강화 상태"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -982,7 +1038,8 @@
         "rules": [
           "RPG: 조건부 피해 반사"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1000,7 +1057,8 @@
           "RPG: 사거리 감소는 영웅 공격주기 증가로 변환",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1018,7 +1076,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1034,7 +1093,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1052,7 +1112,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1068,7 +1129,8 @@
         "rules": [
           "RPG: 영웅 기본공격 및 자동스킬 행동주기 증가"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1084,7 +1146,8 @@
         "rules": [
           "RPG: 영웅 ATK 감소"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1100,7 +1163,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1117,7 +1181,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1134,7 +1199,8 @@
         "rules": [
           "RPG: 사거리 감소는 영웅 공격주기 증가로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1152,7 +1218,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1168,7 +1235,8 @@
         "rules": [
           "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1181,8 +1249,11 @@
       ],
       "mapping": {
         "status": "DIRECT",
-        "rules": [],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "rules": [
+          "원본 설명을 RPG 전투 효과로 직접 구현; 세부 수치는 밸런스 패스에서 확정"
+        ],
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1198,7 +1269,8 @@
         "rules": [
           "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1214,7 +1286,8 @@
         "rules": [
           "RPG: 보스 HP 회복/흡혈로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1232,7 +1305,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1248,7 +1322,8 @@
         "rules": [
           "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1264,7 +1339,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1281,7 +1357,8 @@
           "RPG: 영웅 행동불능",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1298,7 +1375,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1314,7 +1392,8 @@
         "rules": [
           "RPG: 영웅 기본공격 및 자동스킬 행동주기 증가"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1332,7 +1411,8 @@
         "rules": [
           "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1351,7 +1431,8 @@
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1367,7 +1448,8 @@
         "rules": [
           "RPG: 보스 피해감소/DEF 증가 상태"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1380,8 +1462,11 @@
       ],
       "mapping": {
         "status": "DIRECT",
-        "rules": [],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "rules": [
+          "원본 설명을 RPG 전투 효과로 직접 구현; 세부 수치는 밸런스 패스에서 확정"
+        ],
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1398,7 +1483,8 @@
         "rules": [
           "RPG: 영웅 행동불능"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1414,7 +1500,8 @@
         "rules": [
           "RPG: 보스 HP 회복/흡혈로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1431,7 +1518,8 @@
         "rules": [
           "RPG: 사거리 감소는 영웅 공격주기 증가로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1449,7 +1537,8 @@
         "rules": [
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1465,7 +1554,8 @@
         "rules": [
           "RPG: 영웅 기본공격 및 자동스킬 행동주기 증가"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1481,7 +1571,8 @@
         "rules": [
           "RPG: 제한 시간 타겟 불가/피해 무효 상태로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1498,7 +1589,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1515,7 +1607,8 @@
           "RPG: 영웅 스킬 사용 차단/지연",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1531,7 +1624,8 @@
         "rules": [
           "RPG: 영웅 스킬 사용 차단/지연"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1547,7 +1641,8 @@
         "rules": [
           "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1565,7 +1660,8 @@
         "rules": [
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1581,7 +1677,8 @@
         "rules": [
           "RPG: 보스 HP 회복/흡혈로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1597,7 +1694,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1614,7 +1712,8 @@
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
           "RPG: 보스 공격 스킬로 구현"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1631,7 +1730,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1647,7 +1747,8 @@
         "rules": [
           "RPG: 보스 HP 회복/흡혈로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1665,7 +1766,8 @@
         "rules": [
           "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1681,7 +1783,8 @@
         "rules": [
           "RPG: 보스 HP 회복/흡혈로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1697,7 +1800,8 @@
         "rules": [
           "RPG: 보스 전용 소환물/add 생성"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1713,7 +1817,8 @@
         "rules": [
           "RPG: 보스 HP 회복/흡혈로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1729,7 +1834,8 @@
         "rules": [
           "RPG: 영웅 스킬 사용 차단/지연"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1745,7 +1851,8 @@
         "rules": [
           "RPG: 보스 HP 회복/흡혈로 적용"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     },
     {
@@ -1761,7 +1868,8 @@
         "rules": [
           "RPG: 영웅 스킬 사용 차단/지연"
         ],
-        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+        "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+        "origin": "SOURCE_OR_RULE_MAPPING"
       }
     }
   ],
