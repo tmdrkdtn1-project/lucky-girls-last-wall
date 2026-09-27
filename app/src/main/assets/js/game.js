@@ -195,8 +195,20 @@ function updateSpawning(dt){
  }
 }
 function enemyXY(e){
+ // After Final Wall G breaks, structure-engaged enemies visually/targetably advance to Gate Core O.
+ if(e.pathPos>=route.length-2 && gHp<=0)return {x:18,y:5};
  const a=route[Math.floor(e.pathPos)],b=route[Math.min(route.length-1,Math.floor(e.pathPos)+1)],f=e.pathPos-Math.floor(e.pathPos);
  return {x:a[0]+(b[0]-a[0])*f,y:a[1]+(b[1]-a[1])*f};
+}
+function canCastleDefenderReach(u,e,baseRange){
+ const p=enemyXY(e),dist=Math.hypot(p.x-u.x,p.y-u.y);
+ if(dist<=baseRange)return true;
+ if(e.pathPos<route.length-2)return false;
+ // Units deployed on castle C cells always retain line-of-fire against enemies hitting G/O.
+ if(codeFor(u.x,u.y)==='C')return true;
+ // Front-line defenders immediately in front of the castle get a small gate-defense reach assist.
+ const nearCastleFront=(u.x>=15&&u.x<=16&&u.y>=4&&u.y<=6);
+ return nearCastleFront&&dist<=Math.max(baseRange,2.25);
 }
 function updateEnemies(dt,now){
  updateSpawning(dt);
@@ -224,7 +236,7 @@ function updateUnits(now){
   let target=null,best=999;
   for(const e of enemies){
    if(e.hp<=0)continue;const p=enemyXY(e),dist=Math.hypot(p.x-u.x,p.y-u.y);
-   if(dist<=s.range&&dist<best){best=dist;target=e}
+   if(canCastleDefenderReach(u,e,s.range)&&dist<best){best=dist;target=e}
   }
   if(!target)continue;
   target.hp-=s.atk;u.lastShot=now;
@@ -273,7 +285,7 @@ buildGrid();renderUnits();syncHUD();updateComboHighlights();requestAnimationFram
 
 window.__LG_STAGE1_TEST__={
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
- state:()=>({wave,gold,gHp,oHp,speed,simTime,units:[...units.values()],enemies:enemies.length,bottomVisible:bottom.classList.contains('on'),rpgPending}),
+ state:()=>({wave,gold,gHp,oHp,speed,simTime,units:[...units.values()],enemies:enemies.length,bottomVisible:bottom.classList.contains('on'),rpgPending,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
  route:()=>route.slice(),
