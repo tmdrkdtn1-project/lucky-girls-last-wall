@@ -48,13 +48,17 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 .action.heroAction{border-color:#e0bd4d;background:#4a3b1e}
 .action:disabled{opacity:.42}
 #closeBottom{position:absolute;right:10px;top:7px;border:0;background:#26322e;color:#fff;border-radius:8px;padding:5px 9px}
-#toast{position:fixed;z-index:90;left:50%;top:68px;transform:translateX(-50%);background:#111c19e8;border:1px solid #70847a;padding:8px 13px;border-radius:10px;display:none}
+#toast{position:fixed;z-index:130;left:50%;top:calc(var(--top) + 8px);transform:translateX(-50%);background:#111c19f2;border:1px solid #8ea49a;padding:7px 14px;border-radius:9px;display:none;font-weight:900;box-shadow:0 3px 16px #0009;animation:topAlertBlink .55s steps(2,end) infinite}
 #legend{position:absolute;z-index:20;right:1.5%;top:2%;font-size:10px;background:#101813b8;padding:7px 9px;border-radius:9px;border:1px solid #6e826f66;pointer-events:none}
 #legend span{margin-left:8px}
 #stageBanner{position:absolute;z-index:20;left:1.5%;top:2%;background:#101813b8;padding:7px 10px;border-radius:9px;border:1px solid #6e826f66;font-size:11px}
 @media (max-height:520px){:root{--top:46px;--bottom:100px}.hudBox{padding:4px 8px;font-size:12px}.hudBtn{padding:4px 8px}.action{min-width:126px;padding:6px}.action b{font-size:12px}.action small{font-size:10px}}
 
-#bossWarning{position:fixed;z-index:120;left:50%;top:50%;transform:translate(-50%,-50%) scale(.88);min-width:42vw;text-align:center;padding:20px 32px;border:2px solid #ffb25e;background:#140d0de8;box-shadow:0 0 60px #ff3d2477;opacity:0;pointer-events:none;border-radius:16px;transition:.18s ease}#bossWarning.on{opacity:1;transform:translate(-50%,-50%) scale(1)}#bossWarningTitle{font-size:clamp(28px,5vw,64px);font-weight:1000;letter-spacing:.08em;color:#ffcf77;text-shadow:0 0 18px #ff5522}#bossWarningSub{margin-top:6px;font-size:clamp(12px,1.6vw,22px);font-weight:900;color:#fff}
+#bossWarning{position:fixed;z-index:140;left:50%;top:calc(var(--top) + 8px);transform:translateX(-50%);min-width:min(68vw,760px);max-width:82vw;text-align:center;padding:8px 18px;border:2px solid #ffb25e;background:#140d0df2;box-shadow:0 3px 20px #000a,0 0 18px #ff3d2455;opacity:0;pointer-events:none;border-radius:10px}
+#bossWarning.on{opacity:1;animation:topAlertBlink .55s steps(2,end) infinite}
+#bossWarningTitle{font-size:clamp(18px,2.2vw,30px);font-weight:1000;letter-spacing:.05em;color:#ffcf77;text-shadow:0 0 12px #ff5522}
+#bossWarningSub{margin-top:2px;font-size:clamp(10px,1.1vw,15px);font-weight:900;color:#fff}
+@keyframes topAlertBlink{0%,49%{filter:brightness(1)}50%,100%{filter:brightness(1.35)}}
 
 .cell.moveTarget{box-shadow:inset 0 0 0 3px #72d8ff,0 0 12px #72d8ffaa;z-index:4}
 .cell.comboPlacement{outline:4px solid #ffd84d;outline-offset:-4px;box-shadow:inset 0 0 18px #ffd84d99,0 0 18px #ffd84dcc;z-index:7}
