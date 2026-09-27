@@ -1113,6 +1113,6 @@ window.__LG_STAGE1_TEST__={
  recipes:()=>HERO_RECIPES,
  unitDefs:()=>UNIT_DEFS,
  startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.type==='hero_aria').slice(0,5)),
- standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1'
+ standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_2'
 };
 })();

@@ -276,7 +276,7 @@ print("PASS - all 43 provisional boss RPG skills are approved for runtime while 
 
 # Shared RPG Effect Runtime V1 guards
 effect_runtime=json.loads((root/"data/combat_effect_runtime_v1.json").read_text(encoding="utf-8"))
-assert effect_runtime["schema"] in ("LG_COMBAT_EFFECT_RUNTIME_V1","LG_COMBAT_EFFECT_RUNTIME_V1_1","LG_COMBAT_EFFECT_RUNTIME_V1_2")
+assert effect_runtime["schema"]=="LG_COMBAT_EFFECT_RUNTIME_V1_2"
 assert "const RPG_EFFECT_RUNTIME_VERSION='LG_RPG_EFFECT_RUNTIME_V1'" in js
 assert "function applyRpgEffect(effect,ctx={})" in js
 assert "function applyRpgEffects(effects,ctx={})" in js
