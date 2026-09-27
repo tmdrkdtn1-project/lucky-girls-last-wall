@@ -1,14 +1,15 @@
 {
-  "schema": "LG_STAGE1_RPG_BOSS_PROTOTYPE_V1",
+  "schema": "LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_1",
   "stage": 1,
+  "intent": "Stage 1 must be clearable with one legendary hero when ultimate is used reasonably.",
   "boss": {
     "id": "BRAUM",
     "name": "철각왕 브라움",
     "prototype_stats": {
-      "hp": 15000,
-      "atk": 360,
-      "def": 80,
-      "attack_gap_sec": 2.5
+      "hp": 9000,
+      "atk": 170,
+      "def": 60,
+      "attack_gap_sec": 3
     }
   },
   "phases": [
@@ -26,6 +27,32 @@
       "enraged": true
     }
   ],
+  "transition": {
+    "td_defeat_sequence": [
+      "fall",
+      "1.5s later rise with red eyes",
+      "1s roar",
+      "charge to castle front"
+    ],
+    "rpg_intro": [
+      {
+        "scene": 1,
+        "duration_sec": 2,
+        "text": "[보스이름]이 다가온다"
+      },
+      {
+        "scene": 2,
+        "duration_sec": 3,
+        "text": "그대들이 바로 마지막 보루, LAST WALL이다."
+      },
+      {
+        "scene": 3,
+        "duration_sec": 3,
+        "text": "최후의 전투, 개전!"
+      }
+    ],
+    "between_scenes": "fade out -> fade in"
+  },
   "party": {
     "source": "TD_SUMMONED_HEROES_ONLY",
     "max": 5,
@@ -51,12 +78,12 @@
       "manual_ultimate": {
         "name": "최후의 성역",
         "gauge_max": 100
-      },
-      "note": "RPG damage multipliers are prototype-only and not final balance."
+      }
     }
   },
   "state_flow": [
     "TD_BOSS_DEAD",
+    "TD_BOSS_REVIVAL",
     "RPG_TRANSITION",
     "RPG_ACTIVE",
     "RPG_VICTORY",

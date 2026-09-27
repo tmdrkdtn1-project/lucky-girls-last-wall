@@ -72,6 +72,7 @@ function clearSelection(hide=true){
  if(hide)bottom.classList.remove('on');
 }
 function onCellTap(x,y){
+ if(gameMode!=='TD'||rpgPending)return;
  if(comboPlacement){chooseHeroPlacement(x,y);return}
  if(moveModeUnitId){completeMove(x,y);return}
  const cell=cells[cellIndex(x,y)],u=units.get(tileKey(x,y));
@@ -126,17 +127,20 @@ function renderBottomForCombo(u,recipe){
  actionButton('판매','현재 유닛 판매',()=>sellUnit(u));
 }
 function placeUnit(x,y,t){
+ if(gameMode!=='TD'||rpgPending)return;
  if(units.has(tileKey(x,y))||gold<t.cost)return;
  gold-=t.cost;units.set(tileKey(x,y),{id:'u'+Date.now()+Math.random(),x,y,type:t.id,lastShot:0,spent:t.cost,moveCooldownUntil:0});
  cells[cellIndex(x,y)].el.classList.add('occupied');postUnitChange();toast(t.name+' 배치');
 }
 function upgradeUnit(u,next){
+ if(gameMode!=='TD'||rpgPending)return;
  const cur=UNIT_DEFS[u.type];
  if(!cur||!cur.next.includes(next.id)){toast('같은 계열 업그레이드만 가능합니다');return}
  if(gold<next.cost)return;
  gold-=next.cost;u.type=next.id;u.spent=(u.spent||0)+next.cost;postUnitChange();toast(next.name+' 업그레이드');
 }
 function sellUnit(u){
+ if(gameMode!=='TD'||rpgPending)return;
  if(u.type==='hero_aria'){toast('전설 영웅 판매는 현재 잠금');return}
  gold+=Math.max(1,Math.round((u.spent||UNIT_DEFS[u.type].cost)*.35));
  units.delete(tileKey(u.x,u.y));cells[cellIndex(u.x,u.y)].el.classList.remove('occupied');postUnitChange();toast('판매 완료');
@@ -161,6 +165,7 @@ function updateComboHighlights(){
  HERO_RECIPES.forEach(r=>{const mats=recipeMaterials(r);if(mats)mats.forEach(m=>cells[cellIndex(m.x,m.y)].el.classList.add('combo'))});
 }
 function beginHeroSummon(selectedMaterial,recipe){
+ if(gameMode!=='TD'||rpgPending)return;
  if(heroCount>=5){toast('영웅 슬롯 5/5');return}
  const mats=recipeMaterials(recipe);
  if(!mats||!mats.some(m=>m.id===selectedMaterial.id))return;
@@ -195,6 +200,7 @@ function cancelHeroPlacement(msg){
 function clearMoveTargets(){document.querySelectorAll('.cell.moveTarget').forEach(e=>e.classList.remove('moveTarget'))}
 function findUnitById(id){return [...units.values()].find(u=>u.id===id)}
 function beginMove(u){
+ if(gameMode!=='TD'||rpgPending)return;
  if(moveCooldownRemaining(u)>0){toast('이동 재사용 대기 중');return}
  moveModeUnitId=u.id;comboPlacement=null;clearMoveTargets();clearSelection(true);
  cells.forEach(c=>{if(c&&(c.code==='D'||c.code==='C'))c.el.classList.add('moveTarget')});
@@ -331,7 +337,7 @@ function updateUnits(now){
   target.hp-=s.atk;u.lastShot=now;
   if(target.hp<=0){
    const reward=target.kind==='boss'?180:target.kind==='midboss'?90:12;gold+=reward;
-   if(target.kind==='boss'){enterRpgPlaceholder();return}
+   if(target.kind==='boss'){enterRpgPlaceholder(target);return}
    if(target.kind==='midboss')toast('중간보스 격파 +90G');else toast('+12G');
   }
  }
@@ -343,15 +349,51 @@ const RPG_HERO_DEFS={
   skill1Name:'성광 참격',skill2Name:'수호의 맹세',ultimateName:'최후의 성역'
  }
 };
-const RPG_BOSS_DEF={name:'철각왕 브라움',hp:15000,atk:360,def:80,baseAttackGap:2.5};
+const RPG_BOSS_DEF={name:'철각왕 브라움',hp:9000,atk:170,def:60,baseAttackGap:3.0};
 
-function enterRpgPlaceholder(){enterRpgBattle()}
-function enterRpgBattle(){
+function enterRpgPlaceholder(boss){beginTdBossRpgTransition(boss)}
+function cancelAllTdCommands(){
+ clearSelection(true);
+ moveModeUnitId=null;clearMoveTargets();
+ comboPlacement=null;
+ document.querySelectorAll('.cell.comboPlacement,.cell.combo').forEach(e=>e.classList.remove('comboPlacement','combo'));
+ actions.innerHTML='';
+ bottom.classList.remove('on');
+ $('battlefield').classList.add('tdLocked');
+}
+function beginTdBossRpgTransition(boss){
  if(rpgPending)return;
- rpgPending=true;running=false;clearSelection(true);cancelMove();
+ rpgPending=true;running=false;gameMode='TD_TRANSITION';
+ cancelAllTdCommands();
  const tdHeroes=[...units.values()].filter(u=>u.type==='hero_aria').slice(0,5);
- showWarning('TD BOSS DOWN','RPG BOSS BATTLE',900);
- setTimeout(()=>startRpgBattle(tdHeroes),650);
+ clearTimeout(showWarning.t);$('bossWarning').classList.remove('on');
+ boss.hp=1;boss.cinematic=true;boss.cinematicState='fallen';
+ renderEnemies();
+ showWarning('TD BOSS DOWN','전투 명령 종료 · RPG 전환',1100);
+ setTimeout(()=>{
+  boss.cinematicState='rise';renderEnemies();
+ },1500);
+ setTimeout(()=>{
+  boss.cinematicState='roar';renderEnemies();
+  showWarning('⚠ ROAR',RPG_BOSS_DEF.name+'이 다시 일어섰다',900);
+ },2200);
+ setTimeout(()=>{
+  boss.cinematicState='charge';
+  renderEnemies();
+  const token=document.querySelector('.enemyToken[data-enemy-id="'+boss.id+'"]');
+  if(token){
+   token.classList.add('bossCharge');
+   const p=posPct(17,5);
+   requestAnimationFrame(()=>{token.style.left=p.left;token.style.top=p.top});
+  }
+ },3200);
+ setTimeout(()=>{
+  startRpgBattle(tdHeroes);
+ },4100);
+}
+function enterRpgBattle(){
+ const boss=enemies.find(e=>e.kind==='boss');
+ beginTdBossRpgTransition(boss||{id:-1,hp:1,pathPos:route.length-2,kind:'boss',label:'B',maxHp:1});
 }
 function startRpgBattle(tdHeroes){
  gameMode='RPG';rpgPending=false;manualPaused=false;rpgSimTime=0;rpgTransitioning=true;
@@ -366,10 +408,9 @@ function startRpgBattle(tdHeroes){
   boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,lastAttack:0,phase:1,enraged:false},
   result:null
  };
- $('battlefield').style.display='none';
+ $('battlefield').style.display='none';$('battlefield').classList.remove('tdLocked');
  rpgScreen.classList.add('on','prep','transitionLock');rpgScreen.classList.remove('approach','battle');rpgScreen.setAttribute('aria-hidden','false');
  document.querySelectorAll('.tdHud').forEach(e=>e.style.display='none');
- document.querySelectorAll('.rpgHud').forEach(e=>e.style.display='flex');
  $('rpgBossName').textContent=rpgState.boss.name;
  syncPauseButton();renderRpg();
  if(!heroes.length){finishRpgDefeat('출전 가능한 영웅이 없습니다');return}
@@ -385,28 +426,42 @@ function clearRpgTransitionMessage(){
  rpgTransition.classList.remove('on','centerFlash');
  rpgTransitionMessage.textContent='';
 }
+function fadeRpgSceneOut(){rpgScreen.classList.add('sceneFade')}
+function fadeRpgSceneIn(){requestAnimationFrame(()=>rpgScreen.classList.remove('sceneFade'))}
 function playRpgIntroSequence(){
  rpgTransitioning=true;running=false;
- rpgScreen.classList.add('prep','transitionLock');rpgScreen.classList.remove('approach','battle');
+ rpgScreen.classList.add('prep','transitionLock');rpgScreen.classList.remove('approach','battle','sceneFade');
  setRpgTransitionMessage(rpgState.boss.name+'이 다가온다',false);
+ fadeRpgSceneIn();
+
+ // Scene 1: 2 seconds
+ setTimeout(fadeRpgSceneOut,1650);
  setTimeout(()=>{
   rpgScreen.classList.remove('prep');rpgScreen.classList.add('approach');
   setRpgTransitionMessage('그대들이 바로 마지막 보루, LAST WALL이다.',false);
- },1500);
+  fadeRpgSceneIn();
+ },2000);
+
+ // Scene 2: 3 seconds
+ setTimeout(fadeRpgSceneOut,4650);
  setTimeout(()=>{
   rpgScreen.classList.remove('approach');rpgScreen.classList.add('battle');
   setRpgTransitionMessage('최후의 전투, 개전!',true);
- },3200);
+  fadeRpgSceneIn();
+ },5000);
+
+ // Scene 3: 3 seconds
+ setTimeout(fadeRpgSceneOut,7650);
  setTimeout(()=>{
   clearRpgTransitionMessage();
-  rpgScreen.classList.remove('transitionLock');
+  rpgScreen.classList.remove('transitionLock','sceneFade');
   rpgTransitioning=false;
   running=!manualPaused;
- },4300);
+ },8000);
 }
 function rpgDamageToBoss(raw){
  const b=rpgState.boss;
- return Math.max(1,Math.round(raw-Math.max(0,b.def*.35)));
+ return Math.max(1,Math.round(raw-Math.max(0,b.def*.25)));
 }
 function rpgDamageToHero(hero,raw){
  return Math.max(1,Math.round(raw-Math.max(0,hero.def*.45)));
@@ -495,10 +550,13 @@ function renderRpg(){
 function renderEnemies(){
  enemyLayer.innerHTML='';
  for(const e of enemies){
-  if(e.hp<=0)continue;const xy=enemyXY(e),p=posPct(xy.x,xy.y),d=document.createElement('div');
-  d.className='enemyToken '+(e.kind==='boss'?'boss':e.kind==='midboss'?'midboss':'');
+  if(e.hp<=0&&!e.cinematic)continue;const xy=enemyXY(e),p=posPct(xy.x,xy.y),d=document.createElement('div');
+  const cinematicClass=e.cinematic?' cinematicBoss '+(e.cinematicState==='fallen'?'bossFallen':e.cinematicState==='rise'?'bossRise':e.cinematicState==='roar'?'bossRise bossRoar':e.cinematicState==='charge'?'bossRise bossCharge':''):'';
+  d.className='enemyToken '+(e.kind==='boss'?'boss':e.kind==='midboss'?'midboss':'')+cinematicClass;
+  d.dataset.enemyId=e.id;
   d.style.left=p.left;d.style.top=p.top;d.textContent=e.label;
-  d.innerHTML+='<span class="hpbar"><i style="width:'+Math.max(0,e.hp/e.maxHp*100)+'%"></i></span>';enemyLayer.appendChild(d);
+  if(!e.cinematic)d.innerHTML+='<span class="hpbar"><i style="width:'+Math.max(0,e.hp/e.maxHp*100)+'%"></i></span>';
+  enemyLayer.appendChild(d);
  }
 }
 const WAVE10_BOSS_SPAWN_AT=6;
@@ -562,7 +620,7 @@ function syncHUD(){$('gold').textContent=gold;$('wave').textContent=wave;$('gHp'
 function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',750)}
 
 $('closeBottom').onclick=()=>clearSelection(true);
-$('battlefield').addEventListener('click',()=>clearSelection(true));
+$('battlefield').addEventListener('click',()=>{if(gameMode==='TD'&&!rpgPending)clearSelection(true)});
 $('speed').onclick=()=>{speed=speed===1?2:speed===2?3:1;$('speed').textContent='×'+speed};
 function syncPauseButton(){$('pause').textContent=manualPaused?'▶ 계속':'Ⅱ 일시정지'}
 $('pause').onclick=()=>{

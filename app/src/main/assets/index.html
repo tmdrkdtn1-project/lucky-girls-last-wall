@@ -14,8 +14,6 @@
   <div class="hudBox tdHud">🪙 <span id="gold">500</span></div>
   <div class="hudBox tdHud">G <span id="gHp">100</span>/100</div>
   <div class="hudBox tdHud">O <span id="oHp">120</span>/120</div>
-  <div class="hudBox rpgHud" id="rpgBossName">철각왕 브라움</div>
-  <div class="hudBox rpgHud rpgBossHpBox">BOSS <span id="rpgBossHpText">0/0</span></div>
   <div class="hudGrow"></div>
   <button class="hudBtn" id="speed">×1</button>
   <button class="hudBtn" id="pause">Ⅱ 일시정지</button>
@@ -32,10 +30,12 @@
     <div id="rpgTransitionMessage"></div>
   </div>
   <div id="rpgArena">
-    <div id="rpgPhaseLabel">PHASE 1</div>
+    <div id="rpgBossStatus">
+      <div id="rpgBossStatusLine"><strong id="rpgBossName">철각왕 브라움</strong><span id="rpgPhaseLabel">PHASE 1</span><span id="rpgBossHpText">0/0</span></div>
+      <div id="rpgBossTopBar"><i id="rpgBossBarFill"></i></div>
+    </div>
     <div id="rpgBoss">
       <div id="rpgBossBody">BOSS</div>
-      <div id="rpgBossBar"><i id="rpgBossBarFill"></i></div>
     </div>
     <div id="rpgHeroRow"></div>
   </div>

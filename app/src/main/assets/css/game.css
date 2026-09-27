@@ -100,3 +100,30 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 #rpgScreen.transitionLock .rpgUltBtn{pointer-events:none}
 #rpgBoss{transition:transform .45s ease,top .45s ease}
 .rpgHeroFigure{transition:transform .35s ease}
+
+/* RPG V1.1: one readable boss status panel, no duplicate tiny HUD */
+#rpgBossStatus{position:absolute;z-index:12;left:12%;right:12%;top:2%;padding:7px 12px;border-radius:10px;background:#130f13e8;border:1px solid #9a6459;box-shadow:0 4px 16px #0009}
+#rpgBossStatusLine{display:flex;align-items:center;gap:14px;font-size:clamp(12px,1.45vw,19px)}
+#rpgBossStatusLine strong{font-size:clamp(15px,1.9vw,24px);flex:1}
+#rpgBossHpText{font-weight:1000}
+#rpgPhaseLabel{position:static;transform:none;font-size:clamp(11px,1.2vw,16px);color:#ffce8a}
+#rpgBossTopBar{height:14px;margin-top:5px;background:#241015;border:1px solid #a65a54;border-radius:8px;overflow:hidden}
+#rpgBossTopBar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#b52d31,#ec6b3c)}
+#rpgBossBar{display:none}
+#rpgBoss{top:14%}
+
+/* TD boss defeat -> revival -> roar -> charge cinematic */
+#battlefield.tdLocked{pointer-events:none}
+.enemyToken.cinematicBoss{z-index:30;transition:transform .35s ease,filter .35s ease,box-shadow .35s ease}
+.enemyToken.bossFallen{transform:translate(-50%,-50%) rotate(82deg) scale(.86);filter:brightness(.72)}
+.enemyToken.bossRise{transform:translate(-50%,-50%) rotate(0deg) scale(1);box-shadow:0 0 30px #ff2d22,0 0 12px #ff0000 inset;filter:brightness(1.3)}
+.enemyToken.bossRoar{animation:bossRoarShake .12s linear infinite;box-shadow:0 0 38px #ff3525}
+.enemyToken.bossCharge{transition:left .8s cubic-bezier(.2,.8,.3,1),top .8s cubic-bezier(.2,.8,.3,1),transform .8s ease;transform:translate(-50%,-50%) scale(1.12)}
+@keyframes bossRoarShake{0%,100%{margin-left:0}25%{margin-left:-5px}75%{margin-left:5px}}
+
+/* 2s / 3s / 3s RPG scene pacing with fade out -> fade in */
+#rpgArena,#rpgTransition{transition:opacity .35s ease}
+#rpgScreen.sceneFade #rpgArena,#rpgScreen.sceneFade #rpgTransition{opacity:0}
+#rpgScreen.prep #rpgBoss{top:15%}
+#rpgScreen.approach #rpgBoss{top:14%}
+#rpgScreen.battle #rpgBoss{top:14%}

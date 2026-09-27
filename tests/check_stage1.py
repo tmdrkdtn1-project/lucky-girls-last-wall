@@ -136,3 +136,23 @@ assert "#rpgScreen.approach #rpgBoss" in css
 assert "#rpgScreen.battle #rpgBoss" in css
 assert "centerFlash" in css
 print("PASS - RPG intro uses front-prep, distant boss, approach beat, LAST WALL line, center start flash, then combat")
+
+# RPG V1.1 transition lock / cinematic / readability / Stage 1 balance guards
+assert "gameMode='TD_TRANSITION'" in js
+assert "function cancelAllTdCommands()" in js
+assert "function beginTdBossRpgTransition(boss)" in js
+assert "boss.cinematicState='fallen'" in js
+assert "boss.cinematicState='rise'" in js
+assert "boss.cinematicState='roar'" in js
+assert "boss.cinematicState='charge'" in js
+assert "setTimeout(()=>{\n  startRpgBattle(tdHeroes);\n },4100);" in js
+assert "if(gameMode!=='TD'||rpgPending)return;" in js
+assert "hp:9000,atk:170,def:60,baseAttackGap:3.0" in js
+assert "setTimeout(fadeRpgSceneOut,1650)" in js
+assert "},2000);" in js and "},5000);" in js and "},8000);" in js
+assert 'id="rpgBossStatus"' in html
+assert html.count('id="rpgBossName"') == 1
+assert html.count('id="rpgBossHpText"') == 1
+assert "#rpgBossStatus{" in css
+assert ".enemyToken.bossFallen" in css and ".enemyToken.bossRoar" in css and ".enemyToken.bossCharge" in css
+print("PASS - RPG V1.1 locks TD commands, adds boss revival cinematic, 2/3/3 fade intro, readable top boss status, and one-legendary Stage 1 tuning")
