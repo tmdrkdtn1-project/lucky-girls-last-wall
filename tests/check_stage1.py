@@ -45,3 +45,10 @@ assert "codeFor(u.x,u.y)==='C'" in js
 assert "nearCastleFront" in js
 assert "gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'" in js
 print("PASS - castle defenders can keep firing after G breaks and enemies engage O")
+
+# Wave 10 boss regression guards
+assert "function spawnWave10BossNow()" in js
+assert "if(wave===10)spawnWave10BossNow();" in js
+assert "Wave 10 must always contain exactly one TD boss" in js
+assert "bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length" in js
+print("PASS - Wave 10 boss spawns synchronously and is runtime-verifiable")
