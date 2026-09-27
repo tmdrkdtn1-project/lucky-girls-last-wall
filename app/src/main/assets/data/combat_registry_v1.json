@@ -1,0 +1,4519 @@
+{
+  "schema": "LG_COMBAT_REGISTRY_V1",
+  "source": "럭키_걸즈_캐릭터_도감_밸런스제안_V1_1.xlsx",
+  "authority_notes": [
+    "소스 원문을 그대로 보존하고, 게임 내 최신 사용자 확정 규칙이 충돌 시 우선한다.",
+    "아리아 조합은 USER_LOCKED 2×기사단장이다.",
+    "RPG 관통 영웅 스킬은 DEF 100% 무시로 확정한다.",
+    "TD same-cell 판정은 적 논리 스프라이트 footprint가 해당 칸과 조금이라도 겹치면 성립한다."
+  ],
+  "counts": {
+    "heroes": 20,
+    "bosses": 50,
+    "skill_enemies": 65
+  },
+  "effect_taxonomy": [
+    "DAMAGE",
+    "PENETRATION",
+    "AOE",
+    "DOT",
+    "TRANSFER",
+    "FIRE",
+    "FREEZE",
+    "STUN",
+    "SKILL_BLOCK",
+    "SLOW",
+    "BUFF",
+    "DEBUFF",
+    "DEF_IGNORE",
+    "DEF_MOD",
+    "DAMAGE_TAKEN_MOD",
+    "ATTACK_SPEED_MOD",
+    "SUMMON",
+    "CLONE",
+    "HEAL",
+    "SHIELD",
+    "INVULNERABLE",
+    "TARGETING_DISABLE",
+    "KNOCKBACK",
+    "PATH_CONTROL",
+    "WALL_HEAL",
+    "WALL_DEF_MOD",
+    "WALL_DAMAGE_REDUCTION",
+    "EXECUTE",
+    "MULTI_HIT"
+  ],
+  "rpg_global_mapping": {
+    "PENETRATION": "DEF 100% 무시",
+    "TD_SPATIAL_OR_WALL": "RPG 전용 해석 필수",
+    "PATH_CONTROL": "RPG 전용 시간/게이지/위치 효과로 별도 정의 필요",
+    "WALL_EFFECT": "영웅 보호/피해감소/실드 등으로 전환 정의 필요"
+  },
+  "heroes": [
+    {
+      "id": "HERO_01",
+      "number": 1,
+      "faction": "생트아르크\n교황령",
+      "rarity": "전설",
+      "name": "아리아",
+      "class": "성기사",
+      "stats": {
+        "hp": 2600,
+        "atk": 175,
+        "def": 125
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "성광 참격",
+          "source_text": "성광 참격 — 3칸 직선 관통 피해. 방어벽에 붙은 적에게 피해 +25%.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "PENETRATION"
+          ],
+          "rpg_mapping": {
+            "rule": "RPG_PENETRATION_IGNORE_DEF",
+            "detail": "성광 참격: RPG에서는 보스 DEF 100% 무시 공격"
+          }
+        },
+        {
+          "slot": 2,
+          "name": "수호의 맹세",
+          "source_text": "수호의 맹세 — 인근 2칸 아군 ATK·공속 +15%, 가장 가까운 방어벽 DEF +20% (8초).",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "WALL_EFFECT"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "최후의 성역",
+          "source_text": "최후의 성역 — 전 경로 성광 피해 + 방어벽에 5초간 피해 50% 감소 보호막.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "WALL_EFFECT",
+            "FULL_PATH_EFFECT"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "근접 화력+방어선 보조",
+      "source_recipe": [
+        "기사단장",
+        "기사단장"
+      ],
+      "recipe_note": "USER_LOCKED: 2× 기사단장 → 아리아"
+    },
+    {
+      "id": "HERO_02",
+      "number": 2,
+      "faction": "해륜 왕국",
+      "rarity": "전설",
+      "name": "유나",
+      "class": "봉인술사",
+      "stats": {
+        "hp": 2250,
+        "atk": 150,
+        "def": 105
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "봉인의 부적",
+          "source_text": "봉인의 부적 — 단일 적 3초 속박, 보스는 35% 둔화.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "CC"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "결계진",
+          "source_text": "결계진 — 경로 2칸에 6초 결계, 적 이속 -35%·스킬 사용 지연.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "SKILL_CONTROL"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "대봉인술",
+          "source_text": "대봉인술 — 화면 내 정예/보스 스킬을 4초 봉인하고 일반 적 2초 행동불능.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "SKILL_CONTROL"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "제어/보스 봉인",
+      "source_recipe": [
+        "주술사",
+        "대현자"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_03",
+      "number": 3,
+      "faction": "상드라크 제국",
+      "rarity": "전설",
+      "name": "리엘",
+      "class": "화염 마술사",
+      "stats": {
+        "hp": 2100,
+        "atk": 205,
+        "def": 90
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "화염창",
+          "source_text": "화염창 — 단일 고화력 + 6초 화상.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "용암지대",
+          "source_text": "용암지대 — 경로 2칸에 8초 지속 광역 화염.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "홍련지옥",
+          "source_text": "홍련지옥 — 화면 내 적 전체 3회 폭발 피해, 화상 중인 적 추가 피해 +40%.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "광역 지속딜",
+      "source_recipe": [
+        "1급 용암수정",
+        "대현자"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_04",
+      "number": 4,
+      "faction": "아자르 삼국연합",
+      "rarity": "전설",
+      "name": "루비",
+      "class": "현상금 사냥꾼",
+      "stats": {
+        "hp": 2200,
+        "atk": 190,
+        "def": 95
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "현상표식",
+          "source_text": "현상표식 — 가장 HP 높은 적에게 표식, 해당 적이 받는 피해 +15%.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "도탄사격",
+          "source_text": "도탄사격 — 최대 5대상으로 피해 이전, 이전마다 피해 -10%.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "DEAD OR ALIVE",
+          "source_text": "DEAD OR ALIVE — 보스/정예에게 강력한 단일 사격. HP 30% 이하 대상 추가 피해 +60%.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "보스 킬러/다중사격",
+      "source_recipe": [
+        "연사궁병",
+        "연사감시탑"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_05",
+      "number": 5,
+      "faction": "상드라크 제국",
+      "rarity": "전설",
+      "name": "에리카",
+      "class": "용혈의 전사",
+      "stats": {
+        "hp": 2850,
+        "atk": 195,
+        "def": 115
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "용혈참",
+          "source_text": "용혈참 — 전방 2칸 광역 베기.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "혈룡폭주",
+          "source_text": "혈룡폭주 — 10초 ATK +30%·공속 +25%, 종료 후 3초 공속 -15%.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "용의 숨결",
+          "source_text": "용의 숨결 — 넓은 부채꼴 화염 지속피해, 방어 높은 적에게 방어무시 25%.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "근접 광역/중갑 대응",
+      "source_recipe": [
+        "광전사",
+        "마창병"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_06",
+      "number": 6,
+      "faction": "생트아르크 교황령",
+      "rarity": "전설",
+      "name": "세라",
+      "class": "버퍼",
+      "stats": {
+        "hp": 2350,
+        "atk": 120,
+        "def": 110
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "천상의 노래",
+          "source_text": "천상의 노래 — 인근 2칸 아군 ATK·공속 +12%.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "치유의 광휘",
+          "source_text": "치유의 광휘 — 가장 손상된 방어벽 HP 20% 회복 + 5초 DEF +20%.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "세라핌 앙코르",
+          "source_text": "세라핌 앙코르 — 모든 아군 ATK·공속 +18%, 모든 방어벽 10% 즉시 회복.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "전역 버퍼/방벽 유지",
+      "source_recipe": [
+        "아이돌",
+        "흑마법사"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_07",
+      "number": 7,
+      "faction": "벨로자르 제국",
+      "rarity": "전설",
+      "name": "레이나",
+      "class": "빙결 마술사",
+      "stats": {
+        "hp": 2150,
+        "atk": 185,
+        "def": 100
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "서리창",
+          "source_text": "서리창 — 단일 피해 + 이속 -25% 4초.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "빙결감옥",
+          "source_text": "빙결감옥 — 경로 2칸 적 2초 빙결, 보스는 40% 둔화 3초.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "CC"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "절대영도",
+          "source_text": "절대영도 — 화면 전체 1.5초 정지 후 강한 냉기 피해, 이후 6초 이속 -30%.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "CC"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "광역 제어",
+      "source_recipe": [
+        "1급 얼음 수정",
+        "대현자"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_08",
+      "number": 8,
+      "faction": "해륜 왕국",
+      "rarity": "전설",
+      "name": "카린",
+      "class": "암살자",
+      "stats": {
+        "hp": 2050,
+        "atk": 220,
+        "def": 85
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "그림자 베기",
+          "source_text": "그림자 베기 — 가장 앞선 적에게 순간이동 베기 후 원위치, 방어 20% 무시.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "잔영난무",
+          "source_text": "잔영난무 — 4초간 공격이 2회 추가 타격, 보스에게 추가 피해 +20%.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "홍련 처형",
+          "source_text": "홍련 처형 — 보스/정예 단일 초고화력. HP 25% 이하 대상에게 치명 피해 보정.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "암살/보스 폭딜",
+      "source_recipe": [
+        "기사단장",
+        "연사궁병"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_09",
+      "number": 9,
+      "faction": "아자르 삼국연합",
+      "rarity": "신화",
+      "name": "벨",
+      "class": "인형사",
+      "stats": {
+        "hp": 3200,
+        "atk": 235,
+        "def": 135
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "저주인형",
+          "source_text": "저주인형 — 가장 HP 높은 적과 인형 연결, 받은 피해의 25%를 주변 2명에게 이전.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "마리오네트",
+          "source_text": "마리오네트 — 6초간 경로 2칸 적의 이속 -40%, 정예 1체를 2초 행동불능.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "대인형극",
+          "source_text": "대인형극 — 10초간 주변 아군 공격 시 35% 확률로 인형이 추가타.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "제어+추가타",
+      "source_recipe": [
+        "주술사",
+        "충만한 마력수정",
+        "유나"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_10",
+      "number": 10,
+      "faction": "아자르 삼국연합",
+      "rarity": "신화",
+      "name": "미아",
+      "class": "보물 사냥꾼",
+      "stats": {
+        "hp": 2950,
+        "atk": 260,
+        "def": 120
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "보물탄",
+          "source_text": "보물탄 — 3대상 관통, 마지막 대상 추가 피해.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "PENETRATION"
+          ],
+          "rpg_mapping": {
+            "rule": "RPG_PENETRATION_IGNORE_DEF",
+            "detail": "RPG에서 관통 속성 공격은 대상 DEF 100% 무시"
+          }
+        },
+        {
+          "slot": 2,
+          "name": "행운의 함정",
+          "source_text": "행운의 함정 — 경로 1칸에 8초 함정, 최초 6명에게 기절 1초 + 추가 골드 소량.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "왕의 보물고",
+          "source_text": "왕의 보물고 — 8초간 발리스타/감시탑 계열 ATK +30%, 자신은 연속 포격.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "경제+공성 시너지",
+      "source_recipe": [
+        "대형 발리스타",
+        "리엘",
+        "루비"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_11",
+      "number": 11,
+      "faction": "상드라크 제국",
+      "rarity": "신화",
+      "name": "아이린",
+      "class": "전투 메이드",
+      "stats": {
+        "hp": 3400,
+        "atk": 240,
+        "def": 150
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "클린 스위프",
+          "source_text": "클린 스위프 — 전방 부채꼴 광역 피해.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "전술 봉사",
+          "source_text": "전술 봉사 — 인근 2칸 아군 공격속도 +20%, 방어벽 수리속도/회복효과 +20%.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "퍼펙트 클리닝",
+          "source_text": "퍼펙트 클리닝 — 화면 내 가장 강한 적 5체를 순차 타격, 처치 시 다음 타격 피해 증가.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "광역 정리/지원",
+      "source_recipe": [
+        "기사단장",
+        "마력 캐논타워",
+        "아리아"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_12",
+      "number": 12,
+      "faction": "벨로자르 제국",
+      "rarity": "신화",
+      "name": "네온",
+      "class": "형상 마술사",
+      "stats": {
+        "hp": 2850,
+        "atk": 255,
+        "def": 110
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "형상복제",
+          "source_text": "형상복제 — 인접 아군 1명의 피해종류를 8초 복제.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "프리즘 왜곡",
+          "source_text": "프리즘 왜곡 — 경로 2칸에 랜덤 화염/빙결/번개 효과.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "CC"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "무한 프리즘",
+          "source_text": "무한 프리즘 — 12초간 3개의 환영 생성, 기본공격 45% 위력으로 동시 공격.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "SUMMON_OR_CLONE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "유연한 속성 딜러",
+      "source_recipe": [
+        "흑마법사",
+        "대현자",
+        "유나"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_13",
+      "number": 13,
+      "faction": "브레몽 왕국",
+      "rarity": "신화",
+      "name": "샤샤",
+      "class": "공병/폭파병",
+      "stats": {
+        "hp": 3100,
+        "atk": 270,
+        "def": 120
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "접착 폭약",
+          "source_text": "접착 폭약 — 경로 1칸에 지뢰 설치, 5체까지 광역.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "연쇄기폭",
+          "source_text": "연쇄기폭 — 현재 설치된 폭약을 연속 폭발, 방어 높은 적 방어 20% 무시.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "최종 폭파계획",
+          "source_text": "최종 폭파계획 — 3개 경로 핵심지점에 대폭발, 보스에게 별도 단일 추가폭발.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "지형 폭파/광역",
+      "source_recipe": [
+        "봄버 캐논타워",
+        "석궁수",
+        "루비"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_14",
+      "number": 14,
+      "faction": "브레몽 왕국",
+      "rarity": "신화",
+      "name": "루나",
+      "class": "사제 / 운명술사",
+      "stats": {
+        "hp": 2800,
+        "atk": 230,
+        "def": 125
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "운명의 표식",
+          "source_text": "운명의 표식 — 적 1체가 받는 피해 +18%, 처치 시 다음 적에게 이전.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "역행의 별",
+          "source_text": "역행의 별 — 가장 앞선 적 3체를 경로 1칸 뒤로 되돌림, 보스는 1.5초 정지.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "CC"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "운명개변",
+          "source_text": "운명개변 — 8초간 아군 치명/강화효과 발동률 상승, 적의 이동·스킬 주기 20% 지연.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED",
+            "SKILL_CONTROL"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "시간·운명 제어",
+      "source_recipe": [
+        "대현자",
+        "리엘",
+        "레이나"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_15",
+      "number": 15,
+      "faction": "브레몽 왕국",
+      "rarity": "신화",
+      "name": "비올라",
+      "class": "마녀 / 독술사",
+      "stats": {
+        "hp": 2750,
+        "atk": 250,
+        "def": 105
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "독화살비",
+          "source_text": "독화살비 — 경로 2칸 독 지속피해.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "역병 전염",
+          "source_text": "역병 전염 — 독 걸린 적 사망 시 주변 2명에게 독 이전.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "죽음의 정원",
+          "source_text": "죽음의 정원 — 10초간 넓은 독지대. 보스에게 중첩 5회 시 방어 -20%.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "독/장기전",
+      "source_recipe": [
+        "죽음의 화신",
+        "침묵의 화신",
+        "유나"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_16",
+      "number": 16,
+      "faction": "해륜 왕국",
+      "rarity": "신화",
+      "name": "클로에",
+      "class": "아이돌 / 음률술사",
+      "stats": {
+        "hp": 2900,
+        "atk": 190,
+        "def": 125
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "비트 업",
+          "source_text": "비트 업 — 인근 2칸 아군 공속 +18% 6초.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "소닉 웨이브",
+          "source_text": "소닉 웨이브 — 넓은 직선 광역 + 1초 기절.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "라스트 앙코르",
+          "source_text": "라스트 앙코르 — 10초간 전 아군 공속 +15%, 적 이속 -20%, 스킬 쿨다운 10% 단축.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "SKILL_CONTROL"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "글로벌 템포 버퍼",
+      "source_recipe": [
+        "아이돌",
+        "주술사",
+        "세라"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_17",
+      "number": 17,
+      "faction": "브레몽 왕국",
+      "rarity": "신화",
+      "name": "아델",
+      "class": "중갑기사 / 수호자",
+      "stats": {
+        "hp": 3800,
+        "atk": 205,
+        "def": 175
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "수호의 일격",
+          "source_text": "수호의 일격 — 단일 강타 + 주변 적 20% 둔화.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "미스릴 가호",
+          "source_text": "미스릴 가호 — 가장 가까운 방어벽이 8초간 받는 피해 -35%.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "불락의 성채",
+          "source_text": "불락의 성채 — 6초간 방어벽 파괴를 1회 무효화하고 주변 아군 ATK +15%.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "방어벽 특화 수호자",
+      "source_recipe": [
+        "기사단장",
+        "미스릴 방어벽",
+        "아리아"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_18",
+      "number": 18,
+      "faction": "무소속",
+      "rarity": "신화",
+      "name": "니아",
+      "class": "악마 / 혈마법사",
+      "stats": {
+        "hp": 3000,
+        "atk": 285,
+        "def": 105
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "혈창",
+          "source_text": "혈창 — 3대상 관통, 대상 현재 HP 비례 추가피해.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "PENETRATION"
+          ],
+          "rpg_mapping": {
+            "rule": "RPG_PENETRATION_IGNORE_DEF",
+            "detail": "RPG에서 관통 속성 공격은 대상 DEF 100% 무시"
+          }
+        },
+        {
+          "slot": 2,
+          "name": "피의 저주",
+          "source_text": "피의 저주 — 보스/정예 방어 -18%, 받는 지속피해 +30% 8초.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "진홍월식",
+          "source_text": "진홍월식 — 화면 전체 지속피해 8초, HP가 높은 적일수록 첫 타격 강화.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "보스 디버프/지속딜",
+      "source_recipe": [
+        "흑마법사",
+        "마녀대모",
+        "리엘"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_19",
+      "number": 19,
+      "faction": "무소속",
+      "rarity": "신화",
+      "name": "오로라",
+      "class": "별술사 / 천체마법사",
+      "stats": {
+        "hp": 2950,
+        "atk": 275,
+        "def": 115
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "유성낙하",
+          "source_text": "유성낙하 — 지정 경로 1칸 강한 광역.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "별자리 결속",
+          "source_text": "별자리 결속 — 서로 다른 직업 아군이 인접할수록 ATK·사거리 소폭 증가.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "천구붕괴",
+          "source_text": "천구붕괴 — 5개의 유성이 순차 낙하, 마지막은 보스 위치 고정 타격.",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "광역/조합 시너지",
+      "source_recipe": [
+        "주술사",
+        "유나",
+        "세라"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    },
+    {
+      "id": "HERO_20",
+      "number": 20,
+      "faction": "무소속",
+      "rarity": "신화",
+      "name": "이브",
+      "class": "시간술사",
+      "stats": {
+        "hp": 2850,
+        "atk": 250,
+        "def": 120
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "시간지연",
+          "source_text": "시간지연 — 경로 2칸 이속 -35% 5초.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "되감기",
+          "source_text": "되감기 — 가장 앞선 적 4체를 1~2칸 뒤로 이동, 보스는 스킬 게이지 감소.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "SKILL_CONTROL"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "멈춰버린 세계",
+          "source_text": "멈춰버린 세계 — 3초간 일반 적 완전 정지, 보스 1초 정지 + 아군 공속 20% 증가.",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "CC"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "td_role": "최상급 시간제어",
+      "source_recipe": [
+        "아이돌",
+        "카린",
+        "세라"
+      ],
+      "recipe_note": "현재 게임 확정 조합 규칙이 소스 권장안보다 우선"
+    }
+  ],
+  "bosses": [
+    {
+      "stage": 1,
+      "mode": "NORMAL",
+      "region": "서부 왕국",
+      "name": "철각왕 브라움",
+      "visual": "산악왕의 철갑을 두른 거대 산양형 마수",
+      "td_core": "돌진·방어벽 압박",
+      "stats": {
+        "hp": 2200,
+        "def": 10,
+        "move_speed": 0.68,
+        "gate_damage": 62
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "뿔박치기",
+          "source_text": "뿔박치기: 직선 경로 가속",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "암반 붕괴",
+          "source_text": "암반 붕괴: 배치칸 2곳 6초 비활성",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "분쇄 포효",
+          "source_text": "분쇄 포효: 방어벽 피해 +40% 8초",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "철각왕 브라움이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 100,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 2,
+      "mode": "NORMAL",
+      "region": "서부 왕국",
+      "name": "광산왕 모르겐",
+      "visual": "거대 곡괭이와 광석 갑주를 두른 변절 광부왕",
+      "td_core": "방어벽 파괴",
+      "stats": {
+        "hp": 2431,
+        "def": 12,
+        "move_speed": 0.69,
+        "gate_damage": 69
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "파쇄 타격",
+          "source_text": "파쇄 타격: 방어벽 추가피해",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "낙석 지대",
+          "source_text": "낙석 지대: 경로 2곳 피해",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "광맥 폭주",
+          "source_text": "광맥 폭주: DEF 상승",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "광산왕 모르겐이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 113,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 3,
+      "mode": "NORMAL",
+      "region": "서부 왕국",
+      "name": "붉은협곡의 바르칸",
+      "visual": "붉은 망토와 대검을 든 산적왕",
+      "td_core": "고속 돌진",
+      "stats": {
+        "hp": 2686,
+        "def": 14,
+        "move_speed": 0.69,
+        "gate_damage": 76
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "협곡 질주",
+          "source_text": "협곡 질주: 이속 급상승",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "도적 소집",
+          "source_text": "도적 소집: 약탈자 증원",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "피의 검격",
+          "source_text": "피의 검격: 성문 피해 증가",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "붉은협곡의 바르칸이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 128,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 4,
+      "mode": "NORMAL",
+      "region": "서부 왕국",
+      "name": "철익 그라핀",
+      "visual": "금속깃을 지닌 초대형 절벽 매",
+      "td_core": "공중·급강하",
+      "stats": {
+        "hp": 2968,
+        "def": 16,
+        "move_speed": 0.69,
+        "gate_damage": 83
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "급강하",
+          "source_text": "급강하: 방어벽 우회",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "철깃 폭우",
+          "source_text": "철깃 폭우: 배치칸 공격속도 저하",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "폭풍 날갯짓",
+          "source_text": "폭풍 날갯짓: 원거리 명중률 저하",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "철익 그라핀이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 144,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 5,
+      "mode": "NORMAL",
+      "region": "서부 왕국",
+      "name": "산맥포식자 가르도스",
+      "visual": "바위 갑피의 거대 도마뱀, 침식의 기운",
+      "td_core": "초고방어",
+      "stats": {
+        "hp": 3280,
+        "def": 18,
+        "move_speed": 0.7,
+        "gate_damage": 90
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "석화갑피",
+          "source_text": "석화갑피: 피해감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "꼬리휩쓸기",
+          "source_text": "꼬리휩쓸기: 경로 광역",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "암반잠복",
+          "source_text": "암반잠복: 짧은 무적",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "산맥포식자 가르도스이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 163,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 6,
+      "mode": "NORMAL",
+      "region": "아자르 삼국연합",
+      "name": "사구왕 자하르",
+      "visual": "황금 갑주의 거대 전갈",
+      "td_core": "독·중갑",
+      "stats": {
+        "hp": 3624,
+        "def": 20,
+        "move_speed": 0.7,
+        "gate_damage": 97
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "독침 폭우",
+          "source_text": "독침 폭우: 지속피해",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "모래잠행",
+          "source_text": "모래잠행: 타겟팅 해제",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "황금갑각",
+          "source_text": "황금갑각: DEF 증가",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "사구왕 자하르이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 184,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 7,
+      "mode": "NORMAL",
+      "region": "아자르 삼국연합",
+      "name": "불꽃도적 카심",
+      "visual": "불붙은 쌍곡도를 든 도적왕",
+      "td_core": "고속·화염",
+      "stats": {
+        "hp": 4005,
+        "def": 22,
+        "move_speed": 0.7,
+        "gate_damage": 104
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "화염질주",
+          "source_text": "화염질주",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "불꽃궤적",
+          "source_text": "불꽃궤적: 지속장판",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "광폭화",
+          "source_text": "광폭화: HP 40% 이하 공속 상승",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "불꽃도적 카심이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 208,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 8,
+      "mode": "NORMAL",
+      "region": "아자르 삼국연합",
+      "name": "유리사막의 네프라",
+      "visual": "유리 결정로 뒤덮인 모래정령",
+      "td_core": "반사·광역",
+      "stats": {
+        "hp": 4425,
+        "def": 24,
+        "move_speed": 0.7,
+        "gate_damage": 111
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "유리장막",
+          "source_text": "유리장막: 원거리 피해 일부 반사",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "사막폭풍",
+          "source_text": "사막폭풍: 사거리 -1",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "파편폭발",
+          "source_text": "파편폭발: 광역",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "유리사막의 네프라이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 235,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 9,
+      "mode": "NORMAL",
+      "region": "아자르 삼국연합",
+      "name": "오아시스의 배신자 라지르",
+      "visual": "호화로운 천갑주와 독병을 든 밀수왕",
+      "td_core": "독·소환",
+      "stats": {
+        "hp": 4890,
+        "def": 26,
+        "move_speed": 0.71,
+        "gate_damage": 118
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "독안개",
+          "source_text": "독안개: 경로 지속피해",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "밀수단 호출",
+          "source_text": "밀수단 호출: 증원",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "가짜 오아시스",
+          "source_text": "가짜 오아시스: 이동경로 착시 연출",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "오아시스의 배신자 라지르이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 266,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 10,
+      "mode": "NORMAL",
+      "region": "아자르 삼국연합",
+      "name": "태양먹는 아누라",
+      "visual": "검은 태양 문양의 거대 망령, 침식의 기운",
+      "td_core": "영체·디버프",
+      "stats": {
+        "hp": 5404,
+        "def": 28,
+        "move_speed": 0.71,
+        "gate_damage": 125
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "일식",
+          "source_text": "일식: 아군 공속 감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "열사병",
+          "source_text": "열사병: 공격력 감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "그림자 분열",
+          "source_text": "그림자 분열: 분신 2체",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "태양먹는 아누라이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 300,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 11,
+      "mode": "NORMAL",
+      "region": "해륜왕국",
+      "name": "해적왕 쿠로가네",
+      "visual": "검은 갑판갑주와 대도 2자루",
+      "td_core": "상륙·소환",
+      "stats": {
+        "hp": 5971,
+        "def": 30,
+        "move_speed": 0.71,
+        "gate_damage": 132
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "해적선 포격",
+          "source_text": "해적선 포격",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "부하 소환",
+          "source_text": "부하 소환",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "파도베기",
+          "source_text": "파도베기: 직선 광역",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "해적왕 쿠로가네이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 339,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 12,
+      "mode": "NORMAL",
+      "region": "해륜왕국",
+      "name": "청룡치어왕 류가",
+      "visual": "긴 동양룡 형태의 청색 해룡",
+      "td_core": "공중·고속",
+      "stats": {
+        "hp": 6598,
+        "def": 32,
+        "move_speed": 0.72,
+        "gate_damage": 139
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "해무",
+          "source_text": "해무: 사거리 감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "용오름",
+          "source_text": "용오름: 경로 넉백",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "해룡비상",
+          "source_text": "해룡비상: 타겟팅 해제",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "청룡치어왕 류가이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 384,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 13,
+      "mode": "NORMAL",
+      "region": "해륜왕국",
+      "name": "심해무녀 우미",
+      "visual": "젖은 백색 무녀복의 수귀",
+      "td_core": "빙결·저주",
+      "stats": {
+        "hp": 7291,
+        "def": 34,
+        "move_speed": 0.72,
+        "gate_damage": 146
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "수령결계",
+          "source_text": "수령결계: 공격속도 감소",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "익사자의 손",
+          "source_text": "익사자의 손: 1칸 봉쇄",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "심해의 노래",
+          "source_text": "심해의 노래: 이속 감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "심해무녀 우미이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 433,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 14,
+      "mode": "NORMAL",
+      "region": "해륜왕국",
+      "name": "대갑각왕 카니바",
+      "visual": "성문 크기의 거대 게",
+      "td_core": "고방어·방어벽 파괴",
+      "stats": {
+        "hp": 8056,
+        "def": 36,
+        "move_speed": 0.72,
+        "gate_damage": 153
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "집게분쇄",
+          "source_text": "집게분쇄",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "갑각수복",
+          "source_text": "갑각수복: HP 회복",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "옆걸음 돌진",
+          "source_text": "옆걸음 돌진: 경로변경 없이 가속",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "대갑각왕 카니바이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 490,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 15,
+      "mode": "NORMAL",
+      "region": "해륜왕국",
+      "name": "폭풍닌자 시구레",
+      "visual": "거대 풍마수리검과 검은 망토, 침식의 기운",
+      "td_core": "은신·급습",
+      "stats": {
+        "hp": 8902,
+        "def": 38,
+        "move_speed": 0.73,
+        "gate_damage": 160
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "연막",
+          "source_text": "연막: 은신",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "분신술",
+          "source_text": "분신술: 3체",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "천뢰수리검",
+          "source_text": "천뢰수리검: 광역 기절",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "폭풍닌자 시구레이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 553,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 16,
+      "mode": "NORMAL",
+      "region": "벨로자르 제국",
+      "name": "백야왕 펜리르",
+      "visual": "얼음갑주를 두른 거대 백색 늑대",
+      "td_core": "고속·빙결",
+      "stats": {
+        "hp": 9837,
+        "def": 40,
+        "move_speed": 0.73,
+        "gate_damage": 167
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "빙설질주",
+          "source_text": "빙설질주",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "늑대무리 소환",
+          "source_text": "늑대무리 소환",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "동결포효",
+          "source_text": "동결포효: 공속 감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "백야왕 펜리르이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 625,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 17,
+      "mode": "NORMAL",
+      "region": "벨로자르 제국",
+      "name": "빙벽거인 요툰",
+      "visual": "빙산 조각 같은 거인",
+      "td_core": "초고HP",
+      "stats": {
+        "hp": 10870,
+        "def": 42,
+        "move_speed": 0.73,
+        "gate_damage": 174
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "빙벽생성",
+          "source_text": "빙벽생성: 경로 일시 좁힘",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "빙하분쇄",
+          "source_text": "빙하분쇄: 방어벽 피해",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "서리갑피",
+          "source_text": "서리갑피: 피해감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "빙벽거인 요툰이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 707,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 18,
+      "mode": "NORMAL",
+      "region": "벨로자르 제국",
+      "name": "설해마녀 스카디아",
+      "visual": "얼음 왕관과 긴 지팡이",
+      "td_core": "빙결·디버프",
+      "stats": {
+        "hp": 12011,
+        "def": 44,
+        "move_speed": 0.73,
+        "gate_damage": 181
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "서리폭풍",
+          "source_text": "서리폭풍",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "빙결표식",
+          "source_text": "빙결표식",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "절대빙결",
+          "source_text": "절대빙결: 2칸 3초 정지",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "설해마녀 스카디아이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 799,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 19,
+      "mode": "NORMAL",
+      "region": "벨로자르 제국",
+      "name": "동토광왕 브란",
+      "visual": "거대한 도끼와 흉터 가득한 광전사",
+      "td_core": "광폭",
+      "stats": {
+        "hp": 13272,
+        "def": 46,
+        "move_speed": 0.74,
+        "gate_damage": 188
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "피의광폭",
+          "source_text": "피의광폭",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "도끼회전",
+          "source_text": "도끼회전",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "죽음거부",
+          "source_text": "죽음거부: 1회 HP 20% 회복",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "동토광왕 브란이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 902,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 20,
+      "mode": "NORMAL",
+      "region": "벨로자르 제국",
+      "name": "설산군주 아르켄",
+      "visual": "거대 백색 독수리, 침식의 기운",
+      "td_core": "공중·폭풍",
+      "stats": {
+        "hp": 14666,
+        "def": 48,
+        "move_speed": 0.74,
+        "gate_damage": 195
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "폭풍날개",
+          "source_text": "폭풍날개",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "급강하",
+          "source_text": "급강하",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "백야",
+          "source_text": "백야: 원거리 사거리 -1",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "설산군주 아르켄이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 1020,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 21,
+      "mode": "NORMAL",
+      "region": "생트아르크 교황령",
+      "name": "배교성기사 라미엘",
+      "visual": "부서진 금빛 갑주와 검은 후광",
+      "td_core": "중갑·성광",
+      "stats": {
+        "hp": 16206,
+        "def": 50,
+        "move_speed": 0.74,
+        "gate_damage": 202
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "타락성광",
+          "source_text": "타락성광",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "신성방패",
+          "source_text": "신성방패",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "징벌검",
+          "source_text": "징벌검: 방어벽 추가피해",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "배교성기사 라미엘이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 1152,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 22,
+      "mode": "NORMAL",
+      "region": "생트아르크 교황령",
+      "name": "성당의 가고일왕 그레고르",
+      "visual": "대성당 첨탑 모양 날개",
+      "td_core": "공중·석화",
+      "stats": {
+        "hp": 17907,
+        "def": 52,
+        "move_speed": 0.75,
+        "gate_damage": 209
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "석화시선",
+          "source_text": "석화시선: 공속 감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "첨탑낙하",
+          "source_text": "첨탑낙하",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "석상화",
+          "source_text": "석상화: 일시 무적",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "성당의 가고일왕 그레고르이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 1302,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 23,
+      "mode": "NORMAL",
+      "region": "생트아르크 교황령",
+      "name": "순교자 세베라",
+      "visual": "붉은 성흔과 사슬을 감은 광신자",
+      "td_core": "사망버프·증원",
+      "stats": {
+        "hp": 19788,
+        "def": 54,
+        "move_speed": 0.75,
+        "gate_damage": 216
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "순교찬가",
+          "source_text": "순교찬가",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "광신도 소환",
+          "source_text": "광신도 소환",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "성흔폭발",
+          "source_text": "성흔폭발",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "순교자 세베라이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 1471,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 24,
+      "mode": "NORMAL",
+      "region": "생트아르크 교황령",
+      "name": "성유물폭주체 렐릭스",
+      "visual": "여러 성유물이 합쳐진 금속 골렘",
+      "td_core": "고방어·마력",
+      "stats": {
+        "hp": 21865,
+        "def": 56,
+        "move_speed": 0.75,
+        "gate_damage": 223
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "성유물장벽",
+          "source_text": "성유물장벽",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "성광포",
+          "source_text": "성광포",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "봉인파동",
+          "source_text": "봉인파동: 스킬 쿨다운 증가",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "성유물폭주체 렐릭스이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 1663,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 25,
+      "mode": "NORMAL",
+      "region": "생트아르크 교황령",
+      "name": "검은대주교 말키엘",
+      "visual": "검은 법복과 뒤집힌 성표, 침식의 기운",
+      "td_core": "버프·침묵",
+      "stats": {
+        "hp": 24161,
+        "def": 58,
+        "move_speed": 0.76,
+        "gate_damage": 230
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "침묵선고",
+          "source_text": "침묵선고",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "광신강화",
+          "source_text": "광신강화",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "흑성광",
+          "source_text": "흑성광: 광역 피해",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "검은대주교 말키엘이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 1879,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 26,
+      "mode": "NORMAL",
+      "region": "상드라크 제국",
+      "name": "황실골렘 아르카논",
+      "visual": "황금 장갑과 마도핵의 거대 골렘",
+      "td_core": "종합형",
+      "stats": {
+        "hp": 26698,
+        "def": 60,
+        "move_speed": 0.76,
+        "gate_damage": 237
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "마도포격",
+          "source_text": "마도포격",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "자기수복",
+          "source_text": "자기수복",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "중력파",
+          "source_text": "중력파: 이속 감소",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "황실골렘 아르카논이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 2123,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 27,
+      "mode": "NORMAL",
+      "region": "상드라크 제국",
+      "name": "반역장군 드라켄",
+      "visual": "흑적 중갑과 장창",
+      "td_core": "지휘·증원",
+      "stats": {
+        "hp": 29501,
+        "def": 62,
+        "move_speed": 0.76,
+        "gate_damage": 244
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "돌격명령",
+          "source_text": "돌격명령",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "방패진",
+          "source_text": "방패진",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "처형창",
+          "source_text": "처형창: 방어벽 추가피해",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "반역장군 드라켄이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 2399,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 28,
+      "mode": "NORMAL",
+      "region": "상드라크 제국",
+      "name": "실험체 제로",
+      "visual": "불안정한 마도관이 박힌 인간형 괴수",
+      "td_core": "폭주·변이",
+      "stats": {
+        "hp": 32599,
+        "def": 64,
+        "move_speed": 0.76,
+        "gate_damage": 251
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "마력폭주",
+          "source_text": "마력폭주",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "세포재생",
+          "source_text": "세포재생",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "불안정폭발",
+          "source_text": "불안정폭발",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "실험체 제로이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 2711,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 29,
+      "mode": "NORMAL",
+      "region": "상드라크 제국",
+      "name": "공중요새 코르부스",
+      "visual": "부유하는 마도병기",
+      "td_core": "공중·광역",
+      "stats": {
+        "hp": 36022,
+        "def": 66,
+        "move_speed": 0.77,
+        "gate_damage": 258
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "마력폭격",
+          "source_text": "마력폭격",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "드론증원",
+          "source_text": "드론증원",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "방벽무시 포격",
+          "source_text": "방벽무시 포격",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "공중요새 코르부스이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 3063,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 30,
+      "mode": "NORMAL",
+      "region": "상드라크 제국",
+      "name": "균열군주 네메시스",
+      "visual": "검은 균열을 두른 비정형 괴수",
+      "td_core": "심연·최종",
+      "stats": {
+        "hp": 39804,
+        "def": 68,
+        "move_speed": 0.77,
+        "gate_damage": 265
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "균열소환",
+          "source_text": "균열소환",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "공포파동",
+          "source_text": "공포파동",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "심연포식",
+          "source_text": "심연포식: HP 흡수",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "균열군주 네메시스이(가) TD HP 0 도달 후 최후의 힘으로 방어선을 파괴하고 성문 앞으로 전진",
+      "recommended_power": 3462,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 31,
+      "mode": "HARD",
+      "region": "타락한 서부 왕국",
+      "name": "타락한 철각왕 브라움",
+      "visual": "검은 결정이 뿔과 갑주를 뒤덮은 브라움",
+      "td_core": "광폭 돌진",
+      "stats": {
+        "hp": 62000,
+        "def": 95,
+        "move_speed": 0.78,
+        "gate_damage": 420
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연돌진",
+          "source_text": "심연돌진",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "방어벽 붕괴",
+          "source_text": "방어벽 붕괴",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "TD_SPATIAL_OR_WALL",
+            "MODE_TRANSLATION_REQUIRED",
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "검은뿔 폭발",
+          "source_text": "검은뿔 폭발",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "타락한 철각왕 브라움이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 5200,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 32,
+      "mode": "HARD",
+      "region": "타락한 서부 왕국",
+      "name": "침식된 광산왕 모르겐",
+      "visual": "검은 광석이 살점을 뚫고 나온 광부왕",
+      "td_core": "방벽파괴",
+      "stats": {
+        "hp": 68510,
+        "def": 100,
+        "move_speed": 0.79,
+        "gate_damage": 448
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "침식파쇄",
+          "source_text": "침식파쇄",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "검은낙석",
+          "source_text": "검은낙석",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "광맥폭주",
+          "source_text": "광맥폭주",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "침식된 광산왕 모르겐이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 5590,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 33,
+      "mode": "HARD",
+      "region": "타락한 서부 왕국",
+      "name": "침식에 물들은 서부의 설화",
+      "visual": "렛츠컷-록산 르부로 실루엣",
+      "td_core": "초고방어",
+      "stats": {
+        "hp": 75704,
+        "def": 105,
+        "move_speed": 0.79,
+        "gate_damage": 476
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연갑피",
+          "source_text": "심연갑피",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "지각파열",
+          "source_text": "지각파열",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "포식재생",
+          "source_text": "포식재생",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "보스(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 6009,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 34,
+      "mode": "HARD",
+      "region": "타락한 벨로자르 제국",
+      "name": "침식된 백야왕 펜리르",
+      "visual": "검은 서리와 붉은 눈의 거대 늑대",
+      "td_core": "고속빙결",
+      "stats": {
+        "hp": 83652,
+        "def": 110,
+        "move_speed": 0.8,
+        "gate_damage": 504
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연질주",
+          "source_text": "심연질주",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "흑설포효",
+          "source_text": "흑설포효",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "빙혈분신",
+          "source_text": "빙혈분신",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "침식된 백야왕 펜리르이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 6460,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 35,
+      "mode": "HARD",
+      "region": "타락한 벨로자르 제국",
+      "name": "검은 빙벽거인 요툰",
+      "visual": "심연 결정으로 굳은 빙하 거인",
+      "td_core": "초고HP",
+      "stats": {
+        "hp": 92436,
+        "def": 115,
+        "move_speed": 0.8,
+        "gate_damage": 532
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "흑빙벽",
+          "source_text": "흑빙벽",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "대지분쇄",
+          "source_text": "대지분쇄",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "빙하재생",
+          "source_text": "빙하재생",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "검은 빙벽거인 요툰이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 6944,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 36,
+      "mode": "HARD",
+      "region": "타락한 벨로자르 제국",
+      "name": "침식에 물들은 북부의 설화",
+      "visual": "렛츠컷-비비엔 실루엣",
+      "td_core": "빙결침묵",
+      "stats": {
+        "hp": 102142,
+        "def": 120,
+        "move_speed": 0.81,
+        "gate_damage": 560
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "흑서리폭풍",
+          "source_text": "흑서리폭풍",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "빙결봉인",
+          "source_text": "빙결봉인",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "절대영도",
+          "source_text": "절대영도",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "보스(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 7465,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 37,
+      "mode": "HARD",
+      "region": "타락한 아자르 삼국연합",
+      "name": "타락한 사구왕 자하르",
+      "visual": "검은 독이 흐르는 거대 전갈",
+      "td_core": "독중갑",
+      "stats": {
+        "hp": 112867,
+        "def": 125,
+        "move_speed": 0.82,
+        "gate_damage": 588
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연독침",
+          "source_text": "심연독침",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "사막잠행",
+          "source_text": "사막잠행",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "갑각폭주",
+          "source_text": "갑각폭주",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "타락한 사구왕 자하르이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 8025,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 38,
+      "mode": "HARD",
+      "region": "타락한 아자르 삼국연합",
+      "name": "침식된 태양먹는 아누라",
+      "visual": "검은 태양핵을 품은 대형 망령",
+      "td_core": "영체광역",
+      "stats": {
+        "hp": 124718,
+        "def": 130,
+        "move_speed": 0.82,
+        "gate_damage": 616
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "검은일식",
+          "source_text": "검은일식",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "영혼흡수",
+          "source_text": "영혼흡수",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "그림자분열",
+          "source_text": "그림자분열",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "침식된 태양먹는 아누라이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 8627,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 39,
+      "mode": "HARD",
+      "region": "타락한 아자르 삼국연합",
+      "name": "침식에 물들은 남부의 설화",
+      "visual": "렛츠컷-엘로디 실루엣",
+      "td_core": "화염광역",
+      "stats": {
+        "hp": 137813,
+        "def": 135,
+        "move_speed": 0.83,
+        "gate_damage": 644
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연화염",
+          "source_text": "심연화염",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "불꽃분열",
+          "source_text": "불꽃분열",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "청흑폭발",
+          "source_text": "청흑폭발",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "보스(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 9274,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 40,
+      "mode": "HARD",
+      "region": "타락한 해륜왕국",
+      "name": "침식된 해적왕 쿠로가네",
+      "visual": "해초와 검은 결정이 뒤엉킨 해적왕",
+      "td_core": "소환광역",
+      "stats": {
+        "hp": 152283,
+        "def": 140,
+        "move_speed": 0.83,
+        "gate_damage": 672
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "침식포격",
+          "source_text": "침식포격",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "망령선원",
+          "source_text": "망령선원",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "파도참",
+          "source_text": "파도참",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "침식된 해적왕 쿠로가네이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 9970,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 41,
+      "mode": "HARD",
+      "region": "타락한 해륜왕국",
+      "name": "심연해룡 류가",
+      "visual": "검은 비늘과 붉은 지느러미의 해룡",
+      "td_core": "공중고속",
+      "stats": {
+        "hp": 168273,
+        "def": 145,
+        "move_speed": 0.84,
+        "gate_damage": 700
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연해무",
+          "source_text": "심연해무",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "흑룡오름",
+          "source_text": "흑룡오름",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "해륜폭풍",
+          "source_text": "해륜폭풍",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "심연해룡 류가이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 10717,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 42,
+      "mode": "HARD",
+      "region": "타락한 해륜왕국",
+      "name": "침식에 물들은 동부의 설화",
+      "visual": "렛츠컷-이연화 실루엣",
+      "td_core": "방벽무효",
+      "stats": {
+        "hp": 185942,
+        "def": 150,
+        "move_speed": 0.85,
+        "gate_damage": 728
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "촉수압살",
+          "source_text": "촉수압살",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "심해흡입",
+          "source_text": "심해흡입",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "심연파도",
+          "source_text": "심연파도",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "보스(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 11521,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 43,
+      "mode": "HARD",
+      "region": "암운이 드리운 생트아르크 교황령",
+      "name": "검은대주교 말키엘",
+      "visual": "심연 후광과 다수의 눈이 달린 대주교",
+      "td_core": "침묵버프",
+      "stats": {
+        "hp": 205466,
+        "def": 155,
+        "move_speed": 0.85,
+        "gate_damage": 756
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "영구침묵선고",
+          "source_text": "영구침묵선고",
+          "rpg_review_required": true,
+          "rpg_issue_tags": [
+            "RPG_EDGE_CASE"
+          ],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "광신폭주",
+          "source_text": "광신폭주",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "흑성광강림",
+          "source_text": "흑성광강림",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "검은대주교 말키엘이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 12385,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 44,
+      "mode": "HARD",
+      "region": "암운이 드리운 생트아르크 교황령",
+      "name": "사룡숭배 대성상",
+      "visual": "대성상이 용의 두개골 형태로 변이",
+      "td_core": "고방어방벽무효",
+      "stats": {
+        "hp": 227039,
+        "def": 160,
+        "move_speed": 0.86,
+        "gate_damage": 784
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "사룡가호",
+          "source_text": "사룡가호",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "성상분열",
+          "source_text": "성상분열",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "흑성광포",
+          "source_text": "흑성광포",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "사룡숭배 대성상이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 13314,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 45,
+      "mode": "HARD",
+      "region": "암운이 드리운 생트아르크 교황령",
+      "name": "침식에 물들은 용살자의 설화",
+      "visual": "렛츠컷-프라이데이 실루엣",
+      "td_core": "공중광역",
+      "stats": {
+        "hp": 250879,
+        "def": 165,
+        "move_speed": 0.86,
+        "gate_damage": 812
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "검은깃폭우",
+          "source_text": "검은깃폭우",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "타락성가",
+          "source_text": "타락성가",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "천벌역전",
+          "source_text": "천벌역전",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "보스(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 14313,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 46,
+      "mode": "HARD",
+      "region": "심연에 침식당한 상드라크 제국",
+      "name": "심연황실골렘 아르카논",
+      "visual": "황금 갑주가 검게 녹아내린 골렘",
+      "td_core": "종합형",
+      "stats": {
+        "hp": 277221,
+        "def": 170,
+        "move_speed": 0.87,
+        "gate_damage": 840
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연마도포",
+          "source_text": "심연마도포",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "중력붕괴",
+          "source_text": "중력붕괴",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "자가복원",
+          "source_text": "자가복원",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "심연황실골렘 아르카논이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 15386,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 47,
+      "mode": "HARD",
+      "region": "심연에 침식당한 상드라크 제국",
+      "name": "침식된 반역장군 드라켄",
+      "visual": "갑주에 균열핵이 박힌 장군",
+      "td_core": "지휘광폭",
+      "stats": {
+        "hp": 306329,
+        "def": 175,
+        "move_speed": 0.88,
+        "gate_damage": 868
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연돌격명령",
+          "source_text": "심연돌격명령",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "검은방패진",
+          "source_text": "검은방패진",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "처형창진",
+          "source_text": "처형창진",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "침식된 반역장군 드라켄이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 16540,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 48,
+      "mode": "HARD",
+      "region": "심연에 침식당한 상드라크 제국",
+      "name": "사룡의 화신 네메시스",
+      "visual": "용골과 균열이 결합된 재앙형 괴수",
+      "td_core": "심연최종",
+      "stats": {
+        "hp": 338494,
+        "def": 180,
+        "move_speed": 0.88,
+        "gate_damage": 896
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "사룡의포효",
+          "source_text": "사룡의포효",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "균열군세",
+          "source_text": "균열군세",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "성벽파멸",
+          "source_text": "성벽파멸",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "사룡의 화신 네메시스이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 17781,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 49,
+      "mode": "HARD",
+      "region": "심연에 침식당한 상드라크 제국",
+      "name": "종말을 걷는 자 에레보스",
+      "visual": "하반신이 균열 속에 잠긴 초거대 인간형",
+      "td_core": "최종광역",
+      "stats": {
+        "hp": 374035,
+        "def": 185,
+        "move_speed": 0.89,
+        "gate_damage": 924
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "종말의발걸음",
+          "source_text": "종말의발걸음",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "시간붕괴",
+          "source_text": "시간붕괴",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "공포의천막",
+          "source_text": "공포의천막",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "종말을 걷는 자 에레보스이(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 19114,
+      "rpg_review_required": true
+    },
+    {
+      "stage": 50,
+      "mode": "HARD",
+      "region": "심연에 침식당한 상드라크 제국",
+      "name": "침식의 근원, 사룡 발테리옹",
+      "visual": "성벽 너머를 가득 채우는 흑룡형 재앙",
+      "td_core": "최종보스",
+      "stats": {
+        "hp": 413309,
+        "def": 190,
+        "move_speed": 0.89,
+        "gate_damage": 952
+      },
+      "skills": [
+        {
+          "slot": 1,
+          "name": "심연브레스",
+          "source_text": "심연브레스",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 2,
+          "name": "재앙의날갯짓",
+          "source_text": "재앙의날갯짓",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        },
+        {
+          "slot": 3,
+          "name": "LAST WALL 파괴",
+          "source_text": "LAST WALL 파괴",
+          "rpg_review_required": false,
+          "rpg_issue_tags": [],
+          "rpg_mapping": null
+        }
+      ],
+      "transition": "보스(가) 심연폭주 후 LAST_WALL_BOSS_ANGLE로 전환. TD 성과에 따라 RPG 시작 시 방어파괴 디버프 적용",
+      "recommended_power": 20548,
+      "rpg_review_required": true
+    }
+  ],
+  "skill_enemies": [
+    {
+      "region": "서부 왕국",
+      "category": "인간형",
+      "name": "산악 약탈자",
+      "td_role": "기본 보병",
+      "special_effect": "불가능",
+      "note": "정규군 아님",
+      "stats": {
+        "hp": 110,
+        "def": 0,
+        "move_speed": 1,
+        "wall_atk": 12,
+        "wall_attack_gap": 1.2
+      },
+      "air": "1.2",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "인간형",
+      "name": "협곡 강도",
+      "td_role": "고속 근접",
+      "special_effect": "불가능",
+      "note": "정규군 아님",
+      "stats": {
+        "hp": 86,
+        "def": 0,
+        "move_speed": 1.35,
+        "wall_atk": 11,
+        "wall_attack_gap": 1.02
+      },
+      "air": "1.02",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "인간형",
+      "name": "탈영 철갑병",
+      "td_role": "고방어",
+      "special_effect": "불가능",
+      "note": "변절/탈영 설정",
+      "stats": {
+        "hp": 148,
+        "def": 12,
+        "move_speed": 0.82,
+        "wall_atk": 14,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "인간형",
+      "name": "화약 밀수꾼",
+      "td_role": "사망 시 폭발",
+      "special_effect": "불가능",
+      "note": "폭발형",
+      "stats": {
+        "hp": 94,
+        "def": 0,
+        "move_speed": 1.08,
+        "wall_atk": 12,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "인간형",
+      "name": "광산 파괴자",
+      "td_role": "방어벽 특화",
+      "special_effect": "불가능",
+      "note": "방어벽 압박",
+      "stats": {
+        "hp": 116,
+        "def": 4,
+        "move_speed": 0.95,
+        "wall_atk": 21,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "비인간형",
+      "name": "협곡 늑대",
+      "td_role": "고속 물량",
+      "special_effect": "불가능",
+      "note": "야수",
+      "stats": {
+        "hp": 79,
+        "def": 0,
+        "move_speed": 1.42,
+        "wall_atk": 10,
+        "wall_attack_gap": 0.96
+      },
+      "air": "0.96",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "비인간형",
+      "name": "뿔멧돼지",
+      "td_role": "돌진",
+      "special_effect": "불가능",
+      "note": "야수",
+      "stats": {
+        "hp": 104,
+        "def": 2,
+        "move_speed": 1.35,
+        "wall_atk": 16,
+        "wall_attack_gap": 0.96
+      },
+      "air": "0.96",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "비인간형",
+      "name": "바위등 도마뱀",
+      "td_role": "고방어",
+      "special_effect": "불가능",
+      "note": "장갑형",
+      "stats": {
+        "hp": 148,
+        "def": 12,
+        "move_speed": 0.82,
+        "wall_atk": 14,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "비인간형",
+      "name": "절벽 매",
+      "td_role": "공중",
+      "special_effect": "가능",
+      "note": "공중형",
+      "stats": {
+        "hp": 86,
+        "def": 0,
+        "move_speed": 1.28,
+        "wall_atk": 9,
+        "wall_attack_gap": 1.02
+      },
+      "air": "1.02",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "비인간형",
+      "name": "암석 골렘",
+      "td_role": "고HP",
+      "special_effect": "불가능",
+      "note": "중장형",
+      "stats": {
+        "hp": 170,
+        "def": 5,
+        "move_speed": 0.78,
+        "wall_atk": 15,
+        "wall_attack_gap": 1.38
+      },
+      "air": "1.38",
+      "source_gap": null
+    },
+    {
+      "region": "서부 왕국",
+      "category": "비인간형",
+      "name": "최초의 골렘 아즈로",
+      "td_role": "고HP/고방어",
+      "special_effect": "불가능",
+      "note": "중장형",
+      "stats": {
+        "hp": 2376,
+        "def": 40,
+        "move_speed": 0.72,
+        "wall_atk": 50,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "인간형",
+      "name": "사막 약탈자",
+      "td_role": "기본 보병",
+      "special_effect": "불가능",
+      "note": "정규군 아님",
+      "stats": {
+        "hp": 165,
+        "def": 2,
+        "move_speed": 1.03,
+        "wall_atk": 15,
+        "wall_attack_gap": 1.2
+      },
+      "air": "1.2",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "인간형",
+      "name": "독침 암살자",
+      "td_role": "독 지속피해",
+      "special_effect": "불가능",
+      "note": "상태이상형",
+      "stats": {
+        "hp": 148,
+        "def": 3,
+        "move_speed": 1.13,
+        "wall_atk": 15,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "인간형",
+      "name": "오아시스 밀수꾼",
+      "td_role": "특수 공격",
+      "special_effect": "불가능",
+      "note": "범죄조직",
+      "stats": {
+        "hp": 145,
+        "def": 3,
+        "move_speed": 1.11,
+        "wall_atk": 16,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "인간형",
+      "name": "사막 주술사",
+      "td_role": "주변 적 버프",
+      "special_effect": "불가능",
+      "note": "버퍼",
+      "stats": {
+        "hp": 157,
+        "def": 4,
+        "move_speed": 0.95,
+        "wall_atk": 12,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "비인간형",
+      "name": "모래 전갈",
+      "td_role": "독 지속피해",
+      "special_effect": "불가능",
+      "note": "독충",
+      "stats": {
+        "hp": 148,
+        "def": 3,
+        "move_speed": 1.13,
+        "wall_atk": 15,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "비인간형",
+      "name": "사막 늑대",
+      "td_role": "고속 물량",
+      "special_effect": "불가능",
+      "note": "야수",
+      "stats": {
+        "hp": 119,
+        "def": 2,
+        "move_speed": 1.46,
+        "wall_atk": 12,
+        "wall_attack_gap": 0.96
+      },
+      "air": "0.96",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "비인간형",
+      "name": "갑각 풍뎅이",
+      "td_role": "고방어",
+      "special_effect": "불가능",
+      "note": "장갑형",
+      "stats": {
+        "hp": 223,
+        "def": 14,
+        "move_speed": 0.84,
+        "wall_atk": 17,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "비인간형",
+      "name": "모래망령",
+      "td_role": "회피/물리저항",
+      "special_effect": "불가능",
+      "note": "영체",
+      "stats": {
+        "hp": 140,
+        "def": 10,
+        "move_speed": 1.17,
+        "wall_atk": 14,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "비인간형",
+      "name": "화염 정령",
+      "td_role": "화염 저항",
+      "special_effect": "불가능",
+      "note": "정령",
+      "stats": {
+        "hp": 173,
+        "def": 10,
+        "move_speed": 1.05,
+        "wall_atk": 15,
+        "wall_attack_gap": 1.2
+      },
+      "air": "1.2",
+      "source_gap": null
+    },
+    {
+      "region": "아자르 삼국연합",
+      "category": "비인간형",
+      "name": "고위 정령 이프리트",
+      "td_role": "화염 저항 / 고방어",
+      "special_effect": "불가능",
+      "note": "정령",
+      "stats": {
+        "hp": 3267,
+        "def": 44,
+        "move_speed": 0.91,
+        "wall_atk": 60,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "인간형",
+      "name": "해적 검객",
+      "td_role": "기본 보병",
+      "special_effect": "불가능",
+      "note": "해적",
+      "stats": {
+        "hp": 230,
+        "def": 4,
+        "move_speed": 1.05,
+        "wall_atk": 18,
+        "wall_attack_gap": 1.2
+      },
+      "air": "1.2",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "인간형",
+      "name": "파도 도적",
+      "td_role": "고속",
+      "special_effect": "불가능",
+      "note": "고속형",
+      "stats": {
+        "hp": 175,
+        "def": 4,
+        "move_speed": 1.45,
+        "wall_atk": 15,
+        "wall_attack_gap": 1.02
+      },
+      "air": "1.02",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "인간형",
+      "name": "밀수 궁수",
+      "td_role": "원거리",
+      "special_effect": "불가능",
+      "note": "원거리형",
+      "stats": {
+        "hp": 189,
+        "def": 5,
+        "move_speed": 1.1,
+        "wall_atk": 19,
+        "wall_attack_gap": 1.38
+      },
+      "air": "1.38",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "인간형",
+      "name": "폭약 해적",
+      "td_role": "광역 폭발",
+      "special_effect": "불가능",
+      "note": "폭발형",
+      "stats": {
+        "hp": 207,
+        "def": 5,
+        "move_speed": 1.07,
+        "wall_atk": 25,
+        "wall_attack_gap": 1.26
+      },
+      "air": "1.26",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "인간형",
+      "name": "그림자 닌자",
+      "td_role": "일시 은신",
+      "special_effect": "불가능",
+      "note": "은신형",
+      "stats": {
+        "hp": 184,
+        "def": 4,
+        "move_speed": 1.37,
+        "wall_atk": 17,
+        "wall_attack_gap": 1.02
+      },
+      "air": "1.02",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "비인간형",
+      "name": "철갑 바다게",
+      "td_role": "고방어",
+      "special_effect": "불가능",
+      "note": "장갑형",
+      "stats": {
+        "hp": 310,
+        "def": 16,
+        "move_speed": 0.86,
+        "wall_atk": 21,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "비인간형",
+      "name": "해룡 치어",
+      "td_role": "공중/고속",
+      "special_effect": "가능",
+      "note": "공중형",
+      "stats": {
+        "hp": 156,
+        "def": 4,
+        "move_speed": 1.58,
+        "wall_atk": 13,
+        "wall_attack_gap": 0.96
+      },
+      "air": "0.96",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "비인간형",
+      "name": "물귀신",
+      "td_role": "특수 이동",
+      "special_effect": "불가능",
+      "note": "영체",
+      "stats": {
+        "hp": 189,
+        "def": 8,
+        "move_speed": 1.24,
+        "wall_atk": 16,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "비인간형",
+      "name": "해파리 정령",
+      "td_role": "감속/마비",
+      "special_effect": "불가능",
+      "note": "상태이상형",
+      "stats": {
+        "hp": 212,
+        "def": 8,
+        "move_speed": 1.05,
+        "wall_atk": 15,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "비인간형",
+      "name": "심해 촉수수",
+      "td_role": "방어벽 압박",
+      "special_effect": "불가능",
+      "note": "방어벽 압박",
+      "stats": {
+        "hp": 264,
+        "def": 9,
+        "move_speed": 0.97,
+        "wall_atk": 30,
+        "wall_attack_gap": 1.14
+      },
+      "air": "1.14",
+      "source_gap": null
+    },
+    {
+      "region": "해륜왕국",
+      "category": "비인간형",
+      "name": "심연의 고르라켄",
+      "td_role": "방어벽 무효 / 고HP",
+      "special_effect": "불가능",
+      "note": "방어벽 압박",
+      "stats": {
+        "hp": 4968,
+        "def": 40,
+        "move_speed": 0.89,
+        "wall_atk": 83,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "인간형",
+      "name": "설원 약탈자",
+      "td_role": "기본 보병",
+      "special_effect": "불가능",
+      "note": "정규군 아님",
+      "stats": {
+        "hp": 310,
+        "def": 6,
+        "move_speed": 0.98,
+        "wall_atk": 22,
+        "wall_attack_gap": 1.2
+      },
+      "air": "1.2",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "인간형",
+      "name": "탈영 중갑병",
+      "td_role": "중갑",
+      "special_effect": "불가능",
+      "note": "변절/탈영 설정",
+      "stats": {
+        "hp": 418,
+        "def": 20,
+        "move_speed": 0.84,
+        "wall_atk": 26,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "인간형",
+      "name": "빙원 사냥꾼",
+      "td_role": "원거리",
+      "special_effect": "불가능",
+      "note": "원거리형",
+      "stats": {
+        "hp": 254,
+        "def": 7,
+        "move_speed": 1.03,
+        "wall_atk": 23,
+        "wall_attack_gap": 1.38
+      },
+      "air": "1.38",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "인간형",
+      "name": "동토 광전사",
+      "td_role": "저HP 광폭",
+      "special_effect": "불가능",
+      "note": "광폭형",
+      "stats": {
+        "hp": 223,
+        "def": 8,
+        "move_speed": 1.23,
+        "wall_atk": 33,
+        "wall_attack_gap": 0.9
+      },
+      "air": "0.9",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "인간형",
+      "name": "금단 주술사",
+      "td_role": "적 버프",
+      "special_effect": "불가능",
+      "note": "버퍼",
+      "stats": {
+        "hp": 285,
+        "def": 10,
+        "move_speed": 0.88,
+        "wall_atk": 19,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "비인간형",
+      "name": "설원 늑대",
+      "td_role": "고속 물량",
+      "special_effect": "불가능",
+      "note": "야수",
+      "stats": {
+        "hp": 223,
+        "def": 6,
+        "move_speed": 1.39,
+        "wall_atk": 18,
+        "wall_attack_gap": 0.96
+      },
+      "air": "0.96",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "비인간형",
+      "name": "동토 곰",
+      "td_role": "고HP",
+      "special_effect": "불가능",
+      "note": "탱커",
+      "stats": {
+        "hp": 480,
+        "def": 11,
+        "move_speed": 0.76,
+        "wall_atk": 28,
+        "wall_attack_gap": 1.38
+      },
+      "air": "1.38",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "비인간형",
+      "name": "빙갑 정령",
+      "td_role": "고방어",
+      "special_effect": "불가능",
+      "note": "장갑형",
+      "stats": {
+        "hp": 418,
+        "def": 18,
+        "move_speed": 0.8,
+        "wall_atk": 25,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "비인간형",
+      "name": "설산 독수리",
+      "td_role": "공중",
+      "special_effect": "가능",
+      "note": "공중형",
+      "stats": {
+        "hp": 242,
+        "def": 6,
+        "move_speed": 1.25,
+        "wall_atk": 16,
+        "wall_attack_gap": 1.02
+      },
+      "air": "1.02",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "비인간형",
+      "name": "서리 골렘",
+      "td_role": "방어벽 파괴",
+      "special_effect": "불가능",
+      "note": "방어벽 압박",
+      "stats": {
+        "hp": 388,
+        "def": 14,
+        "move_speed": 0.84,
+        "wall_atk": 41,
+        "wall_attack_gap": 1.14
+      },
+      "air": "1.14",
+      "source_gap": null
+    },
+    {
+      "region": "벨로자르 제국",
+      "category": "비인간형",
+      "name": "무언의 사로스",
+      "td_role": "방어벽 무효 / 고hp / 캐릭터 빙결",
+      "special_effect": "불가능",
+      "note": "방어벽 압박",
+      "stats": {
+        "hp": 6975,
+        "def": 44,
+        "move_speed": 0.76,
+        "wall_atk": 106,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "인간형",
+      "name": "이단 광신도",
+      "td_role": "기본 물량",
+      "special_effect": "불가능",
+      "note": "이단자",
+      "stats": {
+        "hp": 353,
+        "def": 8,
+        "move_speed": 1.12,
+        "wall_atk": 24,
+        "wall_attack_gap": 1.02
+      },
+      "air": "1.02",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "인간형",
+      "name": "배교 기사",
+      "td_role": "중갑",
+      "special_effect": "불가능",
+      "note": "변절자",
+      "stats": {
+        "hp": 554,
+        "def": 22,
+        "move_speed": 0.86,
+        "wall_atk": 32,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "인간형",
+      "name": "금단 심문관",
+      "td_role": "방어벽 특화",
+      "special_effect": "불가능",
+      "note": "방어벽 압박",
+      "stats": {
+        "hp": 430,
+        "def": 12,
+        "move_speed": 0.95,
+        "wall_atk": 47,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "인간형",
+      "name": "타락 사제",
+      "td_role": "적 회복/버프",
+      "special_effect": "불가능",
+      "note": "버퍼",
+      "stats": {
+        "hp": 410,
+        "def": 10,
+        "move_speed": 1,
+        "wall_atk": 27,
+        "wall_attack_gap": 1.2
+      },
+      "air": "1.2",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "인간형",
+      "name": "순교 광신자",
+      "td_role": "사망 시 주변 적 강화",
+      "special_effect": "불가능",
+      "note": "사망 버프형",
+      "stats": {
+        "hp": 361,
+        "def": 10,
+        "move_speed": 1.05,
+        "wall_atk": 27,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "비인간형",
+      "name": "성당 가고일",
+      "td_role": "공중",
+      "special_effect": "가능",
+      "note": "공중형",
+      "stats": {
+        "hp": 320,
+        "def": 8,
+        "move_speed": 1.28,
+        "wall_atk": 20,
+        "wall_attack_gap": 1.02
+      },
+      "air": "1.02",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "비인간형",
+      "name": "광휘 망령",
+      "td_role": "물리저항",
+      "special_effect": "불가능",
+      "note": "영체",
+      "stats": {
+        "hp": 410,
+        "def": 18,
+        "move_speed": 1.02,
+        "wall_atk": 26,
+        "wall_attack_gap": 1.2
+      },
+      "air": "1.2",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "비인간형",
+      "name": "성유물 골렘",
+      "td_role": "고방어",
+      "special_effect": "불가능",
+      "note": "장갑형",
+      "stats": {
+        "hp": 554,
+        "def": 20,
+        "move_speed": 0.82,
+        "wall_atk": 31,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "비인간형",
+      "name": "타락 천사 파편체",
+      "td_role": "고속 공중",
+      "special_effect": "가능",
+      "note": "공중형",
+      "stats": {
+        "hp": 287,
+        "def": 8,
+        "move_speed": 1.48,
+        "wall_atk": 19,
+        "wall_attack_gap": 0.96
+      },
+      "air": "0.96",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "비인간형",
+      "name": "저주받은 성상",
+      "td_role": "고HP",
+      "special_effect": "불가능",
+      "note": "중장형",
+      "stats": {
+        "hp": 636,
+        "def": 13,
+        "move_speed": 0.78,
+        "wall_atk": 34,
+        "wall_attack_gap": 1.38
+      },
+      "air": "1.38",
+      "source_gap": null
+    },
+    {
+      "region": "생트아르크 교황령",
+      "category": "비인간형",
+      "name": "기원의 대성상",
+      "td_role": "침묵무효/방어벽무효/고방어",
+      "special_effect": "불가능",
+      "note": "중장형",
+      "stats": {
+        "hp": 9594,
+        "def": 54,
+        "move_speed": 0.72,
+        "wall_atk": 132,
+        "wall_attack_gap": 1.08
+      },
+      "air": "1.08",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "인간형",
+      "name": "제국 변절자",
+      "td_role": "밸런스형",
+      "special_effect": "불가능",
+      "note": "변절자",
+      "stats": {
+        "hp": 567,
+        "def": 14,
+        "move_speed": 1.02,
+        "wall_atk": 33,
+        "wall_attack_gap": 1.2
+      },
+      "air": "1.2",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "인간형",
+      "name": "탈영 석궁수",
+      "td_role": "장거리",
+      "special_effect": "불가능",
+      "note": "탈영병",
+      "stats": {
+        "hp": 454,
+        "def": 12,
+        "move_speed": 1.02,
+        "wall_atk": 35,
+        "wall_attack_gap": 1.44
+      },
+      "air": "1.44",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "인간형",
+      "name": "암시장 마도사",
+      "td_role": "마법 원거리",
+      "special_effect": "불가능",
+      "note": "불법 마도사",
+      "stats": {
+        "hp": 475,
+        "def": 13,
+        "move_speed": 1.02,
+        "wall_atk": 36,
+        "wall_attack_gap": 1.38
+      },
+      "air": "1.38",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "인간형",
+      "name": "폭주 연금술사",
+      "td_role": "광역",
+      "special_effect": "불가능",
+      "note": "폭발형",
+      "stats": {
+        "hp": 513,
+        "def": 13,
+        "move_speed": 1,
+        "wall_atk": 38,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "인간형",
+      "name": "반역 중갑병",
+      "td_role": "고방어",
+      "special_effect": "불가능",
+      "note": "반역자",
+      "stats": {
+        "hp": 729,
+        "def": 22,
+        "move_speed": 0.84,
+        "wall_atk": 38,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "비인간형",
+      "name": "마도 폭주체",
+      "td_role": "고속/폭발",
+      "special_effect": "불가능",
+      "note": "폭주형",
+      "stats": {
+        "hp": 400,
+        "def": 10,
+        "move_speed": 1.43,
+        "wall_atk": 41,
+        "wall_attack_gap": 0.9
+      },
+      "air": "0.9",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "비인간형",
+      "name": "마력 골렘",
+      "td_role": "고HP",
+      "special_effect": "불가능",
+      "note": "중장형",
+      "stats": {
+        "hp": 837,
+        "def": 15,
+        "move_speed": 0.8,
+        "wall_atk": 41,
+        "wall_attack_gap": 1.38
+      },
+      "air": "1.38",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "비인간형",
+      "name": "변이 사냥개",
+      "td_role": "고속 물량",
+      "special_effect": "불가능",
+      "note": "야수",
+      "stats": {
+        "hp": 389,
+        "def": 10,
+        "move_speed": 1.45,
+        "wall_atk": 26,
+        "wall_attack_gap": 0.96
+      },
+      "air": "0.96",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "비인간형",
+      "name": "마도 비행체",
+      "td_role": "공중",
+      "special_effect": "가능",
+      "note": "공중형",
+      "stats": {
+        "hp": 421,
+        "def": 10,
+        "move_speed": 1.31,
+        "wall_atk": 25,
+        "wall_attack_gap": 1.02
+      },
+      "air": "1.02",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "비인간형",
+      "name": "균열 괴수",
+      "td_role": "후반 정예",
+      "special_effect": "불가능",
+      "note": "정예형",
+      "stats": {
+        "hp": 891,
+        "def": 26,
+        "move_speed": 0.97,
+        "wall_atk": 48,
+        "wall_attack_gap": 1.32
+      },
+      "air": "1.32",
+      "source_gap": null
+    },
+    {
+      "region": "상드라크 제국",
+      "category": "비인간형",
+      "name": "종말의 인도자",
+      "td_role": "후반 정예",
+      "special_effect": "불가능",
+      "note": "정예형",
+      "stats": {
+        "hp": 4010,
+        "def": 38,
+        "move_speed": 0.97,
+        "wall_atk": 96,
+        "wall_attack_gap": 1.19
+      },
+      "air": "1.19",
+      "source_gap": null
+    }
+  ]
+}

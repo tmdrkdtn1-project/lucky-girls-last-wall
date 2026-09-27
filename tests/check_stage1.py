@@ -206,3 +206,18 @@ assert "skill1DamageType:'관통'" in js
 assert "if(options.ignoreDefense)return Math.max(1,Math.round(raw))" in js
 assert "skill1.skill1DamageType==='관통'" in js
 print("PASS - same-cell uses sprite-footprint overlap, multi-cell enemies are hittable from either cell, and RPG penetration ignores DEF")
+
+# Full combat registry / RPG issue inventory guards
+combat_registry=json.loads((root/"data/combat_registry_v1.json").read_text(encoding="utf-8"))
+rpg_issues=json.loads((root/"data/rpg_skill_issues_v1.json").read_text(encoding="utf-8"))
+assert combat_registry["schema"]=="LG_COMBAT_REGISTRY_V1"
+assert combat_registry["counts"]["heroes"]==20
+assert combat_registry["counts"]["bosses"]==50
+assert all(len(h["skills"])==3 for h in combat_registry["heroes"])
+assert all(len(b["skills"])==3 for b in combat_registry["bosses"])
+aria=next(h for h in combat_registry["heroes"] if h["name"]=="아리아")
+assert aria["source_recipe"]==["기사단장","기사단장"]
+assert aria["skills"][0]["rpg_mapping"]["rule"]=="RPG_PENETRATION_IGNORE_DEF"
+assert len(rpg_issues["items"])>0
+assert any(x["character"]=="아리아" and x["skill"]=="성광 참격" for x in rpg_issues["items"])
+print("PASS - full combat registry contains 20 heroes, 50 bosses, skill-bearing enemies, and RPG review inventory")

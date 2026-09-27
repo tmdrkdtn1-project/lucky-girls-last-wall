@@ -1,0 +1,1132 @@
+{
+  "schema": "LG_RPG_SKILL_ISSUE_REGISTRY_V1",
+  "count": 104,
+  "items": [
+    {
+      "side": "HERO",
+      "character": "아리아",
+      "skill": "성광 참격",
+      "source": "성광 참격 — 3칸 직선 관통 피해. 방어벽에 붙은 적에게 피해 +25%.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "PENETRATION"
+      ],
+      "mapping": {
+        "rule": "RPG_PENETRATION_IGNORE_DEF",
+        "detail": "성광 참격: RPG에서는 보스 DEF 100% 무시 공격"
+      }
+    },
+    {
+      "side": "HERO",
+      "character": "아리아",
+      "skill": "수호의 맹세",
+      "source": "수호의 맹세 — 인근 2칸 아군 ATK·공속 +15%, 가장 가까운 방어벽 DEF +20% (8초).",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "WALL_EFFECT"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "아리아",
+      "skill": "최후의 성역",
+      "source": "최후의 성역 — 전 경로 성광 피해 + 방어벽에 5초간 피해 50% 감소 보호막.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "WALL_EFFECT",
+        "FULL_PATH_EFFECT"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "유나",
+      "skill": "봉인의 부적",
+      "source": "봉인의 부적 — 단일 적 3초 속박, 보스는 35% 둔화.",
+      "tags": [
+        "CC"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "유나",
+      "skill": "결계진",
+      "source": "결계진 — 경로 2칸에 6초 결계, 적 이속 -35%·스킬 사용 지연.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "SKILL_CONTROL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "유나",
+      "skill": "대봉인술",
+      "source": "대봉인술 — 화면 내 정예/보스 스킬을 4초 봉인하고 일반 적 2초 행동불능.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "SKILL_CONTROL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "리엘",
+      "skill": "용암지대",
+      "source": "용암지대 — 경로 2칸에 8초 지속 광역 화염.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "리엘",
+      "skill": "홍련지옥",
+      "source": "홍련지옥 — 화면 내 적 전체 3회 폭발 피해, 화상 중인 적 추가 피해 +40%.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "에리카",
+      "skill": "용혈참",
+      "source": "용혈참 — 전방 2칸 광역 베기.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "세라",
+      "skill": "천상의 노래",
+      "source": "천상의 노래 — 인근 2칸 아군 ATK·공속 +12%.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "세라",
+      "skill": "치유의 광휘",
+      "source": "치유의 광휘 — 가장 손상된 방어벽 HP 20% 회복 + 5초 DEF +20%.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "세라",
+      "skill": "세라핌 앙코르",
+      "source": "세라핌 앙코르 — 모든 아군 ATK·공속 +18%, 모든 방어벽 10% 즉시 회복.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "레이나",
+      "skill": "서리창",
+      "source": "서리창 — 단일 피해 + 이속 -25% 4초.",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "레이나",
+      "skill": "빙결감옥",
+      "source": "빙결감옥 — 경로 2칸 적 2초 빙결, 보스는 40% 둔화 3초.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "CC"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "레이나",
+      "skill": "절대영도",
+      "source": "절대영도 — 화면 전체 1.5초 정지 후 강한 냉기 피해, 이후 6초 이속 -30%.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "CC"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "카린",
+      "skill": "그림자 베기",
+      "source": "그림자 베기 — 가장 앞선 적에게 순간이동 베기 후 원위치, 방어 20% 무시.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "벨",
+      "skill": "마리오네트",
+      "source": "마리오네트 — 6초간 경로 2칸 적의 이속 -40%, 정예 1체를 2초 행동불능.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "미아",
+      "skill": "보물탄",
+      "source": "보물탄 — 3대상 관통, 마지막 대상 추가 피해.",
+      "tags": [
+        "PENETRATION"
+      ],
+      "mapping": {
+        "rule": "RPG_PENETRATION_IGNORE_DEF",
+        "detail": "RPG에서 관통 속성 공격은 대상 DEF 100% 무시"
+      }
+    },
+    {
+      "side": "HERO",
+      "character": "미아",
+      "skill": "행운의 함정",
+      "source": "행운의 함정 — 경로 1칸에 8초 함정, 최초 6명에게 기절 1초 + 추가 골드 소량.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "아이린",
+      "skill": "전술 봉사",
+      "source": "전술 봉사 — 인근 2칸 아군 공격속도 +20%, 방어벽 수리속도/회복효과 +20%.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "아이린",
+      "skill": "퍼펙트 클리닝",
+      "source": "퍼펙트 클리닝 — 화면 내 가장 강한 적 5체를 순차 타격, 처치 시 다음 타격 피해 증가.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "네온",
+      "skill": "프리즘 왜곡",
+      "source": "프리즘 왜곡 — 경로 2칸에 랜덤 화염/빙결/번개 효과.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "CC"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "네온",
+      "skill": "무한 프리즘",
+      "source": "무한 프리즘 — 12초간 3개의 환영 생성, 기본공격 45% 위력으로 동시 공격.",
+      "tags": [
+        "SUMMON_OR_CLONE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "샤샤",
+      "skill": "접착 폭약",
+      "source": "접착 폭약 — 경로 1칸에 지뢰 설치, 5체까지 광역.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "샤샤",
+      "skill": "최종 폭파계획",
+      "source": "최종 폭파계획 — 3개 경로 핵심지점에 대폭발, 보스에게 별도 단일 추가폭발.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "루나",
+      "skill": "역행의 별",
+      "source": "역행의 별 — 가장 앞선 적 3체를 경로 1칸 뒤로 되돌림, 보스는 1.5초 정지.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "CC"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "루나",
+      "skill": "운명개변",
+      "source": "운명개변 — 8초간 아군 치명/강화효과 발동률 상승, 적의 이동·스킬 주기 20% 지연.",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED",
+        "SKILL_CONTROL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "비올라",
+      "skill": "독화살비",
+      "source": "독화살비 — 경로 2칸 독 지속피해.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "클로에",
+      "skill": "비트 업",
+      "source": "비트 업 — 인근 2칸 아군 공속 +18% 6초.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "클로에",
+      "skill": "라스트 앙코르",
+      "source": "라스트 앙코르 — 10초간 전 아군 공속 +15%, 적 이속 -20%, 스킬 쿨다운 10% 단축.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "SKILL_CONTROL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "아델",
+      "skill": "미스릴 가호",
+      "source": "미스릴 가호 — 가장 가까운 방어벽이 8초간 받는 피해 -35%.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "아델",
+      "skill": "불락의 성채",
+      "source": "불락의 성채 — 6초간 방어벽 파괴를 1회 무효화하고 주변 아군 ATK +15%.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "니아",
+      "skill": "혈창",
+      "source": "혈창 — 3대상 관통, 대상 현재 HP 비례 추가피해.",
+      "tags": [
+        "PENETRATION"
+      ],
+      "mapping": {
+        "rule": "RPG_PENETRATION_IGNORE_DEF",
+        "detail": "RPG에서 관통 속성 공격은 대상 DEF 100% 무시"
+      }
+    },
+    {
+      "side": "HERO",
+      "character": "니아",
+      "skill": "진홍월식",
+      "source": "진홍월식 — 화면 전체 지속피해 8초, HP가 높은 적일수록 첫 타격 강화.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "오로라",
+      "skill": "유성낙하",
+      "source": "유성낙하 — 지정 경로 1칸 강한 광역.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "오로라",
+      "skill": "별자리 결속",
+      "source": "별자리 결속 — 서로 다른 직업 아군이 인접할수록 ATK·사거리 소폭 증가.",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "이브",
+      "skill": "시간지연",
+      "source": "시간지연 — 경로 2칸 이속 -35% 5초.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "이브",
+      "skill": "되감기",
+      "source": "되감기 — 가장 앞선 적 4체를 1~2칸 뒤로 이동, 보스는 스킬 게이지 감소.",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "SKILL_CONTROL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "HERO",
+      "character": "이브",
+      "skill": "멈춰버린 세계",
+      "source": "멈춰버린 세계 — 3초간 일반 적 완전 정지, 보스 1초 정지 + 아군 공속 20% 증가.",
+      "tags": [
+        "CC"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "철각왕 브라움",
+      "skill": "뿔박치기",
+      "source": "뿔박치기: 직선 경로 가속",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "철각왕 브라움",
+      "skill": "암반 붕괴",
+      "source": "암반 붕괴: 배치칸 2곳 6초 비활성",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "철각왕 브라움",
+      "skill": "분쇄 포효",
+      "source": "분쇄 포효: 방어벽 피해 +40% 8초",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "광산왕 모르겐",
+      "skill": "파쇄 타격",
+      "source": "파쇄 타격: 방어벽 추가피해",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "광산왕 모르겐",
+      "skill": "낙석 지대",
+      "source": "낙석 지대: 경로 2곳 피해",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "광산왕 모르겐",
+      "skill": "광맥 폭주",
+      "source": "광맥 폭주: DEF 상승",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "붉은협곡의 바르칸",
+      "skill": "협곡 질주",
+      "source": "협곡 질주: 이속 급상승",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "붉은협곡의 바르칸",
+      "skill": "도적 소집",
+      "source": "도적 소집: 약탈자 증원",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "붉은협곡의 바르칸",
+      "skill": "피의 검격",
+      "source": "피의 검격: 성문 피해 증가",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "철익 그라핀",
+      "skill": "급강하",
+      "source": "급강하: 방어벽 우회",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "철익 그라핀",
+      "skill": "철깃 폭우",
+      "source": "철깃 폭우: 배치칸 공격속도 저하",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "산맥포식자 가르도스",
+      "skill": "석화갑피",
+      "source": "석화갑피: 피해감소",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "산맥포식자 가르도스",
+      "skill": "꼬리휩쓸기",
+      "source": "꼬리휩쓸기: 경로 광역",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "산맥포식자 가르도스",
+      "skill": "암반잠복",
+      "source": "암반잠복: 짧은 무적",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "사구왕 자하르",
+      "skill": "모래잠행",
+      "source": "모래잠행: 타겟팅 해제",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "사구왕 자하르",
+      "skill": "황금갑각",
+      "source": "황금갑각: DEF 증가",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "불꽃도적 카심",
+      "skill": "광폭화",
+      "source": "광폭화: HP 40% 이하 공속 상승",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "유리사막의 네프라",
+      "skill": "유리장막",
+      "source": "유리장막: 원거리 피해 일부 반사",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "유리사막의 네프라",
+      "skill": "사막폭풍",
+      "source": "사막폭풍: 사거리 -1",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "오아시스의 배신자 라지르",
+      "skill": "독안개",
+      "source": "독안개: 경로 지속피해",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "오아시스의 배신자 라지르",
+      "skill": "밀수단 호출",
+      "source": "밀수단 호출: 증원",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "오아시스의 배신자 라지르",
+      "skill": "가짜 오아시스",
+      "source": "가짜 오아시스: 이동경로 착시 연출",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "태양먹는 아누라",
+      "skill": "일식",
+      "source": "일식: 아군 공속 감소",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "태양먹는 아누라",
+      "skill": "열사병",
+      "source": "열사병: 공격력 감소",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "태양먹는 아누라",
+      "skill": "그림자 분열",
+      "source": "그림자 분열: 분신 2체",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "해적왕 쿠로가네",
+      "skill": "부하 소환",
+      "source": "부하 소환",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "청룡치어왕 류가",
+      "skill": "해무",
+      "source": "해무: 사거리 감소",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "청룡치어왕 류가",
+      "skill": "용오름",
+      "source": "용오름: 경로 넉백",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "청룡치어왕 류가",
+      "skill": "해룡비상",
+      "source": "해룡비상: 타겟팅 해제",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "심해무녀 우미",
+      "skill": "익사자의 손",
+      "source": "익사자의 손: 1칸 봉쇄",
+      "tags": [
+        "TD_SPATIAL_OR_WALL"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "심해무녀 우미",
+      "skill": "심해의 노래",
+      "source": "심해의 노래: 이속 감소",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "대갑각왕 카니바",
+      "skill": "갑각수복",
+      "source": "갑각수복: HP 회복",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "대갑각왕 카니바",
+      "skill": "옆걸음 돌진",
+      "source": "옆걸음 돌진: 경로변경 없이 가속",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "폭풍닌자 시구레",
+      "skill": "연막",
+      "source": "연막: 은신",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "폭풍닌자 시구레",
+      "skill": "분신술",
+      "source": "분신술: 3체",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "폭풍닌자 시구레",
+      "skill": "천뢰수리검",
+      "source": "천뢰수리검: 광역 기절",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "백야왕 펜리르",
+      "skill": "늑대무리 소환",
+      "source": "늑대무리 소환",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "백야왕 펜리르",
+      "skill": "동결포효",
+      "source": "동결포효: 공속 감소",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "빙벽거인 요툰",
+      "skill": "빙벽생성",
+      "source": "빙벽생성: 경로 일시 좁힘",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "빙벽거인 요툰",
+      "skill": "빙하분쇄",
+      "source": "빙하분쇄: 방어벽 피해",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "빙벽거인 요툰",
+      "skill": "서리갑피",
+      "source": "서리갑피: 피해감소",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "설해마녀 스카디아",
+      "skill": "빙결표식",
+      "source": "빙결표식",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "설해마녀 스카디아",
+      "skill": "절대빙결",
+      "source": "절대빙결: 2칸 3초 정지",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "동토광왕 브란",
+      "skill": "죽음거부",
+      "source": "죽음거부: 1회 HP 20% 회복",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "설산군주 아르켄",
+      "skill": "백야",
+      "source": "백야: 원거리 사거리 -1",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "배교성기사 라미엘",
+      "skill": "징벌검",
+      "source": "징벌검: 방어벽 추가피해",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "성당의 가고일왕 그레고르",
+      "skill": "석화시선",
+      "source": "석화시선: 공속 감소",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "성당의 가고일왕 그레고르",
+      "skill": "석상화",
+      "source": "석상화: 일시 무적",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "순교자 세베라",
+      "skill": "광신도 소환",
+      "source": "광신도 소환",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "성유물폭주체 렐릭스",
+      "skill": "봉인파동",
+      "source": "봉인파동: 스킬 쿨다운 증가",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "검은대주교 말키엘",
+      "skill": "침묵선고",
+      "source": "침묵선고",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "황실골렘 아르카논",
+      "skill": "중력파",
+      "source": "중력파: 이속 감소",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "반역장군 드라켄",
+      "skill": "처형창",
+      "source": "처형창: 방어벽 추가피해",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "실험체 제로",
+      "skill": "세포재생",
+      "source": "세포재생",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "공중요새 코르부스",
+      "skill": "드론증원",
+      "source": "드론증원",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "공중요새 코르부스",
+      "skill": "방벽무시 포격",
+      "source": "방벽무시 포격",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "균열군주 네메시스",
+      "skill": "균열소환",
+      "source": "균열소환",
+      "tags": [
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "균열군주 네메시스",
+      "skill": "심연포식",
+      "source": "심연포식: HP 흡수",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "타락한 철각왕 브라움",
+      "skill": "방어벽 붕괴",
+      "source": "방어벽 붕괴",
+      "tags": [
+        "TD_SPATIAL_OR_WALL",
+        "MODE_TRANSLATION_REQUIRED",
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 서부의 설화",
+      "skill": "포식재생",
+      "source": "포식재생",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 백야왕 펜리르",
+      "skill": "빙혈분신",
+      "source": "빙혈분신",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "검은 빙벽거인 요툰",
+      "skill": "빙하재생",
+      "source": "빙하재생",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "침식에 물들은 북부의 설화",
+      "skill": "빙결봉인",
+      "source": "빙결봉인",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "침식된 태양먹는 아누라",
+      "skill": "영혼흡수",
+      "source": "영혼흡수",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    },
+    {
+      "side": "BOSS",
+      "character": "검은대주교 말키엘",
+      "skill": "영구침묵선고",
+      "source": "영구침묵선고",
+      "tags": [
+        "RPG_EDGE_CASE"
+      ],
+      "mapping": null
+    }
+  ]
+}
