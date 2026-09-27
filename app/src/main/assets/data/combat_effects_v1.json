@@ -1,0 +1,33 @@
+{
+  "schema": "LG_COMBAT_EFFECTS_V1",
+  "source_semantics": {
+    "single": "one target",
+    "penetration": "all enemies occupying the same path cell",
+    "area": "enemies in nearby path cells; Stage 1 prototype uses radius 1 path cell when a unit has no explicit radius",
+    "transfer": "damage transfers to nearby targets and drops 10% each transfer",
+    "freeze": "stun/disable plus damage for a defined duration",
+    "fire": "damage-over-time for a defined duration",
+    "stun": "action disabled for a defined duration",
+    "block": "skill use disabled for a defined duration"
+  },
+  "stage1_runtime": {
+    "penetration": true,
+    "area": true,
+    "dot": true,
+    "single": true,
+    "transfer": false,
+    "freeze": false,
+    "fire": false,
+    "stun": false,
+    "block": false
+  },
+  "prototype_only": {
+    "magic_lancer_dot": {
+      "duration_sec": 4,
+      "tick_sec": 1,
+      "damage_per_tick_ratio_of_atk": 0.25
+    },
+    "default_area_radius_path_cells": 1,
+    "note": "These values fill source blanks for the alpha and are not final balance."
+  }
+}

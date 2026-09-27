@@ -219,3 +219,8 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
  #rpgBossStatus{left:calc(15% + var(--safe-left));right:calc(15% + var(--safe-right))}
  #rpgScreen.battle #rpgBoss{top:17%;transform:translateX(-50%) scale(.86)}
 }
+
+/* TD combat effect engine V1 visual verification */
+.enemyToken.hitFx-pierce{box-shadow:0 0 16px #b8e7ff,0 0 28px #7db9ff}
+.enemyToken.hitFx-area{box-shadow:0 0 18px #ffd36f,0 0 34px #ff8b45}
+.enemyToken.hitFx-dot{box-shadow:0 0 16px #d867ff,0 0 30px #9d38c7}

@@ -182,3 +182,16 @@ assert "left:calc(10% + var(--safe-left))" in css
 assert "bottom:calc(7% + var(--safe-bottom))" in css
 assert ".rpgHeroCard{width:min(14.5vw,156px)" in css
 print("PASS - UI spacing V1 preserves full-bleed backgrounds while giving TD/RPG combatants safe breathing room")
+
+# TD combat effect engine V1 guards
+assert "function targetsForTdAttack(target,profile)" in js
+assert "routeCellForEnemy(e)===center" in js
+assert "Math.abs(routeCellForEnemy(e)-center)<=radius" in js
+assert "function addEnemyDot(e,sourceAtk,profile)" in js
+assert "function updateEnemyEffects(e,dt)" in js
+assert "resolveTdAttack(u,s,target)" in js
+assert "target.hp-=s.atk" not in js
+assert "damageType:'관통/광역',targetCount:3,areaRadiusCells:1" in js
+assert "damageType:'관통/지속',targetCount:2,dotDuration:4,dotTick:1,dotRatio:.25" in js
+assert ".enemyToken.hitFx-pierce" in css and ".enemyToken.hitFx-area" in css and ".enemyToken.hitFx-dot" in css
+print("PASS - Stage 1 TD attacks now execute single, penetration, area, and prototype DOT semantics instead of UI-only labels")

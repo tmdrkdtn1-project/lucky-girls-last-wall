@@ -11,26 +11,26 @@ const TILE_ROWS=[
 ];
 
 const UNIT_DEFS={
- watchtower:{id:'watchtower',family:'WATCHTOWER',tier:1,name:'감시탑',short:'탑',cost:80,atk:15,range:3.0,rate:.80,damageType:'단일',air:true,next:['watchtower2']},
- watchtower2:{id:'watchtower2',family:'WATCHTOWER',tier:2,name:'강화 감시탑',short:'강',cost:120,atk:25,range:4.0,rate:.95,damageType:'단일',air:true,next:['watchtower3_sniper','watchtower3_rapid','watchtower3_pierce']},
- watchtower3_sniper:{id:'watchtower3_sniper',family:'WATCHTOWER',tier:3,name:'저격 감시탑',short:'저탑',cost:165,atk:42,range:6.0,rate:.55,damageType:'단일',air:true,next:[]},
- watchtower3_rapid:{id:'watchtower3_rapid',family:'WATCHTOWER',tier:3,name:'연사 감시탑',short:'연탑',cost:165,atk:24,range:4.0,rate:1.65,damageType:'단일',air:true,next:[]},
- watchtower3_pierce:{id:'watchtower3_pierce',family:'WATCHTOWER',tier:3,name:'관통 감시탑',short:'관탑',cost:165,atk:34,range:4.0,rate:.90,damageType:'관통',air:true,next:[]},
+ watchtower:{id:'watchtower',family:'WATCHTOWER',tier:1,name:'감시탑',short:'탑',cost:80,atk:15,range:3.0,rate:.80,damageType:'단일',targetCount:1,air:true,next:['watchtower2']},
+ watchtower2:{id:'watchtower2',family:'WATCHTOWER',tier:2,name:'강화 감시탑',short:'강',cost:120,atk:25,range:4.0,rate:.95,damageType:'단일',targetCount:2,air:true,next:['watchtower3_sniper','watchtower3_rapid','watchtower3_pierce']},
+ watchtower3_sniper:{id:'watchtower3_sniper',family:'WATCHTOWER',tier:3,name:'저격 감시탑',short:'저탑',cost:165,atk:42,range:6.0,rate:.55,damageType:'단일',targetCount:2,air:true,next:[]},
+ watchtower3_rapid:{id:'watchtower3_rapid',family:'WATCHTOWER',tier:3,name:'연사 감시탑',short:'연탑',cost:165,atk:24,range:4.0,rate:1.65,damageType:'단일',targetCount:3,air:true,next:[]},
+ watchtower3_pierce:{id:'watchtower3_pierce',family:'WATCHTOWER',tier:3,name:'관통 감시탑',short:'관탑',cost:165,atk:34,range:4.0,rate:.90,damageType:'관통',targetCount:2,air:true,next:[]},
 
- knight1:{id:'knight1',family:'KNIGHT',tier:1,name:'견습 기사',short:'견',cost:80,atk:18,range:1.3,rate:.90,damageType:'단일',air:false,next:['knight2']},
- knight2:{id:'knight2',family:'KNIGHT',tier:2,name:'상급 기사',short:'상',cost:120,atk:28,range:1.4,rate:1.00,damageType:'단일',air:false,next:['knight3_commander','knight3_berserker']},
- knight3_commander:{id:'knight3_commander',family:'KNIGHT',tier:3,name:'기사단장',short:'단',cost:170,atk:42,range:1.7,rate:1.05,damageType:'관통',air:false,next:[]},
- knight3_berserker:{id:'knight3_berserker',family:'KNIGHT',tier:3,name:'광전사',short:'광',cost:170,atk:36,range:1.8,rate:1.45,damageType:'관통/광역',air:false,next:[]},
+ knight1:{id:'knight1',family:'KNIGHT',tier:1,name:'견습 기사',short:'견',cost:80,atk:18,range:1.3,rate:.90,damageType:'단일',targetCount:1,air:false,next:['knight2']},
+ knight2:{id:'knight2',family:'KNIGHT',tier:2,name:'상급 기사',short:'상',cost:120,atk:28,range:1.4,rate:1.00,damageType:'단일',targetCount:1,air:false,next:['knight3_commander','knight3_berserker']},
+ knight3_commander:{id:'knight3_commander',family:'KNIGHT',tier:3,name:'기사단장',short:'단',cost:170,atk:42,range:1.7,rate:1.05,damageType:'관통',targetCount:2,air:false,next:[]},
+ knight3_berserker:{id:'knight3_berserker',family:'KNIGHT',tier:3,name:'광전사',short:'광',cost:170,atk:36,range:1.8,rate:1.45,damageType:'관통/광역',targetCount:3,areaRadiusCells:1,air:false,next:[]},
 
- archer1:{id:'archer1',family:'ARCHER',tier:1,name:'견습 궁수',short:'견궁',cost:90,atk:16,range:3.0,rate:.95,damageType:'단일',air:true,next:['archer2']},
- archer2:{id:'archer2',family:'ARCHER',tier:2,name:'저격수',short:'저',cost:130,atk:28,range:5.0,rate:.72,damageType:'단일',air:true,next:['archer3_crossbow','archer3_rapid']},
- archer3_crossbow:{id:'archer3_crossbow',family:'ARCHER',tier:3,name:'석궁수',short:'석',cost:180,atk:38,range:4.0,rate:.78,damageType:'관통',air:true,next:[]},
- archer3_rapid:{id:'archer3_rapid',family:'ARCHER',tier:3,name:'연사궁병',short:'연',cost:180,atk:24,range:4.0,rate:1.60,damageType:'관통/광역',air:true,next:[]},
+ archer1:{id:'archer1',family:'ARCHER',tier:1,name:'견습 궁수',short:'견궁',cost:90,atk:16,range:3.0,rate:.95,damageType:'단일',targetCount:1,air:true,next:['archer2']},
+ archer2:{id:'archer2',family:'ARCHER',tier:2,name:'저격수',short:'저',cost:130,atk:28,range:5.0,rate:.72,damageType:'단일',targetCount:1,air:true,next:['archer3_crossbow','archer3_rapid']},
+ archer3_crossbow:{id:'archer3_crossbow',family:'ARCHER',tier:3,name:'석궁수',short:'석',cost:180,atk:38,range:4.0,rate:.78,damageType:'관통',targetCount:2,air:true,next:[]},
+ archer3_rapid:{id:'archer3_rapid',family:'ARCHER',tier:3,name:'연사궁병',short:'연',cost:180,atk:24,range:4.0,rate:1.60,damageType:'관통/광역',targetCount:3,areaRadiusCells:1,air:true,next:[]},
 
- lancer1:{id:'lancer1',family:'LANCER',tier:1,name:'투창병',short:'투',cost:100,atk:22,range:2.0,rate:.82,damageType:'관통',air:false,next:['lancer2']},
- lancer2:{id:'lancer2',family:'LANCER',tier:2,name:'프리 랜서',short:'프',cost:145,atk:30,range:3.0,rate:.92,damageType:'관통',air:true,next:['lancer3_elite','lancer3_magic']},
- lancer3_elite:{id:'lancer3_elite',family:'LANCER',tier:3,name:'엘리트 랜서',short:'엘',cost:195,atk:42,range:3.0,rate:1.00,damageType:'관통/광역',air:true,next:[]},
- lancer3_magic:{id:'lancer3_magic',family:'LANCER',tier:3,name:'마창병',short:'마창',cost:195,atk:34,range:4.0,rate:1.05,damageType:'관통/지속',air:true,next:[]}
+ lancer1:{id:'lancer1',family:'LANCER',tier:1,name:'투창병',short:'투',cost:100,atk:22,range:2.0,rate:.82,damageType:'관통',targetCount:2,air:false,next:['lancer2']},
+ lancer2:{id:'lancer2',family:'LANCER',tier:2,name:'프리 랜서',short:'프',cost:145,atk:30,range:3.0,rate:.92,damageType:'관통',targetCount:2,air:true,next:['lancer3_elite','lancer3_magic']},
+ lancer3_elite:{id:'lancer3_elite',family:'LANCER',tier:3,name:'엘리트 랜서',short:'엘',cost:195,atk:42,range:3.0,rate:1.00,damageType:'관통/광역',targetCount:3,areaRadiusCells:1,air:true,next:[]},
+ lancer3_magic:{id:'lancer3_magic',family:'LANCER',tier:3,name:'마창병',short:'마창',cost:195,atk:34,range:4.0,rate:1.05,damageType:'관통/지속',targetCount:2,dotDuration:4,dotTick:1,dotRatio:.25,air:true,next:[]}
 };
 const STAGE1_BASE_IDS=['watchtower','knight1','archer1','lancer1'];
 
@@ -253,7 +253,7 @@ function spawnEnemy(kind='normal'){
  if(kind==='midboss'){hp=Math.round(normalHpForWave(wave)*5.5);speedMult=.72;label='M'}
  else if(kind==='boss'){hp=Math.round(normalHpForWave(wave)*9);speedMult=.62;label='B'}
  else hp=normalHpForWave(wave);
- enemies.push({id:nextEnemyId++,kind,label,pathPos:0,hp,maxHp:hp,speed:(.62+wave*.015)*speedMult,lastStructureHit:0});
+ enemies.push({id:nextEnemyId++,kind,label,pathPos:0,hp,maxHp:hp,speed:(.62+wave*.015)*speedMult,lastStructureHit:0,effects:[],rewarded:false,hitFxType:null,hitFxUntil:0});
 }
 function showWarning(text,sub='',hold=1400){
  const box=$('bossWarning');$('bossWarningTitle').textContent=text;$('bossWarningSub').textContent=sub;box.classList.add('on');
@@ -302,11 +302,71 @@ function canCastleDefenderReach(u,e,baseRange){
  const nearCastleFront=(u.x>=15&&u.x<=16&&u.y>=4&&u.y<=6);
  return nearCastleFront&&dist<=Math.max(baseRange,2.25);
 }
+function routeCellForEnemy(e){return Math.max(0,Math.min(route.length-1,Math.floor(e.pathPos)))}
+function handleEnemyDeath(e){
+ if(e.rewarded)return false;
+ e.rewarded=true;
+ const reward=e.kind==='boss'?180:e.kind==='midboss'?90:12;gold+=reward;
+ if(e.kind==='boss'){enterRpgPlaceholder(e);return true}
+ if(e.kind==='midboss')toast('중간보스 격파 +90G');else toast('+12G');
+ return false;
+}
+function dealEnemyDamage(e,amount,fxType='single'){
+ if(!e||e.hp<=0)return false;
+ e.hp=Math.max(0,e.hp-Math.max(0,amount));
+ e.hitFxType=fxType;e.hitFxUntil=simTime+.22;
+ if(e.hp<=0)return handleEnemyDeath(e);
+ return false;
+}
+function addEnemyDot(e,sourceAtk,profile){
+ if(!e||e.hp<=0)return;
+ const duration=profile.dotDuration||4,tick=profile.dotTick||1,ratio=profile.dotRatio||.25;
+ e.effects=e.effects||[];
+ e.effects.push({type:'dot',remaining:duration,tickEvery:tick,nextTick:tick,damage:sourceAtk*ratio});
+ e.hitFxType='dot';e.hitFxUntil=simTime+.28;
+}
+function updateEnemyEffects(e,dt){
+ if(!e.effects||!e.effects.length||e.hp<=0)return false;
+ for(let i=e.effects.length-1;i>=0;i--){
+  const fx=e.effects[i];fx.remaining-=dt;fx.nextTick-=dt;
+  while(fx.type==='dot'&&fx.nextTick<=0&&fx.remaining>-fx.tickEvery){
+   fx.nextTick+=fx.tickEvery;
+   if(dealEnemyDamage(e,fx.damage,'dot'))return true;
+   if(e.hp<=0)return false;
+  }
+  if(fx.remaining<=0)e.effects.splice(i,1);
+ }
+ return false;
+}
+function targetsForTdAttack(target,profile){
+ const alive=enemies.filter(e=>e.hp>0);
+ const center=routeCellForEnemy(target);
+ const hasPierce=(profile.damageType||'').includes('관통');
+ const hasArea=(profile.damageType||'').includes('광역');
+ if(hasArea){
+  const radius=profile.areaRadiusCells||1;
+  return alive.filter(e=>Math.abs(routeCellForEnemy(e)-center)<=radius);
+ }
+ if(hasPierce)return alive.filter(e=>routeCellForEnemy(e)===center);
+ return [target];
+}
+function resolveTdAttack(u,profile,target){
+ const hit=targetsForTdAttack(target,profile);
+ const fx=(profile.damageType||'').includes('광역')?'area':(profile.damageType||'').includes('관통')?'pierce':'single';
+ for(const e of hit){
+  const triggered=dealEnemyDamage(e,profile.atk,fx);
+  if((profile.damageType||'').includes('지속')&&e.hp>0)addEnemyDot(e,profile.atk,profile);
+  if(triggered)return true;
+ }
+ return false;
+}
 function updateEnemies(dt,now){
  updateSpawning(dt);
  const gateNormals=enemies.filter(e=>e.hp>0&&e.kind==='normal'&&e.pathPos>=route.length-2).slice(0,3);
  const gateSpecial=enemies.find(e=>e.hp>0&&e.kind!=='normal'&&e.pathPos>=route.length-2);
  for(const e of enemies){
+  if(e.hp<=0)continue;
+  if(updateEnemyEffects(e,dt)){return}
   if(e.hp<=0)continue;
   if(e.pathPos<route.length-2){e.pathPos=Math.min(route.length-2,e.pathPos+e.speed*dt);continue}
   const allowed=e.kind==='normal'?gateNormals.includes(e):e===gateSpecial;if(!allowed)continue;
@@ -322,8 +382,8 @@ function updateEnemies(dt,now){
  }
 }
 function unitStats(u){
- if(u.type==='hero_aria')return {atk:u.atk,range:u.range,rate:u.rate};
- const t=UNIT_DEFS[u.type];return {atk:t.atk,range:t.range,rate:t.rate};
+ if(u.type==='hero_aria')return {atk:u.atk,range:u.range,rate:u.rate,damageType:'단일',targetCount:1};
+ const t=UNIT_DEFS[u.type];return {atk:t.atk,range:t.range,rate:t.rate,damageType:t.damageType,targetCount:t.targetCount||1,areaRadiusCells:t.areaRadiusCells||0,dotDuration:t.dotDuration||0,dotTick:t.dotTick||0,dotRatio:t.dotRatio||0};
 }
 function updateUnits(now){
  for(const u of units.values()){
@@ -334,12 +394,8 @@ function updateUnits(now){
    if(canCastleDefenderReach(u,e,s.range)&&dist<best){best=dist;target=e}
   }
   if(!target)continue;
-  target.hp-=s.atk;u.lastShot=now;
-  if(target.hp<=0){
-   const reward=target.kind==='boss'?180:target.kind==='midboss'?90:12;gold+=reward;
-   if(target.kind==='boss'){enterRpgPlaceholder(target);return}
-   if(target.kind==='midboss')toast('중간보스 격파 +90G');else toast('+12G');
-  }
+  u.lastShot=now;
+  if(resolveTdAttack(u,s,target))return;
  }
 }
 const RPG_HERO_DEFS={
@@ -573,7 +629,8 @@ function renderEnemies(){
  for(const e of enemies){
   if(e.hp<=0&&!e.cinematic)continue;const xy=enemyXY(e),p=posPct(xy.x,xy.y),d=document.createElement('div');
   const cinematicClass=e.cinematic?' cinematicBoss '+(e.cinematicState==='fallen'?'bossFallen':e.cinematicState==='rise'?'bossRise':e.cinematicState==='roar'?'bossRise bossRoar':e.cinematicState==='charge'?'bossRise bossCharge':''):'';
-  d.className='enemyToken '+(e.kind==='boss'?'boss':e.kind==='midboss'?'midboss':'')+cinematicClass;
+  const hitFx=e.hitFxUntil>simTime&&e.hitFxType?' hitFx-'+e.hitFxType:'';
+  d.className='enemyToken '+(e.kind==='boss'?'boss':e.kind==='midboss'?'midboss':'')+cinematicClass+hitFx;
   d.dataset.enemyId=e.id;
   d.style.left=p.left;d.style.top=p.top;d.textContent=e.label;
   if(!e.cinematic)d.innerHTML+='<span class="hpbar"><i style="width:'+Math.max(0,e.hp/e.maxHp*100)+'%"></i></span>';
