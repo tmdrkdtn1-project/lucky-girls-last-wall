@@ -110,7 +110,28 @@
         "기사단장",
         "기사단장"
       ],
-      "recipe_note": "USER_LOCKED: 2× 기사단장 → 아리아"
+      "recipe_note": "USER_LOCKED: 2× 기사단장 → 아리아",
+      "td_runtime": {
+        "implementation_status": "IMPLEMENTED_V1",
+        "skill1": {
+          "source_effect": "3칸 직선 관통, 방어벽 부착 적 +25%",
+          "alpha_mapping": "타겟 경로칸 + 성문 방향 다음 2경로칸; 피해배율 1.35는 프로토타입"
+        },
+        "skill2": {
+          "source_effect": "인근 2칸 ATK/공속 +15%, 가장 가까운 방어벽 DEF +20% 8초",
+          "alpha_mapping": "인근 2칸 전체 아군 버프; Stage1 G/O 공용 방어선에 DEF +20%를 피해식 1/(1+0.20)로 임시 해석"
+        },
+        "skill3": {
+          "source_effect": "전 경로 성광 피해 + 방어벽 5초 피해 50% 감소",
+          "alpha_mapping": "화면 내 생존 적 전체 1.0×ATK 프로토타입 피해 + G/O 5초 50% 피해감소"
+        },
+        "prototype_cooldowns_sec": {
+          "skill1": 9,
+          "skill2": 16,
+          "skill3": 30
+        },
+        "note": "원본 문서에 스킬 쿨다운 및 일부 피해배율/DEF 계산식이 없어 alpha prototype 값으로 명시."
+      }
     },
     {
       "id": "HERO_02",

@@ -186,7 +186,7 @@ print("PASS - UI spacing V1 preserves full-bleed backgrounds while giving TD/RPG
 # TD combat effect engine V1 guards
 assert "function targetsForTdAttack(target,profile)" in js
 assert "enemyOccupiesRouteCell(e,center)" in js
-assert "Math.abs(routeCellForEnemy(e)-center)<=radius" in js
+assert "occupiedRouteCells(e).some(c=>Math.abs(c-center)<=radius)" in js
 assert "function addEnemyDot(e,sourceAtk,profile)" in js
 assert "function updateEnemyEffects(e,dt)" in js
 assert "resolveTdAttack(u,s,target)" in js
@@ -226,3 +226,18 @@ assert combat_registry["counts"]["skill_enemies"]==len(combat_registry["skill_en
 assert combat_registry["counts"]["skill_enemies"]<65
 assert all(e["special_effect"]!="불가능" for e in combat_registry["skill_enemies"])
 print("PASS - skill-bearing enemy inventory excludes ordinary enemies and reads the correct source special-effect column")
+
+# Aria TD skill framework V1 guards
+assert "const TD_HERO_SKILL_DEFS" in js
+assert "ARIA_S1" in js and "ARIA_S2" in js and "ARIA_S3" in js
+assert "function castAriaSkill1(u,now)" in js
+assert "function castAriaSkill2(u,now)" in js
+assert "function castAriaSkill3(u,now)" in js
+assert "cellsToHit=[start,start+1,start+2]" in js
+assert "attached=e.pathPos>=route.length-2" in js
+assert "ally.ariaOathUntil" in js
+assert "wallDefBuffUntil" in js and "wallShieldUntil" in js
+assert "wallShieldReduction=.50" not in js  # reduction comes from data definition, not hidden literal combat branch
+assert "wallDamageReduction:.50" in js
+assert "updateHeroSkills(u,now)" in js
+print("PASS - Aria TD S1/S2/S3 execute through shared effect primitives with source-backed effects and marked prototype gaps")

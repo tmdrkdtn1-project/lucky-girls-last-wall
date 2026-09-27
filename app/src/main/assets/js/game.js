@@ -185,7 +185,7 @@ function chooseHeroPlacement(x,y){
  const mats=[...units.values()].filter(u=>materialIds.includes(u.id));
  if(mats.length!==materialIds.length){cancelHeroPlacement('조합 재료 상태가 변경되었습니다');return}
  mats.forEach(m=>{units.delete(tileKey(m.x,m.y));cells[cellIndex(m.x,m.y)].el.classList.remove('occupied')});
- const hero={id:'h'+Date.now(),x,y,type:'hero_aria',hero:recipe.name,atk:recipe.atk,range:recipe.range,rate:recipe.rate,lastShot:0,spent:0,moveCooldownUntil:simTime+5};
+ const hero={id:'h'+Date.now(),x,y,type:'hero_aria',hero:recipe.name,atk:recipe.atk,range:recipe.range,rate:recipe.rate,lastShot:0,lastSkill1:simTime,lastSkill2:simTime,lastSkill3:simTime,ariaOathUntil:0,spent:0,moveCooldownUntil:simTime+5};
  units.set(tileKey(x,y),hero);cells[cellIndex(x,y)].el.classList.add('occupied');heroCount++;
  comboPlacement=null;document.querySelectorAll('.cell.comboPlacement').forEach(e=>e.classList.remove('comboPlacement'));
  clearTimeout(showWarning.t);$('bossWarning').classList.remove('on');
@@ -388,18 +388,24 @@ function updateEnemies(dt,now){
   if(now-e.lastStructureHit>=hitGap){
    e.lastStructureHit=now;
    const baseDmg=e.kind==='boss'?40:e.kind==='midboss'?24:10;
-   const dmg=e.kind==='boss'&&e.enraged?Math.round(baseDmg*1.5):baseDmg;
+   const rawDmg=e.kind==='boss'&&e.enraged?Math.round(baseDmg*1.5):baseDmg;
+   const defMult=now<wallDefBuffUntil?1/(1+wallDefBonusPct):1;
+   const shieldMult=now<wallShieldUntil?1-wallShieldReduction:1;
+   const dmg=Math.max(1,Math.round(rawDmg*defMult*shieldMult));
    if(gHp>0)gHp=Math.max(0,gHp-dmg);else oHp=Math.max(0,oHp-dmg);
    if(oHp<=0){running=false;showWarning('DEFEAT','GATE CORE DESTROYED',999999)}
   }
  }
 }
 function unitStats(u){
- if(u.type==='hero_aria')return {atk:u.atk,range:u.range,rate:u.rate,damageType:'단일',targetCount:1};
- const t=UNIT_DEFS[u.type];return {atk:t.atk,range:t.range,rate:t.rate,damageType:t.damageType,targetCount:t.targetCount||1,areaRadiusCells:t.areaRadiusCells||0,dotDuration:t.dotDuration||0,dotTick:t.dotTick||0,dotRatio:t.dotRatio||0};
+ const oath=(u.ariaOathUntil||0)>simTime;
+ const atkMult=oath?1.15:1,rateMult=oath?1.15:1;
+ if(u.type==='hero_aria')return {atk:u.atk*atkMult,range:u.range,rate:u.rate*rateMult,damageType:'단일',targetCount:1};
+ const t=UNIT_DEFS[u.type];return {atk:t.atk*atkMult,range:t.range,rate:t.rate*rateMult,damageType:t.damageType,targetCount:t.targetCount||1,areaRadiusCells:t.areaRadiusCells||0,dotDuration:t.dotDuration||0,dotTick:t.dotTick||0,dotRatio:t.dotRatio||0};
 }
 function updateUnits(now){
  for(const u of units.values()){
+  if(updateHeroSkills(u,now))return;
   const s=unitStats(u);if(now-u.lastShot<1/s.rate)continue;
   let target=null,best=999;
   for(const e of enemies){
@@ -410,6 +416,61 @@ function updateUnits(now){
   u.lastShot=now;
   if(resolveTdAttack(u,s,target))return;
  }
+}
+const TD_HERO_SKILL_DEFS={
+ ARIA:{
+  skill1:{id:'ARIA_S1',name:'성광 참격',cooldown:9,effects:['DAMAGE','PENETRATION'],prototype:{damageRatio:1.35,lineCells:3,lineMapping:'target path cell + next 2 path cells toward gate'},wallAttachedBonus:1.25},
+  skill2:{id:'ARIA_S2',name:'수호의 맹세',cooldown:16,duration:8,effects:['BUFF','WALL_DEF_MOD'],allyRadius:2,allyAtkMult:1.15,allyRateMult:1.15,wallDefBonusPct:.20},
+  skill3:{id:'ARIA_S3',name:'최후의 성역',cooldown:30,duration:5,effects:['DAMAGE','WALL_DAMAGE_REDUCTION'],prototype:{damageRatio:1.0},wallDamageReduction:.50}
+ }
+};
+let wallDefBuffUntil=0,wallDefBonusPct=0,wallShieldUntil=0,wallShieldReduction=0;
+function nearestAliveEnemyForUnit(u,range){
+ let target=null,best=999;
+ for(const e of enemies){
+  if(e.hp<=0)continue;
+  const p=enemyXY(e),dist=Math.hypot(p.x-u.x,p.y-u.y);
+  if(canCastleDefenderReach(u,e,range)&&dist<best){best=dist;target=e}
+ }
+ return target;
+}
+function ariaSkill1Targets(target){
+ const start=routeCellForEnemy(target),cellsToHit=[start,start+1,start+2].filter(i=>i>=0&&i<route.length);
+ return enemies.filter(e=>e.hp>0&&occupiedRouteCells(e).some(c=>cellsToHit.includes(c)));
+}
+function castAriaSkill1(u,now){
+ const def=TD_HERO_SKILL_DEFS.ARIA.skill1,target=nearestAliveEnemyForUnit(u,u.range);
+ if(!target)return false;
+ const hit=ariaSkill1Targets(target);
+ for(const e of hit){
+  const attached=e.pathPos>=route.length-2;
+  if(dealEnemyDamage(e,u.atk*def.prototype.damageRatio*(attached?def.wallAttachedBonus:1),'pierce'))return true;
+ }
+ u.lastSkill1=now;toast('아리아 · 성광 참격');return false;
+}
+function castAriaSkill2(u,now){
+ const def=TD_HERO_SKILL_DEFS.ARIA.skill2;
+ for(const ally of units.values()){
+  if(Math.hypot(ally.x-u.x,ally.y-u.y)<=def.allyRadius)ally.ariaOathUntil=Math.max(ally.ariaOathUntil||0,now+def.duration);
+ }
+ wallDefBuffUntil=Math.max(wallDefBuffUntil,now+def.duration);wallDefBonusPct=def.wallDefBonusPct;
+ u.lastSkill2=now;toast('아리아 · 수호의 맹세');return false;
+}
+function castAriaSkill3(u,now){
+ const def=TD_HERO_SKILL_DEFS.ARIA.skill3;
+ for(const e of enemies.filter(x=>x.hp>0)){
+  if(dealEnemyDamage(e,u.atk*def.prototype.damageRatio,'area'))return true;
+ }
+ wallShieldUntil=Math.max(wallShieldUntil,now+def.duration);wallShieldReduction=def.wallDamageReduction;
+ u.lastSkill3=now;showWarning('아리아 · 최후의 성역','전 경로 성광 피해 · 방어선 5초 보호',900);return false;
+}
+function updateHeroSkills(u,now){
+ if(u.type!=='hero_aria')return false;
+ const d=TD_HERO_SKILL_DEFS.ARIA;
+ if(now-(u.lastSkill3||0)>=d.skill3.cooldown){if(castAriaSkill3(u,now))return true}
+ if(now-(u.lastSkill2||0)>=d.skill2.cooldown){if(castAriaSkill2(u,now))return true}
+ if(now-(u.lastSkill1||0)>=d.skill1.cooldown){if(castAriaSkill1(u,now))return true}
+ return false;
 }
 const RPG_HERO_DEFS={
  ARIA:{
