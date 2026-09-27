@@ -1,8 +1,8 @@
 {
   "schema": "LG_BOSS_RPG_SKILL_APPROVAL_V1",
-  "status": "PENDING_MASTER_APPROVAL",
+  "status": "APPROVED_FOR_RUNTIME",
   "count": 43,
-  "runtime_gate": "DO_NOT_CONNECT_UNTIL_APPROVED",
+  "runtime_gate": "APPROVED_BUT_MUTABLE",
   "items": [
     {
       "index": 1,
@@ -15,9 +15,11 @@
         "피격 영웅의 다음 행동을 지연",
         "보스 고속·빙결 콘셉트 유지"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 2,
@@ -29,9 +31,11 @@
         "보스 중심 근접 광역 연속타격",
         "낮은 HP 구간에서는 타격 횟수 또는 공격주기 강화"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 3,
@@ -43,9 +47,11 @@
         "잠시 타겟 불가 후 무작위 영웅 1명을 급강하 공격",
         "착지 시 인접 영웅에도 소규모 광역 피해"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 4,
@@ -57,9 +63,11 @@
         "일정 시간 보스 공격력 상승",
         "소환물이 존재하면 소환물도 함께 강화"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 5,
@@ -71,9 +79,11 @@
         "보스 또는 소환물의 공격력·공격주기 강화",
         "소환물이 없으면 보스 자기강화로 적용"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 6,
@@ -85,9 +95,11 @@
         "다음 보스 공격을 강화하고 공격주기를 일시 단축",
         "소환물이 있으면 소환물에도 동일한 공격 가속 적용"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 7,
@@ -99,9 +111,11 @@
         "일정 시간 보스 공격력·공격주기 상승",
         "종료 시 자신에게 소규모 반동 피해 또는 방어 저하 가능; 수치 밸런스 보류"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 8,
@@ -113,9 +127,11 @@
         "영웅 파티 중 복수 대상을 순차 폭격",
         "각 폭격 사이에 짧은 경고 시간을 둔다"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 9,
@@ -128,9 +144,11 @@
         "피격 영웅의 행동을 짧게 지연",
         "일반 브라움 돌진의 HARD 강화형"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 10,
@@ -141,9 +159,11 @@
       "proposed_rpg_rules": [
         "단일 영웅 강타 + 해당 영웅 방어력 일시 감소"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 11,
@@ -155,9 +175,11 @@
         "복수 영웅 위치에 순차 낙석 광역 피해",
         "시전 전 낙하 경고 표시"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 12,
@@ -168,9 +190,11 @@
       "proposed_rpg_rules": [
         "보스 DEF와 공격력 일시 상승"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 13,
@@ -182,9 +206,11 @@
         "영웅 전체 광역 피해",
         "피격 영웅의 다음 스킬 발동을 지연"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 14,
@@ -196,9 +222,11 @@
         "빠른 돌진으로 영웅 전체 피해",
         "피격 영웅의 행동 지연"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 15,
@@ -209,9 +237,11 @@
       "proposed_rpg_rules": [
         "영웅 전체 공격속도 감소 + 짧은 행동 지연"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 16,
@@ -223,9 +253,11 @@
         "보스에게 임시 피해흡수 보호막 생성",
         "보호막 유지 중 받는 피해 감소"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 17,
@@ -237,9 +269,11 @@
         "영웅 전체 짧은 행동정지 후 냉기 광역 피해",
         "해제 후 일정 시간 공격속도 감소"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 18,
@@ -251,9 +285,11 @@
         "보스 DEF 상승 + 공격력 상승",
         "HP가 낮을수록 강화 효과 증가 가능; 수치 보류"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 19,
@@ -265,9 +301,11 @@
         "영웅 전체 공격력·공격속도 감소 디버프",
         "일정 시간 지속"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 20,
@@ -279,9 +317,11 @@
         "보스 분신 2체 생성",
         "분신은 낮은 공격력의 보조 공격을 수행하고 본체 사망 시 제거"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 21,
@@ -293,9 +333,11 @@
         "화염 분신 또는 화염구 다중 생성",
         "복수 영웅 대상 연속 화염 피해 + 짧은 화상"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 22,
@@ -307,9 +349,11 @@
         "영웅 파티의 공격주기 증가 + 스킬 발동 지연",
         "해무 지속 중 보스 회피/피해감소 효과는 수치 보류"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 23,
@@ -320,9 +364,11 @@
       "proposed_rpg_rules": [
         "보스가 잠시 타겟 불가 상태가 된 뒤 영웅 전체에 상승/낙하 광역 피해"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 24,
@@ -334,9 +380,11 @@
         "무작위 영웅 1명을 속박하고 지속 피해",
         "속박 중 해당 영웅 행동불능"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 25,
@@ -348,9 +396,11 @@
         "영웅 전체 행동주기 지연",
         "보스가 준 피해 일부를 HP로 흡수"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 26,
@@ -362,9 +412,11 @@
         "영웅 전체 광역 피해",
         "피격 후 일정 시간 공격속도 감소"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 27,
@@ -376,9 +428,11 @@
         "보스 공격력·공격속도 대폭 상승",
         "소환물이 있으면 소환물도 함께 강화"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 28,
@@ -389,9 +443,11 @@
       "proposed_rpg_rules": [
         "보스에게 피해감소 보호막 + 상태이상 저항 부여"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 29,
@@ -403,9 +459,11 @@
         "보조 성상 소환물 생성",
         "소환물이 존재하는 동안 보스가 추가 공격 또는 피해감소 효과 획득"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 30,
@@ -417,9 +475,11 @@
         "영웅 전체 공격력 감소 + 스킬 쿨다운 지연",
         "보스는 일정 시간 공격력 상승"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 31,
@@ -431,9 +491,11 @@
         "직전 일정 시간 동안 받은 피해 일부를 저장 후 영웅 파티에 반격",
         "반사량 상한 필요; 수치 밸런스 보류"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 32,
@@ -445,9 +507,11 @@
         "무작위 영웅 또는 다수 영웅에 마력 포격",
         "주 대상은 높은 피해, 주변 대상은 감소 피해"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 33,
@@ -459,9 +523,11 @@
         "영웅 전체 공격속도 감소 + 스킬 쿨다운 진행 지연",
         "짧은 행동불능을 추가할 수 있으나 수치 보류"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 34,
@@ -473,9 +539,11 @@
         "보스 HP 일정 비율 회복",
         "연속 사용 시 회복 효율 감소 또는 사용 횟수 제한 필요"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 35,
@@ -487,9 +555,11 @@
         "보스와 소환물 공격력·공격속도 강화",
         "다음 공격을 강화된 돌격 계열 공격으로 변경"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 36,
@@ -501,9 +571,11 @@
         "복수 영웅 대상 순차 창격",
         "HP가 낮은 영웅에게 추가 피해를 주는 처형형 공격"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 37,
@@ -514,9 +586,11 @@
       "proposed_rpg_rules": [
         "영웅 전체 공격력·공격속도 감소 + 짧은 행동 지연"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 38,
@@ -528,9 +602,11 @@
         "RPG에서는 방어벽이 없으므로 영웅 전체 고위력 광역 공격으로 변환",
         "긴 사전 경고를 주어 방어/회복 스킬 대응 가능"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 39,
@@ -542,9 +618,11 @@
         "단계적으로 강해지는 영웅 전체 광역 피해",
         "시전 횟수가 누적될수록 피해 또는 행동지연 강화"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 40,
@@ -556,9 +634,11 @@
         "영웅 전체 스킬 쿨다운 진행 정지/지연",
         "보스 자신의 다음 스킬 발동은 가속"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 41,
@@ -570,9 +650,11 @@
         "영웅 전체 공격력 감소 + 일정 확률/주기로 행동 취소",
         "완전 영구봉쇄는 금지"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 42,
@@ -584,9 +666,11 @@
         "영웅 전체 다단 광역 피해",
         "영웅 스킬 게이지 또는 다음 행동을 일부 지연"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     },
     {
       "index": 43,
@@ -599,9 +683,13 @@
         "긴 전조 후 영웅 전체에 치명적 피해",
         "즉사 고정이 아니라 보호막·피해감소·회복으로 생존 가능한 수치로 설계"
       ],
-      "approval_status": "PENDING_MASTER_APPROVAL",
+      "approval_status": "APPROVED_FOR_RUNTIME",
       "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
-      "numeric_status": "BALANCE_PENDING"
+      "numeric_status": "BALANCE_PENDING",
+      "mutable": true,
+      "approved_note": "1차 전부 승인. 추후 스킬 변경 가능."
     }
-  ]
+  ],
+  "approved_count": 43,
+  "change_policy": "마스터 승인 후 런타임 연결 가능. 이후 스킬 효과/수치/구조는 변경 가능하며 변경 시 버전 갱신."
 }

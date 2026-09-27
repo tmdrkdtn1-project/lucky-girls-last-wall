@@ -1,11 +1,12 @@
 {
-  "schema": "LG_RPG_SKILL_TRANSLATION_V1_1",
+  "schema": "LG_RPG_SKILL_TRANSLATION_V1_2",
   "counts": {
     "hero_skills": 60,
     "boss_skills": 150,
     "total": 210,
     "manual_boss_definitions": 0,
-    "provisional_boss_definitions": 43
+    "provisional_boss_definitions": 0,
+    "approved_provisional_boss_definitions": 43
   },
   "global_rules": {
     "hero_penetration": "RPG에서 관통 속성 공격은 대상 DEF 100% 무시",
@@ -1771,7 +1772,7 @@
       "slot": 1,
       "skill": "빙설질주",
       "source": "빙설질주",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -1782,7 +1783,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -1944,7 +1947,7 @@
       "slot": 2,
       "skill": "도끼회전",
       "source": "도끼회전",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -1954,7 +1957,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -1996,7 +2001,7 @@
       "slot": 2,
       "skill": "급강하",
       "source": "급강하",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2006,7 +2011,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2132,7 +2139,7 @@
       "slot": 1,
       "skill": "순교찬가",
       "source": "순교찬가",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2142,7 +2149,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2249,7 +2258,7 @@
       "slot": 2,
       "skill": "광신강화",
       "source": "광신강화",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2259,7 +2268,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2333,7 +2344,7 @@
       "slot": 1,
       "skill": "돌격명령",
       "source": "돌격명령",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2343,7 +2354,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2388,7 +2401,7 @@
       "slot": 1,
       "skill": "마력폭주",
       "source": "마력폭주",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2398,7 +2411,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2440,7 +2455,7 @@
       "slot": 1,
       "skill": "마력폭격",
       "source": "마력폭격",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2450,7 +2465,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2542,7 +2559,7 @@
       "slot": 1,
       "skill": "심연돌진",
       "source": "심연돌진",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2553,7 +2570,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2596,7 +2615,7 @@
       "slot": 1,
       "skill": "침식파쇄",
       "source": "침식파쇄",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2605,7 +2624,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2615,7 +2636,7 @@
       "slot": 2,
       "skill": "검은낙석",
       "source": "검은낙석",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2625,7 +2646,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2635,7 +2658,7 @@
       "slot": 3,
       "skill": "광맥폭주",
       "source": "광맥폭주",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2644,7 +2667,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2669,7 +2694,7 @@
       "slot": 2,
       "skill": "지각파열",
       "source": "지각파열",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2679,7 +2704,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2706,7 +2733,7 @@
       "slot": 1,
       "skill": "심연질주",
       "source": "심연질주",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2716,7 +2743,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2726,7 +2755,7 @@
       "slot": 2,
       "skill": "흑설포효",
       "source": "흑설포효",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2735,7 +2764,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2762,7 +2793,7 @@
       "slot": 1,
       "skill": "흑빙벽",
       "source": "흑빙벽",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2772,7 +2803,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2846,7 +2879,7 @@
       "slot": 3,
       "skill": "절대영도",
       "source": "절대영도",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2856,7 +2889,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2898,7 +2933,7 @@
       "slot": 3,
       "skill": "갑각폭주",
       "source": "갑각폭주",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2908,7 +2943,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2918,7 +2955,7 @@
       "slot": 1,
       "skill": "검은일식",
       "source": "검은일식",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2928,7 +2965,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2953,7 +2992,7 @@
       "slot": 3,
       "skill": "그림자분열",
       "source": "그림자분열",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -2963,7 +3002,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -2990,7 +3031,7 @@
       "slot": 2,
       "skill": "불꽃분열",
       "source": "불꽃분열",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3000,7 +3041,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3070,7 +3113,7 @@
       "slot": 1,
       "skill": "심연해무",
       "source": "심연해무",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3080,7 +3123,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3090,7 +3135,7 @@
       "slot": 2,
       "skill": "흑룡오름",
       "source": "흑룡오름",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3099,7 +3144,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3124,7 +3171,7 @@
       "slot": 1,
       "skill": "촉수압살",
       "source": "촉수압살",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3134,7 +3181,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3144,7 +3193,7 @@
       "slot": 2,
       "skill": "심해흡입",
       "source": "심해흡입",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3154,7 +3203,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3164,7 +3215,7 @@
       "slot": 3,
       "skill": "심연파도",
       "source": "심연파도",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3174,7 +3225,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3201,7 +3254,7 @@
       "slot": 2,
       "skill": "광신폭주",
       "source": "광신폭주",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3211,7 +3264,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3236,7 +3291,7 @@
       "slot": 1,
       "skill": "사룡가호",
       "source": "사룡가호",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3245,7 +3300,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3255,7 +3312,7 @@
       "slot": 2,
       "skill": "성상분열",
       "source": "성상분열",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3265,7 +3322,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3305,7 +3364,7 @@
       "slot": 2,
       "skill": "타락성가",
       "source": "타락성가",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3315,7 +3374,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3325,7 +3386,7 @@
       "slot": 3,
       "skill": "천벌역전",
       "source": "천벌역전",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3335,7 +3396,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3345,7 +3408,7 @@
       "slot": 1,
       "skill": "심연마도포",
       "source": "심연마도포",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3355,7 +3418,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3365,7 +3430,7 @@
       "slot": 2,
       "skill": "중력붕괴",
       "source": "중력붕괴",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3375,7 +3440,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3385,7 +3452,7 @@
       "slot": 3,
       "skill": "자가복원",
       "source": "자가복원",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3395,7 +3462,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3405,7 +3474,7 @@
       "slot": 1,
       "skill": "심연돌격명령",
       "source": "심연돌격명령",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3415,7 +3484,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3442,7 +3513,7 @@
       "slot": 3,
       "skill": "처형창진",
       "source": "처형창진",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3452,7 +3523,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3462,7 +3535,7 @@
       "slot": 1,
       "skill": "사룡의포효",
       "source": "사룡의포효",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3471,7 +3544,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3496,7 +3571,7 @@
       "slot": 3,
       "skill": "성벽파멸",
       "source": "성벽파멸",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3506,7 +3581,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3516,7 +3593,7 @@
       "slot": 1,
       "skill": "종말의발걸음",
       "source": "종말의발걸음",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3526,7 +3603,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3536,7 +3615,7 @@
       "slot": 2,
       "skill": "시간붕괴",
       "source": "시간붕괴",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3546,7 +3625,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3556,7 +3637,7 @@
       "slot": 3,
       "skill": "공포의천막",
       "source": "공포의천막",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3566,7 +3647,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3591,7 +3674,7 @@
       "slot": 2,
       "skill": "재앙의날갯짓",
       "source": "재앙의날갯짓",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3601,7 +3684,9 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     },
     {
       "side": "BOSS",
@@ -3611,7 +3696,7 @@
       "slot": 3,
       "skill": "LAST WALL 파괴",
       "source": "LAST WALL 파괴",
-      "status": "DESIGN_V1_PROVISIONAL",
+      "status": "APPROVED_PROVISIONAL_V1",
       "effect_tags": [
         "PROVISIONAL_DESIGN"
       ],
@@ -3622,12 +3707,16 @@
       ],
       "numeric_status": "BALANCE_PENDING",
       "definition_origin": "PROJECT_DESIGN_V1_INFERRED_FROM_SKILL_NAME_AND_BOSS_ROLE",
-      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계"
+      "source_support": "원본은 스킬명/보스 역할까지만 지원하며, RPG 효과 내용은 프로젝트용 1차 설계",
+      "mutable": true,
+      "approval_note": "마스터 1차 승인. 추후 스킬 변경 가능."
     }
   ],
   "design_notes": [
     "DESIGN_V1_PROVISIONAL 항목은 원본에 스킬명만 있어 이름과 보스 역할을 바탕으로 만든 프로젝트용 1차 설계다.",
     "프로비저널 항목의 효과 수치/쿨다운/대상 수는 아직 확정하지 않는다.",
-    "최종보스 필살기도 고정 즉사가 아니라 방어/회복으로 대응 가능한 수치로 설계한다."
+    "최종보스 필살기도 고정 즉사가 아니라 방어/회복으로 대응 가능한 수치로 설계한다.",
+    "2026-09-28: 마스터가 43개 프로비저널 보스 RPG 스킬을 전부 1차 승인함.",
+    "승인은 런타임 연결 허용을 의미하며, 추후 스킬 효과/수치/구조 변경 가능."
   ]
 }
