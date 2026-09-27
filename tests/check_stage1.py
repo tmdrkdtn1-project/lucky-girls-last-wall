@@ -37,3 +37,11 @@ assert "updateEnemies(dt,simTime);updateUnits(simTime)" in js
 assert "updateEnemies(dt,ts/1000)" not in js
 assert "updateUnits(ts/1000)" not in js
 print("PASS - speed multiplier advances one shared simulation clock for enemies and allies")
+
+# Castle defense targeting regression guards
+assert "canCastleDefenderReach" in js
+assert "if(e.pathPos>=route.length-2 && gHp<=0)return {x:18,y:5};" in js
+assert "codeFor(u.x,u.y)==='C'" in js
+assert "nearCastleFront" in js
+assert "gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'" in js
+print("PASS - castle defenders can keep firing after G breaks and enemies engage O")
