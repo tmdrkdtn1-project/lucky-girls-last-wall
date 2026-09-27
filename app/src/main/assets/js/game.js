@@ -183,7 +183,8 @@ function startWaveNotice(){
 function updateSpawning(dt){
  spawnClock+=dt;
  if(wave===10){
-  if(!specialSpawned){spawnEnemy('boss');specialSpawned=true}
+  // Fallback guard: Wave 10 must always contain exactly one TD boss.
+  spawnWave10BossNow();
   return;
  }
  const limit=normalCountForWave(wave);
@@ -260,9 +261,17 @@ function renderEnemies(){
   d.innerHTML+='<span class="hpbar"><i style="width:'+Math.max(0,e.hp/e.maxHp*100)+'%"></i></span>';enemyLayer.appendChild(d);
  }
 }
+function spawnWave10BossNow(){
+ if(wave!==10||specialSpawned)return;
+ spawnEnemy('boss');
+ specialSpawned=true;
+ showWarning('⚠ BOSS','FINAL TD BOSS · WAVE 10',1700);
+}
 function advanceWave(){
  if(wave>=10)return;
- wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;startWaveNotice();
+ wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;
+ if(wave===10)spawnWave10BossNow();
+ else startWaveNotice();
 }
 function loop(ts){
  const raw=Math.min(.05,(ts-last)/1000);last=ts;
@@ -285,7 +294,7 @@ buildGrid();renderUnits();syncHUD();updateComboHighlights();requestAnimationFram
 
 window.__LG_STAGE1_TEST__={
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
- state:()=>({wave,gold,gHp,oHp,speed,simTime,units:[...units.values()],enemies:enemies.length,bottomVisible:bottom.classList.contains('on'),rpgPending,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
+ state:()=>({wave,gold,gHp,oHp,speed,simTime,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bottomVisible:bottom.classList.contains('on'),rpgPending,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
  route:()=>route.slice(),
