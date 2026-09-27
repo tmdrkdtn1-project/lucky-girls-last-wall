@@ -185,7 +185,7 @@ print("PASS - UI spacing V1 preserves full-bleed backgrounds while giving TD/RPG
 
 # TD combat effect engine V1 guards
 assert "function targetsForTdAttack(target,profile)" in js
-assert "routeCellForEnemy(e)===center" in js
+assert "enemyOccupiesRouteCell(e,center)" in js
 assert "Math.abs(routeCellForEnemy(e)-center)<=radius" in js
 assert "function addEnemyDot(e,sourceAtk,profile)" in js
 assert "function updateEnemyEffects(e,dt)" in js
