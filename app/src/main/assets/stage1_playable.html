@@ -277,11 +277,15 @@ function updateEnemies(dt,now){
     spawnClock=0;spawnEnemy(isBossWave&&updateEnemies.spawned[wave]===0);
     enemies[enemies.length-1].spawnWave=wave;updateEnemies.spawned[wave]++;
   }
+  const gateNormals=enemies.filter(e=>e.hp>0&&!e.boss&&e.pathPos>=route.length-2).slice(0,3);
+  const gateBoss=enemies.find(e=>e.hp>0&&e.boss&&e.pathPos>=route.length-2);
   for(const e of enemies){
     if(e.hp<=0)continue;
     if(e.pathPos<route.length-2){
       e.pathPos=Math.min(route.length-2,e.pathPos+e.speed*dt);
     }else{
+      const allowed=e.boss ? e===gateBoss : gateNormals.includes(e);
+      if(!allowed)continue;
       const hitGap=e.boss?2.2:1.5;
       if(now-e.lastStructureHit>=hitGap){
         e.lastStructureHit=now;
