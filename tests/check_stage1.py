@@ -195,3 +195,14 @@ assert "damageType:'관통/광역',targetCount:3,areaRadiusCells:1" in js
 assert "damageType:'관통/지속',targetCount:2,dotDuration:4,dotTick:1,dotRatio:.25" in js
 assert ".enemyToken.hitFx-pierce" in css and ".enemyToken.hitFx-area" in css and ".enemyToken.hitFx-dot" in css
 print("PASS - Stage 1 TD attacks now execute single, penetration, area, and prototype DOT semantics instead of UI-only labels")
+
+# Combat semantics V1.1: overlap-based same-cell and RPG penetration mapping
+assert "function occupiedRouteCells(e)" in js
+assert "function enemyOccupiesRouteCell(e,cellIndex)" in js
+assert "occupiedRouteCells(e).some(c=>Math.abs(c-center)<=radius)" in js
+assert "enemyOccupiesRouteCell(e,center)" in js
+assert "footprintCells:kind==='boss'?1.6:kind==='midboss'?1.3:1.0" in js
+assert "skill1DamageType:'관통'" in js
+assert "if(options.ignoreDefense)return Math.max(1,Math.round(raw))" in js
+assert "skill1.skill1DamageType==='관통'" in js
+print("PASS - same-cell uses sprite-footprint overlap, multi-cell enemies are hittable from either cell, and RPG penetration ignores DEF")

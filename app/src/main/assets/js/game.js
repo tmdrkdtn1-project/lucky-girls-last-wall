@@ -253,7 +253,7 @@ function spawnEnemy(kind='normal'){
  if(kind==='midboss'){hp=Math.round(normalHpForWave(wave)*5.5);speedMult=.72;label='M'}
  else if(kind==='boss'){hp=Math.round(normalHpForWave(wave)*9);speedMult=.62;label='B'}
  else hp=normalHpForWave(wave);
- enemies.push({id:nextEnemyId++,kind,label,pathPos:0,hp,maxHp:hp,speed:(.62+wave*.015)*speedMult,lastStructureHit:0,effects:[],rewarded:false,hitFxType:null,hitFxUntil:0});
+ enemies.push({id:nextEnemyId++,kind,label,pathPos:0,hp,maxHp:hp,speed:(.62+wave*.015)*speedMult,lastStructureHit:0,effects:[],rewarded:false,hitFxType:null,hitFxUntil:0,footprintCells:kind==='boss'?1.6:kind==='midboss'?1.3:1.0});
 }
 function showWarning(text,sub='',hold=1400){
  const box=$('bossWarning');$('bossWarningTitle').textContent=text;$('bossWarningSub').textContent=sub;box.classList.add('on');
@@ -303,6 +303,19 @@ function canCastleDefenderReach(u,e,baseRange){
  return nearCastleFront&&dist<=Math.max(baseRange,2.25);
 }
 function routeCellForEnemy(e){return Math.max(0,Math.min(route.length-1,Math.floor(e.pathPos)))}
+function occupiedRouteCells(e){
+ const half=Math.max(.01,(e.footprintCells||1)/2);
+ const start=Math.max(0,Math.floor(e.pathPos-half+.5));
+ const end=Math.min(route.length-1,Math.floor(e.pathPos+half+.5));
+ const out=[];
+ for(let i=start;i<=end;i++){
+  const cellMin=i-.5,cellMax=i+.5;
+  const spriteMin=e.pathPos-half,spriteMax=e.pathPos+half;
+  if(spriteMax>=cellMin&&spriteMin<=cellMax)out.push(i);
+ }
+ return out;
+}
+function enemyOccupiesRouteCell(e,cellIndex){return occupiedRouteCells(e).includes(cellIndex)}
 function handleEnemyDeath(e){
  if(e.rewarded)return false;
  e.rewarded=true;
@@ -345,9 +358,9 @@ function targetsForTdAttack(target,profile){
  const hasArea=(profile.damageType||'').includes('광역');
  if(hasArea){
   const radius=profile.areaRadiusCells||1;
-  return alive.filter(e=>Math.abs(routeCellForEnemy(e)-center)<=radius);
+  return alive.filter(e=>occupiedRouteCells(e).some(c=>Math.abs(c-center)<=radius));
  }
- if(hasPierce)return alive.filter(e=>routeCellForEnemy(e)===center);
+ if(hasPierce)return alive.filter(e=>enemyOccupiesRouteCell(e,center));
  return [target];
 }
 function resolveTdAttack(u,profile,target){
@@ -402,7 +415,7 @@ const RPG_HERO_DEFS={
  ARIA:{
   name:'아리아',hp:2600,atk:175,def:125,
   basicGap:1.0,skill1Gap:9,skill2Gap:16,
-  skill1Name:'성광 참격',skill2Name:'수호의 맹세',ultimateName:'최후의 성역'
+  skill1Name:'성광 참격',skill1DamageType:'관통',skill2Name:'수호의 맹세',ultimateName:'최후의 성역'
  }
 };
 const RPG_BOSS_DEF={name:'철각왕 브라움',hp:16000,atk:110,def:60,baseAttackGap:3.0};
@@ -532,8 +545,9 @@ function playRpgIntroSequence(){
   running=!manualPaused;
  },8000);
 }
-function rpgDamageToBoss(raw){
+function rpgDamageToBoss(raw,options={}){
  const b=rpgState.boss;
+ if(options.ignoreDefense)return Math.max(1,Math.round(raw));
  return Math.max(1,Math.round(raw-Math.max(0,b.def*.25)));
 }
 function rpgDamageToHero(hero,raw){
@@ -550,7 +564,11 @@ function updateRpg(dt){
    h.lastBasic=rpgSimTime;b.hp-=rpgDamageToBoss(h.atk*buff);h.ult=Math.min(100,h.ult+6);
   }
   if(rpgSimTime-h.lastSkill1>=h.skill1Gap){
-   h.lastSkill1=rpgSimTime;b.hp-=rpgDamageToBoss(h.atk*1.65*buff);h.ult=Math.min(100,h.ult+12);
+   h.lastSkill1=rpgSimTime;
+   const skill1=RPG_HERO_DEFS[h.heroId];
+   const ignoreDefense=skill1.skill1DamageType==='관통';
+   b.hp-=rpgDamageToBoss(h.atk*1.65*buff,{ignoreDefense});
+   h.ult=Math.min(100,h.ult+12);
   }
   if(rpgSimTime-h.lastSkill2>=h.skill2Gap){
    h.lastSkill2=rpgSimTime;h.buffUntil=rpgSimTime+8;

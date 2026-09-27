@@ -1,8 +1,8 @@
 {
-  "schema": "LG_COMBAT_EFFECTS_V1",
+  "schema": "LG_COMBAT_EFFECTS_V1_1",
   "source_semantics": {
     "single": "one target",
-    "penetration": "all enemies occupying the same path cell",
+    "penetration": "all enemies whose logical sprite footprint overlaps the struck path cell; an enemy spanning two cells is valid for penetration from either cell",
     "area": "enemies in nearby path cells; Stage 1 prototype uses radius 1 path cell when a unit has no explicit radius",
     "transfer": "damage transfers to nearby targets and drops 10% each transfer",
     "freeze": "stun/disable plus damage for a defined duration",
@@ -29,5 +29,14 @@
     },
     "default_area_radius_path_cells": 1,
     "note": "These values fill source blanks for the alpha and are not final balance."
+  },
+  "collision_rule": {
+    "same_cell": "An enemy counts as being in a cell when any part of its logical sprite footprint intersects that cell.",
+    "multi_cell_overlap": "If one enemy overlaps two path cells, penetration from either cell hits that enemy.",
+    "implementation": "Logical footprint is independent from CSS rendering size so visuals can change without changing combat rules."
+  },
+  "rpg_mapping": {
+    "hero_penetration_skill": "ignore target DEF completely in RPG mode",
+    "aria_skill1": "성광 참격 is tagged 관통 and therefore ignores boss DEF in RPG."
   }
 }
