@@ -30,3 +30,10 @@ assert "*1.2" in js
 assert "RPG BOSS BATTLE · NOT IMPLEMENTED YET" in js
 assert "bossWarning" in html
 print("PASS - V2 unit tree / hero recipe / midboss / pressure / boss warning guards")
+
+# Speed sync regression guard
+assert "simTime+=dt" in js
+assert "updateEnemies(dt,simTime);updateUnits(simTime)" in js
+assert "updateEnemies(dt,ts/1000)" not in js
+assert "updateUnits(ts/1000)" not in js
+print("PASS - speed multiplier advances one shared simulation clock for enemies and allies")
