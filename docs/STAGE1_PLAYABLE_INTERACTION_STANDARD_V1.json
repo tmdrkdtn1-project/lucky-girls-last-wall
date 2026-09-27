@@ -137,7 +137,25 @@
         ]
       }
     },
-    "default_field_barricade_B": false
+    "default_field_barricade_B": false,
+    "tile_rows": [
+      "WWTTXDDDDDTTTTTTTT",
+      "TWTTDDDDDDXTTTTTTT",
+      "DDDDDPPPPPDDDDDDDD",
+      "DDDDDPDDDPDDDDDDCC",
+      "SPPPPPDDDPPPPPPPGO",
+      "DDXDDDDTDDDXDDXDCC",
+      "DDDDDDTTTDDDDDDDDD",
+      "TTTTTTTTTTTTTTTTTT",
+      "WWTTTTTTTTTTTTTTTT",
+      "TWTTTTTTTTTTTTTTTT"
+    ],
+    "tile_code_migration": {
+      "source_baseline": "STAGE1 V1.1 exact 18x10 tile layout",
+      "original_obstacle_O": "X in playable slice, because O is now reserved for Gate Core",
+      "original_B_wall_slots": "P in Stage 1 playable slice because B is absent by default",
+      "castle_override": "original GG is now G,O per latest defense rule"
+    }
   },
   "interaction_rules": {
     "empty_deploy_tile": {
