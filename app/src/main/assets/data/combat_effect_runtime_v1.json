@@ -1,5 +1,5 @@
 {
-  "schema": "LG_COMBAT_EFFECT_RUNTIME_V1_1",
+  "schema": "LG_COMBAT_EFFECT_RUNTIME_V1_2",
   "purpose": "Shared effect primitives for TD/RPG stabilization before PlayerProfile/Save work.",
   "rpg_primitives": [
     {
@@ -98,6 +98,17 @@
       "type": "REFLECT",
       "status": "IMPLEMENTED",
       "notes": "returns ratio of dealt damage to attacker"
+    },
+    {
+      "type": "DAMAGE_TAKEN_MULT",
+      "status": "IMPLEMENTED",
+      "targets": [
+        "SELF",
+        "ALL_HEROES",
+        "RANDOM_HERO",
+        "RANDOM_HEROES"
+      ],
+      "notes": "Multiplier to final incoming damage; used by Stage 1 브라움 분쇄 포효."
     }
   ],
   "stage1_connected": {
@@ -106,7 +117,12 @@
     "hero_skill2": "ATK_MULT + RATE_MULT + DAMAGE_REDUCTION",
     "hero_skill3": "DAMAGE + DAMAGE_REDUCTION",
     "boss": "철각왕 브라움",
-    "boss_basic": "DAMAGE"
+    "boss_basic": "DAMAGE",
+    "boss_skills": {
+      "뿔박치기": "DAMAGE + ACTION_DELAY; damage ratio/cooldown are prototype",
+      "암반 붕괴": "RANDOM_HEROES(2) + SKILL_BLOCK 6s; duration and target count preserved from source",
+      "분쇄 포효": "ALL_HEROES DAMAGE_TAKEN_MULT 1.40 for 8s; +40%/8s preserved from source"
+    }
   },
   "validation_rule": "All currently planned core RPG primitives are implemented. Skill-specific numbers remain data/balance responsibility.",
   "next_step": "Connect approved hero/boss skill definitions to these primitives and add per-skill regression fixtures."

@@ -1,5 +1,5 @@
 {
-  "schema": "LG_RPG_SKILL_TRANSLATION_V1_2",
+  "schema": "LG_RPG_SKILL_TRANSLATION_V1_3",
   "counts": {
     "hero_skills": 60,
     "boss_skills": 150,
@@ -1012,7 +1012,14 @@
       "rpg_rules": [
         "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
       ],
-      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+      "runtime_status": "CONNECTED_STAGE1_V1",
+      "runtime_mapping": "파티 광역 돌진 피해 + 행동지연",
+      "prototype_values": {
+        "cooldown_sec": 11,
+        "damage_ratio": 0.75,
+        "action_delay_sec": 0.8
+      }
     },
     {
       "side": "BOSS",
@@ -1029,7 +1036,16 @@
       "rpg_rules": [
         "RPG: 공간 봉쇄 효과를 영웅 스킬 재사용 지연 또는 행동불능으로 변환"
       ],
-      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+      "runtime_status": "CONNECTED_STAGE1_V1",
+      "runtime_mapping": "무작위 생존 영웅 2명의 스킬을 6초 봉쇄",
+      "source_preserved_values": {
+        "target_count": 2,
+        "duration_sec": 6
+      },
+      "prototype_values": {
+        "cooldown_sec": 17
+      }
     },
     {
       "side": "BOSS",
@@ -1049,7 +1065,16 @@
         "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환",
         "RPG: 보스 공격 스킬로 구현"
       ],
-      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS"
+      "numeric_status": "BOSS_NUMBERS_REQUIRE_BALANCE_PASS",
+      "runtime_status": "CONNECTED_STAGE1_V1",
+      "runtime_mapping": "파티 전체 받는 피해 +40% 8초",
+      "source_preserved_values": {
+        "damage_taken_mult": 1.4,
+        "duration_sec": 8
+      },
+      "prototype_values": {
+        "cooldown_sec": 23
+      }
     },
     {
       "side": "BOSS",

@@ -480,6 +480,13 @@ const RPG_HERO_DEFS={
  }
 };
 const RPG_BOSS_DEF={name:'철각왕 브라움',hp:16000,atk:110,def:60,baseAttackGap:3.0};
+const RPG_BOSS_SKILL_DEFS={
+ BRAUM:{
+  skill1:{id:'BRAUM_S1',name:'뿔박치기',cooldown:11,prototype:{damageRatio:.75,actionDelay:.8},source:'직선 경로 가속'},
+  skill2:{id:'BRAUM_S2',name:'암반 붕괴',cooldown:17,duration:6,targetCount:2,source:'배치칸 2곳 6초 비활성'},
+  skill3:{id:'BRAUM_S3',name:'분쇄 포효',cooldown:23,duration:8,damageTakenMult:1.40,source:'방어벽 피해 +40% 8초'}
+ }
+};
 
 function enterRpgPlaceholder(boss){beginTdBossRpgTransition(boss)}
 function cancelAllTdCommands(){
@@ -547,11 +554,11 @@ function startRpgBattle(tdHeroes){
   const d=RPG_HERO_DEFS.ARIA;
   return {id:'rpg_'+u.id,heroId:'ARIA',name:d.name,maxHp:d.hp,hp:d.hp,atk:d.atk,def:d.def,
    basicGap:d.basicGap,skill1Gap:d.skill1Gap,skill2Gap:d.skill2Gap,lastBasic:-999,lastSkill1:0,lastSkill2:0,
-   buffUntil:0,atkBuffMult:1,atkBuffUntil:0,rateBuffMult:1,rateBuffUntil:0,damageReduction:0,damageReductionUntil:0,stunUntil:0,defModPct:0,defModUntil:0,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[],ult:0,ko:false,slot:i};
+   buffUntil:0,atkBuffMult:1,atkBuffUntil:0,rateBuffMult:1,rateBuffUntil:0,damageReduction:0,damageReductionUntil:0,damageTakenMult:1,damageTakenUntil:0,stunUntil:0,defModPct:0,defModUntil:0,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[],ult:0,ko:false,slot:i};
  });
  rpgState={
   heroes,
-  boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,lastAttack:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]},
+  boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]},
   summons:[],
   result:null
  };
@@ -608,7 +615,7 @@ function playRpgIntroSequence(){
  },8000);
 }
 const RPG_EFFECT_RUNTIME_VERSION='LG_RPG_EFFECT_RUNTIME_V1';
-function selectRpgTargets(spec,source){
+function selectRpgTargets(spec,source,effect={}){
  if(!rpgState)return [];
  if(spec==='BOSS')return [rpgState.boss];
  if(spec==='SELF')return source?[source]:[];
@@ -619,10 +626,14 @@ function selectRpgTargets(spec,source){
  if(spec==='RANDOM_HERO'){
   const alive=rpgAliveHeroes();return alive.length?[alive[Math.floor(Math.random()*alive.length)]]:[];
  }
+ if(spec==='RANDOM_HEROES'){
+  const alive=rpgAliveHeroes().slice().sort(()=>Math.random()-.5);
+  return alive.slice(0,Math.min(alive.length,Math.max(1,effect.count||1)));
+ }
  return [];
 }
 function applyRpgEffect(effect,ctx={}){
- const source=ctx.source||null,targets=selectRpgTargets(effect.target,source);
+ const source=ctx.source||null,targets=selectRpgTargets(effect.target,source,effect);
  for(const t of targets){
   if(effect.type==='DAMAGE'){
    const raw=typeof effect.amount==='function'?effect.amount(source,t):effect.amount;
@@ -650,6 +661,8 @@ function applyRpgEffect(effect,ctx={}){
    t.rateBuffMult=Math.max(t.rateBuffMult||1,effect.mult||1);t.rateBuffUntil=Math.max(t.rateBuffUntil||0,rpgSimTime+(effect.duration||0));
   }else if(effect.type==='DAMAGE_REDUCTION'){
    t.damageReduction=Math.max(t.damageReduction||0,effect.ratio||0);t.damageReductionUntil=Math.max(t.damageReductionUntil||0,rpgSimTime+(effect.duration||0));
+  }else if(effect.type==='DAMAGE_TAKEN_MULT'){
+   t.damageTakenMult=Math.max(t.damageTakenMult||1,effect.mult||1);t.damageTakenUntil=Math.max(t.damageTakenUntil||0,rpgSimTime+(effect.duration||0));
   }else if(effect.type==='ACTION_DELAY'){
    const sec=effect.seconds||0;t.lastBasic=(t.lastBasic||0)+sec;t.lastSkill1=(t.lastSkill1||0)+sec;t.lastSkill2=(t.lastSkill2||0)+sec;
   }else if(effect.type==='STUN'){
@@ -720,9 +733,38 @@ function rpgDamageToHero(hero,raw){
  const effectiveDef=Math.max(0,hero.def*(1+defPct));
  const reduced=Math.max(1,raw-Math.max(0,effectiveDef*.45));
  const dr=(hero.damageReductionUntil||0)>rpgSimTime?(hero.damageReduction||0):0;
- return Math.max(1,Math.round(reduced*(1-dr)));
+ const taken=(hero.damageTakenUntil||0)>rpgSimTime?(hero.damageTakenMult||1):1;
+ return Math.max(1,Math.round(reduced*(1-dr)*taken));
 }
 function rpgAliveHeroes(){return rpgState.heroes.filter(h=>!h.ko&&h.hp>0)}
+function castBraunHornCharge(b){
+ const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill1;
+ applyRpgEffects([
+  {type:'DAMAGE',target:'ALL_HEROES',amount:b.atk*d.prototype.damageRatio},
+  {type:'ACTION_DELAY',target:'ALL_HEROES',seconds:d.prototype.actionDelay}
+ ],{source:b});
+ b.lastSkill1=rpgSimTime;
+ showWarning('철각왕 브라움 · 뿔박치기','돌진 충격 · 전원 피해 / 행동 지연',850);
+}
+function castBraunRockCollapse(b){
+ const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill2;
+ applyRpgEffects([{type:'SKILL_BLOCK',target:'RANDOM_HEROES',count:d.targetCount,duration:d.duration}],{source:b});
+ b.lastSkill2=rpgSimTime;
+ showWarning('철각왕 브라움 · 암반 붕괴','영웅 2명 스킬 6초 봉쇄',900);
+}
+function castBraunCrushingRoar(b){
+ const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill3;
+ applyRpgEffects([{type:'DAMAGE_TAKEN_MULT',target:'ALL_HEROES',mult:d.damageTakenMult,duration:d.duration}],{source:b});
+ b.lastSkill3=rpgSimTime;
+ showWarning('철각왕 브라움 · 분쇄 포효','8초간 파티 받는 피해 +40%',900);
+}
+function updateRpgBossSkills(b){
+ if((b.stunUntil||0)>rpgSimTime||(b.skillBlockUntil||0)>rpgSimTime)return;
+ const d=RPG_BOSS_SKILL_DEFS.BRAUM;
+ if(rpgSimTime-b.lastSkill3>=d.skill3.cooldown){castBraunCrushingRoar(b);return}
+ if(rpgSimTime-b.lastSkill2>=d.skill2.cooldown){castBraunRockCollapse(b);return}
+ if(rpgSimTime-b.lastSkill1>=d.skill1.cooldown){castBraunHornCharge(b);return}
+}
 function updateRpg(dt){
  if(!rpgState||rpgState.result)return;
  rpgSimTime+=dt;
@@ -760,6 +802,7 @@ function updateRpg(dt){
   if(nextPhase===3)b.enraged=true;
   showWarning(nextPhase===3?'⚠ BOSS ENRAGED':'BOSS PHASE '+nextPhase,nextPhase===3?'HP 35% · 최종 광폭화':'공격 패턴 강화',1200);
  }
+ updateRpgBossSkills(b);
  const attackGap=b.baseAttackGap/(b.phase===1?1:b.phase===2?1.18:1.4);
  if(rpgSimTime-b.lastAttack>=attackGap){
   b.lastAttack=rpgSimTime;

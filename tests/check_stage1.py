@@ -244,7 +244,7 @@ print("PASS - Aria TD S1/S2/S3 execute through shared effect primitives with sou
 
 # Full RPG translation matrix V1 guards
 rpg_translation=json.loads((root/"data/rpg_skill_translation_v1.json").read_text(encoding="utf-8"))
-assert rpg_translation["schema"]=="LG_RPG_SKILL_TRANSLATION_V1_2"
+assert rpg_translation["schema"]=="LG_RPG_SKILL_TRANSLATION_V1_3"
 assert rpg_translation["counts"]["hero_skills"]==60
 assert rpg_translation["counts"]["boss_skills"]==150
 assert rpg_translation["counts"]["total"]==210
@@ -276,7 +276,7 @@ print("PASS - all 43 provisional boss RPG skills are approved for runtime while 
 
 # Shared RPG Effect Runtime V1 guards
 effect_runtime=json.loads((root/"data/combat_effect_runtime_v1.json").read_text(encoding="utf-8"))
-assert effect_runtime["schema"]=="LG_COMBAT_EFFECT_RUNTIME_V1"
+assert effect_runtime["schema"] in ("LG_COMBAT_EFFECT_RUNTIME_V1","LG_COMBAT_EFFECT_RUNTIME_V1_1","LG_COMBAT_EFFECT_RUNTIME_V1_2")
 assert "const RPG_EFFECT_RUNTIME_VERSION='LG_RPG_EFFECT_RUNTIME_V1'" in js
 assert "function applyRpgEffect(effect,ctx={})" in js
 assert "function applyRpgEffects(effects,ctx={})" in js
@@ -292,7 +292,7 @@ print("PASS - Stage 1 RPG now uses a shared effect dispatcher for damage, buffs,
 
 # RPG advanced primitives V1.1 guards
 effect_runtime=json.loads((root/"data/combat_effect_runtime_v1.json").read_text(encoding="utf-8"))
-assert effect_runtime["schema"]=="LG_COMBAT_EFFECT_RUNTIME_V1_1"
+assert effect_runtime["schema"]=="LG_COMBAT_EFFECT_RUNTIME_V1_2"
 assert "effect.type==='DOT'" in js
 assert "effect.type==='SUMMON'" in js
 assert "effect.type==='INVULNERABLE'" in js
@@ -305,3 +305,20 @@ assert "(h.skillBlockUntil||0)<=rpgSimTime" in js
 assert "if((t.invulnerableUntil||0)>rpgSimTime)continue;" in js
 assert all(x["status"]=="IMPLEMENTED" for x in effect_runtime["rpg_primitives"])
 print("PASS - DOT, summon, invulnerability, skill block, and reflect are now implemented as shared RPG primitives")
+
+# Stage 1 Braum RPG skill connection guards
+assert "const RPG_BOSS_SKILL_DEFS" in js
+assert "BRAUM_S1" in js and "BRAUM_S2" in js and "BRAUM_S3" in js
+assert "function updateRpgBossSkills(b)" in js
+assert "function castBraunHornCharge(b)" in js
+assert "function castBraunRockCollapse(b)" in js
+assert "function castBraunCrushingRoar(b)" in js
+assert "target:'RANDOM_HEROES',count:d.targetCount,duration:d.duration" in js
+assert "damageTakenMult:1.40" in js
+assert "effect.type==='DAMAGE_TAKEN_MULT'" in js
+assert "updateRpgBossSkills(b);" in js
+braum=[x for x in rpg_translation["boss_skills"] if x["character"]=="철각왕 브라움"]
+assert len(braum)==3 and all(x["runtime_status"]=="CONNECTED_STAGE1_V1" for x in braum)
+assert next(x for x in braum if x["skill"]=="암반 붕괴")["source_preserved_values"]=={"target_count":2,"duration_sec":6}
+assert next(x for x in braum if x["skill"]=="분쇄 포효")["source_preserved_values"]=={"damage_taken_mult":1.4,"duration_sec":8}
+print("PASS - Stage 1 Braum S1/S2/S3 are connected through shared RPG effects with source values separated from prototype timing")
