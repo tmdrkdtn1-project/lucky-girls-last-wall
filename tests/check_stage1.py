@@ -27,7 +27,7 @@ assert "replaceUnit" not in js
 assert "wave===5" in js and "midboss" in js
 assert "normalCountForWave(w){return (10+w*2)*2}" in js
 assert "*1.2" in js
-assert "RPG BOSS BATTLE" in js
+assert "beginTdBossRpgTransition" in js and "startRpgBattle" in js
 assert "bossWarning" in html
 print("PASS - V2 unit tree / hero recipe / midboss / pressure / boss warning guards")
 
