@@ -82,3 +82,12 @@ assert "Ⅱ 일시정지" in html
 assert "manualPaused" in js and "▶ 계속" in js
 assert ".cell.moveTarget" in css and ".cell.comboPlacement" in css
 print("PASS - all units move/swap with 5s lock; hero placement pauses and uses material slots; manual pause is explicit")
+
+# Upgrade UI combat descriptor guards
+assert "function unitFeatureText(t)" in js
+assert "ATK '+t.atk+' · '+t.damageType" in js
+assert "damageType:'관통/광역'" in js
+assert "damageType:'관통/지속'" in js
+assert "damageType:'관통'" in js
+assert "공중 대응" in js and "지상 전용" in js
+print("PASS - placement and upgrade UI show ATK, damage type, and air capability")
