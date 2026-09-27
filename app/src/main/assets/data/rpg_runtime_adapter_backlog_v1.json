@@ -1,10 +1,10 @@
 {
-  "schema": "LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1",
+  "schema": "LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1_1",
   "count": 11,
   "adapters": [
     {
       "id": "CHANCE_TRIGGER",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -30,11 +30,12 @@
           "skill": "공포의천막",
           "stage": 49
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "CONDITIONAL_EXECUTE",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -66,11 +67,12 @@
           "skill": "처형창진",
           "stage": 47
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "COPY_EFFECT",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -78,11 +80,12 @@
           "skill": "형상복제",
           "stage": null
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "DEATH_PREVENTION",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -96,11 +99,12 @@
           "skill": "죽음거부",
           "stage": 19
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "ECONOMY_DISABLED_IN_RPG",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -108,11 +112,12 @@
           "skill": "행운의 함정",
           "stage": null
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "MULTI_HIT_SEQUENCE",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -180,11 +185,12 @@
           "skill": "재앙의날갯짓",
           "stage": 50
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "RPG_SLOW_TO_ACTION_RATE",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -270,11 +276,12 @@
           "skill": "중력파",
           "stage": 26
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "SUMMON_AWARE_TARGETING",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -312,11 +319,12 @@
           "skill": "성상분열",
           "stage": 44
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "TIME_REWIND",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -324,11 +332,12 @@
           "skill": "되감기",
           "stage": null
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "TRANSFER_CHAIN",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -354,11 +363,12 @@
           "skill": "역병 전염",
           "stage": null
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     },
     {
       "id": "ULT_GAUGE_MOD",
-      "status": "PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_V1",
       "affected_skills": [
         {
           "side": "HERO",
@@ -372,7 +382,10 @@
           "skill": "재앙의날갯짓",
           "stage": 50
         }
-      ]
+      ],
+      "runtime": "runRpgAdapter"
     }
-  ]
+  ],
+  "implemented_count": 11,
+  "pending_count": 0
 }

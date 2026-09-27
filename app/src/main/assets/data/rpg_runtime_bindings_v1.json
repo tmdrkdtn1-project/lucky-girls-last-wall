@@ -1,11 +1,11 @@
 {
-  "schema": "LG_RPG_RUNTIME_BINDINGS_V1",
+  "schema": "LG_RPG_RUNTIME_BINDINGS_V1_1",
   "source_translation_schema": "LG_RPG_SKILL_TRANSLATION_V1_3",
   "runtime_schema": "LG_COMBAT_EFFECT_RUNTIME_V1_2",
   "total": 210,
   "counts": {
     "BINDABLE_CORE": 159,
-    "NEEDS_ADAPTER": 43,
+    "ADAPTER_READY": 43,
     "NEEDS_EXPLICIT_EFFECT_PLAN": 5,
     "LIVE_STAGE1": 3
   },
@@ -14,7 +14,8 @@
     "BINDABLE_CORE": "can be executed using existing shared primitives once character/boss is instantiated",
     "NEEDS_ADAPTER": "core primitives exist but special sequencing/condition/target adapter is still required",
     "NEEDS_EXPLICIT_EFFECT_PLAN": "translation text exists but cannot be safely converted to primitive calls without an explicit per-skill effect plan",
-    "BLOCKED_UNSUPPORTED_PRIMITIVE": "requires a primitive not yet present"
+    "BLOCKED_UNSUPPORTED_PRIMITIVE": "requires a primitive not yet present",
+    "ADAPTER_READY": "all required adapters exist in runtime; skill-specific numeric/effect payloads still come from binding data"
   },
   "items": [
     {
@@ -104,7 +105,7 @@
       "slot": 1,
       "skill": "봉인의 부적",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -117,7 +118,8 @@
       "source": "봉인의 부적 — 단일 적 3초 속박, 보스는 35% 둔화.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -127,7 +129,7 @@
       "slot": 2,
       "skill": "결계진",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT",
         "SKILL_BLOCK"
@@ -144,7 +146,8 @@
       "rpg_rules": [
         "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
         "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -226,7 +229,7 @@
       "slot": 3,
       "skill": "홍련지옥",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DOT",
@@ -245,7 +248,8 @@
       "source": "홍련지옥 — 화면 내 적 전체 3회 폭발 피해, 화상 중인 적 추가 피해 +40%.",
       "rpg_rules": [
         "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -279,7 +283,7 @@
       "slot": 2,
       "skill": "도탄사격",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE"
       ],
@@ -295,7 +299,8 @@
       "source": "도탄사격 — 최대 5대상으로 피해 이전, 이전마다 피해 -10%.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -305,7 +310,7 @@
       "slot": 3,
       "skill": "DEAD OR ALIVE",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DAMAGE_TAKEN_MULT"
@@ -321,7 +326,8 @@
       "source": "DEAD OR ALIVE — 보스/정예에게 강력한 단일 사격. HP 30% 이하 대상 추가 피해 +60%.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -480,7 +486,7 @@
       "slot": 1,
       "skill": "서리창",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "RATE_MULT"
@@ -496,7 +502,8 @@
       "source": "서리창 — 단일 피해 + 이속 -25% 4초.",
       "rpg_rules": [
         "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -506,7 +513,7 @@
       "slot": 2,
       "skill": "빙결감옥",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -519,7 +526,8 @@
       "source": "빙결감옥 — 경로 2칸 적 2초 빙결, 보스는 40% 둔화 3초.",
       "rpg_rules": [
         "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -529,7 +537,7 @@
       "slot": 3,
       "skill": "절대영도",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "RATE_MULT",
@@ -548,7 +556,8 @@
       "rpg_rules": [
         "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
         "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -558,7 +567,7 @@
       "slot": 1,
       "skill": "그림자 베기",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "RATE_MULT",
@@ -576,7 +585,8 @@
       "rpg_rules": [
         "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
         "RPG 단일보스에서는 보스 자신을 대상으로 처리"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -586,7 +596,7 @@
       "slot": 2,
       "skill": "잔영난무",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DAMAGE_TAKEN_MULT"
@@ -602,7 +612,8 @@
       "source": "잔영난무 — 4초간 공격이 2회 추가 타격, 보스에게 추가 피해 +20%.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -612,7 +623,7 @@
       "slot": 3,
       "skill": "홍련 처형",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE"
       ],
@@ -628,7 +639,8 @@
       "source": "홍련 처형 — 보스/정예 단일 초고화력. HP 25% 이하 대상에게 치명 피해 보정.",
       "rpg_rules": [
         "RPG에서도 동일 확률/강화효과 계수로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -638,7 +650,7 @@
       "slot": 1,
       "skill": "저주인형",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE"
       ],
@@ -653,7 +665,8 @@
       "source": "저주인형 — 가장 HP 높은 적과 인형 연결, 받은 피해의 25%를 주변 2명에게 이전.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -663,7 +676,7 @@
       "slot": 2,
       "skill": "마리오네트",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT",
         "STUN"
@@ -680,7 +693,8 @@
       "rpg_rules": [
         "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
         "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -690,7 +704,7 @@
       "slot": 3,
       "skill": "대인형극",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -703,7 +717,8 @@
       "source": "대인형극 — 10초간 주변 아군 공격 시 35% 확률로 인형이 추가타.",
       "rpg_rules": [
         "RPG에서는 생존 중인 영웅 파티 전체에 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -713,7 +728,7 @@
       "slot": 1,
       "skill": "보물탄",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DEF_MOD"
@@ -729,7 +744,8 @@
       "source": "보물탄 — 3대상 관통, 마지막 대상 추가 피해.",
       "rpg_rules": [
         "관통 공격은 RPG에서 대상 DEF 100% 무시"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -739,7 +755,7 @@
       "slot": 2,
       "skill": "행운의 함정",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "STUN"
       ],
@@ -754,7 +770,8 @@
       "source": "행운의 함정 — 경로 1칸에 8초 함정, 최초 6명에게 기절 1초 + 추가 골드 소량.",
       "rpg_rules": [
         "RPG: 보스 1초 기절. 추가 골드 효과는 RPG에서 비활성"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -764,7 +781,7 @@
       "slot": 3,
       "skill": "왕의 보물고",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "ATK_MULT"
@@ -780,7 +797,8 @@
       "source": "왕의 보물고 — 8초간 발리스타/감시탑 계열 ATK +30%, 자신은 연속 포격.",
       "rpg_rules": [
         "RPG: 미아 자신 ATK +30% 8초 + 연속 포격 유지"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -839,7 +857,7 @@
       "slot": 3,
       "skill": "퍼펙트 클리닝",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE"
       ],
@@ -854,7 +872,8 @@
       "source": "퍼펙트 클리닝 — 화면 내 가장 강한 적 5체를 순차 타격, 처치 시 다음 타격 피해 증가.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -864,7 +883,7 @@
       "slot": 1,
       "skill": "형상복제",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE"
       ],
@@ -879,7 +898,8 @@
       "source": "형상복제 — 인접 아군 1명의 피해종류를 8초 복제.",
       "rpg_rules": [
         "RPG: 다른 생존 영웅 1명의 공격 속성/피해 타입을 8초 복제"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -935,7 +955,7 @@
       "slot": 1,
       "skill": "접착 폭약",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE"
       ],
@@ -950,7 +970,8 @@
       "source": "접착 폭약 — 경로 1칸에 지뢰 설치, 5체까지 광역.",
       "rpg_rules": [
         "TD 경로 범위는 RPG에서 보스 대상 효과로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -960,7 +981,7 @@
       "slot": 2,
       "skill": "연쇄기폭",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DEF_MOD"
@@ -976,7 +997,8 @@
       "source": "연쇄기폭 — 현재 설치된 폭약을 연속 폭발, 방어 높은 적 방어 20% 무시.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1009,7 +1031,7 @@
       "slot": 1,
       "skill": "운명의 표식",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DAMAGE_TAKEN_MULT"
@@ -1025,7 +1047,8 @@
       "source": "운명의 표식 — 적 1체가 받는 피해 +18%, 처치 시 다음 적에게 이전.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1057,7 +1080,7 @@
       "slot": 3,
       "skill": "운명개변",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT",
         "SKILL_BLOCK"
@@ -1075,7 +1098,8 @@
       "rpg_rules": [
         "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
         "RPG에서도 동일 확률/강화효과 계수로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1109,7 +1133,7 @@
       "slot": 2,
       "skill": "역병 전염",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DOT"
       ],
@@ -1124,7 +1148,8 @@
       "source": "역병 전염 — 독 걸린 적 사망 시 주변 2명에게 독 이전.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1205,7 +1230,7 @@
       "slot": 3,
       "skill": "라스트 앙코르",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT",
         "SKILL_BLOCK"
@@ -1222,7 +1247,8 @@
       "rpg_rules": [
         "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환",
         "RPG에서는 생존 중인 영웅 파티 전체에 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1232,7 +1258,7 @@
       "slot": 1,
       "skill": "수호의 일격",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -1245,7 +1271,8 @@
       "source": "수호의 일격 — 단일 강타 + 주변 적 20% 둔화.",
       "rpg_rules": [
         "원본 효과를 RPG 단일 보스/영웅 파티 문맥에 그대로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1281,7 +1308,7 @@
       "slot": 3,
       "skill": "불락의 성채",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "ATK_MULT",
@@ -1301,7 +1328,8 @@
         "방어벽 대상 효과는 RPG에서 생존 중인 아군 파티 보호 효과로 변환",
         "RPG에서는 생존 중인 영웅 파티 전체에 적용",
         "RPG에서는 아군 1회 치명타/전투불능 피해를 무효화하는 파티 보호막으로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1311,7 +1339,7 @@
       "slot": 1,
       "skill": "혈창",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DEF_MOD"
@@ -1327,7 +1355,8 @@
       "source": "혈창 — 3대상 관통, 대상 현재 HP 비례 추가피해.",
       "rpg_rules": [
         "관통 공격은 RPG에서 대상 DEF 100% 무시"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1363,7 +1392,7 @@
       "slot": 3,
       "skill": "진홍월식",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DOT",
@@ -1380,7 +1409,8 @@
       "source": "진홍월식 — 화면 전체 지속피해 8초, HP가 높은 적일수록 첫 타격 강화.",
       "rpg_rules": [
         "RPG에서는 보스 및 존재하는 소환물 전체에 적용; 소환물이 없으면 보스 단일"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1460,7 +1490,7 @@
       "slot": 1,
       "skill": "시간지연",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT"
       ],
@@ -1476,7 +1506,8 @@
       "rpg_rules": [
         "TD 경로 범위는 RPG에서 보스 대상 효과로 변환",
         "이동속도 변화는 RPG에서 보스 행동주기/공격주기 변화로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1486,7 +1517,7 @@
       "slot": 2,
       "skill": "되감기",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [],
       "primitive_options": {
         "ignoreDefense": false,
@@ -1501,7 +1532,8 @@
       "source": "되감기 — 가장 앞선 적 4체를 1~2칸 뒤로 이동, 보스는 스킬 게이지 감소.",
       "rpg_rules": [
         "RPG: 보스의 다음 스킬 게이지/발동 진행도를 감소"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "HERO",
@@ -1685,7 +1717,7 @@
       "slot": 1,
       "skill": "협곡 질주",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT"
       ],
@@ -1700,7 +1732,8 @@
       "source": "협곡 질주: 이속 급상승",
       "rpg_rules": [
         "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -2026,7 +2059,7 @@
       "slot": 3,
       "skill": "광폭화",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT"
       ],
@@ -2041,7 +2074,8 @@
       "source": "광폭화: HP 40% 이하 공속 상승",
       "rpg_rules": [
         "RPG: HP 임계치 기반 강화 상태"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -2449,7 +2483,7 @@
       "slot": 3,
       "skill": "심해의 노래",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT"
       ],
@@ -2464,7 +2498,8 @@
       "source": "심해의 노래: 이속 감소",
       "rpg_rules": [
         "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -2875,7 +2910,7 @@
       "slot": 3,
       "skill": "죽음거부",
       "source_status": "DIRECT",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "HEAL"
       ],
@@ -2890,7 +2925,8 @@
       "source": "죽음거부: 1회 HP 20% 회복",
       "rpg_rules": [
         "RPG: 보스 HP 회복/흡혈로 적용"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -3113,7 +3149,7 @@
       "slot": 1,
       "skill": "순교찬가",
       "source_status": "APPROVED_PROVISIONAL_V1",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "ATK_MULT",
         "SUMMON"
@@ -3130,7 +3166,8 @@
       "rpg_rules": [
         "일정 시간 보스 공격력 상승",
         "소환물이 존재하면 소환물도 함께 강화"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -3378,7 +3415,7 @@
       "slot": 3,
       "skill": "중력파",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "RATE_MULT"
       ],
@@ -3393,7 +3430,8 @@
       "source": "중력파: 이속 감소",
       "rpg_rules": [
         "RPG: 이동속도 효과는 보스/영웅 공격주기 변화로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -3453,7 +3491,7 @@
       "slot": 3,
       "skill": "처형창",
       "source_status": "TRANSLATED",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DEF_MOD"
@@ -3469,7 +3507,8 @@
       "source": "처형창: 방어벽 추가피해",
       "rpg_rules": [
         "RPG: 방어선 대상 효과를 영웅 파티 직접 피해/방어 약화 효과로 변환"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -4584,7 +4623,7 @@
       "slot": 2,
       "skill": "광신폭주",
       "source_status": "APPROVED_PROVISIONAL_V1",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "ATK_MULT",
         "RATE_MULT",
@@ -4602,7 +4641,8 @@
       "rpg_rules": [
         "보스 공격력·공격속도 대폭 상승",
         "소환물이 있으면 소환물도 함께 강화"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -4659,7 +4699,7 @@
       "slot": 2,
       "skill": "성상분열",
       "source_status": "APPROVED_PROVISIONAL_V1",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "DAMAGE_REDUCTION",
@@ -4677,7 +4717,8 @@
       "rpg_rules": [
         "보조 성상 소환물 생성",
         "소환물이 존재하는 동안 보스가 추가 공격 또는 피해감소 효과 획득"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -4910,7 +4951,7 @@
       "slot": 3,
       "skill": "처형창진",
       "source_status": "APPROVED_PROVISIONAL_V1",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE"
       ],
@@ -4926,7 +4967,8 @@
       "rpg_rules": [
         "복수 영웅 대상 순차 창격",
         "HP가 낮은 영웅에게 추가 피해를 주는 처형형 공격"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -5057,7 +5099,7 @@
       "slot": 3,
       "skill": "공포의천막",
       "source_status": "APPROVED_PROVISIONAL_V1",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "ATK_MULT"
       ],
@@ -5073,7 +5115,8 @@
       "rpg_rules": [
         "영웅 전체 공격력 감소 + 일정 확률/주기로 행동 취소",
         "완전 영구봉쇄는 금지"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -5106,7 +5149,7 @@
       "slot": 2,
       "skill": "재앙의날갯짓",
       "source_status": "APPROVED_PROVISIONAL_V1",
-      "runtime_status": "NEEDS_ADAPTER",
+      "runtime_status": "ADAPTER_READY",
       "primitives": [
         "DAMAGE",
         "SKILL_BLOCK",
@@ -5125,7 +5168,8 @@
       "rpg_rules": [
         "영웅 전체 다단 광역 피해",
         "영웅 스킬 게이지 또는 다음 행동을 일부 지연"
-      ]
+      ],
+      "adapter_runtime": "runRpgAdapter"
     },
     {
       "side": "BOSS",
@@ -5153,5 +5197,6 @@
         "즉사 고정이 아니라 보호막·피해감소·회복으로 생존 가능한 수치로 설계"
       ]
     }
-  ]
+  ],
+  "adapter_runtime_version": "LG_RPG_ADAPTER_RUNTIME_V1"
 }

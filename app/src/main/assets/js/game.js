@@ -558,7 +558,7 @@ function startRpgBattle(tdHeroes){
  });
  rpgState={
   heroes,
-  boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]},
+  boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,rateBuffMult:1,rateBuffUntil:0,deathPreventionCharges:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]},
   summons:[],
   result:null
  };
@@ -618,6 +618,7 @@ const RPG_EFFECT_RUNTIME_VERSION='LG_RPG_EFFECT_RUNTIME_V1';
 function selectRpgTargets(spec,source,effect={}){
  if(!rpgState)return [];
  if(spec==='BOSS')return [rpgState.boss];
+ if(spec==='BOSS_AND_SUMMONS')return [rpgState.boss,...(rpgState.summons||[]).filter(s=>s.hp>0)];
  if(spec==='SELF')return source?[source]:[];
  if(spec==='ALL_HEROES')return rpgAliveHeroes();
  if(spec==='LOWEST_HP_HERO'){
@@ -647,7 +648,10 @@ function applyRpgEffect(effect,ctx={}){
     }
    }else{
     const dealt=rpgDamageToHero(t,raw);
-    t.hp=Math.max(0,t.hp-dealt);if(t.hp<=0)t.ko=true;
+    t.hp=Math.max(0,t.hp-dealt);
+    if(t.hp<=0){
+     if(!tryRpgDeathPrevention(t))t.ko=true;
+    }
     if((t.reflectUntil||0)>rpgSimTime&&source&&source!==t&&source===rpgState.boss){
      source.hp=Math.max(0,source.hp-Math.max(1,Math.round(dealt*(t.reflectRatio||0))));
     }
@@ -713,6 +717,102 @@ function updateRpgSummons(){
    applyRpgEffects([{type:'DAMAGE',target:'SELF',amount:s.atk}],{source:target});
   }
  }
+}
+const RPG_ADAPTER_RUNTIME_VERSION='LG_RPG_ADAPTER_RUNTIME_V1';
+function tryRpgDeathPrevention(actor){
+ if((actor.deathPreventionCharges||0)<=0)return false;
+ actor.deathPreventionCharges--;actor.hp=Math.max(1,Math.round(actor.maxHp*(actor.deathPreventionHealRatio||.20)));
+ actor.ko=false;return true;
+}
+function runRpgAdapter(id,params={},ctx={}){
+ const source=ctx.source||null;
+ if(id==='CHANCE_TRIGGER'){
+  const chance=Math.max(0,Math.min(1,params.chance??1));
+  if(Math.random()>chance)return {triggered:false};
+  if(params.effects)applyRpgEffects(params.effects,{source});
+  return {triggered:true};
+ }
+ if(id==='CONDITIONAL_EXECUTE'){
+  const targets=selectRpgTargets(params.target||'BOSS',source,params);
+  const threshold=params.threshold??.30,mult=params.multiplier??1.6;
+  for(const t of targets){
+   const low=(t.hp/Math.max(1,t.maxHp))<=threshold;
+   if(low&&params.baseDamage!=null)applyRpgEffects([{type:'DAMAGE',target:t===rpgState.boss?'BOSS':'SELF',amount:params.baseDamage*mult,ignoreDefense:!!params.ignoreDefense}],{source:t===rpgState.boss?source:t});
+  }
+  return {triggered:targets.some(t=>(t.hp/Math.max(1,t.maxHp))<=threshold)};
+ }
+ if(id==='COPY_EFFECT'){
+  const donor=params.donor||rpgAliveHeroes().find(h=>h!==source&&h.lastSkillEffects?.length);
+  const effects=params.effects||donor?.lastSkillEffects||[];
+  if(effects.length)applyRpgEffects(effects.map(e=>({...e,target:params.targetOverride||e.target})),{source});
+  return {triggered:effects.length>0,count:effects.length};
+ }
+ if(id==='DEATH_PREVENTION'){
+  const targets=selectRpgTargets(params.target||'SELF',source,params);
+  for(const t of targets){t.deathPreventionCharges=(t.deathPreventionCharges||0)+(params.charges||1);t.deathPreventionHealRatio=params.healRatio??.20}
+  return {triggered:targets.length>0,count:targets.length};
+ }
+ if(id==='ECONOMY_DISABLED_IN_RPG'){
+  return {triggered:false,disabled:true,reason:'RPG_NO_COMBAT_ECONOMY'};
+ }
+ if(id==='MULTI_HIT_SEQUENCE'){
+  const hits=Math.max(1,params.hits||1),falloff=params.falloff??1;
+  let ratio=1;
+  for(let i=0;i<hits;i++){
+   const effects=(params.effects||[]).map(e=>e.type==='DAMAGE'?{...e,amount:(typeof e.amount==='number'?e.amount*ratio:e.amount)}:{...e});
+   applyRpgEffects(effects,{source});ratio*=falloff;
+  }
+  return {triggered:true,hits};
+ }
+ if(id==='RPG_SLOW_TO_ACTION_RATE'){
+  const slow=Math.max(0,Math.min(.90,params.slowRatio??.25));
+  const duration=params.duration||4;
+  const targets=selectRpgTargets(params.target||'BOSS',source,params);
+  for(const t of targets){t.rateBuffMult=Math.min(t.rateBuffMult||1,1-slow);t.rateBuffUntil=Math.max(t.rateBuffUntil||0,rpgSimTime+duration)}
+  return {triggered:targets.length>0,count:targets.length};
+ }
+ if(id==='SUMMON_AWARE_TARGETING'){
+  const targets=selectRpgTargets('BOSS_AND_SUMMONS',source,params);
+  if(params.effects){
+   for(const t of targets){
+    for(const e of params.effects){
+     if(e.type==='DAMAGE'){
+      const amount=typeof e.amount==='function'?e.amount(source,t):e.amount;
+      if(t===rpgState.boss)applyRpgEffects([{...e,target:'BOSS',amount}],{source});
+      else t.hp=Math.max(0,t.hp-Math.max(1,Math.round(amount||0)));
+     }
+    }
+   }
+  }
+  return {triggered:targets.length>0,count:targets.length};
+ }
+ if(id==='TIME_REWIND'){
+  const seconds=params.seconds||2,target=params.target||'BOSS';
+  const targets=selectRpgTargets(target,source,params);
+  for(const t of targets){
+   t.lastAttack=(t.lastAttack||0)+seconds;
+   t.lastSkill1=(t.lastSkill1||0)+seconds;t.lastSkill2=(t.lastSkill2||0)+seconds;t.lastSkill3=(t.lastSkill3||0)+seconds;
+  }
+  return {triggered:targets.length>0,count:targets.length};
+ }
+ if(id==='TRANSFER_CHAIN'){
+  const chain=params.targets||selectRpgTargets(params.target||'BOSS_AND_SUMMONS',source,params);
+  const maxTargets=Math.min(chain.length,params.maxTargets||5),falloff=params.falloff??.90;
+  let amount=params.amount||0;
+  for(let i=0;i<maxTargets;i++){
+   const t=chain[i];
+   if(t===rpgState.boss)applyRpgEffects([{type:'DAMAGE',target:'BOSS',amount,ignoreDefense:!!params.ignoreDefense}],{source});
+   else if(t&&typeof t.hp==='number')t.hp=Math.max(0,t.hp-Math.max(1,Math.round(amount)));
+   amount*=falloff;
+  }
+  return {triggered:maxTargets>0,count:maxTargets};
+ }
+ if(id==='ULT_GAUGE_MOD'){
+  const targets=selectRpgTargets(params.target||'ALL_HEROES',source,params),delta=params.delta||0;
+  for(const t of targets)if(typeof t.ult==='number')t.ult=Math.max(0,Math.min(100,t.ult+delta));
+  return {triggered:targets.length>0,count:targets.length};
+ }
+ return {triggered:false,unsupported:true};
 }
 function effectiveHeroAtk(h){
  const legacy=h.buffUntil>rpgSimTime?1.15:1;
@@ -781,7 +881,9 @@ function updateRpg(dt){
   if((h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill1>=effectiveHeroGap(h,h.skill1Gap)){
    h.lastSkill1=rpgSimTime;
    const skill1=RPG_HERO_DEFS[h.heroId];
-   applyRpgEffects([{type:'DAMAGE',target:'BOSS',amount:atk*1.65,ignoreDefense:skill1.skill1DamageType==='관통'}],{source:h});
+   const skillEffects=[{type:'DAMAGE',target:'BOSS',amount:atk*1.65,ignoreDefense:skill1.skill1DamageType==='관통'}];
+   h.lastSkillEffects=skillEffects.map(e=>({...e}));
+   applyRpgEffects(skillEffects,{source:h});
    h.ult=Math.min(100,h.ult+12);
   }
   if((h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill2>=effectiveHeroGap(h,h.skill2Gap)){
@@ -803,7 +905,8 @@ function updateRpg(dt){
   showWarning(nextPhase===3?'⚠ BOSS ENRAGED':'BOSS PHASE '+nextPhase,nextPhase===3?'HP 35% · 최종 광폭화':'공격 패턴 강화',1200);
  }
  updateRpgBossSkills(b);
- const attackGap=b.baseAttackGap/(b.phase===1?1:b.phase===2?1.18:1.4);
+ const bossRate=(b.rateBuffUntil||0)>rpgSimTime?(b.rateBuffMult||1):1;
+ const attackGap=(b.baseAttackGap/(b.phase===1?1:b.phase===2?1.18:1.4))/Math.max(.1,bossRate);
  if(rpgSimTime-b.lastAttack>=attackGap){
   b.lastAttack=rpgSimTime;
   const alive=rpgAliveHeroes();
