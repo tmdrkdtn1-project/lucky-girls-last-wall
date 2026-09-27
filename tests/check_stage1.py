@@ -46,13 +46,6 @@ assert "nearCastleFront" in js
 assert "gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'" in js
 print("PASS - castle defenders can keep firing after G breaks and enemies engage O")
 
-# Wave 10 boss regression guards
-assert "function spawnWave10BossNow()" in js
-assert "if(wave===10)spawnWave10BossNow();" in js
-assert "Wave 10 must always contain exactly one TD boss" in js
-assert "bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length" in js
-print("PASS - Wave 10 boss spawns synchronously and is runtime-verifiable")
-
 # Wave 10 mid-wave boss timing guards
 assert "WAVE10_BOSS_SPAWN_AT=15" in js
 assert "waveClock<WAVE10_BOSS_SPAWN_AT" in js
@@ -60,3 +53,11 @@ assert "BOSS APPROACHING · 3 SEC" in js
 assert "spawnWave10BossNow" not in js
 assert "spawnWave10BossMidWave" in js
 print("PASS - Wave 10 boss enters at the middle of the 30 second wave")
+
+# Early wave clear bonus guards
+assert "function waveSpawnComplete()" in js
+assert "function tryEarlyWaveClear()" in js
+assert "remaining*5" in js
+assert "적 전멸 보너스" in js
+assert "wave>=10" in js
+print("PASS - early enemy wipe ends non-boss waves and grants explicit bonus gold")

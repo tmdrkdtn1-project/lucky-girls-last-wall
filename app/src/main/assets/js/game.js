@@ -40,7 +40,7 @@ const HERO_RECIPES=[
 
 const cells=[], units=new Map(), enemies=[];
 let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
-let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false;
+let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false,waveEnding=false;
 
 const $=id=>document.getElementById(id);
 const grid=$('grid'), unitLayer=$('unitLayer'), enemyLayer=$('enemyLayer'), bottom=$('bottomUI'), actions=$('actions'), title=$('contextTitle');
@@ -276,6 +276,26 @@ function spawnWave10BossMidWave(){
  specialSpawned=true;
  showWarning('⚠ BOSS','FINAL TD BOSS · WAVE 10',1700);
 }
+function waveSpawnComplete(){
+ if(wave===10)return false;
+ const normalsDone=waveSpawned>=normalCountForWave(wave);
+ const specialDone=wave!==5||specialSpawned;
+ return normalsDone&&specialDone;
+}
+function aliveEnemyCount(){return enemies.filter(e=>e.hp>0).length}
+function earlyClearBonus(){
+ const remaining=Math.max(0,Math.ceil(WAVE_DURATION-waveClock));
+ return remaining*5;
+}
+function tryEarlyWaveClear(){
+ if(waveEnding||wave>=10||waveClock>=WAVE_DURATION||!waveSpawnComplete()||aliveEnemyCount()>0)return false;
+ waveEnding=true;
+ const bonus=earlyClearBonus();
+ gold+=bonus;
+ showWarning('적 전멸 보너스','+'+bonus+'G · '+Math.max(0,Math.ceil(WAVE_DURATION-waveClock))+'초 조기 종료',1200);
+ setTimeout(()=>{waveEnding=false;advanceWave()},450);
+ return true;
+}
 function advanceWave(){
  if(wave>=10)return;
  wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;wave10WarningShown=false;
@@ -285,7 +305,7 @@ function loop(ts){
  const raw=Math.min(.05,(ts-last)/1000);last=ts;
  if(running){
   const dt=raw*speed;simTime+=dt;waveClock+=dt;updateEnemies(dt,simTime);updateUnits(simTime);
-  if(wave<10&&waveClock>=WAVE_DURATION)advanceWave();
+  if(!tryEarlyWaveClear()&&wave<10&&waveClock>=WAVE_DURATION)advanceWave();
   renderEnemies();syncHUD();
  }
  requestAnimationFrame(loop);

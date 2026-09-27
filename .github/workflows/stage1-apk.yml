@@ -25,7 +25,8 @@ jobs:
         run: gradle assembleDebug --stacktrace
       - name: Name APK with unique run version
         run: |
-          VERSION_NAME="0.2.0-stage1-alpha-fix-r${GITHUB_RUN_NUMBER}"
+          BASE_VERSION=$(grep 'val baseVersionName =' app/build.gradle.kts | sed -E 's/.*"([^"]+)".*/\1/')
+          VERSION_NAME="${BASE_VERSION}-r${GITHUB_RUN_NUMBER}"
           cp app/build/outputs/apk/debug/app-debug.apk "LuckyGirls_${VERSION_NAME}.apk"
           echo "APK_NAME=LuckyGirls_${VERSION_NAME}.apk" >> "$GITHUB_ENV"
           echo "ARTIFACT_NAME=lucky-girls-${VERSION_NAME}" >> "$GITHUB_ENV"
