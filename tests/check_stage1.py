@@ -438,3 +438,19 @@ assert js.count(":'FREEZE_DURATION_REDUCTION_40'")>=7
 assert js.count(":'PHYSICAL_DAMAGE_REDUCTION_20'")>=3
 assert js.count(":'LOW_HP_BERSERK_40_25'")>=1
 print("PASS - all 17 source-backed enemy definitions map to their audited runtime semantics")
+
+
+# Shared Stage 2+ runtime contract guards
+stage_contract=json.loads((root/"data/stage_runtime_contract_v1.json").read_text(encoding="utf-8"))
+assert stage_contract["schema"]=="LG_STAGE_RUNTIME_CONTRACT_V1"
+inv=stage_contract["invariants"]
+assert (inv["grid_cols"],inv["grid_rows"])==(18,10)
+assert inv["wave_count"]==10 and inv["wave_duration_sec"]==40
+assert inv["wave5_role"]=="MIDBOSS" and inv["wave10_role"]=="TD_BOSS"
+assert (inv["wave10_warning_at_sec"],inv["wave10_boss_spawn_at_sec"],inv["wave10_enrage_at_sec"])==(3,6,40)
+assert inv["wave10_timer_ends_stage"] is False and inv["td_end_condition"]=="BOSS_DEFEATED"
+assert inv["rpg_eligible_heroes"]=="TD_SUMMONED_HEROES_ONLY"
+assert (inv["rpg_hero_count_min"],inv["rpg_hero_count_max"])==(1,5)
+assert inv["rpg_phase_thresholds"]==[0.70,0.35] and inv["rpg_hard_timeout"] is False
+assert inv["stage_clear_condition"]=="RPG_BOSS_DEFEATED"
+print("PASS - shared Stage 2+ contract preserves confirmed combat invariants without inventing stage-specific balance")
