@@ -1,7 +1,7 @@
 {
   "schema": "LG_MAP_HIERARCHY_RUNTIME_V2",
   "authority": {
-    "workbook": "Lucky_Girls_캐릭터도감_MASTER_확정_2026-09-28.xlsx",
+    "workbook": "Lucky_Girls_GAME_DESIGN_MASTER_2026-09-28.xlsx",
     "sha256": "398489cafe1f7c66ad2fe9ceb57f12c2397946218fde6d8c0e5fcae607f2c9b3",
     "sheets": [
       "적군 보스",
@@ -734,6 +734,6 @@
     ],
     "route_policy": "route for single path; routes[] for authoritative multi-entry stages",
     "geometry_source_policy": "Do not invent coordinates. Use approved map reference or explicit design approval.",
-    "wave_source": "Lucky_Girls_캐릭터도감_MASTER_확정_2026-09-28.xlsx / 스테이지_웨이브"
+    "wave_source": "Lucky_Girls_GAME_DESIGN_MASTER_2026-09-28.xlsx / 스테이지_웨이브"
   }
 }
