@@ -326,16 +326,28 @@ print("PASS - Stage 1 Braum S1/S2/S3 are connected through shared RPG effects wi
 # Full 210-skill runtime binding matrix guards
 runtime_bindings=json.loads((root/"data/rpg_runtime_bindings_v1.json").read_text(encoding="utf-8"))
 adapter_backlog=json.loads((root/"data/rpg_runtime_adapter_backlog_v1.json").read_text(encoding="utf-8"))
-assert runtime_bindings["schema"] in ("LG_RPG_RUNTIME_BINDINGS_V1","LG_RPG_RUNTIME_BINDINGS_V1_1","LG_RPG_RUNTIME_BINDINGS_V1_2")
+assert runtime_bindings["schema"]=="LG_RPG_RUNTIME_BINDINGS_V1_2"
 assert runtime_bindings["total"]==210
 assert len(runtime_bindings["items"])==210
 assert sum(runtime_bindings["counts"].values())==210
+assert runtime_bindings["counts"]=={"BINDABLE_CORE":159,"ADAPTER_READY":43,"EXPLICIT_PLAN_READY":5,"LIVE_STAGE1":3}
+translation_items=rpg_translation["hero_skills"]+rpg_translation["boss_skills"]
+translation_keys=[(x["character"],x["skill"]) for x in translation_items]
+binding_keys=[(x["character"],x["skill"]) for x in runtime_bindings["items"]]
+assert len(translation_keys)==210 and len(set(translation_keys))==210
+assert len(binding_keys)==210 and len(set(binding_keys))==210
+assert set(translation_keys)==set(binding_keys)
+allowed_runtime_status={"BINDABLE_CORE","ADAPTER_READY","EXPLICIT_PLAN_READY","LIVE_STAGE1"}
+assert all(x["runtime_status"] in allowed_runtime_status for x in runtime_bindings["items"])
 assert not any(x["runtime_status"]=="BLOCKED_UNSUPPORTED_PRIMITIVE" for x in runtime_bindings["items"])
 assert all(x["unsupported_primitives"]==[] for x in runtime_bindings["items"])
 assert len([x for x in runtime_bindings["items"] if x["runtime_status"]=="LIVE_STAGE1"])==3
 assert any(x["character"]=="아리아" and x["skill"]=="성광 참격" and x["primitive_options"]["ignoreDefense"] for x in runtime_bindings["items"])
 assert adapter_backlog["count"]==len(adapter_backlog["adapters"])
-print("PASS - all 210 RPG skills now have machine-readable runtime bindings; special semantics are isolated in an adapter backlog")
+adapter_ids={a["id"] for a in adapter_backlog["adapters"]}
+assert len(adapter_ids)==13
+assert all(x.get("adapter_id") in adapter_ids for x in runtime_bindings["items"] if x["runtime_status"]=="ADAPTER_READY")
+print("PASS - all 210 RPG skills have unique 1:1 translation/runtime bindings, valid statuses, and valid adapter references")
 
 # RPG adapter runtime V1 guards
 runtime_bindings=json.loads((root/"data/rpg_runtime_bindings_v1.json").read_text(encoding="utf-8"))
@@ -343,7 +355,7 @@ adapter_backlog=json.loads((root/"data/rpg_runtime_adapter_backlog_v1.json").rea
 assert runtime_bindings["schema"]=="LG_RPG_RUNTIME_BINDINGS_V1_2"
 assert adapter_backlog["schema"]=="LG_RPG_RUNTIME_ADAPTER_BACKLOG_V1_2"
 assert adapter_backlog["implemented_count"]==13 and adapter_backlog["pending_count"]==0
-assert all(a["status"] in {"IMPLEMENTED_V1","IMPLEMENTED_V1_1"} for a in adapter_backlog["adapters"])
+assert all(a["status"]=="IMPLEMENTED_V1" for a in adapter_backlog["adapters"])
 assert "const RPG_ADAPTER_RUNTIME_VERSION='LG_RPG_ADAPTER_RUNTIME_V1_1'" in js
 assert "function runRpgAdapter(id,params={},ctx={})" in js
 for adapter_id in ["CHANCE_TRIGGER","CONDITIONAL_EXECUTE","COPY_EFFECT","DEATH_PREVENTION","ECONOMY_DISABLED_IN_RPG","MULTI_HIT_SEQUENCE","RPG_SLOW_TO_ACTION_RATE","SUMMON_AWARE_TARGETING","TIME_REWIND","TRANSFER_CHAIN","ULT_GAUGE_MOD","CONDITIONAL_EFFECT","TELEGRAPH_SEQUENCE"]:
