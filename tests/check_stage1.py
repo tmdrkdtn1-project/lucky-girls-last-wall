@@ -573,3 +573,15 @@ assert js.count("mode:'NORMAL'") >= 1
 assert html.count('data-stage=') == 5
 assert 'data-stage="6"' not in html
 print("PASS - authoritative workbook hierarchy: NORMAL 1-30 across six 5-stage local maps; HARD 31-50 uses 3/3/3/3/3/5 local-map counts")
+
+# Data-driven stage-map loader guards
+assert "async function loadStageMapRuntime(selection)" in js
+assert "function validateStageMapData(data)" in js
+assert "function applyStageMapData(data)" in js
+assert "function rebuildStageGrid()" in js
+assert "await fetch(stage.dataPath)" in js
+assert "COLS=data.grid.cols;ROWS=data.grid.rows;CELL_COUNT=COLS*ROWS" in js
+assert "route=data.route.map" in js
+assert "TILE_ROWS=data.tile_rows.slice()" in js
+assert "18x10 grid build failed" not in js
+print("PASS - stage geometry is data-driven; Stage 1 JSON is the first runtime map and future stages do not require hardcoded grid geometry")
