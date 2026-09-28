@@ -544,8 +544,13 @@ assert "amount:atk*1.65" not in js
 print("PASS - 20 RPG hero definitions and per-hero skill runtime are wired")
 
 # TD all-hero runtime registry guard
-assert js.count("prototypeRecipe:true") == 19
 for hero in ["ARIA","YUNA","RIEL","RUBY","ERIKA","SERA","REINA","KARIN","BELL","MIA","IRENE","NEON","SASHA","LUNA","VIOLA","CHLOE","ADEL","NIA","AURORA","EVE"]:
     assert "id:'"+hero+"'" in js, f"missing TD hero registry entry: {hero}"
-assert "prototypeRecipe:true" in js
-print("PASS - all 20 heroes are summonable runtime entities; unconfirmed non-Aria recipes remain explicitly prototype-only")
+assert "prototypeRecipe:true" not in js
+assert 'recipeNames:["기사단장","기사단장"]' in js
+assert 'recipeNames:["아이돌","주술사"]' in js
+assert 'recipeNames:["광전사","연사궁병"]' in js
+assert 'recipeNames:["대형 발리스타","연사 감시탑","루비"]' in js
+assert 'recipeNames:["아이돌","1급 얼음수정","카린"]' in js
+assert "recipeRuntimeComplete:" in js
+print("PASS - all 20 authoritative workbook hero recipes are locked; runtime material IDs are separately tracked")
