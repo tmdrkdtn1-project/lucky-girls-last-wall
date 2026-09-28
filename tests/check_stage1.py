@@ -581,7 +581,8 @@ assert "function applyStageMapData(data)" in js
 assert "function rebuildStageGrid()" in js
 assert "await fetch(stage.dataPath)" in js
 assert "COLS=data.grid.cols;ROWS=data.grid.rows;CELL_COUNT=COLS*ROWS" in js
-assert "route=data.route.map" in js
+assert "const paths=data.routes||[data.route]" in js
+assert "route=paths[0].map" in js
 assert "TILE_ROWS=data.tile_rows.slice()" in js
 assert "18x10 grid build failed" not in js
 print("PASS - stage geometry is data-driven; Stage 1 JSON is the first runtime map and future stages do not require hardcoded grid geometry")
