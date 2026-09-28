@@ -35,26 +35,26 @@ const UNIT_DEFS={
 const STAGE1_BASE_IDS=['watchtower','knight1','archer1','lancer1'];
 
 const HERO_RECIPES=[
- {id:'ARIA',name:'아리아',rarity:'LEGENDARY',materials:[{type:'knight3_commander',count:2}],atk:72,range:3.0,rate:1.20},
- {id:'YUNA',name:'유나',rarity:'LEGENDARY',materials:[],atk:42,range:4,rate:1.1,prototypeRecipe:true},
- {id:'RIEL',name:'리엘',rarity:'LEGENDARY',materials:[],atk:90,range:4,rate:1.2,prototypeRecipe:true},
- {id:'RUBY',name:'루비',rarity:'LEGENDARY',materials:[],atk:72,range:4,rate:1.4,prototypeRecipe:true},
- {id:'ERIKA',name:'에리카',rarity:'LEGENDARY',materials:[],atk:84,range:1,rate:1.3,prototypeRecipe:true},
- {id:'SERA',name:'세라',rarity:'LEGENDARY',materials:[],atk:30,range:3,rate:1.2,prototypeRecipe:true},
- {id:'REINA',name:'레이나',rarity:'LEGENDARY',materials:[],atk:58,range:4,rate:1.1,prototypeRecipe:true},
- {id:'KARIN',name:'카린',rarity:'LEGENDARY',materials:[],atk:82,range:2,rate:1.7,prototypeRecipe:true},
- {id:'BELL',name:'벨',rarity:'MYTHIC',materials:[],atk:70,range:4,rate:1.2,prototypeRecipe:true},
- {id:'MIA',name:'미아',rarity:'MYTHIC',materials:[],atk:88,range:4,rate:1.5,prototypeRecipe:true},
- {id:'IRENE',name:'아이린',rarity:'MYTHIC',materials:[],atk:96,range:2,rate:1.3,prototypeRecipe:true},
- {id:'NEON',name:'네온',rarity:'MYTHIC',materials:[],atk:82,range:4,rate:1.4,prototypeRecipe:true},
- {id:'SASHA',name:'샤샤',rarity:'MYTHIC',materials:[],atk:100,range:5,rate:1.1,prototypeRecipe:true},
- {id:'LUNA',name:'루나',rarity:'MYTHIC',materials:[],atk:60,range:5,rate:1.2,prototypeRecipe:true},
- {id:'VIOLA',name:'비올라',rarity:'MYTHIC',materials:[],atk:78,range:4,rate:1.3,prototypeRecipe:true},
- {id:'CHLOE',name:'클로에',rarity:'MYTHIC',materials:[],atk:45,range:4,rate:1.4,prototypeRecipe:true},
- {id:'ADEL',name:'아델',rarity:'MYTHIC',materials:[],atk:76,range:1,rate:1.1,prototypeRecipe:true},
- {id:'NIA',name:'니아',rarity:'MYTHIC',materials:[],atk:98,range:4,rate:1.3,prototypeRecipe:true},
- {id:'AURORA',name:'오로라',rarity:'MYTHIC',materials:[],atk:94,range:5,rate:1.2,prototypeRecipe:true},
- {id:'EVE',name:'이브',rarity:'MYTHIC',materials:[],atk:62,range:5,rate:1.3,prototypeRecipe:true}
+ {id:'ARIA',name:'아리아',rarity:'LEGENDARY',recipeNames:["기사단장","기사단장"],materials:[{"type":"knight3_commander","count":2}],recipeRuntimeComplete:true,atk:72,range:3,rate:1.2},
+ {id:'YUNA',name:'유나',rarity:'LEGENDARY',recipeNames:["주술사","대현자"],materials:[],recipeRuntimeComplete:false,atk:42,range:4,rate:1.1},
+ {id:'RIEL',name:'리엘',rarity:'LEGENDARY',recipeNames:["1급 용암수정","대현자"],materials:[],recipeRuntimeComplete:false,atk:90,range:4,rate:1.2},
+ {id:'RUBY',name:'루비',rarity:'LEGENDARY',recipeNames:["연사궁병","연사 감시탑"],materials:[{"type":"archer3_rapid","count":1},{"type":"watchtower3_rapid","count":1}],recipeRuntimeComplete:true,atk:72,range:4,rate:1.4},
+ {id:'ERIKA',name:'에리카',rarity:'LEGENDARY',recipeNames:["광전사","마창병"],materials:[{"type":"knight3_berserker","count":1},{"type":"lancer3_magic","count":1}],recipeRuntimeComplete:true,atk:84,range:1,rate:1.3},
+ {id:'SERA',name:'세라',rarity:'LEGENDARY',recipeNames:["아이돌","주술사"],materials:[],recipeRuntimeComplete:false,atk:30,range:3,rate:1.2},
+ {id:'REINA',name:'레이나',rarity:'LEGENDARY',recipeNames:["1급 얼음수정","대현자"],materials:[],recipeRuntimeComplete:false,atk:58,range:4,rate:1.1},
+ {id:'KARIN',name:'카린',rarity:'LEGENDARY',recipeNames:["광전사","연사궁병"],materials:[{"type":"knight3_berserker","count":1},{"type":"archer3_rapid","count":1}],recipeRuntimeComplete:true,atk:82,range:2,rate:1.7},
+ {id:'BELL',name:'벨',rarity:'MYTHIC',recipeNames:["주술사","충만한 마력수정","유나"],materials:[],recipeRuntimeComplete:false,atk:70,range:4,rate:1.2},
+ {id:'MIA',name:'미아',rarity:'MYTHIC',recipeNames:["대형 발리스타","연사 감시탑","루비"],materials:[{"type":"watchtower3_rapid","count":1}],recipeRuntimeComplete:false,atk:88,range:4,rate:1.5},
+ {id:'IRENE',name:'아이린',rarity:'MYTHIC',recipeNames:["기사단장","마력 캐논타워","아리아"],materials:[{"type":"knight3_commander","count":1}],recipeRuntimeComplete:false,atk:96,range:2,rate:1.3},
+ {id:'NEON',name:'네온',rarity:'MYTHIC',recipeNames:["흑마법사","대현자","유나"],materials:[],recipeRuntimeComplete:false,atk:82,range:4,rate:1.4},
+ {id:'SASHA',name:'샤샤',rarity:'MYTHIC',recipeNames:["봄버 캐논타워","석궁수","루비"],materials:[{"type":"archer3_crossbow","count":1}],recipeRuntimeComplete:false,atk:100,range:5,rate:1.1},
+ {id:'LUNA',name:'루나',rarity:'MYTHIC',recipeNames:["대현자","충만한 마력수정","레이나"],materials:[],recipeRuntimeComplete:false,atk:60,range:5,rate:1.2},
+ {id:'VIOLA',name:'비올라',rarity:'MYTHIC',recipeNames:["흑마법사","죽음의 화신","유나"],materials:[],recipeRuntimeComplete:false,atk:78,range:4,rate:1.3},
+ {id:'CHLOE',name:'클로에',rarity:'MYTHIC',recipeNames:["아이돌","주술사","세라"],materials:[],recipeRuntimeComplete:false,atk:45,range:4,rate:1.4},
+ {id:'ADEL',name:'아델',rarity:'MYTHIC',recipeNames:["기사단장","미스릴 방어벽","아리아"],materials:[{"type":"knight3_commander","count":1}],recipeRuntimeComplete:false,atk:76,range:1,rate:1.1},
+ {id:'NIA',name:'니아',rarity:'MYTHIC',recipeNames:["흑마법사","마녀대모","리엘"],materials:[],recipeRuntimeComplete:false,atk:98,range:4,rate:1.3},
+ {id:'AURORA',name:'오로라',rarity:'MYTHIC',recipeNames:["주술사","충만한 마력수정","세라"],materials:[],recipeRuntimeComplete:false,atk:94,range:5,rate:1.2},
+ {id:'EVE',name:'이브',rarity:'MYTHIC',recipeNames:["아이돌","1급 얼음수정","카린"],materials:[],recipeRuntimeComplete:false,atk:62,range:5,rate:1.3}
 ];
 
 const cells=[], units=new Map(), enemies=[];
