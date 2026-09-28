@@ -346,7 +346,7 @@ assert any(x["character"]=="아리아" and x["skill"]=="성광 참격" and x["pr
 assert adapter_backlog["count"]==len(adapter_backlog["adapters"])
 adapter_ids={a["id"] for a in adapter_backlog["adapters"]}
 assert len(adapter_ids)==13
-assert all(x.get("adapter_id") in adapter_ids for x in runtime_bindings["items"] if x["runtime_status"]=="ADAPTER_READY")
+assert all(x.get("adapters") and all(adapter_id in adapter_ids for adapter_id in x["adapters"]) for x in runtime_bindings["items"] if x["runtime_status"]=="ADAPTER_READY")
 print("PASS - all 210 RPG skills have unique 1:1 translation/runtime bindings, valid statuses, and valid adapter references")
 
 # RPG adapter runtime V1 guards
