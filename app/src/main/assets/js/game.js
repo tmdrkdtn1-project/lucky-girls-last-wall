@@ -33,14 +33,25 @@ const UNIT_DEFS={
  lancer3_magic:{id:'lancer3_magic',family:'LANCER',tier:3,name:'마창병',short:'마창',cost:195,atk:34,range:4.0,rate:1.05,damageType:'관통/지속',targetCount:2,dotDuration:4,dotTick:1,dotRatio:.25,air:true,next:[]}
 };
 const STAGE_RUNTIME_REGISTRY={
- 1:{id:1,dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],status:'IMPLEMENTED'}
+ 1:{id:1,dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],status:'IMPLEMENTED',label:'서부 왕국 · 산악 초입'},
+ 2:{id:2,dataPath:'data/stage02.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 2'},
+ 3:{id:3,dataPath:'data/stage03.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 3'},
+ 4:{id:4,dataPath:'data/stage04.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 4'},
+ 5:{id:5,dataPath:'data/stage05.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 5'},
+ 6:{id:6,dataPath:'data/stage06.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 6'}
 };
 let activeStageRuntime=STAGE_RUNTIME_REGISTRY[1];
 function stageBaseUnitIds(){return activeStageRuntime.baseUnitIds}
 function selectStageRuntime(stageId){
  const stage=STAGE_RUNTIME_REGISTRY[stageId];
- if(!stage)throw new Error('Stage '+stageId+' runtime is not implemented');
+ if(!stage||stage.status!=='IMPLEMENTED')throw new Error('Stage '+stageId+' runtime is not implemented');
  activeStageRuntime=stage;playerProfile.selectedStage=stageId;return stage;
+}
+function availableMasterStages(){return Object.values(STAGE_RUNTIME_REGISTRY).map(s=>({id:s.id,label:s.label,status:s.status}))}
+function syncStageHud(){
+ const stage=activeStageRuntime||STAGE_RUNTIME_REGISTRY[1];
+ const hud=document.querySelector('#topHUD .hudBox');if(hud)hud.textContent='STAGE '+stage.id;
+ const banner=document.getElementById('stageBanner');if(banner)banner.textContent=stage.label+' · '+COLS+'×'+ROWS+' PLAYABLE BLOCKOUT';
 }
 
 const HERO_RECIPES=[
@@ -1342,7 +1353,7 @@ $('pause').onclick=()=>{
 syncPauseButton();
 
 function startPrototypeBattle(profile){
- playerProfile=profile;selectStageRuntime(profile.selectedStage||1);
+ playerProfile=profile;selectStageRuntime(profile.selectedStage||1);syncStageHud();
  gold=profile.infiniteGold?500:500;
  $('prototypeLobby').classList.add('off');$('app').classList.remove('prototypeBattleHidden');running=true;last=performance.now();syncHUD();
 }
