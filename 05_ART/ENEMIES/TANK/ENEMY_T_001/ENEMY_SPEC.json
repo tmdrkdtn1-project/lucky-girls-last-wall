@@ -1,0 +1,6 @@
+﻿{
+    "category":  "TANK",
+    "master_locked":  false,
+    "id":  "ENEMY_T_001",
+    "type":  "enemy"
+}

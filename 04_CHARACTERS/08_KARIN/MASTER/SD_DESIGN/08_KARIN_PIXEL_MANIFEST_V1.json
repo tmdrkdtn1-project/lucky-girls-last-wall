@@ -1,0 +1,73 @@
+{
+  "project": "Lucky Girls: Last Wall",
+  "character_id": "08_KARIN",
+  "character_name": "카린",
+  "pixel_standard": {
+    "canvas_width": 96,
+    "canvas_height": 96,
+    "character_height_target": 72,
+    "fps": 12,
+    "palette_target_colors": "12-16",
+    "view": "3/4 front"
+  },
+  "identity_keys": {
+    "silhouette": [
+      "long black hair",
+      "slim upper body",
+      "defined waist-hip contrast",
+      "dagger user silhouette"
+    ],
+    "hair_key": [
+      "long black hair",
+      "red hair ornament"
+    ],
+    "color_key": [
+      "charcoal black",
+      "crimson red",
+      "pale skin"
+    ],
+    "costume_key": [
+      "tight assassin outfit",
+      "waist emphasis",
+      "hip/thigh emphasis",
+      "strap/garter motifs"
+    ],
+    "weapon_key": [
+      "dagger",
+      "dual dagger allowed"
+    ],
+    "sexy_appeal_focus": [
+      "waist/hip silhouette",
+      "hip/underbutt emphasis",
+      "bust silhouette under clothing"
+    ],
+    "sexy_mood": "dangerous and provocative assassin"
+  },
+  "actions": {
+    "IDLE": {
+      "frames": 6,
+      "spec_file": "08_KARIN_IDLE_6F_SPEC_V1.md"
+    },
+    "MOVE": {
+      "frames": 8
+    },
+    "ATTACK_01": {
+      "frames": 6
+    },
+    "SKILL_01": {
+      "frames": 8
+    },
+    "HIT": {
+      "frames": 3
+    },
+    "DOWN": {
+      "frames": 5
+    }
+  },
+  "files": {
+    "design_spec": "08_KARIN_SD_DESIGN_SPEC_V1.md",
+    "production_tasklist": "08_KARIN_PIXEL_PRODUCTION_TASKLIST_V1.md",
+    "idle_spec": "08_KARIN_IDLE_6F_SPEC_V1.md"
+  },
+  "status": "PILOT_DRAFT"
+}
