@@ -22,7 +22,8 @@ print("PASS - clean Stage 1 baseline")
 # V2 regression guards
 assert "기사단장" in js and "광전사" in js and "상급 기사" in js
 assert "마탑 수습생" not in js  # Stage 5 unlock must not leak into Stage 1 placement
-assert "materials:[{type:'knight3_commander',count:2}]" in js
+assert 'recipeNames:["기사단장","기사단장"]' in js
+assert '"type":"knight3_commander","count":2' in js
 assert "replaceUnit" not in js
 assert "wave===5" in js and "midboss" in js
 assert "normalCountForWave(w){return (10+w*2)*2}" in js
