@@ -481,3 +481,16 @@ for token in [
  "luckyRoulette:{roll:(v)=>luckyOutcomeRoll(v)"
 ]: assert token in js, "missing Lucky Roulette runtime guard: "+token
 print("PASS - Lucky Roulette probability, reset, 45% natural build, 40% buff cap and midboss choice core are guarded")
+
+
+# Lucky Roulette playable UI guards
+html=(root/"index.html").read_text(encoding="utf-8")
+css=(root/"css/game.css").read_text(encoding="utf-8")
+for token in ['id="luckyRouletteButton"','id="luckyJackpotPct"','id="luckyModal"','id="luckyWheel"','id="luckyRewardChoices"','id="luckySpinButton"','id="luckyFireworks"']:
+    assert token in html, "missing Lucky Roulette UI: "+token
+for token in [".luckyRouletteButton{",".luckyModal.on{display:flex}",".luckyWheel.spinning{animation:luckySpin","@keyframes luckySpin","@keyframes luckyFireworks"]:
+    assert token in css, "missing Lucky Roulette presentation: "+token
+for token in ["function openLuckyModal()","function runLuckySpinPresentation()","function showMidbossRewardModal()","$('luckyRouletteButton').onclick=openLuckyModal","$('luckySpinButton').onclick=runLuckySpinPresentation","syncLuckyHud()"]:
+    assert token in js, "missing Lucky Roulette UI runtime: "+token
+assert "PlayerProfile 보유 영웅 데이터 연결 후 활성화" in js
+print("PASS - Lucky Roulette button, spin/result/reward UI, fireworks and midboss choice overlay are wired; owned-hero rewards remain explicitly PlayerProfile-gated")
