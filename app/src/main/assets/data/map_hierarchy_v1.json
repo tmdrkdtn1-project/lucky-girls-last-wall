@@ -1,5 +1,18 @@
 {
-  "schema": "LG_MAP_HIERARCHY_RUNTIME_V1",
+  "schema": "LG_MAP_HIERARCHY_RUNTIME_V2",
+  "authority": {
+    "workbook": "Lucky_Girls_캐릭터도감_MASTER_확정_2026-09-28.xlsx",
+    "sha256": "398489cafe1f7c66ad2fe9ceb57f12c2397946218fde6d8c0e5fcae607f2c9b3",
+    "sheets": [
+      "적군 보스",
+      "HARD31_36_1주성장벽",
+      "HARD37_45_성장벽",
+      "HARD46_50_최종성장벽",
+      "HARD31_33_REDESIGN",
+      "HARD34_44_TD_RPG통합",
+      "HARD45_50_FINAL_DESIGN"
+    ]
+  },
   "hierarchy": [
     "WORLD",
     "LOCAL_MAP",
@@ -8,54 +21,392 @@
   "modes": {
     "NORMAL": {
       "stage_count_policy": "FIXED_PER_LOCAL_MAP",
-      "normal_stages_per_local_map": 5
+      "count": 5,
+      "global_range": [
+        1,
+        30
+      ]
     },
     "HARD": {
       "stage_count_policy": "VARIABLE_PER_LOCAL_MAP",
-      "hard_stage_counts_source": "AUTHORITATIVE_MAP_MASTER_REQUIRED",
-      "do_not_assume_fixed_count": true
+      "global_range": [
+        31,
+        50
+      ]
     }
   },
   "worlds": [
     {
       "id": "WORLD_01",
-      "status": "PARTIAL_RUNTIME",
       "local_maps": [
         {
-          "id": "LOCAL_01",
+          "id": "LOCAL_WEST",
+          "normal_name": "서부 왕국",
+          "hard_name": "타락한 서부 왕국",
           "normal": {
+            "stage_count": 5,
             "stages": [
               {
-                "id": "NORMAL_01_01",
-                "ordinal": 1,
+                "stage": 1,
+                "id": "NORMAL_01",
                 "status": "IMPLEMENTED",
                 "data_path": "data/stage01.json"
               },
               {
-                "id": "NORMAL_01_02",
-                "ordinal": 2,
-                "status": "PLANNED"
+                "stage": 2,
+                "id": "NORMAL_02",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
               },
               {
-                "id": "NORMAL_01_03",
-                "ordinal": 3,
-                "status": "PLANNED"
+                "stage": 3,
+                "id": "NORMAL_03",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
               },
               {
-                "id": "NORMAL_01_04",
-                "ordinal": 4,
-                "status": "PLANNED"
+                "stage": 4,
+                "id": "NORMAL_04",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
               },
               {
-                "id": "NORMAL_01_05",
-                "ordinal": 5,
-                "status": "PLANNED"
+                "stage": 5,
+                "id": "NORMAL_05",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
               }
             ]
           },
           "hard": {
-            "stages": [],
-            "status": "AWAITING_AUTHORITATIVE_STAGE_COUNT"
+            "stage_count": 3,
+            "stages": [
+              {
+                "stage": 31,
+                "id": "HARD_31",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 32,
+                "id": "HARD_32",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 33,
+                "id": "HARD_33",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              }
+            ]
+          }
+        },
+        {
+          "id": "LOCAL_BELOZAR",
+          "normal_name": "벨로자르 제국",
+          "hard_name": "타락한 벨로자르 제국",
+          "normal": {
+            "stage_count": 5,
+            "stages": [
+              {
+                "stage": 16,
+                "id": "NORMAL_16",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 17,
+                "id": "NORMAL_17",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 18,
+                "id": "NORMAL_18",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 19,
+                "id": "NORMAL_19",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 20,
+                "id": "NORMAL_20",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              }
+            ]
+          },
+          "hard": {
+            "stage_count": 3,
+            "stages": [
+              {
+                "stage": 34,
+                "id": "HARD_34",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 35,
+                "id": "HARD_35",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 36,
+                "id": "HARD_36",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              }
+            ]
+          }
+        },
+        {
+          "id": "LOCAL_AZAR",
+          "normal_name": "아자르 삼국연합",
+          "hard_name": "타락한 아자르 삼국연합",
+          "normal": {
+            "stage_count": 5,
+            "stages": [
+              {
+                "stage": 6,
+                "id": "NORMAL_06",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 7,
+                "id": "NORMAL_07",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 8,
+                "id": "NORMAL_08",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 9,
+                "id": "NORMAL_09",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 10,
+                "id": "NORMAL_10",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              }
+            ]
+          },
+          "hard": {
+            "stage_count": 3,
+            "stages": [
+              {
+                "stage": 37,
+                "id": "HARD_37",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 38,
+                "id": "HARD_38",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 39,
+                "id": "HARD_39",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              }
+            ]
+          }
+        },
+        {
+          "id": "LOCAL_HAERYUN",
+          "normal_name": "해륜왕국",
+          "hard_name": "타락한 해륜왕국",
+          "normal": {
+            "stage_count": 5,
+            "stages": [
+              {
+                "stage": 11,
+                "id": "NORMAL_11",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 12,
+                "id": "NORMAL_12",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 13,
+                "id": "NORMAL_13",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 14,
+                "id": "NORMAL_14",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 15,
+                "id": "NORMAL_15",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              }
+            ]
+          },
+          "hard": {
+            "stage_count": 3,
+            "stages": [
+              {
+                "stage": 40,
+                "id": "HARD_40",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 41,
+                "id": "HARD_41",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 42,
+                "id": "HARD_42",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              }
+            ]
+          }
+        },
+        {
+          "id": "LOCAL_SAINTARC",
+          "normal_name": "생트아르크 교황령",
+          "hard_name": "암운이 드리운 생트아르크 교황령",
+          "normal": {
+            "stage_count": 5,
+            "stages": [
+              {
+                "stage": 21,
+                "id": "NORMAL_21",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 22,
+                "id": "NORMAL_22",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 23,
+                "id": "NORMAL_23",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 24,
+                "id": "NORMAL_24",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 25,
+                "id": "NORMAL_25",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              }
+            ]
+          },
+          "hard": {
+            "stage_count": 3,
+            "stages": [
+              {
+                "stage": 43,
+                "id": "HARD_43",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 44,
+                "id": "HARD_44",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 45,
+                "id": "HARD_45",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              }
+            ]
+          }
+        },
+        {
+          "id": "LOCAL_SANDRAK",
+          "normal_name": "상드라크 제국",
+          "hard_name": "심연에 침식당한 상드라크 제국",
+          "normal": {
+            "stage_count": 5,
+            "stages": [
+              {
+                "stage": 26,
+                "id": "NORMAL_26",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 27,
+                "id": "NORMAL_27",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 28,
+                "id": "NORMAL_28",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 29,
+                "id": "NORMAL_29",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              },
+              {
+                "stage": 30,
+                "id": "NORMAL_30",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "data_path": null
+              }
+            ]
+          },
+          "hard": {
+            "stage_count": 5,
+            "stages": [
+              {
+                "stage": 46,
+                "id": "HARD_46",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 47,
+                "id": "HARD_47",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 48,
+                "id": "HARD_48",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 49,
+                "id": "HARD_49",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              },
+              {
+                "stage": 50,
+                "id": "HARD_50",
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+              }
+            ]
           }
         }
       ]
@@ -63,8 +414,9 @@
   ],
   "invariants": [
     "WORLD, LOCAL_MAP, and STAGE_MAP are distinct identifiers.",
-    "NORMAL local maps contain 5 stage maps.",
-    "HARD stage-map counts vary by local map and must never be inferred from NORMAL.",
-    "A MASTER profile selects an existing stage map; it does not globally unlock unrelated stage runtime units."
+    "NORMAL has exactly 5 stage maps per local map (30 total).",
+    "HARD local-map stage counts come from the authoritative workbook: 3,3,3,3,3,5 (20 total).",
+    "MASTER selects a stage map; it does not globally unlock unrelated stage runtime units.",
+    "Workbook-authoritative values must not be guessed or replaced by legacy summary text."
   ]
 }
