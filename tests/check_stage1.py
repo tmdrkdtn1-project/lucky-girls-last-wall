@@ -494,3 +494,14 @@ for token in ["function openLuckyModal()","function runLuckySpinPresentation()",
     assert token in js, "missing Lucky Roulette UI runtime: "+token
 assert "PlayerProfile 보유 영웅 데이터 연결 후 활성화" in js
 print("PASS - Lucky Roulette button, spin/result/reward UI, fireworks and midboss choice overlay are wired; owned-hero rewards remain explicitly PlayerProfile-gated")
+
+
+# Prototype profile lobby + hero skill unlock guards
+assert 'id="prototypeLobby"' in html and 'data-profile="BASIC"' in html and 'data-profile="MASTER"' in html
+assert 'data-gold="BASIC"' in html and 'data-gold="INFINITE"' in html
+for lv in [10,20,30,50,100]:
+    assert f'data-level="{lv}"' in html
+for token in ["const ALL_HERO_IDS=","function heroSkillUnlocked(slot)","type:'MASTER',ownedHeroes:[...ALL_HERO_IDS]","infiniteGold:masterGold==='INFINITE'","heroSkillUnlocked(3)&&now-(u.lastSkill3","heroSkillUnlocked(2)&&now-(u.lastSkill2","rpgAutoBattle&&heroSkillUnlocked(3)","!heroSkillUnlocked(3)||h.ult<100","heroSkillUnlocked(2)&&(h.skillBlockUntil"]:
+    assert token in js, "missing prototype profile/skill gate: "+token
+assert "slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30" in js
+print("PASS - BASIC/MASTER prototype lobby and Lv10/20/30 skill gates are wired")
