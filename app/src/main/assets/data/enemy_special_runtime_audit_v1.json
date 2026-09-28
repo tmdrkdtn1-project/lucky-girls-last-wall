@@ -1,0 +1,403 @@
+{
+  "schema": "LG_ENEMY_SPECIAL_RUNTIME_AUDIT_V1",
+  "source": "combat_registry_v1.json / skill_enemies",
+  "count": 35,
+  "counts": {
+    "SOURCE_GAP": 7,
+    "SEMANTIC_READY_BALANCE_PENDING": 11,
+    "SPEC_READY": 17
+  },
+  "policy": [
+    "Do not invent missing numeric balance values.",
+    "SPEC_READY means the source provides enough explicit behavior to encode without a new balance decision.",
+    "SEMANTIC_READY_BALANCE_PENDING preserves the source mechanic but requires numeric tuning before live runtime.",
+    "SOURCE_GAP requires source/design clarification; do not infer the missing special-effect behavior."
+  ],
+  "items": [
+    {
+      "id": "ENEMY_SPECIAL_01",
+      "region": "서부 왕국",
+      "name": "화약 밀수꾼",
+      "td_role": "사망 시 폭발",
+      "special_effect": "없음",
+      "runtime_status": "SOURCE_GAP",
+      "runtime_semantic": null,
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음",
+      "note": "폭발형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_02",
+      "region": "서부 왕국",
+      "name": "광산 파괴자",
+      "td_role": "방어벽 특화",
+      "special_effect": "방어벽 대상 피해 증가",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "방어벽 압박"
+    },
+    {
+      "id": "ENEMY_SPECIAL_03",
+      "region": "서부 왕국",
+      "name": "뿔멧돼지",
+      "td_role": "돌진",
+      "special_effect": "없음",
+      "runtime_status": "SOURCE_GAP",
+      "runtime_semantic": null,
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음",
+      "note": "야수"
+    },
+    {
+      "id": "ENEMY_SPECIAL_04",
+      "region": "서부 왕국",
+      "name": "절벽 매",
+      "td_role": "공중",
+      "special_effect": "지형 무시 비행",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FLYING_TERRAIN_IGNORE",
+      "source_gap": null,
+      "note": "공중형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_05",
+      "region": "서부 왕국",
+      "name": "암석 골렘",
+      "td_role": "고HP",
+      "special_effect": "빙결 지속시간 40% 감소",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40",
+      "source_gap": null,
+      "note": "중장형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_06",
+      "region": "서부 왕국",
+      "name": "최초의 골렘 아즈로",
+      "td_role": "고HP/고방어",
+      "special_effect": "빙결 지속시간 40% 감소",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40",
+      "source_gap": null,
+      "note": "중장형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_07",
+      "region": "아자르 삼국연합",
+      "name": "독침 암살자",
+      "td_role": "독 지속피해",
+      "special_effect": "없음",
+      "runtime_status": "SOURCE_GAP",
+      "runtime_semantic": null,
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음",
+      "note": "상태이상형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_08",
+      "region": "아자르 삼국연합",
+      "name": "사막 주술사",
+      "td_role": "주변 적 버프",
+      "special_effect": "주변 적 이동속도/방어 소폭 증가",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "버퍼"
+    },
+    {
+      "id": "ENEMY_SPECIAL_09",
+      "region": "아자르 삼국연합",
+      "name": "모래 전갈",
+      "td_role": "독 지속피해",
+      "special_effect": "없음",
+      "runtime_status": "SOURCE_GAP",
+      "runtime_semantic": null,
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음",
+      "note": "독충"
+    },
+    {
+      "id": "ENEMY_SPECIAL_10",
+      "region": "아자르 삼국연합",
+      "name": "모래망령",
+      "td_role": "회피/물리저항",
+      "special_effect": "물리 피해 20% 경감",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "PHYSICAL_DAMAGE_REDUCTION_20",
+      "source_gap": null,
+      "note": "영체"
+    },
+    {
+      "id": "ENEMY_SPECIAL_11",
+      "region": "해륜왕국",
+      "name": "폭약 해적",
+      "td_role": "광역 폭발",
+      "special_effect": "사망/접촉 시 소규모 폭발",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "폭발형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_12",
+      "region": "해륜왕국",
+      "name": "그림자 닌자",
+      "td_role": "일시 은신",
+      "special_effect": "없음",
+      "runtime_status": "SOURCE_GAP",
+      "runtime_semantic": null,
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음",
+      "note": "은신형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_13",
+      "region": "해륜왕국",
+      "name": "해룡 치어",
+      "td_role": "공중/고속",
+      "special_effect": "지형 무시 비행",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FLYING_TERRAIN_IGNORE",
+      "source_gap": null,
+      "note": "공중형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_14",
+      "region": "해륜왕국",
+      "name": "물귀신",
+      "td_role": "특수 이동",
+      "special_effect": "물리 피해 20% 경감",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "PHYSICAL_DAMAGE_REDUCTION_20",
+      "source_gap": null,
+      "note": "영체"
+    },
+    {
+      "id": "ENEMY_SPECIAL_15",
+      "region": "해륜왕국",
+      "name": "해파리 정령",
+      "td_role": "감속/마비",
+      "special_effect": "없음",
+      "runtime_status": "SOURCE_GAP",
+      "runtime_semantic": null,
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음",
+      "note": "상태이상형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_16",
+      "region": "해륜왕국",
+      "name": "심해 촉수수",
+      "td_role": "방어벽 압박",
+      "special_effect": "방어벽 대상 피해 증가",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "방어벽 압박"
+    },
+    {
+      "id": "ENEMY_SPECIAL_17",
+      "region": "해륜왕국",
+      "name": "심연의 고르라켄",
+      "td_role": "방어벽 무효 / 고HP",
+      "special_effect": "방어벽 대상 피해 증가",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "방어벽 압박"
+    },
+    {
+      "id": "ENEMY_SPECIAL_18",
+      "region": "벨로자르 제국",
+      "name": "동토 광전사",
+      "td_role": "저HP 광폭",
+      "special_effect": "HP 40% 이하에서 이속·방벽피해 +25%",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "LOW_HP_BERSERK_40_25",
+      "source_gap": null,
+      "note": "광폭형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_19",
+      "region": "벨로자르 제국",
+      "name": "금단 주술사",
+      "td_role": "적 버프",
+      "special_effect": "주변 적 이동속도/방어 소폭 증가",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "버퍼"
+    },
+    {
+      "id": "ENEMY_SPECIAL_20",
+      "region": "벨로자르 제국",
+      "name": "설산 독수리",
+      "td_role": "공중",
+      "special_effect": "지형 무시 비행",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FLYING_TERRAIN_IGNORE",
+      "source_gap": null,
+      "note": "공중형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_21",
+      "region": "벨로자르 제국",
+      "name": "서리 골렘",
+      "td_role": "방어벽 파괴",
+      "special_effect": "빙결 지속시간 40% 감소",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40",
+      "source_gap": null,
+      "note": "방어벽 압박"
+    },
+    {
+      "id": "ENEMY_SPECIAL_22",
+      "region": "벨로자르 제국",
+      "name": "무언의 사로스",
+      "td_role": "방어벽 무효 / 고hp / 캐릭터 빙결",
+      "special_effect": "방어벽 대상 피해 증가",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "방어벽 압박"
+    },
+    {
+      "id": "ENEMY_SPECIAL_23",
+      "region": "생트아르크 교황령",
+      "name": "금단 심문관",
+      "td_role": "방어벽 특화",
+      "special_effect": "방어벽 대상 피해 증가",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "방어벽 압박"
+    },
+    {
+      "id": "ENEMY_SPECIAL_24",
+      "region": "생트아르크 교황령",
+      "name": "타락 사제",
+      "td_role": "적 회복/버프",
+      "special_effect": "주변 적 이동속도/방어 소폭 증가",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "버퍼"
+    },
+    {
+      "id": "ENEMY_SPECIAL_25",
+      "region": "생트아르크 교황령",
+      "name": "순교 광신자",
+      "td_role": "사망 시 주변 적 강화",
+      "special_effect": "없음",
+      "runtime_status": "SOURCE_GAP",
+      "runtime_semantic": null,
+      "source_gap": "TD 역할에는 특수행동이 명시되어 있으나 특수효과 상세 수치가 소스에 없음",
+      "note": "사망 버프형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_26",
+      "region": "생트아르크 교황령",
+      "name": "성당 가고일",
+      "td_role": "공중",
+      "special_effect": "지형 무시 비행",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FLYING_TERRAIN_IGNORE",
+      "source_gap": null,
+      "note": "공중형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_27",
+      "region": "생트아르크 교황령",
+      "name": "광휘 망령",
+      "td_role": "물리저항",
+      "special_effect": "물리 피해 20% 경감",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "PHYSICAL_DAMAGE_REDUCTION_20",
+      "source_gap": null,
+      "note": "영체"
+    },
+    {
+      "id": "ENEMY_SPECIAL_28",
+      "region": "생트아르크 교황령",
+      "name": "성유물 골렘",
+      "td_role": "고방어",
+      "special_effect": "빙결 지속시간 40% 감소",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40",
+      "source_gap": null,
+      "note": "장갑형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_29",
+      "region": "생트아르크 교황령",
+      "name": "타락 천사 파편체",
+      "td_role": "고속 공중",
+      "special_effect": "지형 무시 비행",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FLYING_TERRAIN_IGNORE",
+      "source_gap": null,
+      "note": "공중형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_30",
+      "region": "생트아르크 교황령",
+      "name": "저주받은 성상",
+      "td_role": "고HP",
+      "special_effect": "빙결 지속시간 40% 감소",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40",
+      "source_gap": null,
+      "note": "중장형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_31",
+      "region": "생트아르크 교황령",
+      "name": "기원의 대성상",
+      "td_role": "침묵무효/방어벽무효/고방어",
+      "special_effect": "빙결 지속시간 40% 감소",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40",
+      "source_gap": null,
+      "note": "중장형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_32",
+      "region": "상드라크 제국",
+      "name": "폭주 연금술사",
+      "td_role": "광역",
+      "special_effect": "사망/접촉 시 소규모 폭발",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "폭발형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_33",
+      "region": "상드라크 제국",
+      "name": "마도 폭주체",
+      "td_role": "고속/폭발",
+      "special_effect": "사망/접촉 시 소규모 폭발",
+      "runtime_status": "SEMANTIC_READY_BALANCE_PENDING",
+      "runtime_semantic": null,
+      "source_gap": null,
+      "note": "폭주형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_34",
+      "region": "상드라크 제국",
+      "name": "마력 골렘",
+      "td_role": "고HP",
+      "special_effect": "빙결 지속시간 40% 감소",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40",
+      "source_gap": null,
+      "note": "중장형"
+    },
+    {
+      "id": "ENEMY_SPECIAL_35",
+      "region": "상드라크 제국",
+      "name": "마도 비행체",
+      "td_role": "공중",
+      "special_effect": "지형 무시 비행",
+      "runtime_status": "SPEC_READY",
+      "runtime_semantic": "FLYING_TERRAIN_IGNORE",
+      "source_gap": null,
+      "note": "공중형"
+    }
+  ]
+}
