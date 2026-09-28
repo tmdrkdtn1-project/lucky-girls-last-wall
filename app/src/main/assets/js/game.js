@@ -48,6 +48,23 @@ function selectStageRuntime(selection){activeStageRuntime=resolveStageRuntime(se
 function availableMasterStages(){const out=[];Object.values(MAP_RUNTIME_REGISTRY).forEach(w=>Object.values(w.localMaps).forEach(l=>Object.entries(l.modes).forEach(([mode,v])=>v.stages.forEach(s=>out.push({worldId:w.id,localMapId:l.id,mode,id:s.id,globalStage:s.globalStage,status:s.status,label:s.label||s.id})))));return out}
 function syncStageHud(){const stage=activeStageRuntime;const hud=document.querySelector('#topHUD .hudBox');if(hud)hud.textContent=activeMapSelection.mode+' · '+activeMapSelection.localMapId+' · STAGE '+stage.globalStage;const banner=document.getElementById('stageBanner');if(banner)banner.textContent=(stage.label||stage.id)+' · '+COLS+'×'+ROWS+' PLAYABLE BLOCKOUT'}
 
+function validateStageMapData(data){
+ if(!data||!data.grid||!Array.isArray(data.route)||!Array.isArray(data.tile_rows))throw new Error('Invalid stage map data');
+ if(data.tile_rows.length!==data.grid.rows||data.tile_rows.some(r=>r.length!==data.grid.cols))throw new Error('Stage map grid mismatch');
+ return data;
+}
+function applyStageMapData(data){
+ validateStageMapData(data);COLS=data.grid.cols;ROWS=data.grid.rows;CELL_COUNT=COLS*ROWS;route=data.route.map(p=>[p[0],p[1]]);TILE_ROWS=data.tile_rows.slice();
+}
+async function loadStageMapRuntime(selection){
+ const stage=resolveStageRuntime(selection);if(!stage.dataPath)throw new Error('Stage map '+stage.id+' has no runtime map data');
+ const response=await fetch(stage.dataPath);if(!response.ok)throw new Error('Failed to load '+stage.dataPath);
+ applyStageMapData(await response.json());return stage;
+}
+function rebuildStageGrid(){
+ cells.length=0;document.querySelectorAll('#grid > .cell').forEach(el=>el.remove());buildGrid();renderUnits();
+}
+
 const HERO_RECIPES=[
  {id:'ARIA',name:'아리아',rarity:'LEGENDARY',recipeNames:["기사단장","기사단장"],materials:[{"type":"knight3_commander","count":2}],recipeRuntimeComplete:true,atk:72,range:3,rate:1.2},
  {id:'YUNA',name:'유나',rarity:'LEGENDARY',recipeNames:["주술사","대현자"],materials:[],recipeRuntimeComplete:false,atk:42,range:4,rate:1.1},
@@ -206,7 +223,7 @@ function buildGrid(){
   cells[cellIndex(x,y)]={x,y,code,el};
   grid.insertBefore(el,unitLayer);
  }
- if(cells.length!==CELL_COUNT)throw new Error('18x10 grid build failed');
+ if(cells.length!==CELL_COUNT)throw new Error(COLS+'x'+ROWS+' grid build failed');
 }
 
 function clearSelection(hide=true){
@@ -1346,8 +1363,9 @@ $('pause').onclick=()=>{
 };
 syncPauseButton();
 
-function startPrototypeBattle(profile){
- playerProfile=profile;selectStageRuntime(profile.selectedMap||{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'});syncStageHud();
+async function startPrototypeBattle(profile){
+ playerProfile=profile;const selection=profile.selectedMap||{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'};
+ await loadStageMapRuntime(selection);selectStageRuntime(selection);rebuildStageGrid();syncStageHud();
  gold=profile.infiniteGold?500:500;
  $('prototypeLobby').classList.add('off');$('app').classList.remove('prototypeBattleHidden');running=true;last=performance.now();syncHUD();
 }
