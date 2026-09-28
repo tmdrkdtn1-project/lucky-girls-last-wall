@@ -1,0 +1,86 @@
+{
+  "schema": "LG_STAGE_RUNTIME_CONTRACT_V1",
+  "purpose": "Shared data contract for Stage 2+ design. Stage-specific balance/content remains explicit and must not be inferred.",
+  "required": {
+    "identity": [
+      "stage_id",
+      "stage_number",
+      "region",
+      "status"
+    ],
+    "grid": [
+      "cols",
+      "rows",
+      "tile_rows",
+      "route",
+      "castle"
+    ],
+    "waves": [
+      "count",
+      "duration_sec",
+      "entries"
+    ],
+    "defenses": [
+      "final_wall",
+      "gate_core",
+      "barricade"
+    ],
+    "enemies": [
+      "normal_pool",
+      "elite_pool",
+      "wave5_midboss",
+      "wave10_td_boss"
+    ],
+    "boss_transition": [
+      "td_boss_defeat_lock",
+      "collapse",
+      "rise",
+      "roar",
+      "charge",
+      "rpg_intro",
+      "rpg_active"
+    ],
+    "rpg": [
+      "boss_id",
+      "boss_skill_set",
+      "eligible_heroes_rule",
+      "phase_thresholds",
+      "hard_timeout"
+    ],
+    "rewards": [
+      "kill_rewards",
+      "early_clear_bonus",
+      "stage_clear_rewards"
+    ]
+  },
+  "invariants": {
+    "grid_cols": 18,
+    "grid_rows": 10,
+    "wave_count": 10,
+    "wave_duration_sec": 40,
+    "wave5_role": "MIDBOSS",
+    "wave10_role": "TD_BOSS",
+    "wave10_warning_at_sec": 3,
+    "wave10_boss_spawn_at_sec": 6,
+    "wave10_enrage_at_sec": 40,
+    "wave10_timer_ends_stage": false,
+    "td_end_condition": "BOSS_DEFEATED",
+    "rpg_eligible_heroes": "TD_SUMMONED_HEROES_ONLY",
+    "rpg_hero_count_min": 1,
+    "rpg_hero_count_max": 5,
+    "rpg_phase_thresholds": [
+      0.7,
+      0.35
+    ],
+    "rpg_hard_timeout": false,
+    "stage_clear_condition": "RPG_BOSS_DEFEATED"
+  },
+  "design_policy": [
+    "Stage 2+ map geometry, enemy roster, boss identity, boss skills, rewards and numeric balance are stage-specific content.",
+    "Do not copy Stage 1 HP/ATK multipliers into later stages unless explicitly approved.",
+    "Enemy special effects should reference existing audited runtime semantics when available.",
+    "Missing balance numbers remain BALANCE_PENDING; missing rules that change gameplay remain DECISION_NEEDED.",
+    "A stage may be authored before all art exists, but must pass this contract before runtime integration."
+  ],
+  "stage1_reference": "stage01.json"
+}
