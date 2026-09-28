@@ -202,10 +202,9 @@ assert "function enemyOccupiesRouteCell(e,cellIndex)" in js
 assert "occupiedRouteCells(e).some(c=>Math.abs(c-center)<=radius)" in js
 assert "enemyOccupiesRouteCell(e,center)" in js
 assert "footprintCells:kind==='boss'?1.6:kind==='midboss'?1.3:1.0" in js
-assert "skill1DamageType:'관통'" in js
 assert "if(options.ignoreDefense)return Math.max(1,Math.round(raw))" in js
-assert "skill1.skill1DamageType==='관통'" in js
-print("PASS - same-cell uses sprite-footprint overlap, multi-cell enemies are hittable from either cell, and RPG penetration ignores DEF")
+assert "if(h.heroId==='KARIN')fx[0].ignoreDefense=true" in js
+print("PASS - same-cell uses sprite-footprint overlap, multi-cell enemies are hittable from either cell, and per-hero RPG defense-ignore uses the shared damage engine")
 
 # Full combat registry / RPG issue inventory guards
 combat_registry=json.loads((root/"data/combat_registry_v1.json").read_text(encoding="utf-8"))
