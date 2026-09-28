@@ -643,11 +643,26 @@ function updateHeroSkills(u,now){
  return false;
 }
 const RPG_HERO_DEFS={
- ARIA:{
-  name:'아리아',hp:2600,atk:175,def:125,
-  basicGap:1.0,skill1Gap:9,skill2Gap:16,
-  skill1Name:'성광 참격',skill1DamageType:'관통',skill2Name:'수호의 맹세',ultimateName:'최후의 성역'
- }
+ ARIA:{name:'아리아',hp:2600,atk:175,def:125,basicGap:1/1.0,skill1Gap:8,skill2Gap:18,s1:1.6,s2:.4,ult:4.0,skill1Name:'성광 참격',skill2Name:'수호의 맹세',ultimateName:'최후의 성역'},
+ YUNA:{name:'유나',hp:2250,atk:150,def:105,basicGap:1/.9,skill1Gap:9,skill2Gap:16,s1:1.2,s2:.25,ult:2.8,skill1Name:'봉인의 부적',skill2Name:'결계진',ultimateName:'대봉인술'},
+ RIEL:{name:'리엘',hp:2100,atk:205,def:90,basicGap:1/.95,skill1Gap:8,skill2Gap:14,s1:1.75,s2:1.1,ult:4.6,skill1Name:'화염창',skill2Name:'용암지대',ultimateName:'홍련지옥'},
+ RUBY:{name:'루비',hp:2200,atk:190,def:95,basicGap:1/1.05,skill1Gap:8,skill2Gap:12,s1:1.55,s2:.9,ult:4.3,skill1Name:'현상표식',skill2Name:'도탄사격',ultimateName:'DEAD OR ALIVE'},
+ ERIKA:{name:'에리카',hp:2850,atk:195,def:115,basicGap:1/1.0,skill1Gap:8,skill2Gap:16,s1:1.65,s2:.5,ult:4.2,skill1Name:'용혈참',skill2Name:'혈룡폭주',ultimateName:'용의 숨결'},
+ SERA:{name:'세라',hp:2350,atk:120,def:110,basicGap:1/.85,skill1Gap:10,skill2Gap:18,s1:.8,s2:.2,ult:2.2,skill1Name:'천상의 노래',skill2Name:'치유의 광휘',ultimateName:'세라핌 앙코르'},
+ REINA:{name:'레이나',hp:2150,atk:185,def:100,basicGap:1/.9,skill1Gap:9,skill2Gap:15,s1:1.3,s2:.35,ult:3.2,skill1Name:'서리창',skill2Name:'빙결감옥',ultimateName:'절대영도'},
+ KARIN:{name:'카린',hp:2050,atk:220,def:85,basicGap:1/1.2,skill1Gap:7,skill2Gap:11,s1:1.7,s2:.9,ult:4.8,skill1Name:'그림자 베기',skill2Name:'잔영난무',ultimateName:'홍련 처형'},
+ BELL:{name:'벨',hp:3200,atk:235,def:135,basicGap:1/1.0,skill1Gap:8,skill2Gap:14,s1:1.35,s2:.5,ult:3.6,skill1Name:'저주인형',skill2Name:'마리오네트',ultimateName:'대인형극'},
+ MIA:{name:'미아',hp:2950,atk:260,def:120,basicGap:1/1.05,skill1Gap:7,skill2Gap:13,s1:1.45,s2:.6,ult:4.0,skill1Name:'보물탄',skill2Name:'행운의 함정',ultimateName:'왕의 보물고'},
+ IRENE:{name:'아이린',hp:3400,atk:240,def:150,basicGap:1/1.0,skill1Gap:8,skill2Gap:15,s1:1.5,s2:.5,ult:4.1,skill1Name:'클린 스위프',skill2Name:'전술 봉사',ultimateName:'퍼펙트 클리닝'},
+ NEON:{name:'네온',hp:2850,atk:255,def:110,basicGap:1/1.05,skill1Gap:7,skill2Gap:12,s1:1.4,s2:.75,ult:4.2,skill1Name:'형상복제',skill2Name:'프리즘 왜곡',ultimateName:'무한 프리즘'},
+ SASHA:{name:'샤샤',hp:3100,atk:270,def:120,basicGap:1/.9,skill1Gap:8,skill2Gap:13,s1:1.75,s2:1.0,ult:4.5,skill1Name:'접착 폭약',skill2Name:'연쇄기폭',ultimateName:'최종 폭파계획'},
+ LUNA:{name:'루나',hp:2800,atk:230,def:125,basicGap:1/.9,skill1Gap:9,skill2Gap:15,s1:1.2,s2:.3,ult:3.2,skill1Name:'운명의 표식',skill2Name:'역행의 별',ultimateName:'운명개변'},
+ VIOLA:{name:'비올라',hp:2750,atk:250,def:105,basicGap:1/.95,skill1Gap:8,skill2Gap:13,s1:1.4,s2:.8,ult:4.2,skill1Name:'독화살비',skill2Name:'역병 전염',ultimateName:'죽음의 정원'},
+ CHLOE:{name:'클로에',hp:2900,atk:190,def:125,basicGap:1/.9,skill1Gap:9,skill2Gap:12,s1:.95,s2:.75,ult:2.8,skill1Name:'비트 업',skill2Name:'소닉 웨이브',ultimateName:'라스트 앙코르'},
+ ADEL:{name:'아델',hp:3800,atk:205,def:175,basicGap:1/.9,skill1Gap:9,skill2Gap:16,s1:1.3,s2:.35,ult:3.3,skill1Name:'수호의 일격',skill2Name:'미스릴 가호',ultimateName:'불락의 성채'},
+ NIA:{name:'니아',hp:3000,atk:285,def:105,basicGap:1/1.0,skill1Gap:7,skill2Gap:13,s1:1.7,s2:.7,ult:4.8,skill1Name:'혈창',skill2Name:'피의 저주',ultimateName:'진홍월식'},
+ AURORA:{name:'오로라',hp:2950,atk:275,def:115,basicGap:1/1.0,skill1Gap:8,skill2Gap:15,s1:1.55,s2:.45,ult:4.5,skill1Name:'유성낙하',skill2Name:'별자리 결속',ultimateName:'천구붕괴'},
+ EVE:{name:'이브',hp:2850,atk:250,def:120,basicGap:1/.95,skill1Gap:8,skill2Gap:14,s1:1.2,s2:.35,ult:3.2,skill1Name:'시간지연',skill2Name:'되감기',ultimateName:'멈춰버린 세계'}
 };
 const RPG_BOSS_DEF={name:'철각왕 브라움',hp:16000,atk:110,def:60,baseAttackGap:3.0};
 const RPG_BOSS_SKILL_DEFS={
