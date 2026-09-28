@@ -3457,7 +3457,7 @@ repository root의 MASTER_MANUAL_LUCKY_GIRLS_LAST_WALL.md를 최우선으로 읽
 
 ## AUTHORITATIVE WORKBOOK BASELINE — 2026-09-28
 
-Primary design source: `Lucky_Girls_캐릭터도감_MASTER_확정_2026-09-28.xlsx`
+Primary design source: `Lucky_Girls_GAME_DESIGN_MASTER_2026-09-28.xlsx`
 SHA-256: `398489cafe1f7c66ad2fe9ceb57f12c2397946218fde6d8c0e5fcae607f2c9b3`
 
 When this manual, legacy summaries, and the workbook disagree, use the latest direct user decision first, then this workbook. Runtime-derived tuning explicitly recorded as an override remains separate from source design values.
