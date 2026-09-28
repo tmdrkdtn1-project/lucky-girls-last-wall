@@ -1,0 +1,224 @@
+{
+  "schema": "LG_ENEMY_SPECIAL_RUNTIME_BINDINGS_V1",
+  "source_audit_schema": "LG_ENEMY_SPECIAL_RUNTIME_AUDIT_V1",
+  "count": 17,
+  "semantic_count": 4,
+  "semantics": {
+    "FLYING_TERRAIN_IGNORE": {
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "airborne": true,
+        "terrain_pathing": "IGNORE_TERRAIN"
+      },
+      "note": "Runtime contract only; stage spawn integration remains separate."
+    },
+    "FREEZE_DURATION_REDUCTION_40": {
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "freeze_duration_multiplier": 0.6
+      },
+      "note": "Explicit source value: freeze duration reduced by 40%."
+    },
+    "PHYSICAL_DAMAGE_REDUCTION_20": {
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "physical_damage_taken_multiplier": 0.8
+      },
+      "note": "Explicit source value: physical damage reduced by 20%."
+    },
+    "LOW_HP_BERSERK_40_25": {
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "trigger_hp_ratio_lte": 0.4,
+        "move_speed_multiplier": 1.25,
+        "wall_damage_multiplier": 1.25
+      },
+      "note": "Explicit source values: <=40% HP; movement speed and wall damage +25%."
+    }
+  },
+  "bindings": [
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_04",
+      "name": "절벽 매",
+      "semantic": "FLYING_TERRAIN_IGNORE",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "airborne": true,
+        "terrain_pathing": "IGNORE_TERRAIN"
+      },
+      "note": "Runtime contract only; stage spawn integration remains separate."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_05",
+      "name": "암석 골렘",
+      "semantic": "FREEZE_DURATION_REDUCTION_40",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "freeze_duration_multiplier": 0.6
+      },
+      "note": "Explicit source value: freeze duration reduced by 40%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_06",
+      "name": "최초의 골렘 아즈로",
+      "semantic": "FREEZE_DURATION_REDUCTION_40",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "freeze_duration_multiplier": 0.6
+      },
+      "note": "Explicit source value: freeze duration reduced by 40%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_10",
+      "name": "모래망령",
+      "semantic": "PHYSICAL_DAMAGE_REDUCTION_20",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "physical_damage_taken_multiplier": 0.8
+      },
+      "note": "Explicit source value: physical damage reduced by 20%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_13",
+      "name": "해룡 치어",
+      "semantic": "FLYING_TERRAIN_IGNORE",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "airborne": true,
+        "terrain_pathing": "IGNORE_TERRAIN"
+      },
+      "note": "Runtime contract only; stage spawn integration remains separate."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_14",
+      "name": "물귀신",
+      "semantic": "PHYSICAL_DAMAGE_REDUCTION_20",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "physical_damage_taken_multiplier": 0.8
+      },
+      "note": "Explicit source value: physical damage reduced by 20%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_18",
+      "name": "동토 광전사",
+      "semantic": "LOW_HP_BERSERK_40_25",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "trigger_hp_ratio_lte": 0.4,
+        "move_speed_multiplier": 1.25,
+        "wall_damage_multiplier": 1.25
+      },
+      "note": "Explicit source values: <=40% HP; movement speed and wall damage +25%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_20",
+      "name": "설산 독수리",
+      "semantic": "FLYING_TERRAIN_IGNORE",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "airborne": true,
+        "terrain_pathing": "IGNORE_TERRAIN"
+      },
+      "note": "Runtime contract only; stage spawn integration remains separate."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_21",
+      "name": "서리 골렘",
+      "semantic": "FREEZE_DURATION_REDUCTION_40",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "freeze_duration_multiplier": 0.6
+      },
+      "note": "Explicit source value: freeze duration reduced by 40%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_26",
+      "name": "성당 가고일",
+      "semantic": "FLYING_TERRAIN_IGNORE",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "airborne": true,
+        "terrain_pathing": "IGNORE_TERRAIN"
+      },
+      "note": "Runtime contract only; stage spawn integration remains separate."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_27",
+      "name": "광휘 망령",
+      "semantic": "PHYSICAL_DAMAGE_REDUCTION_20",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "physical_damage_taken_multiplier": 0.8
+      },
+      "note": "Explicit source value: physical damage reduced by 20%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_28",
+      "name": "성유물 골렘",
+      "semantic": "FREEZE_DURATION_REDUCTION_40",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "freeze_duration_multiplier": 0.6
+      },
+      "note": "Explicit source value: freeze duration reduced by 40%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_29",
+      "name": "타락 천사 파편체",
+      "semantic": "FLYING_TERRAIN_IGNORE",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "airborne": true,
+        "terrain_pathing": "IGNORE_TERRAIN"
+      },
+      "note": "Runtime contract only; stage spawn integration remains separate."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_30",
+      "name": "저주받은 성상",
+      "semantic": "FREEZE_DURATION_REDUCTION_40",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "freeze_duration_multiplier": 0.6
+      },
+      "note": "Explicit source value: freeze duration reduced by 40%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_31",
+      "name": "기원의 대성상",
+      "semantic": "FREEZE_DURATION_REDUCTION_40",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "freeze_duration_multiplier": 0.6
+      },
+      "note": "Explicit source value: freeze duration reduced by 40%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_34",
+      "name": "마력 골렘",
+      "semantic": "FREEZE_DURATION_REDUCTION_40",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "freeze_duration_multiplier": 0.6
+      },
+      "note": "Explicit source value: freeze duration reduced by 40%."
+    },
+    {
+      "enemy_special_id": "ENEMY_SPECIAL_35",
+      "name": "마도 비행체",
+      "semantic": "FLYING_TERRAIN_IGNORE",
+      "runtime_status": "CONTRACT_READY",
+      "parameters": {
+        "airborne": true,
+        "terrain_pathing": "IGNORE_TERRAIN"
+      },
+      "note": "Runtime contract only; stage spawn integration remains separate."
+    }
+  ],
+  "policy": [
+    "This file encodes only explicit source-backed mechanics and numeric values.",
+    "CONTRACT_READY does not mean the enemy is instantiated in Stage 1.",
+    "No BALANCE_PENDING or SOURCE_GAP mechanic is assigned invented runtime values."
+  ]
+}
