@@ -508,7 +508,7 @@ print("PASS - BASIC/MASTER prototype lobby and Lv10/20/30 skill gates are wired"
 
 
 # Lucky owned-hero free summon uniqueness guards
-for token in ["const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY'}","function summonedHeroIds()","function eligibleOwnedHeroes(rarity)","!summoned.has(id)","function luckyFreeSummon(rarity,count)","Math.min(count,open,eligible.length)","showLuckyCelebration('💥 펑!')","heroId:recipe.id","luckyFreeSummon('MYTHIC',1)","luckyFreeSummon('LEGENDARY',2)","luckyFreeSummon('LEGENDARY',1)"]:
+for token in ["const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY',YUNA:'LEGENDARY',RIEL:'LEGENDARY',RUBY:'LEGENDARY',ERIKA:'LEGENDARY',SERA:'LEGENDARY',REINA:'LEGENDARY',KARIN:'LEGENDARY',BELL:'MYTHIC'","function summonedHeroIds()","function eligibleOwnedHeroes(rarity)","!summoned.has(id)","function luckyFreeSummon(rarity,count)","Math.min(count,open,eligible.length)","showLuckyCelebration('💥 펑!')","heroId:recipe.id","luckyFreeSummon('MYTHIC',1)","luckyFreeSummon('LEGENDARY',2)","luckyFreeSummon('LEGENDARY',1)"]:
     assert token in js, "missing Lucky owned-hero uniqueness rule: "+token
 assert "PlayerProfile 보유 영웅 데이터 연결 후 활성화" not in js
 print("PASS - Lucky free summons use owned+rarity+not-yet-summoned candidates, respect hero cap, and burst when no candidate exists")
@@ -517,3 +517,10 @@ print("PASS - Lucky free summons use owned+rarity+not-yet-summoned candidates, r
 for token in ["const summoned=summonedHeroIds();","if(summoned.has(r.id))continue","if(summoned.has(r.id))return","if(summonedHeroIds().has(recipe.id)){toast(recipe.name+'은 이미 소환되었습니다');return}"]:
     assert token in js, "missing normal-combo hero uniqueness guard: "+token
 print("PASS - hero duplicate summon is blocked globally for Lucky rewards and normal material combos")
+
+# Authoritative V4_2 encyclopedia rarity split: 8 Legendary + 12 Mythic
+for hero in ["ARIA","YUNA","RIEL","RUBY","ERIKA","SERA","REINA","KARIN"]:
+    assert hero+":'LEGENDARY'" in js
+for hero in ["BELL","MIA","IRENE","NEON","SASHA","LUNA","VIOLA","CHLOE","ADEL","NIA","AURORA","EVE"]:
+    assert hero+":'MYTHIC'" in js
+print("PASS - all 20 hero rarities match V4_2 encyclopedia (8 Legendary / 12 Mythic)")
