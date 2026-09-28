@@ -1,0 +1,22 @@
+﻿
+# ===== Lucky Girls Local Safety =====
+99_ARCHIVE/
+09_LOGS/
+*.tmp
+*.temp
+*.bak
+Thumbs.db
+Desktop.ini
+# ===== Lucky Girls Local Only =====
+_SORT_LOGS/
+**/_SORT_LOGS/
+*.autosave
+.vscode/
+.idea/
+.gradle/
+**/build/
+local.properties
+*.apk
+*.aab
+__pycache__/
+*.pyc
