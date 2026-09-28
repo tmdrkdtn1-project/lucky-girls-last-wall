@@ -1,0 +1,68 @@
+{
+  "scene_code": "LAST_WALL_BOSS_ANGLE",
+  "project": "Lucky Girls: Last Wall",
+  "status": "HOLD_FOR_ASSET_PRODUCTION",
+  "format": {
+    "aspect_ratio": "16:9",
+    "orientation": "landscape"
+  },
+  "camera": {
+    "angle": "low-angle",
+    "perspective": "upward-looking",
+    "position": "near_heroes",
+    "viewer_relation": "share_heroes_perspective"
+  },
+  "composition": {
+    "foreground": "five_heroes",
+    "midground": "fortress_wall",
+    "background": "colossal_boss",
+    "focus": "heroes_looking_up_at_boss",
+    "scale_contrast": "extreme"
+  },
+  "heroes": {
+    "count": 5,
+    "center_hero": "08_KARIN",
+    "style": "sd_or_semi_sd_battle_style",
+    "official_master_required": true
+  },
+  "boss": {
+    "position": "above_wall_upper_background",
+    "dominance": "looking_down",
+    "presence": "overwhelming"
+  },
+  "scene_variants": {
+    "section_1": {
+      "code": "READY_FRONT",
+      "hero_view": "front_or_front_3_4",
+      "hero_action": "combat_ready",
+      "look_direction": "upward_to_boss"
+    },
+    "section_2": {
+      "code": "PREBATTLE_REAR",
+      "hero_view": "rear",
+      "hero_action": "formation_before_engagement",
+      "look_direction": "upward_to_boss"
+    },
+    "section_3": {
+      "code": "COMBAT_SKILL",
+      "hero_view": "dynamic",
+      "hero_action": "attack_and_skill_activation",
+      "attack_direction": "forward_upward_to_boss"
+    }
+  },
+  "asset_layers": [
+    "BACKGROUND_FORTRESS",
+    "BOSS",
+    "HEROES",
+    "VFX",
+    "BOSS_UI",
+    "PARTY_UI"
+  ],
+  "forbidden_composition": [
+    "same_eye_level_between_heroes_and_boss",
+    "flat_horizontal_camera",
+    "heroes_not_looking_up",
+    "boss_too_small_or_too_distant",
+    "top_down_camera_for_rpg_boss_scene"
+  ]
+}

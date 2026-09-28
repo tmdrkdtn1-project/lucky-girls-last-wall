@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lucky Girls Pixel Animation Metadata V1",
+  "type": "object",
+  "required": [
+    "project",
+    "character_id",
+    "action",
+    "version",
+    "canvas",
+    "frame_count",
+    "fps",
+    "loop",
+    "direction",
+    "view_system",
+    "pivot",
+    "source_pxo",
+    "approval_status"
+  ],
+  "properties": {
+    "project": {
+      "const": "Lucky Girls: Last Wall"
+    },
+    "character_id": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "canvas": {
+      "type": "object",
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "frame_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "fps": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "loop": {
+      "type": "boolean"
+    },
+    "direction": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "view_system": {
+      "type": "string"
+    },
+    "pivot": {
+      "type": "object",
+      "required": [
+        "mode",
+        "x",
+        "y"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      }
+    },
+    "hitbox": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "hurtbox": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "source_pxo": {
+      "type": "string"
+    },
+    "approval_status": {
+      "enum": [
+        "WORKING",
+        "QC",
+        "WAITING_MASTER_APPROVAL",
+        "APPROVED",
+        "FINAL"
+      ]
+    }
+  }
+}

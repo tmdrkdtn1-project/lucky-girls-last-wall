@@ -1,0 +1,14 @@
+{
+  "created_kst": "2026-09-28T10:54:24.279030+09:00",
+  "repository": "https://github.com/tmdrkdtn1-project/lucky-girls-last-wall",
+  "commit": "05284c014cf840817a2e17353a3e26c976e3a262",
+  "file_count_repository": 40,
+  "commits_in_period": 94,
+  "manual_internal_snapshot": "8bdecc948b49fc680eb14920de00aa94ca8e6261",
+  "workbook_sha256": "b4430bbecd8d18cc2ad4ba07b4df11b552ec469a5615e7700bb6026c5f45ccce",
+  "ci_run": 94,
+  "ci_conclusion": "success",
+  "apk_included": false,
+  "local_deployed": false,
+  "main_reconfirmed_kst": "2026-09-28T10:59:28+09:00"
+}

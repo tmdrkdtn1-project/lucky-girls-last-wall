@@ -1,0 +1,11 @@
+﻿filename,status,additions,deletions,changes,blob_url
+MASTER_MANUAL_LUCKY_GIRLS_LAST_WALL.md,added,3453,0,3453,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/MASTER_MANUAL_LUCKY_GIRLS_LAST_WALL.md
+MASTER_MANUAL_LUCKY_GIRLS_LAST_WALL_UTF8_BOM.md,added,3453,0,3453,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/MASTER_MANUAL_LUCKY_GIRLS_LAST_WALL_UTF8_BOM.md
+app/src/main/assets/css/game.css,modified,21,0,21,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/app%2Fsrc%2Fmain%2Fassets%2Fcss%2Fgame.css
+app/src/main/assets/data/enemy_special_runtime_audit_v1.json,added,403,0,403,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/app%2Fsrc%2Fmain%2Fassets%2Fdata%2Fenemy_special_runtime_audit_v1.json
+app/src/main/assets/data/enemy_special_runtime_bindings_v1.json,added,224,0,224,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/app%2Fsrc%2Fmain%2Fassets%2Fdata%2Fenemy_special_runtime_bindings_v1.json
+app/src/main/assets/data/lucky_roulette_v1.json,added,147,0,147,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/app%2Fsrc%2Fmain%2Fassets%2Fdata%2Flucky_roulette_v1.json
+app/src/main/assets/data/stage_runtime_contract_v1.json,added,86,0,86,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/app%2Fsrc%2Fmain%2Fassets%2Fdata%2Fstage_runtime_contract_v1.json
+app/src/main/assets/index.html,modified,15,1,16,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/app%2Fsrc%2Fmain%2Fassets%2Findex.html
+app/src/main/assets/js/game.js,modified,212,22,234,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/app%2Fsrc%2Fmain%2Fassets%2Fjs%2Fgame.js
+tests/check_stage1.py,modified,163,9,172,https://github.com/tmdrkdtn1-project/lucky-girls-last-wall/blob/05284c014cf840817a2e17353a3e26c976e3a262/tests%2Fcheck_stage1.py
