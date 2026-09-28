@@ -3491,3 +3491,13 @@ Workbook sheets that directly govern HARD design include:
 `HARD31_36_1주성장벽`, `HARD37_45_성장벽`, `HARD46_50_최종성장벽`,
 `HARD31_33_REDESIGN`, `HARD34_44_TD_RPG통합`, `HARD45_50_FINAL_DESIGN`,
 `TD_RPG_통합검수_30_33`, and `적군 보스`.
+
+
+### Six-region TD map reference package
+Local path: `D:\MYGAME\lucky_girls\03_DESIGN\MAP\REFERENCE\6_REGION_TD_CONCEPT_V1`
+GitHub reference registry: `03_DESIGN/MAP/REFERENCE/6_REGION_TD_CONCEPT_V1/`
+
+Status is strictly **REFERENCE ONLY**. The package anchors regional visual/layout proposals to Stage 01 WEST, 08 AZAR, 13 HAERYUN, 18 BELOZAR, 23 SAINT, and 30 SANDRAK. It does not approve those layouts as runtime geometry and does not approve HARD geometry.
+
+Promotion rule: `REFERENCE -> REVIEWED_CANDIDATE -> APPROVED_MAP_DESIGN -> STAGE_JSON_RUNTIME`.
+Only an explicitly approved map may be converted into runtime coordinates.
