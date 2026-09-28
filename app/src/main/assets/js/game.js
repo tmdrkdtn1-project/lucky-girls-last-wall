@@ -267,14 +267,16 @@ function recipeMaterials(recipe){
  return picked;
 }
 function comboForUnit(u){
- for(const r of HERO_RECIPES){const mats=recipeMaterials(r);if(mats&&mats.some(m=>m.id===u.id))return r}
+ const summoned=summonedHeroIds();
+ for(const r of HERO_RECIPES){if(summoned.has(r.id))continue;const mats=recipeMaterials(r);if(mats&&mats.some(m=>m.id===u.id))return r}
  return null;
 }
 function updateComboHighlights(){
  document.querySelectorAll('.cell.combo').forEach(e=>e.classList.remove('combo'));
- HERO_RECIPES.forEach(r=>{const mats=recipeMaterials(r);if(mats)mats.forEach(m=>cells[cellIndex(m.x,m.y)].el.classList.add('combo'))});
+ const summoned=summonedHeroIds();HERO_RECIPES.forEach(r=>{if(summoned.has(r.id))return;const mats=recipeMaterials(r);if(mats)mats.forEach(m=>cells[cellIndex(m.x,m.y)].el.classList.add('combo'))});
 }
 function beginHeroSummon(selectedMaterial,recipe){
+ if(summonedHeroIds().has(recipe.id)){toast(recipe.name+'은 이미 소환되었습니다');return}
  if(gameMode!=='TD'||rpgPending)return;
  if(heroCount>=5){toast('영웅 슬롯 5/5');return}
  const mats=recipeMaterials(recipe);
