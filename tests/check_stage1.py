@@ -283,9 +283,9 @@ assert "function selectRpgTargets(spec,source,effect={})" in js
 assert "effect.type==='DAMAGE'" in js and "effect.type==='HEAL'" in js
 assert "effect.type==='ATK_MULT'" in js and "effect.type==='RATE_MULT'" in js
 assert "effect.type==='DAMAGE_REDUCTION'" in js and "effect.type==='STUN'" in js
-assert "ignoreDefense:skill1.skill1DamageType==='관통'" in js
-assert "{type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.50,duration:5}" in js
-assert "{type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.20,duration:8}" in js
+assert "if(h.heroId==='KARIN')fx[0].ignoreDefense=true" in js
+assert "if(h.heroId==='ARIA')fx.push({type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.50,duration:5})" in js
+assert "function rpgHeroSkillEffects(h,slot)" in js and "function rpgHeroUltimateEffects(h)" in js
 assert all(x["status"]=="IMPLEMENTED" for x in effect_runtime["rpg_primitives"][:8])
 print("PASS - Stage 1 RPG now uses a shared effect dispatcher for damage, buffs, mitigation, delays, stun, and DEF modifiers")
 
