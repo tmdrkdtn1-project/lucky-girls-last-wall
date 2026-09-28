@@ -40,6 +40,7 @@ const HERO_RECIPES=[
 
 const cells=[], units=new Map(), enemies=[];
 const ALL_HERO_IDS=['ARIA','YUNA','RIEL','RUBY','ERIKA','SERA','REINA','KARIN','BELL','MIA','IRENE','NEON','SASHA','LUNA','VIOLA','CHLOE','ADELE','NIA','AURORA','EVE'];
+const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY'}; // only source-confirmed rarity; extend from authoritative hero data
 let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedStage:1,infiniteGold:false};
 function heroSkillUnlocked(slot){return slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30}
 function spendGold(amount){if(playerProfile.infiniteGold)return true;if(gold<amount)return false;gold-=amount;return true}
@@ -96,11 +97,33 @@ function closeLuckyOverlay(){
  if(gameMode==='TD'&&!rpgPending&&!midbossRewardPending)running=!manualPaused;
  syncLuckyHud();
 }
+function summonedHeroIds(){return new Set([...units.values()].filter(u=>u.heroId).map(u=>u.heroId))}
+function eligibleOwnedHeroes(rarity){
+ const summoned=summonedHeroIds();
+ return playerProfile.ownedHeroes.filter(id=>HERO_RARITY_REGISTRY[id]===rarity&&!summoned.has(id));
+}
+function findFreeHeroTiles(){
+ return cells.filter(c=>c&&(c.code==='D'||c.code==='C')&&!units.has(tileKey(c.x,c.y)));
+}
+function freeSummonHeroById(heroId){
+ if(heroCount>=5)return false;
+ const tile=findFreeHeroTiles()[0];if(!tile)return false;
+ const recipe=HERO_RECIPES.find(r=>r.id===heroId);if(!recipe)return false;
+ const hero={id:'hfree'+Date.now()+Math.random(),heroId:heroId,x:tile.x,y:tile.y,type:'hero_aria',hero:recipe.name,atk:recipe.atk,range:recipe.range,rate:recipe.rate,lastShot:0,lastSkill1:simTime,lastSkill2:simTime,lastSkill3:simTime,ariaOathUntil:0,spent:0,moveCooldownUntil:simTime+5};
+ units.set(tileKey(tile.x,tile.y),hero);tile.el.classList.add('occupied');heroCount++;postUnitChange();return true;
+}
+function luckyFreeSummon(rarity,count){
+ const open=Math.max(0,5-heroCount),eligible=eligibleOwnedHeroes(rarity),wanted=Math.min(count,open,eligible.length);
+ if(wanted<=0){showLuckyCelebration('💥 펑!');$('luckyResultSub').textContent='소환 가능한 '+(rarity==='MYTHIC'?'신화':'전설')+' 영웅이 없습니다';setTimeout(closeLuckyOverlay,1100);return {summoned:[],burst:true}}
+ const pool=[...eligible],picked=[];while(picked.length<wanted){const i=Math.floor(Math.random()*pool.length);picked.push(pool.splice(i,1)[0])}
+ const summoned=picked.filter(freeSummonHeroById);
+ if(!summoned.length){showLuckyCelebration('💥 펑!');$('luckyResultSub').textContent='소환 가능한 영웅 배치 공간이 없습니다';setTimeout(closeLuckyOverlay,1100);return {summoned:[],burst:true}}
+ showLuckyCelebration('무료 소환 성공!!');$('luckyResultSub').textContent=summoned.map(id=>(HERO_RECIPES.find(r=>r.id===id)||{name:id}).name).join(' · ');setTimeout(closeLuckyOverlay,1100);return {summoned,burst:false};
+}
 function applyLuckyRewardChoice(id){
- if(id.includes('MYTHIC_')||id.includes('LEGENDARY_')||id==='MID_LEGENDARY_1'){
-  showWarning('무료 영웅 소환','PlayerProfile 보유 영웅 데이터 연결 후 활성화',1100);
-  return false;
- }
+ if(id==='MYTHIC_OWNED_RANDOM_1'){luckyFreeSummon('MYTHIC',1);return true}
+ if(id==='LEGENDARY_OWNED_RANDOM_2'){luckyFreeSummon('LEGENDARY',2);return true}
+ if(id==='LEGENDARY_OWNED_RANDOM_1'||id==='MID_LEGENDARY_1'){luckyFreeSummon('LEGENDARY',1);return true}
  applyLuckySimpleReward(id);showLuckyCelebration('보상 획득!!');setTimeout(closeLuckyOverlay,850);return true;
 }
 function runLuckySpinPresentation(){
@@ -118,7 +141,7 @@ function showMidbossRewardModal(){
  $('luckyModal').classList.add('on');$('luckyModal').setAttribute('aria-hidden','false');$('luckySpinButton').style.display='none';
  $('luckyResultTitle').textContent='MID BOSS CLEAR';$('luckyResultSub').textContent='보상 1개를 선택하세요';
  renderLuckyChoices(['MID_GOLD_1000','MID_LEGENDARY_1','MID_JACKPOT_20'],id=>{
-  if(id==='MID_LEGENDARY_1'){showWarning('무료 영웅 소환','PlayerProfile 보유 영웅 데이터 연결 후 활성화',1100);return}
+  if(id==='MID_LEGENDARY_1'){midbossRewardPending=false;luckyFreeSummon('LEGENDARY',1);return}
   chooseMidbossReward(id);showLuckyCelebration('중간보스 보상 획득!!');
  });
 }
@@ -272,7 +295,7 @@ function chooseHeroPlacement(x,y){
  const mats=[...units.values()].filter(u=>materialIds.includes(u.id));
  if(mats.length!==materialIds.length){cancelHeroPlacement('조합 재료 상태가 변경되었습니다');return}
  mats.forEach(m=>{units.delete(tileKey(m.x,m.y));cells[cellIndex(m.x,m.y)].el.classList.remove('occupied')});
- const hero={id:'h'+Date.now(),x,y,type:'hero_aria',hero:recipe.name,atk:recipe.atk,range:recipe.range,rate:recipe.rate,lastShot:0,lastSkill1:simTime,lastSkill2:simTime,lastSkill3:simTime,ariaOathUntil:0,spent:0,moveCooldownUntil:simTime+5};
+ const hero={id:'h'+Date.now(),heroId:recipe.id,x,y,type:'hero_aria',hero:recipe.name,atk:recipe.atk,range:recipe.range,rate:recipe.rate,lastShot:0,lastSkill1:simTime,lastSkill2:simTime,lastSkill3:simTime,ariaOathUntil:0,spent:0,moveCooldownUntil:simTime+5};
  units.set(tileKey(x,y),hero);cells[cellIndex(x,y)].el.classList.add('occupied');heroCount++;
  comboPlacement=null;document.querySelectorAll('.cell.comboPlacement').forEach(e=>e.classList.remove('comboPlacement'));
  clearTimeout(showWarning.t);$('bossWarning').classList.remove('on');
@@ -1267,7 +1290,7 @@ $('masterStart').onclick=()=>startPrototypeBattle({type:'MASTER',ownedHeroes:[..
 buildGrid();renderUnits();syncHUD();updateComboHighlights();running=false;requestAnimationFrame(loop);
 
 window.__LG_STAGE1_TEST__={
- luckyRoulette:{roll:(v)=>luckyOutcomeRoll(v),spin:(v)=>luckySpin(v),waveClear:(w)=>addLuckyWaveClear(w),midbossBonus:()=>addLuckyMidbossBonus(),buff:(p)=>addLuckyStageBuff(p),state:()=>({jackpotPct:luckyJackpotPct,stageBuffPct:luckyStageBuffPct}),midbossOptions:()=>openMidbossReward(),chooseMidboss:(id)=>chooseMidbossReward(id)},
+ luckyRoulette:{eligible:(rarity)=>eligibleOwnedHeroes(rarity),freeSummon:(rarity,count)=>luckyFreeSummon(rarity,count),roll:(v)=>luckyOutcomeRoll(v),spin:(v)=>luckySpin(v),waveClear:(w)=>addLuckyWaveClear(w),midbossBonus:()=>addLuckyMidbossBonus(),buff:(p)=>addLuckyStageBuff(p),state:()=>({jackpotPct:luckyJackpotPct,stageBuffPct:luckyStageBuffPct}),midbossOptions:()=>openMidbossReward(),chooseMidboss:(id)=>chooseMidbossReward(id)},
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
  state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossHp:rpgState.boss.hp,bossPhase:rpgState.boss.phase,heroes:rpgState.heroes.map(h=>({name:h.name,hp:h.hp,ult:h.ult,ko:h.ko})),result:rpgState.result,transitioning:rpgTransitioning,autoBattle:rpgAutoBattle}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
