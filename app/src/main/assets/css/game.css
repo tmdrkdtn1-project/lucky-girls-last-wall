@@ -237,3 +237,11 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 .luckyFireworks.on{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 30%,#fff 0 2px,transparent 3px),radial-gradient(circle at 75% 25%,#ffd66b 0 3px,transparent 4px),radial-gradient(circle at 60% 70%,#fff 0 2px,transparent 3px);animation:luckyFireworks .7s ease 2}
 @keyframes luckyFireworks{0%{opacity:0;transform:scale(.5)}50%{opacity:1}100%{opacity:0;transform:scale(1.3)}}
 @media (max-height:520px){.luckyRouletteButton{width:86px;height:86px}.luckyRouletteButton span{font-size:14px}.luckyRouletteButton b{font-size:17px}.luckyPanel{min-height:330px;padding:12px}.luckyWheel{width:130px;height:130px}.luckyWheelCore{width:68px;height:68px;font-size:11px}}
+
+/* Prototype profile lobby */
+.prototypeBattleHidden{display:none!important}
+.prototypeLobby{position:fixed;inset:0;z-index:300;background:radial-gradient(circle at 50% 25%,#382044,#0c0911 65%);display:flex;align-items:center;justify-content:center;color:#fff}
+.prototypeLobby.off{display:none}.prototypeLobbyPanel{width:min(760px,92vw);max-height:90vh;overflow:auto;padding:28px;border:2px solid #ffd66b;border-radius:22px;background:#17101ddd;text-align:center;box-shadow:0 0 50px #000}
+.prototypeLobby h1{margin:0 0 8px;color:#ffd66b}.prototypeLobby h3{margin:18px 0 8px;color:#ffd66b}.prototypeChoices{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.prototypeChoices button,.prototypeStart{padding:12px 18px;border:1px solid #ffd66b;border-radius:12px;background:#38213e;color:#fff;font-weight:900}.prototypeChoices button.selected{background:#8a5a19;box-shadow:0 0 16px #ffd66b66}
+.masterSetup{display:none;margin-top:18px}.masterSetup.on{display:block}.prototypeStart{margin-top:22px;font-size:18px}.prototypeStart:disabled{opacity:.35}
