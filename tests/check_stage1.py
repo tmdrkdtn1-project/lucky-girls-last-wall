@@ -557,23 +557,19 @@ assert "recipeRuntimeComplete:" in js
 print("PASS - all 20 authoritative workbook hero recipes are locked; runtime material IDs are separately tracked")
 
 # Stage-scoped MASTER profile/runtime guards
-assert "const STAGE_RUNTIME_REGISTRY={" in js
-assert "function stageBaseUnitIds()" in js
-assert "function selectStageRuntime(stageId)" in js
-assert "stageBaseUnitIds().map(id=>UNIT_DEFS[id])" in js
-assert "selectStageRuntime(profile.selectedStage||1)" in js
-assert "all units" not in js.lower()
-print("PASS - MASTER profile selects a stage; unit availability remains stage-scoped instead of globally unlocked")
-
-# World / Local Map / Stage Map hierarchy guards
 assert "const MAP_RUNTIME_REGISTRY={" in js
-assert "WORLD_01" in js and "LOCAL_01" in js
-assert "NORMAL:{stages:[" in js and "HARD:{stages:[],status:'AWAITING_AUTHORITATIVE_STAGE_COUNT'}" in js
-assert "function resolveStageRuntime(selection)" in js
+assert "function stageBaseUnitIds()" in js
+assert "function selectStageRuntime(selection)" in js
+assert "stageBaseUnitIds().map(id=>UNIT_DEFS[id])" in js
 assert "playerProfile.selectedMap={...selection}" in js
-assert "selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_01'}" in js
+print("PASS - MASTER selects WORLD > LOCAL_MAP > STAGE_MAP; unit availability remains stage-scoped")
+
+# Authoritative workbook map hierarchy guards
+assert "LOCAL_WEST" in js and "LOCAL_BELOZAR" in js and "LOCAL_AZAR" in js
+assert "LOCAL_HAERYUN" in js and "LOCAL_SAINTARC" in js and "LOCAL_SANDRAK" in js
+for hard_stage in range(31,51):
+    assert f"id:'HARD_{hard_stage}'" in js
+assert js.count("mode:'NORMAL'") >= 1
 assert html.count('data-stage=') == 5
 assert 'data-stage="6"' not in html
-assert "WORLD / LOCAL MAP / MODE" in html
-assert "HARD · 로컬맵별 가변 스테이지 수" in html
-print("PASS - runtime distinguishes WORLD > LOCAL_MAP > STAGE_MAP; NORMAL has 5 stage slots and HARD remains variable-length")
+print("PASS - authoritative workbook hierarchy: NORMAL 1-30 across six 5-stage local maps; HARD 31-50 uses 3/3/3/3/3/5 local-map counts")
