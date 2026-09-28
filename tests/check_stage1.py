@@ -512,3 +512,8 @@ for token in ["const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY'}","function summoned
     assert token in js, "missing Lucky owned-hero uniqueness rule: "+token
 assert "PlayerProfile 보유 영웅 데이터 연결 후 활성화" not in js
 print("PASS - Lucky free summons use owned+rarity+not-yet-summoned candidates, respect hero cap, and burst when no candidate exists")
+
+# Global hero uniqueness: normal material combo must also reject already-summoned hero IDs
+for token in ["const summoned=summonedHeroIds();","if(summoned.has(r.id))continue","if(summoned.has(r.id))return","if(summonedHeroIds().has(recipe.id)){toast(recipe.name+'은 이미 소환되었습니다');return}"]:
+    assert token in js, "missing normal-combo hero uniqueness guard: "+token
+print("PASS - hero duplicate summon is blocked globally for Lucky rewards and normal material combos")
