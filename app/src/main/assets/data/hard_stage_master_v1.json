@@ -1,7 +1,7 @@
 {
   "schema": "LG_HARD_STAGE_MASTER_V1",
   "authority": {
-    "workbook": "Lucky_Girls_캐릭터도감_MASTER_확정_2026-09-28.xlsx",
+    "workbook": "Lucky_Girls_GAME_DESIGN_MASTER_2026-09-28.xlsx",
     "sha256": "398489cafe1f7c66ad2fe9ceb57f12c2397946218fde6d8c0e5fcae607f2c9b3",
     "priority": "AUTHORITATIVE"
   },
