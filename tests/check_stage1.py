@@ -555,3 +555,12 @@ assert 'recipeNames:["대형 발리스타","연사 감시탑","루비"]' in js
 assert 'recipeNames:["아이돌","1급 얼음수정","카린"]' in js
 assert "recipeRuntimeComplete:" in js
 print("PASS - all 20 authoritative workbook hero recipes are locked; runtime material IDs are separately tracked")
+
+# Stage-scoped MASTER profile/runtime guards
+assert "const STAGE_RUNTIME_REGISTRY={" in js
+assert "function stageBaseUnitIds()" in js
+assert "function selectStageRuntime(stageId)" in js
+assert "stageBaseUnitIds().map(id=>UNIT_DEFS[id])" in js
+assert "selectStageRuntime(profile.selectedStage||1)" in js
+assert "all units" not in js.lower()
+print("PASS - MASTER profile selects a stage; unit availability remains stage-scoped instead of globally unlocked")
