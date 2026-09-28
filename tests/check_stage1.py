@@ -565,13 +565,15 @@ assert "selectStageRuntime(profile.selectedStage||1)" in js
 assert "all units" not in js.lower()
 print("PASS - MASTER profile selects a stage; unit availability remains stage-scoped instead of globally unlocked")
 
-# MASTER stage selector / planned map-slot guards
-for stage_id in range(1,7):
-    assert f"data-stage=\"{stage_id}\"" in html
-assert html.count("· 준비중") == 5
-assert "2:{id:2,dataPath:'data/stage02.json'" in js and "6:{id:6,dataPath:'data/stage06.json'" in js
-assert "status:'PLANNED'" in js
-assert "masterStage=Number(b.dataset.stage)" in js
-assert "selectedStage:masterStage" in js
-assert "function syncStageHud()" in js
-print("PASS - MASTER exposes Stage 1-6 slots, locks unimplemented maps, and binds the selected implemented stage to runtime")
+# World / Local Map / Stage Map hierarchy guards
+assert "const MAP_RUNTIME_REGISTRY={" in js
+assert "WORLD_01" in js and "LOCAL_01" in js
+assert "NORMAL:{stages:[" in js and "HARD:{stages:[],status:'AWAITING_AUTHORITATIVE_STAGE_COUNT'}" in js
+assert "function resolveStageRuntime(selection)" in js
+assert "playerProfile.selectedMap={...selection}" in js
+assert "selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_01'}" in js
+assert html.count('data-stage=') == 5
+assert 'data-stage="6"' not in html
+assert "WORLD / LOCAL MAP / MODE" in html
+assert "HARD · 로컬맵별 가변 스테이지 수" in html
+print("PASS - runtime distinguishes WORLD > LOCAL_MAP > STAGE_MAP; NORMAL has 5 stage slots and HARD remains variable-length")
