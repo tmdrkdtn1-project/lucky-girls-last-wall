@@ -394,3 +394,19 @@ assert all(x["runtime_status"] in {"SOURCE_GAP","SEMANTIC_READY_BALANCE_PENDING"
 assert all(x["source_gap"] for x in enemy_special_audit["items"] if x["runtime_status"]=="SOURCE_GAP")
 assert all(x["runtime_semantic"] for x in enemy_special_audit["items"] if x["runtime_status"]=="SPEC_READY")
 print("PASS - all 35 skill-bearing enemies are audited without inventing unresolved balance values")
+
+
+# Source-backed enemy special-effect runtime binding guards
+enemy_special_bindings=json.loads((root/"data/enemy_special_runtime_bindings_v1.json").read_text(encoding="utf-8"))
+assert enemy_special_bindings["schema"]=="LG_ENEMY_SPECIAL_RUNTIME_BINDINGS_V1"
+assert enemy_special_bindings["source_audit_schema"]=="LG_ENEMY_SPECIAL_RUNTIME_AUDIT_V1"
+assert enemy_special_bindings["count"]==17 and len(enemy_special_bindings["bindings"])==17
+assert enemy_special_bindings["semantic_count"]==4
+assert len({x["enemy_special_id"] for x in enemy_special_bindings["bindings"]})==17
+assert all(x["runtime_status"]=="CONTRACT_READY" for x in enemy_special_bindings["bindings"])
+sem=enemy_special_bindings["semantics"]
+assert sem["FLYING_TERRAIN_IGNORE"]["parameters"]=={"airborne":True,"terrain_pathing":"IGNORE_TERRAIN"}
+assert sem["FREEZE_DURATION_REDUCTION_40"]["parameters"]["freeze_duration_multiplier"]==0.6
+assert sem["PHYSICAL_DAMAGE_REDUCTION_20"]["parameters"]["physical_damage_taken_multiplier"]==0.8
+assert sem["LOW_HP_BERSERK_40_25"]["parameters"]=={"trigger_hp_ratio_lte":0.4,"move_speed_multiplier":1.25,"wall_damage_multiplier":1.25}
+print("PASS - 17 source-backed enemy special effects bind to 4 explicit runtime semantics with no invented balance values")
