@@ -1,0 +1,147 @@
+{
+  "schema": "LG_LUCKY_ROULETTE_V1",
+  "title": "Lucky Roulette",
+  "ui": {
+    "anchor": "BOTTOM_RIGHT_ALWAYS_VISIBLE",
+    "button_label": "JACKPOT",
+    "show_jackpot_percent": true,
+    "pause_during_spin_and_reward": true
+  },
+  "jackpot": {
+    "initial_pct": 0,
+    "wave_clear_increment_pct": 5,
+    "natural_increment_waves": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "natural_max_pct": 45,
+    "reset_after_spin_pct": 0,
+    "midboss_bonus_pct": 20,
+    "absolute_cap_pct": 100
+  },
+  "outcome_model": {
+    "jackpot": "DISPLAYED_JACKPOT_PERCENT_IS_ABSOLUTE_PROBABILITY",
+    "on_jackpot_failure_weights": {
+      "LUCKY": 1.5,
+      "BONUS": 1.8,
+      "MISS": 1
+    },
+    "miss_has_penalty": false
+  },
+  "stage_buff": {
+    "stats": [
+      "ATK",
+      "ATTACK_SPEED"
+    ],
+    "stacking": true,
+    "cap_pct": 40,
+    "applies_to": "CURRENT_AND_FUTURE_UNITS_IN_STAGE"
+  },
+  "rewards": {
+    "JACKPOT": [
+      {
+        "id": "MYTHIC_OWNED_RANDOM_1",
+        "effect": "FREE_SUMMON",
+        "rarity": "MYTHIC",
+        "count": 1,
+        "hero_cap": 5
+      },
+      {
+        "id": "STAGE_BUFF_30",
+        "effect": "STAGE_ATK_AS_BUFF",
+        "pct": 30
+      },
+      {
+        "id": "LEGENDARY_OWNED_RANDOM_2",
+        "effect": "FREE_SUMMON",
+        "rarity": "LEGENDARY",
+        "count": 2,
+        "hero_cap": 5
+      },
+      {
+        "id": "GOLD_2000",
+        "effect": "GOLD",
+        "amount": 2000
+      }
+    ],
+    "LUCKY": [
+      {
+        "id": "LEGENDARY_OWNED_RANDOM_1",
+        "effect": "FREE_SUMMON",
+        "rarity": "LEGENDARY",
+        "count": 1,
+        "hero_cap": 5
+      },
+      {
+        "id": "STAGE_BUFF_20",
+        "effect": "STAGE_ATK_AS_BUFF",
+        "pct": 20
+      },
+      {
+        "id": "GOLD_1000",
+        "effect": "GOLD",
+        "amount": 1000
+      }
+    ],
+    "BONUS": [
+      {
+        "id": "STAGE_BUFF_10",
+        "effect": "STAGE_ATK_AS_BUFF",
+        "pct": 10
+      },
+      {
+        "id": "GOLD_500",
+        "effect": "GOLD",
+        "amount": 500
+      }
+    ],
+    "MISS": []
+  },
+  "free_summon_policy": {
+    "pool": "OWNED_HEROES_OF_REQUIRED_RARITY",
+    "random": true,
+    "consume_materials": false,
+    "hero_cap": 5,
+    "truncate_to_open_slots": true
+  },
+  "presentation": {
+    "spin_visual": true,
+    "result_visual": true,
+    "reward_choice_after_win": true,
+    "celebration": "FIREWORKS",
+    "example": "잭팟 성공!!"
+  },
+  "midboss_reward": {
+    "trigger": "WAVE5_MIDBOSS_DEFEATED",
+    "pause_game": true,
+    "choose": 1,
+    "options": [
+      {
+        "id": "MID_GOLD_1000",
+        "effect": "GOLD",
+        "amount": 1000
+      },
+      {
+        "id": "MID_LEGENDARY_1",
+        "effect": "FREE_SUMMON",
+        "rarity": "LEGENDARY",
+        "count": 1,
+        "hero_cap": 5
+      },
+      {
+        "id": "MID_JACKPOT_20",
+        "effect": "JACKPOT_ADD_PERCENTAGE_POINTS",
+        "pct": 20,
+        "absolute_cap_pct": 100
+      }
+    ],
+    "resume_after_apply": true
+  }
+}
