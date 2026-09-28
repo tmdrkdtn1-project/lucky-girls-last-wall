@@ -1,0 +1,67 @@
+{
+  "schema": "LG_MAP_REFERENCE_PACKAGE_V1",
+  "status": "REFERENCE_ONLY",
+  "approved": false,
+  "final": false,
+  "local_path": "D:\\MYGAME\\lucky_girls\\03_DESIGN\\MAP\\REFERENCE\\6_REGION_TD_CONCEPT_V1",
+  "source_zip": "LUCKY_GIRLS_6_REGION_TD_CONCEPT_V1.zip",
+  "file_count": 18,
+  "total_uncompressed_bytes": 21577498,
+  "regions": [
+    {
+      "stage": 1,
+      "region": "WEST",
+      "png": "01_STAGE01_WEST.png",
+      "plan": "01_STAGE01_WEST_PLAN.svg"
+    },
+    {
+      "stage": 8,
+      "region": "AZAR",
+      "png": "02_STAGE08_AZAR.png",
+      "plan": "02_STAGE08_AZAR_PLAN.svg"
+    },
+    {
+      "stage": 13,
+      "region": "HAERYUN",
+      "png": "03_STAGE13_HAERYUN.png",
+      "plan": "03_STAGE13_HAERYUN_PLAN.svg"
+    },
+    {
+      "stage": 18,
+      "region": "BELOZAR",
+      "png": "04_STAGE18_BELOZAR.png",
+      "plan": "04_STAGE18_BELOZAR_PLAN.svg"
+    },
+    {
+      "stage": 23,
+      "region": "SAINT",
+      "png": "05_STAGE23_SAINT.png",
+      "plan": "05_STAGE23_SAINT_PLAN.svg"
+    },
+    {
+      "stage": 30,
+      "region": "SANDRAK",
+      "png": "06_STAGE30_SANDRAK.png",
+      "plan": "06_STAGE30_SANDRAK_PLAN.svg"
+    }
+  ],
+  "runtime_policy": {
+    "may_auto_promote": false,
+    "requires_explicit_approval": true,
+    "approved_stage_json_is_authoritative": true
+  },
+  "sha256": {
+    "01_STAGE01_WEST.png": "39c1c9ce8badd847726ca27cadd6021232375a21eeb7ed751444a520c2c54123",
+    "01_STAGE01_WEST_PLAN.svg": "e8c26de15d8e6ef29663e0c8e491dc1caa4807a104562745bff5e4a94977595d",
+    "02_STAGE08_AZAR.png": "8415afc9d6a73c86b7e4fcdbd09995ed0184c4212371a21bbff9812198d9c798",
+    "02_STAGE08_AZAR_PLAN.svg": "36a195878a5fddbf06925fae3b28c5f69e92194e5b687dafd98b17ae051e2968",
+    "03_STAGE13_HAERYUN.png": "70e0eb0b7ddc2c58aa665b44a7a531615794ae660e049dd5efda7679d1b9ab57",
+    "03_STAGE13_HAERYUN_PLAN.svg": "0c54361a4f9e57f473762ecfe1adc93df36ca7ad1c785b1a2f270a6eb39d6f93",
+    "04_STAGE18_BELOZAR.png": "faf4e96a5ccb507a9cef9c480439787e5a8593d12931c566b793add11c9c1d44",
+    "04_STAGE18_BELOZAR_PLAN.svg": "6930708f862458d6ddef6fa953c2d74c3ef3e1595bad97fe92a4286e00faa1bb",
+    "05_STAGE23_SAINT.png": "f0468ace1f85b2939f120dcdba58f69ef09ff8f08580e4e9c4d58489c1094ead",
+    "05_STAGE23_SAINT_PLAN.svg": "cbb77a10e5a7f69e30f2adbb40a963d95fe689a044e349ee5b31bcac1de4d5ab",
+    "06_STAGE30_SANDRAK.png": "0654dd8511bf31ef13ce8042f4d5db2492fa7d76b50d0aa01352f4e9ed62b586",
+    "06_STAGE30_SANDRAK_PLAN.svg": "71f503512895a187b22f68620225f8f91d66e521f44832e7fcadb2c723fe984e"
+  }
+}
