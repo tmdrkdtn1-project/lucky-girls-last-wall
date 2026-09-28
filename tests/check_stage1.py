@@ -542,3 +542,10 @@ assert "castRpgHeroSkill(h,1)" in js and "castRpgHeroSkill(h,2)" in js
 assert "applyRpgEffects(rpgHeroUltimateEffects(h),{source:h})" in js
 assert "amount:atk*1.65" not in js
 print("PASS - 20 RPG hero definitions and per-hero skill runtime are wired")
+
+# TD all-hero runtime registry guard
+assert js.count("prototypeRecipe:true") == 19
+for hero in ["ARIA","YUNA","RIEL","RUBY","ERIKA","SERA","REINA","KARIN","BELL","MIA","IRENE","NEON","SASHA","LUNA","VIOLA","CHLOE","ADEL","NIA","AURORA","EVE"]:
+    assert "id:'"+hero+"'" in js, f"missing TD hero registry entry: {hero}"
+assert "prototypeRecipe:true" in js
+print("PASS - all 20 heroes are summonable runtime entities; unconfirmed non-Aria recipes remain explicitly prototype-only")
