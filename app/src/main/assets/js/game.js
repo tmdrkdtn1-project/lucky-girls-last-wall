@@ -324,9 +324,40 @@ function handleEnemyDeath(e){
  if(e.kind==='midboss')toast('중간보스 격파 +90G');else toast('+12G');
  return false;
 }
-function dealEnemyDamage(e,amount,fxType='single'){
+const ENEMY_SPECIAL_RUNTIME_SEMANTICS={
+ FLYING_TERRAIN_IGNORE:{airborne:true,terrainPathing:'IGNORE_TERRAIN'},
+ FREEZE_DURATION_REDUCTION_40:{freezeDurationMultiplier:.60},
+ PHYSICAL_DAMAGE_REDUCTION_20:{physicalDamageTakenMultiplier:.80},
+ LOW_HP_BERSERK_40_25:{triggerHpRatioLte:.40,moveSpeedMultiplier:1.25,wallDamageMultiplier:1.25}
+};
+function enemySpecialRuntimeProfile(semantic,hp=1,maxHp=1){
+ const def=ENEMY_SPECIAL_RUNTIME_SEMANTICS[semantic];if(!def)return null;
+ if(semantic==='LOW_HP_BERSERK_40_25'){
+  const active=maxHp>0&&hp/maxHp<=def.triggerHpRatioLte;
+  return {...def,active,moveSpeedMultiplier:active?def.moveSpeedMultiplier:1,wallDamageMultiplier:active?def.wallDamageMultiplier:1};
+ }
+ return {...def,active:true};
+}
+function applyEnemyPhysicalDamageReduction(e,amount,damageClass='PHYSICAL'){
+ const p=enemySpecialRuntimeProfile(e&&e.specialSemantic,e&&e.hp,e&&e.maxHp);
+ return damageClass==='PHYSICAL'&&p&&p.physicalDamageTakenMultiplier?amount*p.physicalDamageTakenMultiplier:amount;
+}
+function enemyFreezeDuration(e,duration){
+ const p=enemySpecialRuntimeProfile(e&&e.specialSemantic,e&&e.hp,e&&e.maxHp);
+ return p&&p.freezeDurationMultiplier?duration*p.freezeDurationMultiplier:duration;
+}
+function enemyMovementMultiplier(e){
+ const p=enemySpecialRuntimeProfile(e&&e.specialSemantic,e&&e.hp,e&&e.maxHp);
+ return p&&p.moveSpeedMultiplier?p.moveSpeedMultiplier:1;
+}
+function enemyWallDamageMultiplier(e){
+ const p=enemySpecialRuntimeProfile(e&&e.specialSemantic,e&&e.hp,e&&e.maxHp);
+ return p&&p.wallDamageMultiplier?p.wallDamageMultiplier:1;
+}
+function dealEnemyDamage(e,amount,fxType='single',damageClass='PHYSICAL'){
  if(!e||e.hp<=0)return false;
- e.hp=Math.max(0,e.hp-Math.max(0,amount));
+ const resolved=applyEnemyPhysicalDamageReduction(e,Math.max(0,amount),damageClass);
+ e.hp=Math.max(0,e.hp-resolved);
  e.hitFxType=fxType;e.hitFxUntil=simTime+.22;
  if(e.hp<=0)return handleEnemyDeath(e);
  return false;
@@ -381,14 +412,14 @@ function updateEnemies(dt,now){
   if(e.hp<=0)continue;
   if(updateEnemyEffects(e,dt)){return}
   if(e.hp<=0)continue;
-  if(e.pathPos<route.length-2){e.pathPos=Math.min(route.length-2,e.pathPos+e.speed*dt);continue}
+  if(e.pathPos<route.length-2){e.pathPos=Math.min(route.length-2,e.pathPos+e.speed*enemyMovementMultiplier(e)*dt);continue}
   const allowed=e.kind==='normal'?gateNormals.includes(e):e===gateSpecial;if(!allowed)continue;
   const baseHitGap=e.kind==='boss'?2.2:e.kind==='midboss'?1.9:1.5;
   const hitGap=e.kind==='boss'&&e.enraged?baseHitGap/1.25:baseHitGap;
   if(now-e.lastStructureHit>=hitGap){
    e.lastStructureHit=now;
    const baseDmg=e.kind==='boss'?40:e.kind==='midboss'?24:10;
-   const rawDmg=e.kind==='boss'&&e.enraged?Math.round(baseDmg*1.5):baseDmg;
+   const rawDmg=(e.kind==='boss'&&e.enraged?Math.round(baseDmg*1.5):baseDmg)*enemyWallDamageMultiplier(e);
    const defMult=now<wallDefBuffUntil?1/(1+wallDefBonusPct):1;
    const shieldMult=now<wallShieldUntil?1-wallShieldReduction:1;
    const dmg=Math.max(1,Math.round(rawDmg*defMult*shieldMult));
@@ -1113,6 +1144,7 @@ window.__LG_STAGE1_TEST__={
  recipes:()=>HERO_RECIPES,
  unitDefs:()=>UNIT_DEFS,
  startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.type==='hero_aria').slice(0,5)),
+ enemySpecialRuntime:{semantics:()=>ENEMY_SPECIAL_RUNTIME_SEMANTICS,profile:(semantic,hp,maxHp)=>enemySpecialRuntimeProfile(semantic,hp,maxHp),freezeDuration:(semantic,duration)=>enemyFreezeDuration({specialSemantic:semantic,hp:1,maxHp:1},duration),physicalDamage:(semantic,amount)=>applyEnemyPhysicalDamageReduction({specialSemantic:semantic,hp:1,maxHp:1},amount,'PHYSICAL')},
  standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_2'
 };
 })();
