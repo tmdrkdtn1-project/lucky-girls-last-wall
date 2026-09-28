@@ -454,3 +454,30 @@ assert (inv["rpg_hero_count_min"],inv["rpg_hero_count_max"])==(1,5)
 assert inv["rpg_phase_thresholds"]==[0.70,0.35] and inv["rpg_hard_timeout"] is False
 assert inv["stage_clear_condition"]=="RPG_BOSS_DEFEATED"
 print("PASS - shared Stage 2+ contract preserves confirmed combat invariants without inventing stage-specific balance")
+
+
+# Lucky Roulette V1 + midboss reward contract/runtime guards
+lucky=json.loads((root/"data/lucky_roulette_v1.json").read_text(encoding="utf-8"))
+assert lucky["schema"]=="LG_LUCKY_ROULETTE_V1"
+assert lucky["jackpot"]["initial_pct"]==0 and lucky["jackpot"]["wave_clear_increment_pct"]==5
+assert lucky["jackpot"]["natural_increment_waves"]==list(range(1,10))
+assert lucky["jackpot"]["natural_max_pct"]==45 and lucky["jackpot"]["reset_after_spin_pct"]==0
+assert lucky["outcome_model"]["on_jackpot_failure_weights"]=={"LUCKY":1.5,"BONUS":1.8,"MISS":1.0}
+assert lucky["stage_buff"]["stacking"] is True and lucky["stage_buff"]["cap_pct"]==40
+assert len(lucky["rewards"]["JACKPOT"])==4 and len(lucky["rewards"]["LUCKY"])==3 and len(lucky["rewards"]["BONUS"])==2
+assert lucky["midboss_reward"]["pause_game"] is True and lucky["midboss_reward"]["choose"]==1
+assert [x["id"] for x in lucky["midboss_reward"]["options"]]==["MID_GOLD_1000","MID_LEGENDARY_1","MID_JACKPOT_20"]
+for token in [
+ "const LUCKY_FAIL_WEIGHTS={LUCKY:1.5,BONUS:1.8,MISS:1.0}",
+ "function luckyOutcomeRoll(randomValue=Math.random())",
+ "function addLuckyWaveClear(w){if(w>=1&&w<=9)luckyJackpotPct=Math.min(45,luckyJackpotPct+5)}",
+ "function addLuckyMidbossBonus(){luckyJackpotPct=Math.min(100,luckyJackpotPct+20)}",
+ "function resetLuckyAfterSpin(){luckyJackpotPct=0}",
+ "function addLuckyStageBuff(pct){luckyStageBuffPct=Math.min(40,luckyStageBuffPct+pct)",
+ "const reward=e.kind==='boss'?180:e.kind==='midboss'?0:12",
+ "openMidbossReward();toast('중간보스 격파 · 보상 1개 선택')",
+ "const lucky=luckyUnitStatMultiplier()",
+ "addLuckyWaveClear(wave);",
+ "luckyRoulette:{roll:(v)=>luckyOutcomeRoll(v)"
+]: assert token in js, "missing Lucky Roulette runtime guard: "+token
+print("PASS - Lucky Roulette probability, reset, 45% natural build, 40% buff cap and midboss choice core are guarded")
