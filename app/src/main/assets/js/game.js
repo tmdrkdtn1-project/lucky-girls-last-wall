@@ -32,41 +32,21 @@ const UNIT_DEFS={
  lancer3_elite:{id:'lancer3_elite',family:'LANCER',tier:3,name:'엘리트 랜서',short:'엘',cost:195,atk:42,range:3.0,rate:1.00,damageType:'관통/광역',targetCount:3,areaRadiusCells:1,air:true,next:[]},
  lancer3_magic:{id:'lancer3_magic',family:'LANCER',tier:3,name:'마창병',short:'마창',cost:195,atk:34,range:4.0,rate:1.05,damageType:'관통/지속',targetCount:2,dotDuration:4,dotTick:1,dotRatio:.25,air:true,next:[]}
 };
-const MAP_RUNTIME_REGISTRY={
- WORLD_01:{id:'WORLD_01',localMaps:{
-  LOCAL_01:{id:'LOCAL_01',modes:{
-   NORMAL:{stages:[
-    {id:'NORMAL_01_01',ordinal:1,dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],status:'IMPLEMENTED',label:'서부 왕국 · 산악 초입'},
-    {id:'NORMAL_01_02',ordinal:2,status:'PLANNED'},{id:'NORMAL_01_03',ordinal:3,status:'PLANNED'},{id:'NORMAL_01_04',ordinal:4,status:'PLANNED'},{id:'NORMAL_01_05',ordinal:5,status:'PLANNED'}
-   ]},
-   HARD:{stages:[],status:'AWAITING_AUTHORITATIVE_STAGE_COUNT'}
-  }}
- }}
-};
-let activeMapSelection={worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_01'};
-let activeStageRuntime=MAP_RUNTIME_REGISTRY.WORLD_01.localMaps.LOCAL_01.modes.NORMAL.stages[0];
+const MAP_RUNTIME_REGISTRY={WORLD_01:{id:'WORLD_01',localMaps:{
+  LOCAL_WEST:{id:'LOCAL_WEST',normalName:'서부 왕국',hardName:'타락한 서부 왕국',modes:{NORMAL:{stages:[{id:'NORMAL_01',globalStage:1,status:'IMPLEMENTED',dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],label:'서부 왕국 · 산악 초입'},{id:'NORMAL_02',globalStage:2,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_03',globalStage:3,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_04',globalStage:4,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_05',globalStage:5,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_31',globalStage:31,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_32',globalStage:32,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_33',globalStage:33,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
+  LOCAL_BELOZAR:{id:'LOCAL_BELOZAR',normalName:'벨로자르 제국',hardName:'타락한 벨로자르 제국',modes:{NORMAL:{stages:[{id:'NORMAL_16',globalStage:16,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_17',globalStage:17,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_18',globalStage:18,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_19',globalStage:19,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_20',globalStage:20,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_34',globalStage:34,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_35',globalStage:35,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_36',globalStage:36,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
+  LOCAL_AZAR:{id:'LOCAL_AZAR',normalName:'아자르 삼국연합',hardName:'타락한 아자르 삼국연합',modes:{NORMAL:{stages:[{id:'NORMAL_06',globalStage:6,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_07',globalStage:7,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_08',globalStage:8,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_09',globalStage:9,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_10',globalStage:10,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_37',globalStage:37,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_38',globalStage:38,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_39',globalStage:39,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
+  LOCAL_HAERYUN:{id:'LOCAL_HAERYUN',normalName:'해륜왕국',hardName:'타락한 해륜왕국',modes:{NORMAL:{stages:[{id:'NORMAL_11',globalStage:11,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_12',globalStage:12,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_13',globalStage:13,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_14',globalStage:14,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_15',globalStage:15,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_40',globalStage:40,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_41',globalStage:41,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_42',globalStage:42,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
+  LOCAL_SAINTARC:{id:'LOCAL_SAINTARC',normalName:'생트아르크 교황령',hardName:'암운이 드리운 생트아르크 교황령',modes:{NORMAL:{stages:[{id:'NORMAL_21',globalStage:21,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_22',globalStage:22,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_23',globalStage:23,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_24',globalStage:24,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_25',globalStage:25,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_43',globalStage:43,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_44',globalStage:44,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_45',globalStage:45,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
+  LOCAL_SANDRAK:{id:'LOCAL_SANDRAK',normalName:'상드라크 제국',hardName:'심연에 침식당한 상드라크 제국',modes:{NORMAL:{stages:[{id:'NORMAL_26',globalStage:26,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_27',globalStage:27,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_28',globalStage:28,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_29',globalStage:29,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_30',globalStage:30,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_46',globalStage:46,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_47',globalStage:47,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_48',globalStage:48,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_49',globalStage:49,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_50',globalStage:50,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}}
+}}};
+let activeMapSelection={worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'};
+let activeStageRuntime=MAP_RUNTIME_REGISTRY.WORLD_01.localMaps.LOCAL_WEST.modes.NORMAL.stages[0];
 function stageBaseUnitIds(){return activeStageRuntime.baseUnitIds||[]}
-function resolveStageRuntime(selection){
- const world=MAP_RUNTIME_REGISTRY[selection.worldId];if(!world)throw new Error('Unknown world '+selection.worldId);
- const local=world.localMaps[selection.localMapId];if(!local)throw new Error('Unknown local map '+selection.localMapId);
- const mode=local.modes[selection.mode];if(!mode)throw new Error('Unknown mode '+selection.mode);
- const stage=mode.stages.find(s=>s.id===selection.stageId);
- if(!stage||stage.status!=='IMPLEMENTED')throw new Error('Stage map '+selection.stageId+' runtime is not implemented');
- return stage;
-}
-function selectStageRuntime(selection){
- activeStageRuntime=resolveStageRuntime(selection);activeMapSelection={...selection};
- playerProfile.selectedMap={...selection};return activeStageRuntime;
-}
-function availableMasterStages(){
- const out=[];Object.values(MAP_RUNTIME_REGISTRY).forEach(w=>Object.values(w.localMaps).forEach(l=>Object.entries(l.modes).forEach(([mode,v])=>v.stages.forEach(s=>out.push({worldId:w.id,localMapId:l.id,mode,id:s.id,ordinal:s.ordinal,status:s.status,label:s.label||s.id})))));
- return out;
-}
-function syncStageHud(){
- const stage=activeStageRuntime;const hud=document.querySelector('#topHUD .hudBox');
- if(hud)hud.textContent=activeMapSelection.mode+' · '+activeMapSelection.localMapId+' · STAGE '+stage.ordinal;
- const banner=document.getElementById('stageBanner');if(banner)banner.textContent=(stage.label||stage.id)+' · '+COLS+'×'+ROWS+' PLAYABLE BLOCKOUT';
-}
+function resolveStageRuntime(selection){const world=MAP_RUNTIME_REGISTRY[selection.worldId];if(!world)throw new Error('Unknown world '+selection.worldId);const local=world.localMaps[selection.localMapId];if(!local)throw new Error('Unknown local map '+selection.localMapId);const mode=local.modes[selection.mode];if(!mode)throw new Error('Unknown mode '+selection.mode);const stage=mode.stages.find(s=>s.id===selection.stageId);if(!stage||stage.status!=='IMPLEMENTED')throw new Error('Stage map '+selection.stageId+' runtime is not implemented');return stage}
+function selectStageRuntime(selection){activeStageRuntime=resolveStageRuntime(selection);activeMapSelection={...selection};playerProfile.selectedMap={...selection};return activeStageRuntime}
+function availableMasterStages(){const out=[];Object.values(MAP_RUNTIME_REGISTRY).forEach(w=>Object.values(w.localMaps).forEach(l=>Object.entries(l.modes).forEach(([mode,v])=>v.stages.forEach(s=>out.push({worldId:w.id,localMapId:l.id,mode,id:s.id,globalStage:s.globalStage,status:s.status,label:s.label||s.id})))));return out}
+function syncStageHud(){const stage=activeStageRuntime;const hud=document.querySelector('#topHUD .hudBox');if(hud)hud.textContent=activeMapSelection.mode+' · '+activeMapSelection.localMapId+' · STAGE '+stage.globalStage;const banner=document.getElementById('stageBanner');if(banner)banner.textContent=(stage.label||stage.id)+' · '+COLS+'×'+ROWS+' PLAYABLE BLOCKOUT'}
 
 const HERO_RECIPES=[
  {id:'ARIA',name:'아리아',rarity:'LEGENDARY',recipeNames:["기사단장","기사단장"],materials:[{"type":"knight3_commander","count":2}],recipeRuntimeComplete:true,atk:72,range:3,rate:1.2},
@@ -94,7 +74,7 @@ const HERO_RECIPES=[
 const cells=[], units=new Map(), enemies=[];
 const ALL_HERO_IDS=['ARIA','YUNA','RIEL','RUBY','ERIKA','SERA','REINA','KARIN','BELL','MIA','IRENE','NEON','SASHA','LUNA','VIOLA','CHLOE','ADEL','NIA','AURORA','EVE'];
 const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY',YUNA:'LEGENDARY',RIEL:'LEGENDARY',RUBY:'LEGENDARY',ERIKA:'LEGENDARY',SERA:'LEGENDARY',REINA:'LEGENDARY',KARIN:'LEGENDARY',BELL:'MYTHIC',MIA:'MYTHIC',IRENE:'MYTHIC',NEON:'MYTHIC',SASHA:'MYTHIC',LUNA:'MYTHIC',VIOLA:'MYTHIC',CHLOE:'MYTHIC',ADEL:'MYTHIC',NIA:'MYTHIC',AURORA:'MYTHIC',EVE:'MYTHIC'}; // authoritative V4_2 encyclopedia: Legendary 8 + Mythic 12
-let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_01'},infiniteGold:false};
+let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'},infiniteGold:false};
 function heroSkillUnlocked(slot){return slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30}
 function spendGold(amount){if(playerProfile.infiniteGold)return true;if(gold<amount)return false;gold-=amount;return true}
 let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
@@ -1367,7 +1347,7 @@ $('pause').onclick=()=>{
 syncPauseButton();
 
 function startPrototypeBattle(profile){
- playerProfile=profile;selectStageRuntime(profile.selectedMap||{worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_01'});syncStageHud();
+ playerProfile=profile;selectStageRuntime(profile.selectedMap||{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'});syncStageHud();
  gold=profile.infiniteGold?500:500;
  $('prototypeLobby').classList.add('off');$('app').classList.remove('prototypeBattleHidden');running=true;last=performance.now();syncHUD();
 }
@@ -1380,7 +1360,7 @@ let masterGold=null,masterLevel=null,masterStage=1;
 document.querySelectorAll('[data-stage]').forEach(b=>b.onclick=()=>{if(b.disabled)return;document.querySelectorAll('[data-stage]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterStage=Number(b.dataset.stage)});
 document.querySelectorAll('[data-gold]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-gold]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterGold=b.dataset.gold;$('masterStart').disabled=!(masterGold&&masterLevel)});
 document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-level]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterLevel=Number(b.dataset.level);$('masterStart').disabled=!(masterGold&&masterLevel)});
-$('masterStart').onclick=()=>startPrototypeBattle({type:'MASTER',ownedHeroes:[...ALL_HERO_IDS],heroLevel:masterLevel,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_0'+masterStage},infiniteGold:masterGold==='INFINITE'});
+$('masterStart').onclick=()=>startPrototypeBattle({type:'MASTER',ownedHeroes:[...ALL_HERO_IDS],heroLevel:masterLevel,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_0'+masterStage},infiniteGold:masterGold==='INFINITE'});
 
 buildGrid();renderUnits();syncHUD();updateComboHighlights();running=false;requestAnimationFrame(loop);
 
