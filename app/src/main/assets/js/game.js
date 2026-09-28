@@ -1362,10 +1362,11 @@ document.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>{
  if(b.dataset.profile==='BASIC'){startPrototypeBattle({type:'BASIC',ownedHeroes:['ARIA'],heroLevel:10,selectedStage:1,infiniteGold:false});return}
  $('masterSetup').classList.add('on');$('profileStepText').textContent='MASTER PROFILE · 테스트 조건을 선택하세요.';
 });
-let masterGold=null,masterLevel=null;
+let masterGold=null,masterLevel=null,masterStage=1;
+document.querySelectorAll('[data-stage]').forEach(b=>b.onclick=()=>{if(b.disabled)return;document.querySelectorAll('[data-stage]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterStage=Number(b.dataset.stage)});
 document.querySelectorAll('[data-gold]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-gold]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterGold=b.dataset.gold;$('masterStart').disabled=!(masterGold&&masterLevel)});
 document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-level]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterLevel=Number(b.dataset.level);$('masterStart').disabled=!(masterGold&&masterLevel)});
-$('masterStart').onclick=()=>startPrototypeBattle({type:'MASTER',ownedHeroes:[...ALL_HERO_IDS],heroLevel:masterLevel,selectedStage:1,infiniteGold:masterGold==='INFINITE'});
+$('masterStart').onclick=()=>startPrototypeBattle({type:'MASTER',ownedHeroes:[...ALL_HERO_IDS],heroLevel:masterLevel,selectedStage:masterStage,infiniteGold:masterGold==='INFINITE'});
 
 buildGrid();renderUnits();syncHUD();updateComboHighlights();running=false;requestAnimationFrame(loop);
 
@@ -1380,7 +1381,7 @@ window.__LG_STAGE1_TEST__={
  unitDefs:()=>UNIT_DEFS,
  startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.heroId).slice(0,5)),
  enemySpecialRuntime:{semantics:()=>ENEMY_SPECIAL_RUNTIME_SEMANTICS,bindings:()=>({...ENEMY_SPECIAL_SEMANTIC_BY_NAME}),bind:(enemy,name)=>bindEnemySpecialSemantic(enemy,name),profile:(semantic,hp,maxHp)=>enemySpecialRuntimeProfile(semantic,hp,maxHp),freezeDuration:(semantic,duration)=>enemyFreezeDuration({specialSemantic:semantic,hp:1,maxHp:1},duration),physicalDamage:(semantic,amount)=>applyEnemyPhysicalDamageReduction({specialSemantic:semantic,hp:1,maxHp:1},amount,'PHYSICAL')},
- profile:()=>({...playerProfile,ownedHeroes:[...playerProfile.ownedHeroes]}),skillUnlocked:(slot)=>heroSkillUnlocked(slot),
+ profile:()=>({...playerProfile,ownedHeroes:[...playerProfile.ownedHeroes]}),stages:()=>availableMasterStages(),skillUnlocked:(slot)=>heroSkillUnlocked(slot),
  standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_2'
 };
 })();
