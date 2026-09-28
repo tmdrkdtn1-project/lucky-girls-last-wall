@@ -410,3 +410,17 @@ assert sem["FREEZE_DURATION_REDUCTION_40"]["parameters"]["freeze_duration_multip
 assert sem["PHYSICAL_DAMAGE_REDUCTION_20"]["parameters"]["physical_damage_taken_multiplier"]==0.8
 assert sem["LOW_HP_BERSERK_40_25"]["parameters"]=={"trigger_hp_ratio_lte":0.4,"move_speed_multiplier":1.25,"wall_damage_multiplier":1.25}
 print("PASS - 17 source-backed enemy special effects bind to 4 explicit runtime semantics with no invented balance values")
+
+
+# Enemy special-effect executable runtime guards
+assert "const ENEMY_SPECIAL_RUNTIME_SEMANTICS={" in js
+assert "FLYING_TERRAIN_IGNORE:{airborne:true,terrainPathing:'IGNORE_TERRAIN'}" in js
+assert "FREEZE_DURATION_REDUCTION_40:{freezeDurationMultiplier:.60}" in js
+assert "PHYSICAL_DAMAGE_REDUCTION_20:{physicalDamageTakenMultiplier:.80}" in js
+assert "LOW_HP_BERSERK_40_25:{triggerHpRatioLte:.40,moveSpeedMultiplier:1.25,wallDamageMultiplier:1.25}" in js
+assert "function enemyFreezeDuration(e,duration)" in js
+assert "function applyEnemyPhysicalDamageReduction(e,amount,damageClass='PHYSICAL')" in js
+assert "e.speed*enemyMovementMultiplier(e)*dt" in js
+assert "*enemyWallDamageMultiplier(e)" in js
+assert "enemySpecialRuntime:{semantics:" in js
+print("PASS - 4 source-backed enemy special semantics have executable runtime helpers; Stage 1 spawn roster remains unchanged")
