@@ -3451,3 +3451,43 @@ repository root의 MASTER_MANUAL_LUCKY_GIRLS_LAST_WALL.md를 최우선으로 읽
 - 모든 변경은 GitHub CI로 회귀 검증한다.
 
 **END OF MASTER MANUAL — snapshot 8bdecc948b49fc680eb14920de00aa94ca8e6261**
+
+
+---
+
+## AUTHORITATIVE WORKBOOK BASELINE — 2026-09-28
+
+Primary design source: `Lucky_Girls_캐릭터도감_MASTER_확정_2026-09-28.xlsx`
+SHA-256: `398489cafe1f7c66ad2fe9ceb57f12c2397946218fde6d8c0e5fcae607f2c9b3`
+
+When this manual, legacy summaries, and the workbook disagree, use the latest direct user decision first, then this workbook. Runtime-derived tuning explicitly recorded as an override remains separate from source design values.
+
+### Map hierarchy
+`WORLD > LOCAL_MAP > STAGE_MAP`. A local map is not a stage map.
+
+NORMAL:
+- 서부 왕국: Stage 1–5
+- 아자르 삼국연합: Stage 6–10
+- 해륜왕국: Stage 11–15
+- 벨로자르 제국: Stage 16–20
+- 생트아르크 교황령: Stage 21–25
+- 상드라크 제국: Stage 26–30
+
+HARD:
+- 타락한 서부 왕국: Stage 31–33 (3)
+- 타락한 벨로자르 제국 / 타락한 북부: Stage 34–36 (3)
+- 타락한 아자르 삼국연합: Stage 37–39 (3)
+- 타락한 해륜왕국: Stage 40–42 (3)
+- 암운이 드리운 생트아르크 교황령: Stage 43–45 (3)
+- 심연에 침식당한 상드라크 제국: Stage 46–50 (5)
+
+HARD stage count is therefore variable by local map and must never be inferred from NORMAL's fixed five-stage rule.
+
+Canonical runtime data:
+- `app/src/main/assets/data/map_hierarchy_v1.json`
+- `app/src/main/assets/data/hard_stage_master_v1.json`
+
+Workbook sheets that directly govern HARD design include:
+`HARD31_36_1주성장벽`, `HARD37_45_성장벽`, `HARD46_50_최종성장벽`,
+`HARD31_33_REDESIGN`, `HARD34_44_TD_RPG통합`, `HARD45_50_FINAL_DESIGN`,
+`TD_RPG_통합검수_30_33`, and `적군 보스`.
