@@ -43,6 +43,41 @@ let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),
 let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false,waveEnding=false;
 let moveModeUnitId=null,comboPlacement=null,manualPaused=false;
 let gameMode='TD',rpgState=null,rpgSimTime=0,rpgTransitioning=false,rpgAutoBattle=false;
+let luckyJackpotPct=0,luckyStageBuffPct=0,luckyOverlayOpen=false,midbossRewardPending=false;
+const LUCKY_FAIL_WEIGHTS={LUCKY:1.5,BONUS:1.8,MISS:1.0};
+function luckyOutcomeRoll(randomValue=Math.random()){
+ const jp=Math.max(0,Math.min(100,luckyJackpotPct))/100;
+ if(randomValue<jp)return 'JACKPOT';
+ const remain=1-jp,local=remain>0?(randomValue-jp)/remain:0,total=4.3;
+ if(local<1.5/total)return 'LUCKY';
+ if(local<(1.5+1.8)/total)return 'BONUS';
+ return 'MISS';
+}
+function addLuckyWaveClear(w){if(w>=1&&w<=9)luckyJackpotPct=Math.min(45,luckyJackpotPct+5)}
+function addLuckyMidbossBonus(){luckyJackpotPct=Math.min(100,luckyJackpotPct+20)}
+function resetLuckyAfterSpin(){luckyJackpotPct=0}
+function addLuckyStageBuff(pct){luckyStageBuffPct=Math.min(40,luckyStageBuffPct+pct);return luckyStageBuffPct}
+function luckyUnitStatMultiplier(){return 1+luckyStageBuffPct/100}
+function luckyRewardOptions(tier){
+ if(tier==='JACKPOT')return ['MYTHIC_OWNED_RANDOM_1','STAGE_BUFF_30','LEGENDARY_OWNED_RANDOM_2','GOLD_2000'];
+ if(tier==='LUCKY')return ['LEGENDARY_OWNED_RANDOM_1','STAGE_BUFF_20','GOLD_1000'];
+ if(tier==='BONUS')return ['STAGE_BUFF_10','GOLD_500'];
+ return [];
+}
+function luckySpin(randomValue=Math.random()){
+ if(gameMode!=='TD'||rpgPending||luckyOverlayOpen)return null;
+ const tier=luckyOutcomeRoll(randomValue);running=false;luckyOverlayOpen=true;resetLuckyAfterSpin();
+ return {tier,rewards:luckyRewardOptions(tier)};
+}
+function closeLuckyOverlay(){luckyOverlayOpen=false;if(gameMode==='TD'&&!rpgPending&&!midbossRewardPending)running=!manualPaused}
+function applyLuckySimpleReward(id){
+ if(id==='GOLD_2000')gold+=2000;else if(id==='GOLD_1000'||id==='MID_GOLD_1000')gold+=1000;else if(id==='GOLD_500')gold+=500;
+ else if(id==='STAGE_BUFF_30')addLuckyStageBuff(30);else if(id==='STAGE_BUFF_20')addLuckyStageBuff(20);else if(id==='STAGE_BUFF_10')addLuckyStageBuff(10);
+ else if(id==='MID_JACKPOT_20')addLuckyMidbossBonus();
+ syncHUD();
+}
+function openMidbossReward(){running=false;midbossRewardPending=true;luckyOverlayOpen=true;return ['MID_GOLD_1000','MID_LEGENDARY_1','MID_JACKPOT_20']}
+function chooseMidbossReward(id){if(!midbossRewardPending)return false;applyLuckySimpleReward(id);midbossRewardPending=false;closeLuckyOverlay();return true}
 
 const $=id=>document.getElementById(id);
 const grid=$('grid'), unitLayer=$('unitLayer'), enemyLayer=$('enemyLayer'), bottom=$('bottomUI'), actions=$('actions'), title=$('contextTitle');
@@ -319,9 +354,9 @@ function enemyOccupiesRouteCell(e,cellIndex){return occupiedRouteCells(e).includ
 function handleEnemyDeath(e){
  if(e.rewarded)return false;
  e.rewarded=true;
- const reward=e.kind==='boss'?180:e.kind==='midboss'?90:12;gold+=reward;
+ const reward=e.kind==='boss'?180:e.kind==='midboss'?0:12;gold+=reward;
  if(e.kind==='boss'){enterRpgPlaceholder(e);return true}
- if(e.kind==='midboss')toast('중간보스 격파 +90G');else toast('+12G');
+ if(e.kind==='midboss'){openMidbossReward();toast('중간보스 격파 · 보상 1개 선택');}else toast('+12G');
  return false;
 }
 const ENEMY_SPECIAL_RUNTIME_SEMANTICS={
@@ -456,8 +491,9 @@ function updateEnemies(dt,now){
 function unitStats(u){
  const oath=(u.ariaOathUntil||0)>simTime;
  const atkMult=oath?1.15:1,rateMult=oath?1.15:1;
- if(u.type==='hero_aria')return {atk:u.atk*atkMult,range:u.range,rate:u.rate*rateMult,damageType:'단일',targetCount:1};
- const t=UNIT_DEFS[u.type];return {atk:t.atk*atkMult,range:t.range,rate:t.rate*rateMult,damageType:t.damageType,targetCount:t.targetCount||1,areaRadiusCells:t.areaRadiusCells||0,dotDuration:t.dotDuration||0,dotTick:t.dotTick||0,dotRatio:t.dotRatio||0};
+ const lucky=luckyUnitStatMultiplier();
+ if(u.type==='hero_aria')return {atk:u.atk*atkMult*lucky,range:u.range,rate:u.rate*rateMult*lucky,damageType:'단일',targetCount:1};
+ const t=UNIT_DEFS[u.type];return {atk:t.atk*atkMult*lucky,range:t.range,rate:t.rate*rateMult*lucky,damageType:t.damageType,targetCount:t.targetCount||1,areaRadiusCells:t.areaRadiusCells||0,dotDuration:t.dotDuration||0,dotTick:t.dotTick||0,dotRatio:t.dotRatio||0};
 }
 function updateUnits(now){
  for(const u of units.values()){
@@ -1118,6 +1154,7 @@ function tryEarlyWaveClear(){
 }
 function advanceWave(){
  if(wave>=10)return;
+ addLuckyWaveClear(wave);
  wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;wave10WarningShown=false;wave10EnrageTriggered=false;
  startWaveNotice();
 }
@@ -1161,6 +1198,7 @@ syncPauseButton();
 buildGrid();renderUnits();syncHUD();updateComboHighlights();requestAnimationFrame(loop);
 
 window.__LG_STAGE1_TEST__={
+ luckyRoulette:{roll:(v)=>luckyOutcomeRoll(v),spin:(v)=>luckySpin(v),waveClear:(w)=>addLuckyWaveClear(w),midbossBonus:()=>addLuckyMidbossBonus(),buff:(p)=>addLuckyStageBuff(p),state:()=>({jackpotPct:luckyJackpotPct,stageBuffPct:luckyStageBuffPct}),midbossOptions:()=>openMidbossReward(),chooseMidboss:(id)=>chooseMidbossReward(id)},
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
  state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossHp:rpgState.boss.hp,bossPhase:rpgState.boss.phase,heroes:rpgState.heroes.map(h=>({name:h.name,hp:h.hp,ult:h.ult,ko:h.ko})),result:rpgState.result,transitioning:rpgTransitioning,autoBattle:rpgAutoBattle}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
