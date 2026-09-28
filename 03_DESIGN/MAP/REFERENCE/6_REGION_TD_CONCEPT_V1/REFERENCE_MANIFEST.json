@@ -63,5 +63,24 @@
     "05_STAGE23_SAINT_PLAN.svg": "cbb77a10e5a7f69e30f2adbb40a963d95fe689a044e349ee5b31bcac1de4d5ab",
     "06_STAGE30_SANDRAK.png": "0654dd8511bf31ef13ce8042f4d5db2492fa7d76b50d0aa01352f4e9ed62b586",
     "06_STAGE30_SANDRAK_PLAN.svg": "71f503512895a187b22f68620225f8f91d66e521f44832e7fcadb2c723fe984e"
+  },
+  "reference_usage": {
+    "design_role": "REGION_STYLE_AND_LAYOUT_PROPOSAL",
+    "runtime_role": "NONE_UNTIL_APPROVED",
+    "candidate_stage_anchors": [
+      1,
+      8,
+      13,
+      18,
+      23,
+      30
+    ],
+    "promotion_flow": [
+      "REFERENCE",
+      "REVIEWED_CANDIDATE",
+      "APPROVED_MAP_DESIGN",
+      "STAGE_JSON_RUNTIME"
+    ],
+    "hard_mode_note": "HARD may reuse regional visual language, but HARD geometry is not approved by this package."
   }
 }
