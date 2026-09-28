@@ -564,3 +564,14 @@ assert "stageBaseUnitIds().map(id=>UNIT_DEFS[id])" in js
 assert "selectStageRuntime(profile.selectedStage||1)" in js
 assert "all units" not in js.lower()
 print("PASS - MASTER profile selects a stage; unit availability remains stage-scoped instead of globally unlocked")
+
+# MASTER stage selector / planned map-slot guards
+for stage_id in range(1,7):
+    assert f"data-stage=\"{stage_id}\"" in html
+assert html.count("· 준비중") == 5
+assert "2:{id:2,dataPath:'data/stage02.json'" in js and "6:{id:6,dataPath:'data/stage06.json'" in js
+assert "status:'PLANNED'" in js
+assert "masterStage=Number(b.dataset.stage)" in js
+assert "selectedStage:masterStage" in js
+assert "function syncStageHud()" in js
+print("PASS - MASTER exposes Stage 1-6 slots, locks unimplemented maps, and binds the selected implemented stage to runtime")
