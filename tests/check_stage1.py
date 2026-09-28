@@ -424,3 +424,17 @@ assert "e.speed*enemyMovementMultiplier(e)*dt" in js
 assert "*enemyWallDamageMultiplier(e)" in js
 assert "enemySpecialRuntime:{semantics:" in js
 print("PASS - 4 source-backed enemy special semantics have executable runtime helpers; Stage 1 spawn roster remains unchanged")
+
+
+# Source-backed enemy instance binding guards
+assert "const ENEMY_SPECIAL_SEMANTIC_BY_NAME={" in js
+assert "function bindEnemySpecialSemantic(enemy,name)" in js
+assert "bindings:()=>({...ENEMY_SPECIAL_SEMANTIC_BY_NAME})" in js
+for binding in enemy_special_bindings["bindings"]:
+    expected="'{}':'{}'".format(binding["name"],binding["semantic"])
+    assert expected in js, "missing enemy runtime mapping: "+expected
+assert js.count(":'FLYING_TERRAIN_IGNORE'")>=6
+assert js.count(":'FREEZE_DURATION_REDUCTION_40'")>=7
+assert js.count(":'PHYSICAL_DAMAGE_REDUCTION_20'")>=3
+assert js.count(":'LOW_HP_BERSERK_40_25'")>=1
+print("PASS - all 17 source-backed enemy definitions map to their audited runtime semantics")
