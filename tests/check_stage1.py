@@ -524,3 +524,11 @@ for hero in ["ARIA","YUNA","RIEL","RUBY","ERIKA","SERA","REINA","KARIN"]:
 for hero in ["BELL","MIA","IRENE","NEON","SASHA","LUNA","VIOLA","CHLOE","ADEL","NIA","AURORA","EVE"]:
     assert hero+":'MYTHIC'" in js
 print("PASS - all 20 hero rarities match V4_2 encyclopedia (8 Legendary / 12 Mythic)")
+
+# Shared 20-hero identity/runtime guards
+assert "'CHLOE','ADEL','NIA'" in js and "'CHLOE','ADELE','NIA'" not in js
+assert "filter(u=>u.heroId).slice(0,5)" in js
+assert "const heroId=u.heroId||'ARIA',d=RPG_HERO_DEFS[heroId]||RPG_HERO_DEFS.ARIA" in js
+assert "const d=TD_HERO_SKILL_DEFS[u.heroId]" in js
+assert "const hero=!!u.heroId" in js
+print("PASS - TD/RPG transition and rendering use shared heroId identity; ADEL ID is canonical")
