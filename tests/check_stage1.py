@@ -585,3 +585,10 @@ assert "route=data.route.map" in js
 assert "TILE_ROWS=data.tile_rows.slice()" in js
 assert "18x10 grid build failed" not in js
 print("PASS - stage geometry is data-driven; Stage 1 JSON is the first runtime map and future stages do not require hardcoded grid geometry")
+
+# Stage-map multi-route contract guards
+assert "let activeStageRoutes=[]" in js
+assert "data.routes||[data.route]" in js
+assert "activeStageRoutes=paths.map" in js
+assert "routes:()=>activeStageRoutes.map" in js
+print("PASS - stage loader accepts authoritative multi-route geometry while preserving Stage 1 single-route compatibility")
