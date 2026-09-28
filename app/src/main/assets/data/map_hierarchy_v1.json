@@ -1,0 +1,70 @@
+{
+  "schema": "LG_MAP_HIERARCHY_RUNTIME_V1",
+  "hierarchy": [
+    "WORLD",
+    "LOCAL_MAP",
+    "STAGE_MAP"
+  ],
+  "modes": {
+    "NORMAL": {
+      "stage_count_policy": "FIXED_PER_LOCAL_MAP",
+      "normal_stages_per_local_map": 5
+    },
+    "HARD": {
+      "stage_count_policy": "VARIABLE_PER_LOCAL_MAP",
+      "hard_stage_counts_source": "AUTHORITATIVE_MAP_MASTER_REQUIRED",
+      "do_not_assume_fixed_count": true
+    }
+  },
+  "worlds": [
+    {
+      "id": "WORLD_01",
+      "status": "PARTIAL_RUNTIME",
+      "local_maps": [
+        {
+          "id": "LOCAL_01",
+          "normal": {
+            "stages": [
+              {
+                "id": "NORMAL_01_01",
+                "ordinal": 1,
+                "status": "IMPLEMENTED",
+                "data_path": "data/stage01.json"
+              },
+              {
+                "id": "NORMAL_01_02",
+                "ordinal": 2,
+                "status": "PLANNED"
+              },
+              {
+                "id": "NORMAL_01_03",
+                "ordinal": 3,
+                "status": "PLANNED"
+              },
+              {
+                "id": "NORMAL_01_04",
+                "ordinal": 4,
+                "status": "PLANNED"
+              },
+              {
+                "id": "NORMAL_01_05",
+                "ordinal": 5,
+                "status": "PLANNED"
+              }
+            ]
+          },
+          "hard": {
+            "stages": [],
+            "status": "AWAITING_AUTHORITATIVE_STAGE_COUNT"
+          }
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    "WORLD, LOCAL_MAP, and STAGE_MAP are distinct identifiers.",
+    "NORMAL local maps contain 5 stage maps.",
+    "HARD stage-map counts vary by local map and must never be inferred from NORMAL.",
+    "A MASTER profile selects an existing stage map; it does not globally unlock unrelated stage runtime units."
+  ]
+}
