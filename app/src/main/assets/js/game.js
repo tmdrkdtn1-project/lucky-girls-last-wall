@@ -1089,6 +1089,47 @@ function updateRpgBossSkills(b){
  if(rpgSimTime-b.lastSkill2>=d.skill2.cooldown){castBraunRockCollapse(b);return}
  if(rpgSimTime-b.lastSkill1>=d.skill1.cooldown){castBraunHornCharge(b);return}
 }
+function rpgHeroSkillEffects(h,slot){
+ const d=RPG_HERO_DEFS[h.heroId],atk=effectiveHeroAtk(h);
+ if(!d)return [];
+ const ratio=slot===1?d.s1:d.s2;
+ const fx=[{type:'DAMAGE',target:'BOSS',amount:atk*ratio}];
+ if(slot===1){
+  if(h.heroId==='KARIN')fx[0].ignoreDefense=true;
+  if(h.heroId==='RIEL'||h.heroId==='VIOLA')fx.push({type:'DOT',target:'BOSS',amount:atk*.18,duration:6,tick:1});
+  if(h.heroId==='YUNA')fx.push({type:'STUN',target:'BOSS',duration:1});
+  if(h.heroId==='REINA'||h.heroId==='EVE')runRpgAdapter('RPG_SLOW_TO_ACTION_RATE',{target:'BOSS',slowRatio:.25,duration:4},{source:h});
+  if(h.heroId==='RUBY'||h.heroId==='LUNA')fx.push({type:'DAMAGE_TAKEN_MULT',target:'BOSS',mult:h.heroId==='LUNA'?1.18:1.15,duration:8});
+ }
+ if(slot===2){
+  if(h.heroId==='YUNA')fx.push({type:'SKILL_BLOCK',target:'BOSS',duration:2});
+  if(h.heroId==='REINA')fx.push({type:'STUN',target:'BOSS',duration:1});
+  if(h.heroId==='NIA')fx.push({type:'DEF_MOD',target:'BOSS',pct:-.18,duration:8});
+  if(h.heroId==='EVE')runRpgAdapter('TIME_REWIND',{target:'BOSS',seconds:2},{source:h});
+  if(h.heroId==='ERIKA')fx.push({type:'ATK_MULT',target:'SELF',mult:1.30,duration:10},{type:'RATE_MULT',target:'SELF',mult:1.25,duration:10});
+  if(h.heroId==='CHLOE')fx.push({type:'STUN',target:'BOSS',duration:1});
+ }
+ return fx;
+}
+function castRpgHeroSkill(h,slot){
+ const d=RPG_HERO_DEFS[h.heroId];if(!d)return;
+ const effects=rpgHeroSkillEffects(h,slot);h.lastSkillEffects=effects.map(e=>({...e}));
+ applyRpgEffects(effects,{source:h});
+ if(slot===1){h.lastSkill1=rpgSimTime;h.ult=Math.min(100,h.ult+12)}
+ else {h.lastSkill2=rpgSimTime;h.ult=Math.min(100,h.ult+16)}
+}
+function rpgHeroUltimateEffects(h){
+ const d=RPG_HERO_DEFS[h.heroId],atk=effectiveHeroAtk(h);if(!d)return [];
+ const fx=[{type:'DAMAGE',target:'BOSS',amount:atk*d.ult}];
+ if(h.heroId==='ARIA')fx.push({type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.50,duration:5});
+ if(h.heroId==='YUNA')fx.push({type:'SKILL_BLOCK',target:'BOSS',duration:4});
+ if(h.heroId==='RIEL')fx.push({type:'DOT',target:'BOSS',amount:atk*.22,duration:6,tick:1});
+ if(h.heroId==='SERA')fx.push({type:'ATK_MULT',target:'ALL_HEROES',mult:1.18,duration:10},{type:'RATE_MULT',target:'ALL_HEROES',mult:1.18,duration:10});
+ if(h.heroId==='REINA')fx.push({type:'STUN',target:'BOSS',duration:1});
+ if(h.heroId==='CHLOE')fx.push({type:'RATE_MULT',target:'ALL_HEROES',mult:1.15,duration:10});
+ if(h.heroId==='EVE')fx.push({type:'STUN',target:'BOSS',duration:1},{type:'RATE_MULT',target:'ALL_HEROES',mult:1.20,duration:6});
+ return fx;
+}
 function updateRpg(dt){
  if(!rpgState||rpgState.result)return;
  rpgSimTime+=dt;
@@ -1102,23 +1143,8 @@ function updateRpg(dt){
    applyRpgEffects([{type:'DAMAGE',target:'BOSS',amount:atk}],{source:h});
    h.ult=Math.min(100,h.ult+6);
   }
-  if(heroSkillUnlocked(1)&&(h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill1>=effectiveHeroGap(h,h.skill1Gap)){
-   h.lastSkill1=rpgSimTime;
-   const skill1=RPG_HERO_DEFS[h.heroId];
-   const skillEffects=[{type:'DAMAGE',target:'BOSS',amount:atk*1.65,ignoreDefense:skill1.skill1DamageType==='관통'}];
-   h.lastSkillEffects=skillEffects.map(e=>({...e}));
-   applyRpgEffects(skillEffects,{source:h});
-   h.ult=Math.min(100,h.ult+12);
-  }
-  if(heroSkillUnlocked(2)&&(h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill2>=effectiveHeroGap(h,h.skill2Gap)){
-   h.lastSkill2=rpgSimTime;
-   applyRpgEffects([
-    {type:'ATK_MULT',target:'ALL_HEROES',mult:1.15,duration:8},
-    {type:'RATE_MULT',target:'ALL_HEROES',mult:1.15,duration:8},
-    {type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.20,duration:8}
-   ],{source:h});
-   h.buffUntil=rpgSimTime+8;
-  }
+  if(heroSkillUnlocked(1)&&(h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill1>=effectiveHeroGap(h,h.skill1Gap))castRpgHeroSkill(h,1);
+  if(heroSkillUnlocked(2)&&(h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill2>=effectiveHeroGap(h,h.skill2Gap))castRpgHeroSkill(h,2);
  }
  if(b.hp<=0){b.hp=0;finishRpgVictory();return}
  const ratio=b.hp/b.maxHp;
@@ -1157,10 +1183,7 @@ function useRpgUltimate(heroId,fromAuto=false){
  if(!h||h.ko||!heroSkillUnlocked(3)||h.ult<100||(h.skillBlockUntil||0)>rpgSimTime)return;
  h.ult=0;
  const before=rpgState.boss.hp;
- applyRpgEffects([
-  {type:'DAMAGE',target:'BOSS',amount:h.atk*4},
-  {type:'DAMAGE_REDUCTION',target:'ALL_HEROES',ratio:.50,duration:5}
- ],{source:h});
+ applyRpgEffects(rpgHeroUltimateEffects(h),{source:h});
  const dmg=Math.max(0,Math.round(before-rpgState.boss.hp));
  showWarning(h.name+' · '+RPG_HERO_DEFS[h.heroId].ultimateName,(fromAuto?'AUTO · ':'')+'ULTIMATE · '+dmg+' DAMAGE · PARTY GUARD 5s',850);
  if(rpgState.boss.hp<=0)finishRpgVictory();else renderRpg();
