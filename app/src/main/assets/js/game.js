@@ -39,7 +39,7 @@ const HERO_RECIPES=[
 ];
 
 const cells=[], units=new Map(), enemies=[];
-const ALL_HERO_IDS=['ARIA','YUNA','RIEL','RUBY','ERIKA','SERA','REINA','KARIN','BELL','MIA','IRENE','NEON','SASHA','LUNA','VIOLA','CHLOE','ADELE','NIA','AURORA','EVE'];
+const ALL_HERO_IDS=['ARIA','YUNA','RIEL','RUBY','ERIKA','SERA','REINA','KARIN','BELL','MIA','IRENE','NEON','SASHA','LUNA','VIOLA','CHLOE','ADEL','NIA','AURORA','EVE'];
 const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY',YUNA:'LEGENDARY',RIEL:'LEGENDARY',RUBY:'LEGENDARY',ERIKA:'LEGENDARY',SERA:'LEGENDARY',REINA:'LEGENDARY',KARIN:'LEGENDARY',BELL:'MYTHIC',MIA:'MYTHIC',IRENE:'MYTHIC',NEON:'MYTHIC',SASHA:'MYTHIC',LUNA:'MYTHIC',VIOLA:'MYTHIC',CHLOE:'MYTHIC',ADEL:'MYTHIC',NIA:'MYTHIC',AURORA:'MYTHIC',EVE:'MYTHIC'}; // authoritative V4_2 encyclopedia: Legendary 8 + Mythic 12
 let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedStage:1,infiniteGold:false};
 function heroSkillUnlocked(slot){return slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30}
@@ -349,7 +349,7 @@ function completeMove(x,y){
 function renderUnits(){
  unitLayer.innerHTML='';
  for(const u of units.values()){
-  const hero=u.type==='hero_aria';const t=hero?{short:'아'}:UNIT_DEFS[u.type];
+  const hero=!!u.heroId;const t=hero?{short:(u.hero||u.heroId||'영').slice(0,1)}:UNIT_DEFS[u.type];
   const d=document.createElement('div');d.className='unitToken '+(hero?'hero':t.tier===3?'tier3':t.tier===2?'tier2':'basic');
   const p=posPct(u.x,u.y);d.style.left=p.left;d.style.top=p.top;d.textContent=t.short;unitLayer.appendChild(d);
  }
@@ -634,8 +634,9 @@ function castAriaSkill3(u,now){
  u.lastSkill3=now;showWarning('아리아 · 최후의 성역','전 경로 성광 피해 · 방어선 5초 보호',900);return false;
 }
 function updateHeroSkills(u,now){
- if(u.type!=='hero_aria')return false;
- const d=TD_HERO_SKILL_DEFS.ARIA;
+ if(!u.heroId)return false;
+ const d=TD_HERO_SKILL_DEFS[u.heroId];
+ if(!d)return false;
  if(heroSkillUnlocked(3)&&now-(u.lastSkill3||0)>=d.skill3.cooldown){if(castAriaSkill3(u,now))return true}
  if(heroSkillUnlocked(2)&&now-(u.lastSkill2||0)>=d.skill2.cooldown){if(castAriaSkill2(u,now))return true}
  if(heroSkillUnlocked(1)&&now-(u.lastSkill1||0)>=d.skill1.cooldown){if(castAriaSkill1(u,now))return true}
@@ -682,7 +683,7 @@ function beginTdBossRpgTransition(boss){
  if(rpgPending)return;
  rpgPending=true;running=false;gameMode='TD_TRANSITION';
  cancelAllTdCommands();
- const tdHeroes=[...units.values()].filter(u=>u.type==='hero_aria').slice(0,5);
+ const tdHeroes=[...units.values()].filter(u=>u.heroId).slice(0,5);
  clearTimeout(showWarning.t);$('bossWarning').classList.remove('on');
  boss.hp=1;boss.cinematic=true;boss.cinematicState='fallen';
  renderEnemies();
@@ -720,8 +721,8 @@ function enterRpgBattle(){
 function startRpgBattle(tdHeroes){
  gameMode='RPG';rpgPending=false;manualPaused=false;rpgSimTime=0;rpgTransitioning=true;
  const heroes=tdHeroes.map((u,i)=>{
-  const d=RPG_HERO_DEFS.ARIA;
-  return {id:'rpg_'+u.id,heroId:'ARIA',name:d.name,maxHp:d.hp,hp:d.hp,atk:d.atk,def:d.def,
+  const heroId=u.heroId||'ARIA',d=RPG_HERO_DEFS[heroId]||RPG_HERO_DEFS.ARIA;
+  return {id:'rpg_'+u.id,heroId,name:d.name,maxHp:d.hp,hp:d.hp,atk:d.atk,def:d.def,
    basicGap:d.basicGap,skill1Gap:d.skill1Gap,skill2Gap:d.skill2Gap,lastBasic:-999,lastSkill1:0,lastSkill2:0,
    buffUntil:0,atkBuffMult:1,atkBuffUntil:0,rateBuffMult:1,rateBuffUntil:0,damageReduction:0,damageReductionUntil:0,damageTakenMult:1,damageTakenUntil:0,stunUntil:0,defModPct:0,defModUntil:0,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[],ult:0,ko:false,slot:i};
  });
@@ -1300,7 +1301,7 @@ window.__LG_STAGE1_TEST__={
  route:()=>route.slice(),
  recipes:()=>HERO_RECIPES,
  unitDefs:()=>UNIT_DEFS,
- startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.type==='hero_aria').slice(0,5)),
+ startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.heroId).slice(0,5)),
  enemySpecialRuntime:{semantics:()=>ENEMY_SPECIAL_RUNTIME_SEMANTICS,bindings:()=>({...ENEMY_SPECIAL_SEMANTIC_BY_NAME}),bind:(enemy,name)=>bindEnemySpecialSemantic(enemy,name),profile:(semantic,hp,maxHp)=>enemySpecialRuntimeProfile(semantic,hp,maxHp),freezeDuration:(semantic,duration)=>enemyFreezeDuration({specialSemantic:semantic,hp:1,maxHp:1},duration),physicalDamage:(semantic,amount)=>applyEnemyPhysicalDamageReduction({specialSemantic:semantic,hp:1,maxHp:1},amount,'PHYSICAL')},
  profile:()=>({...playerProfile,ownedHeroes:[...playerProfile.ownedHeroes]}),skillUnlocked:(slot)=>heroSkillUnlocked(slot),
  standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_2'
