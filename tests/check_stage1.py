@@ -492,8 +492,8 @@ for token in [".luckyRouletteButton{",".luckyModal.on{display:flex}",".luckyWhee
     assert token in css, "missing Lucky Roulette presentation: "+token
 for token in ["function openLuckyModal()","function runLuckySpinPresentation()","function showMidbossRewardModal()","$('luckyRouletteButton').onclick=openLuckyModal","$('luckySpinButton').onclick=runLuckySpinPresentation","syncLuckyHud()"]:
     assert token in js, "missing Lucky Roulette UI runtime: "+token
-assert "PlayerProfile 보유 영웅 데이터 연결 후 활성화" in js
-print("PASS - Lucky Roulette button, spin/result/reward UI, fireworks and midboss choice overlay are wired; owned-hero rewards remain explicitly PlayerProfile-gated")
+assert "function luckyFreeSummon(rarity,count)" in js
+print("PASS - Lucky Roulette button, spin/result/reward UI, fireworks and midboss choice overlay are wired; owned-hero rewards use the PlayerProfile summon runtime")
 
 
 # Prototype profile lobby + hero skill unlock guards
