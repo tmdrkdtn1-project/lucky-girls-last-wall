@@ -330,6 +330,31 @@ const ENEMY_SPECIAL_RUNTIME_SEMANTICS={
  PHYSICAL_DAMAGE_REDUCTION_20:{physicalDamageTakenMultiplier:.80},
  LOW_HP_BERSERK_40_25:{triggerHpRatioLte:.40,moveSpeedMultiplier:1.25,wallDamageMultiplier:1.25}
 };
+const ENEMY_SPECIAL_SEMANTIC_BY_NAME={
+ '절벽 매':'FLYING_TERRAIN_IGNORE',
+ '암석 골렘':'FREEZE_DURATION_REDUCTION_40',
+ '최초의 골렘 아즈로':'FREEZE_DURATION_REDUCTION_40',
+ '모래망령':'PHYSICAL_DAMAGE_REDUCTION_20',
+ '해룡 치어':'FLYING_TERRAIN_IGNORE',
+ '물귀신':'PHYSICAL_DAMAGE_REDUCTION_20',
+ '동토 광전사':'LOW_HP_BERSERK_40_25',
+ '설산 독수리':'FLYING_TERRAIN_IGNORE',
+ '서리 골렘':'FREEZE_DURATION_REDUCTION_40',
+ '성당 가고일':'FLYING_TERRAIN_IGNORE',
+ '광휘 망령':'PHYSICAL_DAMAGE_REDUCTION_20',
+ '성유물 골렘':'FREEZE_DURATION_REDUCTION_40',
+ '타락 천사 파편체':'FLYING_TERRAIN_IGNORE',
+ '저주받은 성상':'FREEZE_DURATION_REDUCTION_40',
+ '기원의 대성상':'FREEZE_DURATION_REDUCTION_40',
+ '마력 골렘':'FREEZE_DURATION_REDUCTION_40',
+ '마도 비행체':'FLYING_TERRAIN_IGNORE'
+};
+function bindEnemySpecialSemantic(enemy,name){
+ if(!enemy)return enemy;
+ const semantic=ENEMY_SPECIAL_SEMANTIC_BY_NAME[name];
+ if(semantic)enemy.specialSemantic=semantic;
+ return enemy;
+}
 function enemySpecialRuntimeProfile(semantic,hp=1,maxHp=1){
  const def=ENEMY_SPECIAL_RUNTIME_SEMANTICS[semantic];if(!def)return null;
  if(semantic==='LOW_HP_BERSERK_40_25'){
@@ -1144,7 +1169,7 @@ window.__LG_STAGE1_TEST__={
  recipes:()=>HERO_RECIPES,
  unitDefs:()=>UNIT_DEFS,
  startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.type==='hero_aria').slice(0,5)),
- enemySpecialRuntime:{semantics:()=>ENEMY_SPECIAL_RUNTIME_SEMANTICS,profile:(semantic,hp,maxHp)=>enemySpecialRuntimeProfile(semantic,hp,maxHp),freezeDuration:(semantic,duration)=>enemyFreezeDuration({specialSemantic:semantic,hp:1,maxHp:1},duration),physicalDamage:(semantic,amount)=>applyEnemyPhysicalDamageReduction({specialSemantic:semantic,hp:1,maxHp:1},amount,'PHYSICAL')},
+ enemySpecialRuntime:{semantics:()=>ENEMY_SPECIAL_RUNTIME_SEMANTICS,bindings:()=>({...ENEMY_SPECIAL_SEMANTIC_BY_NAME}),bind:(enemy,name)=>bindEnemySpecialSemantic(enemy,name),profile:(semantic,hp,maxHp)=>enemySpecialRuntimeProfile(semantic,hp,maxHp),freezeDuration:(semantic,duration)=>enemyFreezeDuration({specialSemantic:semantic,hp:1,maxHp:1},duration),physicalDamage:(semantic,amount)=>applyEnemyPhysicalDamageReduction({specialSemantic:semantic,hp:1,maxHp:1},amount,'PHYSICAL')},
  standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_2'
 };
 })();
