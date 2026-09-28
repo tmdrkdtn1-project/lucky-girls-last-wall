@@ -3,6 +3,7 @@
 
 let COLS=18, ROWS=10, CELL_COUNT=COLS*ROWS;
 const WAVE_DURATION=40;
+let activeStageRoutes=[];
 let route=[[1,5],[2,5],[3,5],[4,5],[5,5],[6,5],[6,4],[6,3],[7,3],[8,3],[9,3],[10,3],[10,4],[10,5],[11,5],[12,5],[13,5],[14,5],[15,5],[16,5],[17,5],[18,5]];
 let TILE_ROWS=[
  'WWTTXDDDDDTTTTTTTT','TWTTDDDDDDXTTTTTTT','DDDDDPPPPPDDDDDDDD','DDDDDPDDDPDDDDDDCC',
@@ -49,12 +50,13 @@ function availableMasterStages(){const out=[];Object.values(MAP_RUNTIME_REGISTRY
 function syncStageHud(){const stage=activeStageRuntime;const hud=document.querySelector('#topHUD .hudBox');if(hud)hud.textContent=activeMapSelection.mode+' · '+activeMapSelection.localMapId+' · STAGE '+stage.globalStage;const banner=document.getElementById('stageBanner');if(banner)banner.textContent=(stage.label||stage.id)+' · '+COLS+'×'+ROWS+' PLAYABLE BLOCKOUT'}
 
 function validateStageMapData(data){
- if(!data||!data.grid||!Array.isArray(data.route)||!Array.isArray(data.tile_rows))throw new Error('Invalid stage map data');
+ if(!data||!data.grid||(!Array.isArray(data.route)&&!Array.isArray(data.routes))||!Array.isArray(data.tile_rows))throw new Error('Invalid stage map data');
  if(data.tile_rows.length!==data.grid.rows||data.tile_rows.some(r=>r.length!==data.grid.cols))throw new Error('Stage map grid mismatch');
+ const paths=data.routes||[data.route];if(!paths.length||paths.some(p=>!Array.isArray(p)||p.length<2))throw new Error('Stage map route mismatch');
  return data;
 }
 function applyStageMapData(data){
- validateStageMapData(data);COLS=data.grid.cols;ROWS=data.grid.rows;CELL_COUNT=COLS*ROWS;route=data.route.map(p=>[p[0],p[1]]);TILE_ROWS=data.tile_rows.slice();
+ validateStageMapData(data);COLS=data.grid.cols;ROWS=data.grid.rows;CELL_COUNT=COLS*ROWS;const paths=data.routes||[data.route];route=paths[0].map(p=>[p[0],p[1]]);activeStageRoutes=paths.map(path=>path.map(p=>[p[0],p[1]]));TILE_ROWS=data.tile_rows.slice();
 }
 async function loadStageMapRuntime(selection){
  const stage=resolveStageRuntime(selection);if(!stage.dataPath)throw new Error('Stage map '+stage.id+' has no runtime map data');
@@ -1388,7 +1390,7 @@ window.__LG_STAGE1_TEST__={
  state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossHp:rpgState.boss.hp,bossPhase:rpgState.boss.phase,heroes:rpgState.heroes.map(h=>({name:h.name,hp:h.hp,ult:h.ult,ko:h.ko})),result:rpgState.result,transitioning:rpgTransitioning,autoBattle:rpgAutoBattle}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
- route:()=>route.slice(),
+ route:()=>route.slice(),routes:()=>activeStageRoutes.map(r=>r.slice()),
  recipes:()=>HERO_RECIPES,
  unitDefs:()=>UNIT_DEFS,
  startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.heroId).slice(0,5)),
