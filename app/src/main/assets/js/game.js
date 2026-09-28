@@ -1,10 +1,10 @@
 (()=> {
 'use strict';
 
-const COLS=18, ROWS=10, CELL_COUNT=COLS*ROWS;
+let COLS=18, ROWS=10, CELL_COUNT=COLS*ROWS;
 const WAVE_DURATION=40;
-const route=[[1,5],[2,5],[3,5],[4,5],[5,5],[6,5],[6,4],[6,3],[7,3],[8,3],[9,3],[10,3],[10,4],[10,5],[11,5],[12,5],[13,5],[14,5],[15,5],[16,5],[17,5],[18,5]];
-const TILE_ROWS=[
+let route=[[1,5],[2,5],[3,5],[4,5],[5,5],[6,5],[6,4],[6,3],[7,3],[8,3],[9,3],[10,3],[10,4],[10,5],[11,5],[12,5],[13,5],[14,5],[15,5],[16,5],[17,5],[18,5]];
+let TILE_ROWS=[
  'WWTTXDDDDDTTTTTTTT','TWTTDDDDDDXTTTTTTT','DDDDDPPPPPDDDDDDDD','DDDDDPDDDPDDDDDDCC',
  'SPPPPPDDDPPPPPPPGO','DDXDDDDTDDDXDDXDCC','DDDDDDTTTDDDDDDDDD','TTTTTTTTTTTTTTTTTT',
  'WWTTTTTTTTTTTTTTTT','TWTTTTTTTTTTTTTTTT'
@@ -32,7 +32,16 @@ const UNIT_DEFS={
  lancer3_elite:{id:'lancer3_elite',family:'LANCER',tier:3,name:'엘리트 랜서',short:'엘',cost:195,atk:42,range:3.0,rate:1.00,damageType:'관통/광역',targetCount:3,areaRadiusCells:1,air:true,next:[]},
  lancer3_magic:{id:'lancer3_magic',family:'LANCER',tier:3,name:'마창병',short:'마창',cost:195,atk:34,range:4.0,rate:1.05,damageType:'관통/지속',targetCount:2,dotDuration:4,dotTick:1,dotRatio:.25,air:true,next:[]}
 };
-const STAGE1_BASE_IDS=['watchtower','knight1','archer1','lancer1'];
+const STAGE_RUNTIME_REGISTRY={
+ 1:{id:1,dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],status:'IMPLEMENTED'}
+};
+let activeStageRuntime=STAGE_RUNTIME_REGISTRY[1];
+function stageBaseUnitIds(){return activeStageRuntime.baseUnitIds}
+function selectStageRuntime(stageId){
+ const stage=STAGE_RUNTIME_REGISTRY[stageId];
+ if(!stage)throw new Error('Stage '+stageId+' runtime is not implemented');
+ activeStageRuntime=stage;playerProfile.selectedStage=stageId;return stage;
+}
 
 const HERO_RECIPES=[
  {id:'ARIA',name:'아리아',rarity:'LEGENDARY',recipeNames:["기사단장","기사단장"],materials:[{"type":"knight3_commander","count":2}],recipeRuntimeComplete:true,atk:72,range:3,rate:1.2},
@@ -227,7 +236,7 @@ function unitFeatureText(t){
 }
 function renderBottomForEmpty(x,y){
  showBottom('빈 배치칸 '+x+','+y+' · 기본 아군 배치');
- STAGE1_BASE_IDS.map(id=>UNIT_DEFS[id]).forEach(t=>actionButton(t.name,unitFeatureText(t),()=>placeUnit(x,y,t),false,gold<t.cost));
+ stageBaseUnitIds().map(id=>UNIT_DEFS[id]).forEach(t=>actionButton(t.name,unitFeatureText(t),()=>placeUnit(x,y,t),false,gold<t.cost));
 }
 function moveCooldownRemaining(u){return Math.max(0,(u.moveCooldownUntil||0)-simTime)}
 function renderMoveAction(u){
@@ -1333,7 +1342,7 @@ $('pause').onclick=()=>{
 syncPauseButton();
 
 function startPrototypeBattle(profile){
- playerProfile=profile;
+ playerProfile=profile;selectStageRuntime(profile.selectedStage||1);
  gold=profile.infiniteGold?500:500;
  $('prototypeLobby').classList.add('off');$('app').classList.remove('prototypeBattleHidden');running=true;last=performance.now();syncHUD();
 }
