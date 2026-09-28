@@ -505,3 +505,10 @@ for token in ["const ALL_HERO_IDS=","function heroSkillUnlocked(slot)","type:'MA
     assert token in js, "missing prototype profile/skill gate: "+token
 assert "slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30" in js
 print("PASS - BASIC/MASTER prototype lobby and Lv10/20/30 skill gates are wired")
+
+
+# Lucky owned-hero free summon uniqueness guards
+for token in ["const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY'}","function summonedHeroIds()","function eligibleOwnedHeroes(rarity)","!summoned.has(id)","function luckyFreeSummon(rarity,count)","Math.min(count,open,eligible.length)","showLuckyCelebration('💥 펑!')","heroId:recipe.id","luckyFreeSummon('MYTHIC',1)","luckyFreeSummon('LEGENDARY',2)","luckyFreeSummon('LEGENDARY',1)"]:
+    assert token in js, "missing Lucky owned-hero uniqueness rule: "+token
+assert "PlayerProfile 보유 영웅 데이터 연결 후 활성화" not in js
+print("PASS - Lucky free summons use owned+rarity+not-yet-summoned candidates, respect hero cap, and burst when no candidate exists")
