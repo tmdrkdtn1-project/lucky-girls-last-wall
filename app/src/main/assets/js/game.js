@@ -40,7 +40,7 @@ const HERO_RECIPES=[
 
 const cells=[], units=new Map(), enemies=[];
 const ALL_HERO_IDS=['ARIA','YUNA','RIEL','RUBY','ERIKA','SERA','REINA','KARIN','BELL','MIA','IRENE','NEON','SASHA','LUNA','VIOLA','CHLOE','ADELE','NIA','AURORA','EVE'];
-const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY'}; // only source-confirmed rarity; extend from authoritative hero data
+const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY',YUNA:'LEGENDARY',RIEL:'LEGENDARY',RUBY:'LEGENDARY',ERIKA:'LEGENDARY',SERA:'LEGENDARY',REINA:'LEGENDARY',KARIN:'LEGENDARY',BELL:'MYTHIC',MIA:'MYTHIC',IRENE:'MYTHIC',NEON:'MYTHIC',SASHA:'MYTHIC',LUNA:'MYTHIC',VIOLA:'MYTHIC',CHLOE:'MYTHIC',ADEL:'MYTHIC',NIA:'MYTHIC',AURORA:'MYTHIC',EVE:'MYTHIC'}; // authoritative V4_2 encyclopedia: Legendary 8 + Mythic 12
 let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedStage:1,infiniteGold:false};
 function heroSkillUnlocked(slot){return slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30}
 function spendGold(amount){if(playerProfile.infiniteGold)return true;if(gold<amount)return false;gold-=amount;return true}
