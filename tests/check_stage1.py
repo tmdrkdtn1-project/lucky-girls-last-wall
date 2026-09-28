@@ -382,3 +382,15 @@ assert "id==='CONDITIONAL_EFFECT'" in js and "id==='TELEGRAPH_SEQUENCE'" in js
 assert "function updateRpgPendingEvents()" in js
 assert "updateRpgPendingEvents();updateRpgDots(dt)" in js
 print("PASS - the final five ambiguous skills have explicit runtime plans; all 210 RPG skill definitions are structurally runtime-ready")
+
+
+# Enemy / elite special-effect runtime audit guards
+enemy_special_audit=json.loads((root/"data/enemy_special_runtime_audit_v1.json").read_text(encoding="utf-8"))
+assert enemy_special_audit["schema"]=="LG_ENEMY_SPECIAL_RUNTIME_AUDIT_V1"
+assert enemy_special_audit["count"]==35 and len(enemy_special_audit["items"])==35
+assert enemy_special_audit["counts"]=={"SOURCE_GAP":7,"SEMANTIC_READY_BALANCE_PENDING":11,"SPEC_READY":17}
+assert len({x["id"] for x in enemy_special_audit["items"]})==35
+assert all(x["runtime_status"] in {"SOURCE_GAP","SEMANTIC_READY_BALANCE_PENDING","SPEC_READY"} for x in enemy_special_audit["items"])
+assert all(x["source_gap"] for x in enemy_special_audit["items"] if x["runtime_status"]=="SOURCE_GAP")
+assert all(x["runtime_semantic"] for x in enemy_special_audit["items"] if x["runtime_status"]=="SPEC_READY")
+print("PASS - all 35 skill-bearing enemies are audited without inventing unresolved balance values")
