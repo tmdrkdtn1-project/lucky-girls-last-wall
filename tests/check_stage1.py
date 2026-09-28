@@ -532,3 +532,14 @@ assert "const heroId=u.heroId||'ARIA',d=RPG_HERO_DEFS[heroId]||RPG_HERO_DEFS.ARI
 assert "const d=TD_HERO_SKILL_DEFS[u.heroId]" in js
 assert "const hero=!!u.heroId" in js
 print("PASS - TD/RPG transition and rendering use shared heroId identity; ADEL ID is canonical")
+
+# V4_2 RPG all-hero runtime coverage
+for hero in ["ARIA","YUNA","RIEL","RUBY","ERIKA","SERA","REINA","KARIN","BELL","MIA","IRENE","NEON","SASHA","LUNA","VIOLA","CHLOE","ADEL","NIA","AURORA","EVE"]:
+    assert hero+":{name:" in js, f"missing RPG hero definition: {hero}"
+assert "function rpgHeroSkillEffects(h,slot)" in js
+assert "function castRpgHeroSkill(h,slot)" in js
+assert "function rpgHeroUltimateEffects(h)" in js
+assert "castRpgHeroSkill(h,1)" in js and "castRpgHeroSkill(h,2)" in js
+assert "applyRpgEffects(rpgHeroUltimateEffects(h),{source:h})" in js
+assert "amount:atk*1.65" not in js
+print("PASS - 20 RPG hero definitions and per-hero skill runtime are wired")
