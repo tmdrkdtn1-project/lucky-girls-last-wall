@@ -39,6 +39,10 @@ const HERO_RECIPES=[
 ];
 
 const cells=[], units=new Map(), enemies=[];
+const ALL_HERO_IDS=['ARIA','YUNA','RIEL','RUBY','ERIKA','SERA','REINA','KARIN','BELL','MIA','IRENE','NEON','SASHA','LUNA','VIOLA','CHLOE','ADELE','NIA','AURORA','EVE'];
+let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedStage:1,infiniteGold:false};
+function heroSkillUnlocked(slot){return slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30}
+function spendGold(amount){if(playerProfile.infiniteGold)return true;if(gold<amount)return false;gold-=amount;return true}
 let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
 let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false,waveEnding=false;
 let moveModeUnitId=null,comboPlacement=null,manualPaused=false;
@@ -607,9 +611,9 @@ function castAriaSkill3(u,now){
 function updateHeroSkills(u,now){
  if(u.type!=='hero_aria')return false;
  const d=TD_HERO_SKILL_DEFS.ARIA;
- if(now-(u.lastSkill3||0)>=d.skill3.cooldown){if(castAriaSkill3(u,now))return true}
- if(now-(u.lastSkill2||0)>=d.skill2.cooldown){if(castAriaSkill2(u,now))return true}
- if(now-(u.lastSkill1||0)>=d.skill1.cooldown){if(castAriaSkill1(u,now))return true}
+ if(heroSkillUnlocked(3)&&now-(u.lastSkill3||0)>=d.skill3.cooldown){if(castAriaSkill3(u,now))return true}
+ if(heroSkillUnlocked(2)&&now-(u.lastSkill2||0)>=d.skill2.cooldown){if(castAriaSkill2(u,now))return true}
+ if(heroSkillUnlocked(1)&&now-(u.lastSkill1||0)>=d.skill1.cooldown){if(castAriaSkill1(u,now))return true}
  return false;
 }
 const RPG_HERO_DEFS={
@@ -1057,7 +1061,7 @@ function updateRpg(dt){
    applyRpgEffects([{type:'DAMAGE',target:'BOSS',amount:atk}],{source:h});
    h.ult=Math.min(100,h.ult+6);
   }
-  if((h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill1>=effectiveHeroGap(h,h.skill1Gap)){
+  if(heroSkillUnlocked(1)&&(h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill1>=effectiveHeroGap(h,h.skill1Gap)){
    h.lastSkill1=rpgSimTime;
    const skill1=RPG_HERO_DEFS[h.heroId];
    const skillEffects=[{type:'DAMAGE',target:'BOSS',amount:atk*1.65,ignoreDefense:skill1.skill1DamageType==='관통'}];
@@ -1065,7 +1069,7 @@ function updateRpg(dt){
    applyRpgEffects(skillEffects,{source:h});
    h.ult=Math.min(100,h.ult+12);
   }
-  if((h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill2>=effectiveHeroGap(h,h.skill2Gap)){
+  if(heroSkillUnlocked(2)&&(h.skillBlockUntil||0)<=rpgSimTime&&rpgSimTime-h.lastSkill2>=effectiveHeroGap(h,h.skill2Gap)){
    h.lastSkill2=rpgSimTime;
    applyRpgEffects([
     {type:'ATK_MULT',target:'ALL_HEROES',mult:1.15,duration:8},
@@ -1100,7 +1104,7 @@ function updateRpg(dt){
   }
  }
  if(!rpgAliveHeroes().length){finishRpgDefeat('모든 영웅이 전투불능');return}
- if(rpgAutoBattle){
+ if(rpgAutoBattle&&heroSkillUnlocked(3)){
   const ready=rpgAliveHeroes().find(h=>h.ult>=100);
   if(ready){useRpgUltimate(ready.id,true);return}
  }
@@ -1109,7 +1113,7 @@ function updateRpg(dt){
 function useRpgUltimate(heroId,fromAuto=false){
  if(gameMode!=='RPG'||!rpgState||rpgState.result||manualPaused)return;
  const h=rpgState.heroes.find(x=>x.id===heroId);
- if(!h||h.ko||h.ult<100||(h.skillBlockUntil||0)>rpgSimTime)return;
+ if(!h||h.ko||!heroSkillUnlocked(3)||h.ult<100||(h.skillBlockUntil||0)>rpgSimTime)return;
  h.ult=0;
  const before=rpgState.boss.hp;
  applyRpgEffects([
@@ -1143,7 +1147,7 @@ function renderRpg(){
   card.innerHTML='<div class="rpgHeroFigure">아</div><div class="rpgHeroName">'+h.name+'</div>'+
    '<div class="rpgHp"><i style="width:'+hpPct+'%"></i></div>'+
    '<div class="rpgUlt"><i style="width:'+ultPct+'%"></i></div>'+
-   '<button class="rpgUltBtn '+(h.ult>=100&&!h.ko?'ready':'')+'" '+(h.ult>=100&&!h.ko?'':'disabled')+'>ULT '+Math.floor(h.ult)+'%</button>'+
+   '<button class="rpgUltBtn '+(heroSkillUnlocked(3)&&h.ult>=100&&!h.ko?'ready':'')+'" '+(heroSkillUnlocked(3)&&h.ult>=100&&!h.ko?'':'disabled')+'>'+(heroSkillUnlocked(3)?'ULT '+Math.floor(h.ult)+'%':'ULT LOCK')+'</button>'+
    '<div class="rpgStatus">'+(h.ko?'K.O.':h.buffUntil>rpgSimTime?'수호의 맹세':'AUTO ATTACK')+'</div>';
   const btn=card.querySelector('.rpgUltBtn');btn.onclick=()=>useRpgUltimate(h.id);
   rpgHeroRow.appendChild(card);
@@ -1245,7 +1249,22 @@ $('pause').onclick=()=>{
 };
 syncPauseButton();
 
-buildGrid();renderUnits();syncHUD();updateComboHighlights();requestAnimationFrame(loop);
+function startPrototypeBattle(profile){
+ playerProfile=profile;
+ gold=profile.infiniteGold?500:500;
+ $('prototypeLobby').classList.add('off');$('app').classList.remove('prototypeBattleHidden');running=true;last=performance.now();syncHUD();
+}
+document.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('[data-profile]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');
+ if(b.dataset.profile==='BASIC'){startPrototypeBattle({type:'BASIC',ownedHeroes:['ARIA'],heroLevel:10,selectedStage:1,infiniteGold:false});return}
+ $('masterSetup').classList.add('on');$('profileStepText').textContent='MASTER PROFILE · 테스트 조건을 선택하세요.';
+});
+let masterGold=null,masterLevel=null;
+document.querySelectorAll('[data-gold]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-gold]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterGold=b.dataset.gold;$('masterStart').disabled=!(masterGold&&masterLevel)});
+document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-level]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterLevel=Number(b.dataset.level);$('masterStart').disabled=!(masterGold&&masterLevel)});
+$('masterStart').onclick=()=>startPrototypeBattle({type:'MASTER',ownedHeroes:[...ALL_HERO_IDS],heroLevel:masterLevel,selectedStage:1,infiniteGold:masterGold==='INFINITE'});
+
+buildGrid();renderUnits();syncHUD();updateComboHighlights();running=false;requestAnimationFrame(loop);
 
 window.__LG_STAGE1_TEST__={
  luckyRoulette:{roll:(v)=>luckyOutcomeRoll(v),spin:(v)=>luckySpin(v),waveClear:(w)=>addLuckyWaveClear(w),midbossBonus:()=>addLuckyMidbossBonus(),buff:(p)=>addLuckyStageBuff(p),state:()=>({jackpotPct:luckyJackpotPct,stageBuffPct:luckyStageBuffPct}),midbossOptions:()=>openMidbossReward(),chooseMidboss:(id)=>chooseMidbossReward(id)},
@@ -1258,6 +1277,7 @@ window.__LG_STAGE1_TEST__={
  unitDefs:()=>UNIT_DEFS,
  startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.type==='hero_aria').slice(0,5)),
  enemySpecialRuntime:{semantics:()=>ENEMY_SPECIAL_RUNTIME_SEMANTICS,bindings:()=>({...ENEMY_SPECIAL_SEMANTIC_BY_NAME}),bind:(enemy,name)=>bindEnemySpecialSemantic(enemy,name),profile:(semantic,hp,maxHp)=>enemySpecialRuntimeProfile(semantic,hp,maxHp),freezeDuration:(semantic,duration)=>enemyFreezeDuration({specialSemantic:semantic,hp:1,maxHp:1},duration),physicalDamage:(semantic,amount)=>applyEnemyPhysicalDamageReduction({specialSemantic:semantic,hp:1,maxHp:1},amount,'PHYSICAL')},
+ profile:()=>({...playerProfile,ownedHeroes:[...playerProfile.ownedHeroes]}),skillUnlocked:(slot)=>heroSkillUnlocked(slot),
  standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_2'
 };
 })();
