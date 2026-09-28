@@ -50,31 +50,61 @@
                 "stage": 1,
                 "id": "NORMAL_01",
                 "status": "IMPLEMENTED",
-                "data_path": "data/stage01.json"
+                "data_path": "data/stage01.json",
+                "geometry_status": "IMPLEMENTED",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 2,
                 "id": "NORMAL_02",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 3,
                 "id": "NORMAL_03",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 4,
                 "id": "NORMAL_04",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 5,
                 "id": "NORMAL_05",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           },
@@ -84,17 +114,35 @@
               {
                 "stage": 31,
                 "id": "HARD_31",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 32,
                 "id": "HARD_32",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 33,
                 "id": "HARD_33",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           }
@@ -110,31 +158,61 @@
                 "stage": 16,
                 "id": "NORMAL_16",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 17,
                 "id": "NORMAL_17",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 18,
                 "id": "NORMAL_18",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 19,
                 "id": "NORMAL_19",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 20,
                 "id": "NORMAL_20",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           },
@@ -144,17 +222,35 @@
               {
                 "stage": 34,
                 "id": "HARD_34",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 35,
                 "id": "HARD_35",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 36,
                 "id": "HARD_36",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           }
@@ -170,31 +266,61 @@
                 "stage": 6,
                 "id": "NORMAL_06",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 7,
                 "id": "NORMAL_07",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 8,
                 "id": "NORMAL_08",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 9,
                 "id": "NORMAL_09",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 10,
                 "id": "NORMAL_10",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           },
@@ -204,17 +330,35 @@
               {
                 "stage": 37,
                 "id": "HARD_37",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 38,
                 "id": "HARD_38",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 39,
                 "id": "HARD_39",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           }
@@ -230,31 +374,61 @@
                 "stage": 11,
                 "id": "NORMAL_11",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 12,
                 "id": "NORMAL_12",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 13,
                 "id": "NORMAL_13",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 14,
                 "id": "NORMAL_14",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 15,
                 "id": "NORMAL_15",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           },
@@ -264,17 +438,35 @@
               {
                 "stage": 40,
                 "id": "HARD_40",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 41,
                 "id": "HARD_41",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 42,
                 "id": "HARD_42",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           }
@@ -290,31 +482,61 @@
                 "stage": 21,
                 "id": "NORMAL_21",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 22,
                 "id": "NORMAL_22",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 23,
                 "id": "NORMAL_23",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 24,
                 "id": "NORMAL_24",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 25,
                 "id": "NORMAL_25",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           },
@@ -324,17 +546,35 @@
               {
                 "stage": 43,
                 "id": "HARD_43",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 44,
                 "id": "HARD_44",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 45,
                 "id": "HARD_45",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           }
@@ -350,31 +590,61 @@
                 "stage": 26,
                 "id": "NORMAL_26",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 27,
                 "id": "NORMAL_27",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 28,
                 "id": "NORMAL_28",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 29,
                 "id": "NORMAL_29",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 30,
                 "id": "NORMAL_30",
                 "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null
+                "data_path": null,
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           },
@@ -384,27 +654,57 @@
               {
                 "stage": 46,
                 "id": "HARD_46",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 47,
                 "id": "HARD_47",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 48,
                 "id": "HARD_48",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 49,
                 "id": "HARD_49",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               },
               {
                 "stage": 50,
                 "id": "HARD_50",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING"
+                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
+                "geometry_status": "DESIGN_PENDING",
+                "runtime_contract": {
+                  "geometry": "STAGE_JSON",
+                  "wave_source": "AUTHORITATIVE_WORKBOOK",
+                  "boss_rpg_transition": true
+                }
               }
             ]
           }
@@ -418,5 +718,22 @@
     "HARD local-map stage counts come from the authoritative workbook: 3,3,3,3,3,5 (20 total).",
     "MASTER selects a stage map; it does not globally unlock unrelated stage runtime units.",
     "Workbook-authoritative values must not be guessed or replaced by legacy summary text."
-  ]
+  ],
+  "stage_map_contract": {
+    "required": [
+      "grid",
+      "route",
+      "tile_rows",
+      "castle"
+    ],
+    "optional": [
+      "routes",
+      "terrain_meta",
+      "spawn_points",
+      "deploy_zones"
+    ],
+    "route_policy": "route for single path; routes[] for authoritative multi-entry stages",
+    "geometry_source_policy": "Do not invent coordinates. Use approved map reference or explicit design approval.",
+    "wave_source": "Lucky_Girls_캐릭터도감_MASTER_확정_2026-09-28.xlsx / 스테이지_웨이브"
+  }
 }
