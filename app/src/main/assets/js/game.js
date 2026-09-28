@@ -32,26 +32,40 @@ const UNIT_DEFS={
  lancer3_elite:{id:'lancer3_elite',family:'LANCER',tier:3,name:'엘리트 랜서',short:'엘',cost:195,atk:42,range:3.0,rate:1.00,damageType:'관통/광역',targetCount:3,areaRadiusCells:1,air:true,next:[]},
  lancer3_magic:{id:'lancer3_magic',family:'LANCER',tier:3,name:'마창병',short:'마창',cost:195,atk:34,range:4.0,rate:1.05,damageType:'관통/지속',targetCount:2,dotDuration:4,dotTick:1,dotRatio:.25,air:true,next:[]}
 };
-const STAGE_RUNTIME_REGISTRY={
- 1:{id:1,dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],status:'IMPLEMENTED',label:'서부 왕국 · 산악 초입'},
- 2:{id:2,dataPath:'data/stage02.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 2'},
- 3:{id:3,dataPath:'data/stage03.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 3'},
- 4:{id:4,dataPath:'data/stage04.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 4'},
- 5:{id:5,dataPath:'data/stage05.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 5'},
- 6:{id:6,dataPath:'data/stage06.json',baseUnitIds:[],status:'PLANNED',label:'STAGE 6'}
+const MAP_RUNTIME_REGISTRY={
+ WORLD_01:{id:'WORLD_01',localMaps:{
+  LOCAL_01:{id:'LOCAL_01',modes:{
+   NORMAL:{stages:[
+    {id:'NORMAL_01_01',ordinal:1,dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],status:'IMPLEMENTED',label:'서부 왕국 · 산악 초입'},
+    {id:'NORMAL_01_02',ordinal:2,status:'PLANNED'},{id:'NORMAL_01_03',ordinal:3,status:'PLANNED'},{id:'NORMAL_01_04',ordinal:4,status:'PLANNED'},{id:'NORMAL_01_05',ordinal:5,status:'PLANNED'}
+   ]},
+   HARD:{stages:[],status:'AWAITING_AUTHORITATIVE_STAGE_COUNT'}
+  }}
+ }}
 };
-let activeStageRuntime=STAGE_RUNTIME_REGISTRY[1];
-function stageBaseUnitIds(){return activeStageRuntime.baseUnitIds}
-function selectStageRuntime(stageId){
- const stage=STAGE_RUNTIME_REGISTRY[stageId];
- if(!stage||stage.status!=='IMPLEMENTED')throw new Error('Stage '+stageId+' runtime is not implemented');
- activeStageRuntime=stage;playerProfile.selectedStage=stageId;return stage;
+let activeMapSelection={worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_01'};
+let activeStageRuntime=MAP_RUNTIME_REGISTRY.WORLD_01.localMaps.LOCAL_01.modes.NORMAL.stages[0];
+function stageBaseUnitIds(){return activeStageRuntime.baseUnitIds||[]}
+function resolveStageRuntime(selection){
+ const world=MAP_RUNTIME_REGISTRY[selection.worldId];if(!world)throw new Error('Unknown world '+selection.worldId);
+ const local=world.localMaps[selection.localMapId];if(!local)throw new Error('Unknown local map '+selection.localMapId);
+ const mode=local.modes[selection.mode];if(!mode)throw new Error('Unknown mode '+selection.mode);
+ const stage=mode.stages.find(s=>s.id===selection.stageId);
+ if(!stage||stage.status!=='IMPLEMENTED')throw new Error('Stage map '+selection.stageId+' runtime is not implemented');
+ return stage;
 }
-function availableMasterStages(){return Object.values(STAGE_RUNTIME_REGISTRY).map(s=>({id:s.id,label:s.label,status:s.status}))}
+function selectStageRuntime(selection){
+ activeStageRuntime=resolveStageRuntime(selection);activeMapSelection={...selection};
+ playerProfile.selectedMap={...selection};return activeStageRuntime;
+}
+function availableMasterStages(){
+ const out=[];Object.values(MAP_RUNTIME_REGISTRY).forEach(w=>Object.values(w.localMaps).forEach(l=>Object.entries(l.modes).forEach(([mode,v])=>v.stages.forEach(s=>out.push({worldId:w.id,localMapId:l.id,mode,id:s.id,ordinal:s.ordinal,status:s.status,label:s.label||s.id})))));
+ return out;
+}
 function syncStageHud(){
- const stage=activeStageRuntime||STAGE_RUNTIME_REGISTRY[1];
- const hud=document.querySelector('#topHUD .hudBox');if(hud)hud.textContent='STAGE '+stage.id;
- const banner=document.getElementById('stageBanner');if(banner)banner.textContent=stage.label+' · '+COLS+'×'+ROWS+' PLAYABLE BLOCKOUT';
+ const stage=activeStageRuntime;const hud=document.querySelector('#topHUD .hudBox');
+ if(hud)hud.textContent=activeMapSelection.mode+' · '+activeMapSelection.localMapId+' · STAGE '+stage.ordinal;
+ const banner=document.getElementById('stageBanner');if(banner)banner.textContent=(stage.label||stage.id)+' · '+COLS+'×'+ROWS+' PLAYABLE BLOCKOUT';
 }
 
 const HERO_RECIPES=[
@@ -80,7 +94,7 @@ const HERO_RECIPES=[
 const cells=[], units=new Map(), enemies=[];
 const ALL_HERO_IDS=['ARIA','YUNA','RIEL','RUBY','ERIKA','SERA','REINA','KARIN','BELL','MIA','IRENE','NEON','SASHA','LUNA','VIOLA','CHLOE','ADEL','NIA','AURORA','EVE'];
 const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY',YUNA:'LEGENDARY',RIEL:'LEGENDARY',RUBY:'LEGENDARY',ERIKA:'LEGENDARY',SERA:'LEGENDARY',REINA:'LEGENDARY',KARIN:'LEGENDARY',BELL:'MYTHIC',MIA:'MYTHIC',IRENE:'MYTHIC',NEON:'MYTHIC',SASHA:'MYTHIC',LUNA:'MYTHIC',VIOLA:'MYTHIC',CHLOE:'MYTHIC',ADEL:'MYTHIC',NIA:'MYTHIC',AURORA:'MYTHIC',EVE:'MYTHIC'}; // authoritative V4_2 encyclopedia: Legendary 8 + Mythic 12
-let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedStage:1,infiniteGold:false};
+let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_01'},infiniteGold:false};
 function heroSkillUnlocked(slot){return slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30}
 function spendGold(amount){if(playerProfile.infiniteGold)return true;if(gold<amount)return false;gold-=amount;return true}
 let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
@@ -1353,7 +1367,7 @@ $('pause').onclick=()=>{
 syncPauseButton();
 
 function startPrototypeBattle(profile){
- playerProfile=profile;selectStageRuntime(profile.selectedStage||1);syncStageHud();
+ playerProfile=profile;selectStageRuntime(profile.selectedMap||{worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_01'});syncStageHud();
  gold=profile.infiniteGold?500:500;
  $('prototypeLobby').classList.add('off');$('app').classList.remove('prototypeBattleHidden');running=true;last=performance.now();syncHUD();
 }
@@ -1366,7 +1380,7 @@ let masterGold=null,masterLevel=null,masterStage=1;
 document.querySelectorAll('[data-stage]').forEach(b=>b.onclick=()=>{if(b.disabled)return;document.querySelectorAll('[data-stage]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterStage=Number(b.dataset.stage)});
 document.querySelectorAll('[data-gold]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-gold]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterGold=b.dataset.gold;$('masterStart').disabled=!(masterGold&&masterLevel)});
 document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-level]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');masterLevel=Number(b.dataset.level);$('masterStart').disabled=!(masterGold&&masterLevel)});
-$('masterStart').onclick=()=>startPrototypeBattle({type:'MASTER',ownedHeroes:[...ALL_HERO_IDS],heroLevel:masterLevel,selectedStage:masterStage,infiniteGold:masterGold==='INFINITE'});
+$('masterStart').onclick=()=>startPrototypeBattle({type:'MASTER',ownedHeroes:[...ALL_HERO_IDS],heroLevel:masterLevel,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_01',mode:'NORMAL',stageId:'NORMAL_01_0'+masterStage},infiniteGold:masterGold==='INFINITE'});
 
 buildGrid();renderUnits();syncHUD();updateComboHighlights();running=false;requestAnimationFrame(loop);
 
