@@ -478,7 +478,7 @@ for token in [
  "openMidbossReward();toast('중간보스 격파 · 보상 1개 선택')",
  "const lucky=luckyUnitStatMultiplier()",
  "addLuckyWaveClear(wave);",
- "luckyRoulette:{roll:(v)=>luckyOutcomeRoll(v)"
+ "roll:(v)=>luckyOutcomeRoll(v)"
 ]: assert token in js, "missing Lucky Roulette runtime guard: "+token
 print("PASS - Lucky Roulette probability, reset, 45% natural build, 40% buff cap and midboss choice core are guarded")
 
