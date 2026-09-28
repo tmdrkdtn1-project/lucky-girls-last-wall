@@ -69,14 +69,62 @@ function luckySpin(randomValue=Math.random()){
  const tier=luckyOutcomeRoll(randomValue);running=false;luckyOverlayOpen=true;resetLuckyAfterSpin();
  return {tier,rewards:luckyRewardOptions(tier)};
 }
-function closeLuckyOverlay(){luckyOverlayOpen=false;if(gameMode==='TD'&&!rpgPending&&!midbossRewardPending)running=!manualPaused}
+function luckyRewardLabel(id){
+ const labels={MYTHIC_OWNED_RANDOM_1:'보유 신화 영웅 1명 무료 소환',STAGE_BUFF_30:'전 유닛 공격력·공격속도 +30%',LEGENDARY_OWNED_RANDOM_2:'보유 전설 영웅 2명 무료 소환',GOLD_2000:'2000 골드',LEGENDARY_OWNED_RANDOM_1:'보유 전설 영웅 1명 무료 소환',STAGE_BUFF_20:'전 유닛 공격력·공격속도 +20%',GOLD_1000:'1000 골드',STAGE_BUFF_10:'전 유닛 공격력·공격속도 +10%',GOLD_500:'500 골드',MID_GOLD_1000:'1000 골드',MID_LEGENDARY_1:'보유 전설 영웅 1명 무료 소환',MID_JACKPOT_20:'JACKPOT 확률 +20%p'};
+ return labels[id]||id;
+}
+function syncLuckyHud(){const a=$('luckyJackpotPct'),b=$('luckyModalPct');if(a)a.textContent=luckyJackpotPct+'%';if(b)b.textContent=luckyJackpotPct+'%'}
+function renderLuckyChoices(ids,onChoose){
+ const box=$('luckyRewardChoices');box.innerHTML='';
+ ids.forEach(id=>{const b=document.createElement('button');b.textContent=luckyRewardLabel(id);b.onclick=()=>onChoose(id);box.appendChild(b)});
+}
+function showLuckyCelebration(title){$('luckyResultTitle').textContent=title;const fw=$('luckyFireworks');fw.classList.remove('on');void fw.offsetWidth;fw.classList.add('on')}
+function openLuckyModal(){
+ if(gameMode!=='TD'||rpgPending||luckyOverlayOpen)return;
+ running=false;luckyOverlayOpen=true;syncLuckyHud();
+ $('luckyModal').classList.add('on');$('luckyModal').setAttribute('aria-hidden','false');
+ $('luckyResultTitle').textContent='LUCKY ROULETTE';$('luckyResultSub').innerHTML='JACKPOT <b id="luckyModalPct">'+luckyJackpotPct+'%</b>';
+ $('luckyRewardChoices').innerHTML='';$('luckySpinButton').style.display='inline-block';
+}
+function closeLuckyOverlay(){
+ luckyOverlayOpen=false;
+ const modal=$('luckyModal');if(modal){modal.classList.remove('on');modal.setAttribute('aria-hidden','true')}
+ if(gameMode==='TD'&&!rpgPending&&!midbossRewardPending)running=!manualPaused;
+ syncLuckyHud();
+}
+function applyLuckyRewardChoice(id){
+ if(id.includes('MYTHIC_')||id.includes('LEGENDARY_')||id==='MID_LEGENDARY_1'){
+  showWarning('무료 영웅 소환','PlayerProfile 보유 영웅 데이터 연결 후 활성화',1100);
+  return false;
+ }
+ applyLuckySimpleReward(id);showLuckyCelebration('보상 획득!!');setTimeout(closeLuckyOverlay,850);return true;
+}
+function runLuckySpinPresentation(){
+ const before=luckyJackpotPct,result=luckySpin();
+ if(!result)return;
+ syncLuckyHud();$('luckySpinButton').style.display='none';const wheel=$('luckyWheel');wheel.classList.add('spinning');
+ setTimeout(()=>{wheel.classList.remove('spinning');$('luckyResultTitle').textContent=result.tier==='MISS'?'꽝':result.tier+' 성공!!';
+  $('luckyResultSub').textContent=result.tier==='MISS'?'다음 웨이브에서 행운을 모아보세요':'보상을 하나 선택하세요';
+  if(result.tier==='MISS'){setTimeout(closeLuckyOverlay,900);return}
+  showLuckyCelebration(result.tier+' 성공!!');renderLuckyChoices(result.rewards,applyLuckyRewardChoice);
+ },1900);
+}
+function showMidbossRewardModal(){
+ running=false;midbossRewardPending=true;luckyOverlayOpen=true;
+ $('luckyModal').classList.add('on');$('luckyModal').setAttribute('aria-hidden','false');$('luckySpinButton').style.display='none';
+ $('luckyResultTitle').textContent='MID BOSS CLEAR';$('luckyResultSub').textContent='보상 1개를 선택하세요';
+ renderLuckyChoices(['MID_GOLD_1000','MID_LEGENDARY_1','MID_JACKPOT_20'],id=>{
+  if(id==='MID_LEGENDARY_1'){showWarning('무료 영웅 소환','PlayerProfile 보유 영웅 데이터 연결 후 활성화',1100);return}
+  chooseMidbossReward(id);showLuckyCelebration('중간보스 보상 획득!!');
+ });
+}
 function applyLuckySimpleReward(id){
  if(id==='GOLD_2000')gold+=2000;else if(id==='GOLD_1000'||id==='MID_GOLD_1000')gold+=1000;else if(id==='GOLD_500')gold+=500;
  else if(id==='STAGE_BUFF_30')addLuckyStageBuff(30);else if(id==='STAGE_BUFF_20')addLuckyStageBuff(20);else if(id==='STAGE_BUFF_10')addLuckyStageBuff(10);
  else if(id==='MID_JACKPOT_20')addLuckyMidbossBonus();
  syncHUD();
 }
-function openMidbossReward(){running=false;midbossRewardPending=true;luckyOverlayOpen=true;return ['MID_GOLD_1000','MID_LEGENDARY_1','MID_JACKPOT_20']}
+function openMidbossReward(){showMidbossRewardModal();return ['MID_GOLD_1000','MID_LEGENDARY_1','MID_JACKPOT_20']}
 function chooseMidbossReward(id){if(!midbossRewardPending)return false;applyLuckySimpleReward(id);midbossRewardPending=false;closeLuckyOverlay();return true}
 
 const $=id=>document.getElementById(id);
@@ -1172,10 +1220,12 @@ function loop(ts){
  }
  requestAnimationFrame(loop);
 }
-function syncHUD(){$('gold').textContent=gold;$('wave').textContent=wave;$('gHp').textContent=gHp;$('oHp').textContent=oHp}
+function syncHUD(){$('gold').textContent=gold;$('wave').textContent=wave;$('gHp').textContent=gHp;$('oHp').textContent=oHp;syncLuckyHud()}
 function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',750)}
 
 $('closeBottom').onclick=()=>clearSelection(true);
+$('luckyRouletteButton').onclick=openLuckyModal;
+$('luckySpinButton').onclick=runLuckySpinPresentation;
 $('battlefield').addEventListener('click',()=>{if(gameMode==='TD'&&!rpgPending)clearSelection(true)});
 $('speed').onclick=()=>{speed=speed===1?2:speed===2?3:1;$('speed').textContent='×'+speed};
 $('autoBattle').onclick=()=>{
