@@ -9,7 +9,7 @@
   },
   "jackpot": {
     "initial_pct": 0,
-    "wave_clear_increment_pct": 5,
+    "wave_clear_increment_pct": 2,
     "natural_increment_waves": [
       1,
       2,
@@ -21,18 +21,23 @@
       8,
       9
     ],
-    "natural_max_pct": 45,
+    "natural_max_pct": 18,
     "reset_after_spin_pct": 0,
     "midboss_bonus_pct": 20,
-    "absolute_cap_pct": 100
+    "absolute_cap_pct": 100,
+    "midboss_bonus_storage": "SEPARATE_BONUS_POOL",
+    "displayed_pct_rule": "CLAMP_NATURAL_PLUS_BONUS",
+    "reset_scope_after_spin": [
+      "natural_pct",
+      "bonus_pct"
+    ]
   },
   "outcome_model": {
     "jackpot": "DISPLAYED_JACKPOT_PERCENT_IS_ABSOLUTE_PROBABILITY",
-    "on_jackpot_failure_weights": {
-      "LUCKY": 1.5,
-      "BONUS": 1.8,
-      "MISS": 1
-    },
+    "resolution": "SEQUENTIAL_CONDITIONAL",
+    "lucky_chance_multiplier_after_jackpot_fail": 1.5,
+    "bonus_chance_multiplier_after_lucky_fail": 1.8,
+    "miss_when_all_fail": true,
     "miss_has_penalty": false
   },
   "stage_buff": {

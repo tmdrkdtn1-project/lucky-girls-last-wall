@@ -461,8 +461,14 @@ lucky=json.loads((root/"data/lucky_roulette_v1.json").read_text(encoding="utf-8"
 assert lucky["schema"]=="LG_LUCKY_ROULETTE_V1"
 assert lucky["jackpot"]["initial_pct"]==0
 assert lucky["jackpot"]["natural_increment_waves"]==list(range(1,10))
-assert lucky["jackpot"]["natural_max_pct"]==45 and lucky["jackpot"]["reset_after_spin_pct"]==0
-assert lucky["outcome_model"]["on_jackpot_failure_weights"]=={"LUCKY":1.5,"BONUS":1.8,"MISS":1.0}
+assert lucky["jackpot"]["wave_clear_increment_pct"]==2 and lucky["jackpot"]["natural_max_pct"]==18 and lucky["jackpot"]["reset_after_spin_pct"]==0
+assert lucky["outcome_model"]["resolution"]=="SEQUENTIAL_CONDITIONAL"
+assert lucky["outcome_model"]["lucky_chance_multiplier_after_jackpot_fail"]==1.5
+assert lucky["outcome_model"]["bonus_chance_multiplier_after_lucky_fail"]==1.8
+assert lucky["outcome_model"]["miss_when_all_fail"] is True
+assert lucky["jackpot"]["midboss_bonus_storage"]=="SEPARATE_BONUS_POOL"
+assert lucky["jackpot"]["displayed_pct_rule"]=="CLAMP_NATURAL_PLUS_BONUS"
+assert lucky["jackpot"]["reset_scope_after_spin"]==["natural_pct","bonus_pct"]
 assert lucky["stage_buff"]["stacking"] is True and lucky["stage_buff"]["cap_pct"]==40
 assert len(lucky["rewards"]["JACKPOT"])==4 and len(lucky["rewards"]["LUCKY"])==3 and len(lucky["rewards"]["BONUS"])==2
 assert lucky["midboss_reward"]["pause_game"] is True and lucky["midboss_reward"]["choose"]==1
