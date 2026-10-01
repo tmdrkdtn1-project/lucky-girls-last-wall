@@ -459,7 +459,7 @@ print("PASS - shared Stage 2+ contract preserves confirmed combat invariants wit
 # Lucky Roulette V1 + midboss reward contract/runtime guards
 lucky=json.loads((root/"data/lucky_roulette_v1.json").read_text(encoding="utf-8"))
 assert lucky["schema"]=="LG_LUCKY_ROULETTE_V1"
-assert lucky["jackpot"]["initial_pct"]==0 and lucky["jackpot"]["wave_clear_increment_pct"]==5
+assert lucky["jackpot"]["initial_pct"]==0
 assert lucky["jackpot"]["natural_increment_waves"]==list(range(1,10))
 assert lucky["jackpot"]["natural_max_pct"]==45 and lucky["jackpot"]["reset_after_spin_pct"]==0
 assert lucky["outcome_model"]["on_jackpot_failure_weights"]=={"LUCKY":1.5,"BONUS":1.8,"MISS":1.0}
@@ -468,19 +468,19 @@ assert len(lucky["rewards"]["JACKPOT"])==4 and len(lucky["rewards"]["LUCKY"])==3
 assert lucky["midboss_reward"]["pause_game"] is True and lucky["midboss_reward"]["choose"]==1
 assert [x["id"] for x in lucky["midboss_reward"]["options"]]==["MID_GOLD_1000","MID_LEGENDARY_1","MID_JACKPOT_20"]
 for token in [
- "const LUCKY_FAIL_WEIGHTS={LUCKY:1.5,BONUS:1.8,MISS:1.0}",
- "function luckyOutcomeRoll(randomValue=Math.random())",
- "function addLuckyWaveClear(w){if(w>=1&&w<=9)luckyJackpotPct=Math.min(45,luckyJackpotPct+5)}",
- "function addLuckyMidbossBonus(){luckyJackpotPct=Math.min(100,luckyJackpotPct+20)}",
- "function resetLuckyAfterSpin(){luckyJackpotPct=0}",
+ "function luckyDisplayedJackpotPct(){return Math.max(0,Math.min(100,luckyNaturalPct+luckyBonusPct))}",
+ "function luckyOutcomeRoll(randomSource=Math.random)",
+ "function addLuckyWaveClear(w){if(w>=1&&w<=9)luckyNaturalPct=Math.min(18,luckyNaturalPct+2)}",
+ "function addLuckyMidbossBonus(){luckyBonusPct=Math.min(100,luckyBonusPct+20)}",
+ "function resetLuckyAfterSpin(){luckyNaturalPct=0;luckyBonusPct=0}",
  "function addLuckyStageBuff(pct){luckyStageBuffPct=Math.min(40,luckyStageBuffPct+pct)",
  "const reward=e.kind==='boss'?180:e.kind==='midboss'?0:12",
  "openMidbossReward();toast('중간보스 격파 · 보상 1개 선택')",
  "const lucky=luckyUnitStatMultiplier()",
  "addLuckyWaveClear(wave);",
- "roll:(v)=>luckyOutcomeRoll(v)"
+ "roll:(v)=>{const q=Array.isArray(v)?[...v]:null;return luckyOutcomeRoll(q?()=>q.shift():v)}"
 ]: assert token in js, "missing Lucky Roulette runtime guard: "+token
-print("PASS - Lucky Roulette probability, reset, 45% natural build, 40% buff cap and midboss choice core are guarded")
+print("PASS - Lucky Roulette sequential probability, natural+bonus reset, 18% natural cap, 40% buff cap and midboss choice core are guarded")
 
 
 # Lucky Roulette playable UI guards
@@ -554,7 +554,17 @@ assert 'recipeNames:["광전사","연사궁병"]' in js
 assert 'recipeNames:["대형 발리스타","연사 감시탑","루비"]' in js
 assert 'recipeNames:["아이돌","1급 얼음수정","카린"]' in js
 assert "recipeRuntimeComplete:" in js
-print("PASS - all 20 authoritative workbook hero recipes are locked; runtime material IDs are separately tracked")
+for token in [
+    "recipeRuntimeComplete!==true||summoned.has(r.id)",
+    "if(recipe.recipeRuntimeComplete!==true){toast('아직 조합할 수 없는 영웅입니다');return}",
+    "if(heroCount>=5){cancelHeroPlacement('영웅 제한 초과')",
+    "!playerProfile.infiniteGold&&gold<t.cost",
+    "!playerProfile.infiniteGold&&gold<n.cost",
+    "!spendGold(t.cost)",
+    "!spendGold(next.cost)"
+]:
+    assert token in js, "missing combo/infinite-gold runtime guard: "+token
+print("PASS - all 20 authoritative workbook hero recipes are locked; complete-recipe combo and Infinite Gold runtime guards are wired")
 
 # Stage-scoped MASTER profile/runtime guards
 assert "const MAP_RUNTIME_REGISTRY={" in js
