@@ -3,12 +3,85 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Lucky Girls Stage 1 Playable</title>
+<title>Lucky Girls: Last Wall</title>
 <link rel="stylesheet" href="css/game.css">
 </head>
 <body>
-<div id="prototypeLobby" class="prototypeLobby">
+<div id="uiV1Flow" class="uiV1Flow">
+  <section class="flowScreen active" data-flow-screen="title">
+    <div class="flowHero">
+      <div class="eyebrow">LUCKY GIRLS</div>
+      <h1>LAST WALL</h1>
+      <p>끝까지 버티고, 마지막 벽을 지켜라.</p>
+      <button class="flowPrimary" data-flow-go="lobby">시작</button>
+    </div>
+  </section>
+  <section class="flowScreen" data-flow-screen="lobby">
+    <div class="flowPanel">
+      <button class="flowBack" data-flow-go="title">←</button>
+      <div class="eyebrow">LOBBY</div><h2>전투 본부</h2>
+      <div class="flowCards">
+        <button class="flowCard" data-flow-go="story"><strong>스토리 모드</strong><span>지역을 선택하고 전선을 진행합니다.</span></button>
+        <button class="flowCard muted" id="openTestProfile"><strong>테스트 프로파일</strong><span>개발용 조건 설정</span></button>
+      </div>
+    </div>
+  </section>
+  <section class="flowScreen" data-flow-screen="story">
+    <div class="flowPanel">
+      <button class="flowBack" data-flow-go="lobby">←</button>
+      <div class="eyebrow">STORY MODE</div><h2>세계 전선</h2>
+      <p class="flowLead">해금된 지역을 선택해 지역별 스테이지 전선으로 이동합니다.</p>
+      <button class="flowPrimary" data-flow-go="world">월드맵 열기</button>
+    </div>
+  </section>
+  <section class="flowScreen" data-flow-screen="world">
+    <div class="flowPanel wide">
+      <button class="flowBack" data-flow-go="story">←</button>
+      <div class="eyebrow">WORLD MAP</div><h2>에르세리아 전선</h2>
+      <div class="worldRegions">
+        <button class="worldRegion unlocked" data-flow-go="local"><strong>해륜 황국</strong><span>현재 전선 · 진입 가능</span></button>
+        <div class="worldRegion locked"><strong>생아트르크 교황령</strong><span>LOCKED · 진행 데이터 대기</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="flowScreen" data-flow-screen="local">
+    <div class="flowPanel wide">
+      <button class="flowBack" data-flow-go="world">←</button>
+      <div class="eyebrow">LOCAL STAGE DETAIL</div><h2>해륜 황국 · 서부 전선</h2>
+      <div class="localSummary"><span>진행 스테이지 1</span><span>보스 정보 연결됨</span><span>보상 세부 DATA_PENDING</span></div>
+      <button class="flowPrimary" data-flow-go="stage">스테이지 선택</button>
+    </div>
+  </section>
+  <section class="flowScreen" data-flow-screen="stage">
+    <div class="flowPanel wide">
+      <button class="flowBack" data-flow-go="local">←</button>
+      <div class="eyebrow">STAGE SELECT</div><h2>서부 전선</h2>
+      <div class="stageSelectGrid">
+        <button class="stageSelectCard selected" data-flow-go="prep"><strong>STAGE 1</strong><span>산악 초입</span></button>
+        <div class="stageSelectCard locked"><strong>STAGE 2</strong><span>준비중</span></div>
+        <div class="stageSelectCard locked"><strong>STAGE 3</strong><span>준비중</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="flowScreen" data-flow-screen="prep">
+    <div class="flowPanel wide battlePrep">
+      <button class="flowBack" data-flow-go="stage">←</button>
+      <div class="eyebrow">BATTLE PREP</div><h2>STAGE 1 · 산악 초입</h2>
+      <div class="prepGrid">
+        <article><h3>목표</h3><p>최종 방어선을 지키고 TD 보스를 격파한 뒤 RPG 결전을 완료하십시오.</p></article>
+        <article><h3>적 특성</h3><p>웨이브 진행에 따라 정예/중간보스/보스가 등장합니다.</p></article>
+        <article><h3>보스 특성</h3><p>철각왕 브라움 · RPG 전환 후 페이즈 전투.</p></article>
+        <article><h3>보상</h3><p>DATA_PENDING · 권위 데이터가 들어오면 표시됩니다.</p></article>
+        <article><h3>특수 규칙</h3><p>TD 활성 영웅 최대 5명. TD 종료 시 남은 영웅이 RPG에 그대로 참가합니다.</p></article>
+      </div>
+      <button id="uiV1StartBattle" class="flowPrimary">전투 시작</button>
+    </div>
+  </section>
+</div>
+
+<div id="prototypeLobby" class="prototypeLobby off">
  <div class="prototypeLobbyPanel">
+  <button id="closeTestProfile" class="flowBack">←</button>
   <h1>Lucky Girls: Last Wall</h1><p id="profileStepText">프로토타입 프로파일을 선택하세요.</p>
   <div id="profileChoice" class="prototypeChoices"><button data-profile="BASIC">BASIC PROFILE</button><button data-profile="MASTER">MASTER PROFILE</button></div>
   <div id="masterSetup" class="masterSetup">
@@ -19,25 +92,43 @@
   </div>
  </div>
 </div>
+
 <div id="app" class="prototypeBattleHidden">
 <header id="topHUD">
-  <div class="hudBox">STAGE 1</div>
-  <div class="hudBox tdHud">WAVE <span id="wave">1</span>/10</div>
-  <div class="hudBox tdHud">🪙 <span id="gold">500</span></div>
-  <div class="hudBox tdHud">G <span id="gHp">100</span>/100</div>
-  <div class="hudBox tdHud">O <span id="oHp">120</span>/120</div>
-  <div class="hudGrow"></div>
-  <button class="hudBtn" id="speed">×1</button>
-  <button class="hudBtn rpgOnlyControl" id="autoBattle">AUTO OFF</button>
-  <button class="hudBtn" id="pause">Ⅱ 일시정지</button>
+  <div class="hudLeft">
+    <div class="hudStage">STAGE 1</div>
+    <div class="hudWave tdHud">WAVE <span id="wave">1</span>/10</div>
+  </div>
+  <div id="hudWarningLane" class="hudWarningLane">전선 안정</div>
+  <div class="hudRight">
+    <div class="hudBox tdHud">GOLD <span id="gold">500</span></div>
+    <div class="hudBox tdHud">HERO <span id="heroCountHud">0</span>/5</div>
+    <button class="hudBtn" id="speed">×1</button>
+    <button class="hudBtn rpgOnlyControl" id="autoBattle">AUTO OFF</button>
+    <button class="hudBtn" id="pause">Ⅱ 일시정지</button>
+  </div>
 </header>
+
+<div id="defenseStatus" class="defenseStatus tdHud">
+  <div><span>최종 방어벽</span><strong><span id="gHp">100</span>/100</strong></div>
+  <div><span>성문 코어</span><strong><span id="oHp">120</span>/120</strong></div>
+</div>
+
 <main id="battlefield">
-  <div id="stageBanner">서부 왕국 · 산악 초입 · 18×10 PLAYABLE BLOCKOUT</div>
+  <div id="stageBanner">산악 초입</div>
   <div id="legend">S 스폰 <span>P 경로</span><span>D 배치</span><span>W 수역</span><span>X 장애물</span><span>G 최종방어벽</span><span>O 성문</span></div>
   <div id="mapFrame">
     <div id="grid"><div id="unitLayer"></div><div id="enemyLayer"></div><div id="fxLayer"></div></div>
   </div>
 </main>
+
+<div id="heroStrip" class="heroStrip tdHud"></div>
+<button id="heroBrowserButton" class="heroBrowserButton tdHud">영웅 빌드</button>
+<aside id="heroBrowser" class="heroBrowser tdHud" aria-hidden="true">
+  <div class="heroBrowserHead"><div><span>HERO BUILD</span><strong>보유 영웅 레시피</strong></div><button id="heroBrowserClose">✕</button></div>
+  <div id="heroBrowserList" class="heroBrowserList"></div>
+</aside>
+
 <section id="rpgScreen" aria-hidden="true">
   <div id="rpgTransition" class="rpgTransition">
     <div id="rpgTransitionMessage"></div>
@@ -46,13 +137,27 @@
     <div id="rpgBossStatus">
       <div id="rpgBossStatusLine"><strong id="rpgBossName">철각왕 브라움</strong><span id="rpgPhaseLabel">PHASE 1</span><span id="rpgBossHpText">0/0</span></div>
       <div id="rpgBossTopBar"><i id="rpgBossBarFill"></i></div>
+      <div id="rpgCastBar" class="rpgCastBar" aria-hidden="true"><span id="rpgCastName">SKILL</span><i id="rpgCastFill"></i><b id="rpgCastMeta"></b></div>
     </div>
-    <div id="rpgBoss">
-      <div id="rpgBossBody">BOSS</div>
-    </div>
+    <div id="rpgBoss"><div id="rpgBossBody">BOSS</div></div>
     <div id="rpgHeroRow"></div>
   </div>
 </section>
+
+<section id="resultScreen" class="resultScreen" aria-hidden="true">
+  <div class="resultPanel">
+    <div id="resultEyebrow" class="eyebrow">RESULT</div>
+    <h2 id="resultTitle">STAGE CLEAR</h2>
+    <p id="resultReason"></p>
+    <div id="resultMeta" class="resultMeta"></div>
+    <div class="resultActions">
+      <button id="resultNext" class="flowPrimary">다음 스테이지</button>
+      <button id="resultStageSelect">스테이지 선택</button>
+      <button id="resultRetry">재도전</button>
+    </div>
+  </div>
+</section>
+
 <div id="bottomUI">
   <button id="closeBottom">✕</button>
   <div id="contextTitle"></div>
@@ -60,7 +165,8 @@
 </div>
 <button id="luckyRouletteButton" class="luckyRouletteButton tdHud"><span>LUCKY</span><strong>JACKPOT <b id="luckyJackpotPct">0%</b></strong></button>
 <div id="luckyModal" class="luckyModal" aria-hidden="true"><div class="luckyPanel"><div id="luckyWheel" class="luckyWheel"><div class="luckyWheelCore">LUCKY<br>ROULETTE</div></div><h2 id="luckyResultTitle">LUCKY ROULETTE</h2><div id="luckyResultSub">JACKPOT <b id="luckyModalPct">0%</b></div><div id="luckyRewardChoices" class="luckyRewardChoices"></div><button id="luckySpinButton" class="luckySpinButton">SPIN</button></div><div id="luckyFireworks" class="luckyFireworks"></div></div>
-<div id="toast"></div>\n<div id="bossWarning"><div id="bossWarningTitle">⚠ WARNING</div><div id="bossWarningSub"></div></div>
+<div id="toast"></div>
+<div id="bossWarning"><div id="bossWarningTitle">⚠ WARNING</div><div id="bossWarningSub"></div></div>
 </div>
 <script src="js/game.js"></script>
 </body>

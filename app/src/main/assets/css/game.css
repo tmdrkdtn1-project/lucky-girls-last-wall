@@ -245,3 +245,80 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 .prototypeLobby h1{margin:0 0 8px;color:#ffd66b}.prototypeLobby h3{margin:18px 0 8px;color:#ffd66b}.prototypeChoices{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
 .prototypeChoices button,.prototypeStart{padding:12px 18px;border:1px solid #ffd66b;border-radius:12px;background:#38213e;color:#fff;font-weight:900}.prototypeChoices button.selected{background:#8a5a19;box-shadow:0 0 16px #ffd66b66}
 .masterSetup{display:none;margin-top:18px}.masterSetup.on{display:block}.prototypeStart{margin-top:22px;font-size:18px}.prototypeStart:disabled{opacity:.35}
+
+/* UI V1 */
+.uiV1Flow{position:fixed;inset:0;z-index:360;background:radial-gradient(circle at 50% 18%,#2f2339 0,#121019 48%,#07080d 100%);color:#fff;display:block}
+.uiV1Flow.off{display:none}
+.flowScreen{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:max(24px,env(safe-area-inset-top)) max(28px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(28px,env(safe-area-inset-left))}
+.flowScreen.active{display:flex}
+.flowHero,.flowPanel{width:min(760px,92vw);padding:34px;border:1px solid #d8b77866;border-radius:20px;background:linear-gradient(180deg,#1b1721ee,#0d0f16ee);box-shadow:0 24px 80px #000c}
+.flowHero{text-align:center}
+.flowHero h1,.flowPanel h2{margin:4px 0 10px;font-size:clamp(32px,5vw,64px);letter-spacing:.06em}
+.flowPanel h2{font-size:clamp(26px,3.2vw,42px)}
+.flowPanel.wide{width:min(1040px,94vw)}
+.eyebrow{font-size:12px;font-weight:1000;letter-spacing:.22em;color:#e5c47f}
+.flowLead{color:#c7c5ce}
+.flowPrimary,.flowCard,.worldRegion,.stageSelectCard,.resultActions button{border:1px solid #d9b86f88;border-radius:12px;background:#2b2334;color:#fff}
+.flowPrimary{padding:12px 22px;font-weight:1000;font-size:16px;margin-top:18px}
+.flowBack{position:absolute;margin:-8px 0 0 -8px;border:0;background:#0008;color:#fff;border-radius:10px;padding:8px 12px}
+.flowCards,.worldRegions,.stageSelectGrid,.prepGrid{display:grid;gap:12px;margin-top:20px}
+.flowCards{grid-template-columns:repeat(2,minmax(0,1fr))}
+.flowCard,.worldRegion,.stageSelectCard{text-align:left;padding:18px}
+.flowCard strong,.worldRegion strong,.stageSelectCard strong{display:block;font-size:18px}
+.flowCard span,.worldRegion span,.stageSelectCard span{display:block;margin-top:6px;color:#bbb7c4;font-size:12px}
+.flowCard.muted,.worldRegion.locked,.stageSelectCard.locked{opacity:.5}
+.worldRegions{grid-template-columns:repeat(2,minmax(0,1fr))}
+.worldRegion.unlocked,.stageSelectCard.selected{box-shadow:inset 0 0 0 1px #f1cb79,0 0 22px #e7b34b22}
+.localSummary{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.localSummary span{padding:8px 10px;border-radius:999px;background:#ffffff10;border:1px solid #ffffff18;font-size:12px}
+.stageSelectGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.prepGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.prepGrid article{padding:14px;border-radius:12px;background:#ffffff08;border:1px solid #ffffff12}
+.prepGrid article:last-child{grid-column:1/-1}
+.prepGrid h3{margin:0 0 6px;color:#f1ca7b}
+.prepGrid p{margin:0;color:#d2cfda;line-height:1.45}
+#topHUD{display:flex;align-items:center;gap:12px;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+.hudLeft,.hudRight{display:flex;align-items:center;gap:8px}
+.hudRight{margin-left:auto}
+.hudStage{font-weight:1000;color:#f2d38b}
+.hudWave{font-weight:900}
+.hudWarningLane{position:absolute;left:50%;transform:translateX(-50%);min-width:220px;text-align:center;font-weight:900;color:#f0cf8a;pointer-events:none}
+.defenseStatus{position:fixed;z-index:70;left:max(12px,env(safe-area-inset-left));top:calc(var(--top) + 8px);display:flex;gap:8px}
+.defenseStatus>div{min-width:120px;padding:7px 10px;border-radius:9px;background:#0d1219d9;border:1px solid #78909c55}
+.defenseStatus span{display:block;font-size:10px;color:#aeb7c2}.defenseStatus strong{font-size:12px}
+#legend{display:none!important}
+.coord,.tileLabel{display:none!important}
+#stageBanner{opacity:.75;font-size:10px;pointer-events:none}
+.heroStrip{position:fixed;z-index:65;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:6px;pointer-events:none}
+.heroSlot{width:54px;height:54px;border-radius:10px;border:1px solid #d1b76c55;background:#111722d9;padding:5px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.heroSlot.filled{border-color:#e7c36f;box-shadow:0 0 16px #e7b64d22}
+.heroSlot strong{font-size:10px}.heroSlot span{font-size:9px;color:#aaa}.heroSlot.empty{opacity:.45}
+.heroBrowserButton{position:fixed;z-index:68;right:max(118px,calc(env(safe-area-inset-right) + 118px));bottom:18px;border:1px solid #d3b86c88;border-radius:10px;background:#181824e6;color:#fff;padding:9px 12px;font-weight:900}
+.heroBrowser{position:fixed;z-index:210;right:max(10px,env(safe-area-inset-right));top:calc(var(--top) + 10px);bottom:10px;width:min(390px,44vw);padding:12px;border:1px solid #d0b46b66;border-radius:16px;background:#11121af4;transform:translateX(110%);transition:.22s;overflow:hidden}
+.heroBrowser.on{transform:translateX(0)}
+.heroBrowserHead{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid #ffffff12}
+.heroBrowserHead span{display:block;font-size:10px;letter-spacing:.18em;color:#d8b86f}.heroBrowserHead strong{font-size:16px}
+.heroBrowserHead button{border:0;background:#ffffff10;color:#fff;border-radius:8px;padding:7px 10px}
+.heroBrowserList{height:calc(100% - 52px);overflow:auto;padding-top:8px}
+.heroRecipeCard{padding:10px;margin-bottom:8px;border-radius:10px;background:#ffffff08;border:1px solid #ffffff10}
+.heroRecipeCard.craftable{border-color:#e7c46f;box-shadow:0 0 16px #e7bd5122}
+.heroRecipeCard.locked{opacity:.55}
+.heroRecipeCard .line{display:flex;justify-content:space-between;gap:8px}.heroRecipeCard small{display:block;color:#b8b4c2;margin-top:5px;line-height:1.35}
+#bottomUI{padding-bottom:max(8px,env(safe-area-inset-bottom))}
+.rpgCastBar{margin-top:7px;height:24px;border:1px solid #ffba6d66;border-radius:8px;background:#160d0de6;position:relative;overflow:hidden;display:none}
+.rpgCastBar.on{display:block}
+.rpgCastBar i{position:absolute;left:0;top:0;bottom:0;width:0;background:#c44932aa;transition:width linear}
+.rpgCastBar span,.rpgCastBar b{position:relative;z-index:2;font-size:10px;line-height:22px}
+.rpgCastBar span{padding-left:8px;font-weight:1000}.rpgCastBar b{float:right;padding-right:8px;color:#ffd398}
+.rpgStatusIcons{display:flex;gap:3px;min-height:16px;margin-top:3px}
+.rpgStatusIcon{font-size:9px;padding:2px 4px;border-radius:5px;background:#ffffff12;border:1px solid #ffffff15}
+.resultScreen{position:fixed;inset:0;z-index:340;display:none;align-items:center;justify-content:center;background:#080a10eF}
+.resultScreen.on{display:flex}
+.resultPanel{width:min(720px,90vw);padding:30px;border:1px solid #d9bd7488;border-radius:18px;background:#15141cee;text-align:center}
+.resultPanel h2{font-size:38px;margin:6px 0 10px}
+.resultMeta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
+.resultMeta>div{padding:10px;border-radius:10px;background:#ffffff08}
+.resultActions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.resultActions button{padding:10px 16px;font-weight:900}
+@media (max-width:760px){.flowCards,.worldRegions,.prepGrid{grid-template-columns:1fr}.stageSelectGrid{grid-template-columns:1fr 1fr}.heroBrowser{width:68vw}.hudWarningLane{display:none}.heroSlot{width:46px;height:46px}}
+

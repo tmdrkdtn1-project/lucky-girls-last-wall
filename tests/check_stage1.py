@@ -124,9 +124,9 @@ print("PASS - TD boss now hands off to playable RPG boss prototype with 1-5 TD h
 # RPG cinematic intro guards
 assert 'id="rpgTransition"' in html
 assert "function playRpgIntroSequence()" in js
-assert "name+'이 다가온다'" in js
-assert "그대들이 바로 마지막 보루, LAST WALL이다." in js
-assert "최후의 전투, 개전!" in js
+assert "모든 방어선이 '+rpgState.boss.name+' 에게 무너졌다." in js
+assert "DATA_PENDING · 보스 전용 대사 원본 대기" in js
+assert "영웅들이여, 그대들이 바로\\nLAST WALL 이다." in js
 assert "rpgTransitioning=true" in js
 assert "running=false;" in js
 assert "rpgScreen.classList.add('prep','transitionLock')" in js
@@ -609,3 +609,39 @@ assert "data.routes||[data.route]" in js
 assert "activeStageRoutes=paths.map" in js
 assert "routes:()=>activeStageRoutes.map" in js
 print("PASS - stage loader accepts authoritative multi-route geometry while preserving Stage 1 single-route compatibility")
+
+# Master-locked UI V1 contract guards
+for token in [
+    'data-flow-screen="title"',
+    'data-flow-screen="lobby"',
+    'data-flow-screen="story"',
+    'data-flow-screen="world"',
+    'data-flow-screen="local"',
+    'data-flow-screen="stage"',
+    'data-flow-screen="prep"',
+    'id="defenseStatus"',
+    'id="heroStrip"',
+    'id="heroBrowser"',
+    'id="heroCountHud"',
+    'id="rpgCastBar"',
+    'id="resultScreen"'
+]:
+    assert token in html, "missing UI V1 surface: "+token
+assert "해륜 황국" in html and "생아트르크 교황령" in html
+assert "해륜왕국" not in html and "생트아르크 교황령" not in html
+assert "출전 영웅" not in html and "편성 변경" not in html
+assert "#legend{display:none!important}" in css and ".coord,.tileLabel{display:none!important}" in css
+assert "function showFlowScreen(name)" in js
+assert "function renderHeroStrip()" in js and "function renderHeroBrowser()" in js
+assert "function sellHeroUnit(u)" in js
+assert "if(rarity==='MYTHIC'){toast('신화 영웅은 판매할 수 없습니다');return}" in js
+assert "heroCount=Math.max(0,heroCount-1)" in js
+assert "function setRpgCast(name,duration,tier,target)" in js
+assert "function rpgStatusBadges(h)" in js
+assert "function showResultScreen(kind,reason)" in js
+assert "DATA_PENDING · 보스 전용 대사 원본 대기" in js
+assert "영웅들이여, 그대들이 바로\\nLAST WALL 이다." in js
+assert "별 조건</strong><span>DATA_PENDING" in js
+assert "보상</strong><span>DATA_PENDING" in js
+assert "빈 배치칸 '+x+','+y+" not in js
+print("PASS - UI V1 screen flow, TD HUD, hero browser/slots, RPG telegraph/status HUD, result UI and DATA_PENDING guards are locked")
