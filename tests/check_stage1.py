@@ -598,7 +598,9 @@ assert "async function loadStageMapRuntime(selection)" in js
 assert "function validateStageMapData(data)" in js
 assert "function applyStageMapData(data)" in js
 assert "function rebuildStageGrid()" in js
-assert "await fetch(stage.dataPath)" in js
+assert "applyStageMapData(await loadJsonAsset(stage.dataPath))" in js
+assert "const response=await fetch(resolved)" in js
+assert "const xhr=new XMLHttpRequest()" in js
 assert "COLS=data.grid.cols;ROWS=data.grid.rows;CELL_COUNT=COLS*ROWS" in js
 assert "const paths=data.routes||[data.route]" in js
 assert "route=paths[0].map" in js
@@ -635,6 +637,14 @@ assert "해륜왕국" not in html and "생트아르크 교황령" not in html
 assert "출전 영웅" not in html and "편성 변경" not in html
 assert "#legend{display:none!important}" in css and ".coord,.tileLabel{display:none!important}" in css
 assert "function showFlowScreen(name)" in js
+assert "async function loadJsonAsset(path)" in js
+assert "location.protocol==='file:'" in js
+assert "const xhr=new XMLHttpRequest()" in js
+assert "xhr.status===0" in js
+assert "STAGE_ASSET_XHR_FAILED" in js
+assert "STAGE_ASSET_FETCH_FAILED" in js
+assert "applyStageMapData(await loadJsonAsset(stage.dataPath))" in js
+assert "b.textContent='전투 시작 실패 · '+code" in js
 assert 'id="uiV1StartBattle" class="flowPrimary" type="button"' in html
 assert "function bindUiV1BattleStartInput()" in js
 assert "b.addEventListener('touchend'" in js

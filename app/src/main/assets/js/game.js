@@ -57,10 +57,31 @@ function validateStageMapData(data){
 function applyStageMapData(data){
  validateStageMapData(data);COLS=data.grid.cols;ROWS=data.grid.rows;CELL_COUNT=COLS*ROWS;const paths=data.routes||[data.route];route=paths[0].map(p=>[p[0],p[1]]);activeStageRoutes=paths.map(path=>path.map(p=>[p[0],p[1]]));TILE_ROWS=data.tile_rows.slice();
 }
+async function loadJsonAsset(path){
+ const resolved=new URL(path,location.href).href;
+ if(location.protocol==='file:'){
+  return await new Promise((resolve,reject)=>{
+   const xhr=new XMLHttpRequest();
+   xhr.open('GET',resolved,true);
+   if(xhr.overrideMimeType)xhr.overrideMimeType('application/json');
+   xhr.onload=()=>{
+    const body=xhr.responseText||'';
+    if((xhr.status===0||xhr.status>=200&&xhr.status<300)&&body){
+     try{resolve(JSON.parse(body))}catch(err){reject(new Error('STAGE_ASSET_JSON_INVALID '+path))}
+     return;
+    }
+    reject(new Error('STAGE_ASSET_XHR_FAILED '+path+' status='+xhr.status));
+   };
+   xhr.onerror=()=>reject(new Error('STAGE_ASSET_XHR_FAILED '+path+' status='+xhr.status));
+   xhr.send();
+  });
+ }
+ const response=await fetch(resolved);if(!response.ok)throw new Error('STAGE_ASSET_FETCH_FAILED '+path+' status='+response.status);
+ return await response.json();
+}
 async function loadStageMapRuntime(selection){
  const stage=resolveStageRuntime(selection);if(!stage.dataPath)throw new Error('Stage map '+stage.id+' has no runtime map data');
- const response=await fetch(stage.dataPath);if(!response.ok)throw new Error('Failed to load '+stage.dataPath);
- applyStageMapData(await response.json());return stage;
+ applyStageMapData(await loadJsonAsset(stage.dataPath));return stage;
 }
 function rebuildStageGrid(){
  cells.length=0;document.querySelectorAll('#grid > .cell').forEach(el=>el.remove());buildGrid();renderUnits();
@@ -313,7 +334,7 @@ async function activateUiV1BattleStart(){
  const b=$('uiV1StartBattle');uiV1BattleStartInFlight=true;
  if(b){b.setAttribute('aria-busy','true');b.textContent='전투 로딩...'}
  try{await startPrototypeBattle(uiV1BattleProfile());return true}
- catch(err){console.error('UI_V1_BATTLE_START_FAILED',err);if(b){b.textContent='전투 시작 실패 · 다시 누르세요'}return false}
+ catch(err){console.error('UI_V1_BATTLE_START_FAILED',err);const code=String(err&&err.message||err||'UNKNOWN').split(/\s+/)[0];if(b){b.textContent='전투 시작 실패 · '+code}return false}
  finally{uiV1BattleStartInFlight=false;if(b){b.removeAttribute('aria-busy');if(!uiV1Flow.classList.contains('off'))setTimeout(()=>{if(!uiV1Flow.classList.contains('off'))b.textContent='전투 시작'},900)}}
 }
 function bindUiV1BattleStartInput(){
