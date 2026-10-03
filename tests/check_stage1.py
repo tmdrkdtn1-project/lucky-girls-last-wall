@@ -637,6 +637,25 @@ assert "해륜왕국" not in html and "생트아르크 교황령" not in html
 assert "출전 영웅" not in html and "편성 변경" not in html
 assert "#legend{display:none!important}" in css and ".coord,.tileLabel{display:none!important}" in css
 assert "function showFlowScreen(name)" in js
+assert 'id="cameraControls" class="cameraControls tdHud"' in html
+assert 'id="cameraZoomOut"' in html and 'id="cameraReset"' in html and 'id="cameraZoomIn"' in html
+assert '#mapFrame{position:absolute' in css and 'touch-action:none' in css
+assert 'transform-origin:50% 50%' in css and 'will-change:transform' in css
+assert "const CAMERA_MIN=1,CAMERA_MAX=1.8,CAMERA_STEP=.15" in js
+assert "function resetBattleCamera()" in js
+assert "function bindBattleCamera()" in js
+assert "frame.addEventListener('pointermove',moveCameraPointer" in js
+assert "performance.now()<cameraSuppressClickUntil" in js
+assert "camera:{state:()=>({scale:cameraScale" in js
+assert 'class="defenseHpTrack"' in html and 'id="gHpBar"' in html and 'id="oHpBar"' in html
+assert '.defenseStatus{position:fixed;z-index:44' in css and 'pointer-events:none' in css
+assert '#unitLayer{z-index:12}' in css and '.unitToken.selectedUnit{' in css
+assert "d.dataset.unitId=u.id" in js
+assert "token.classList.add('selectedUnit')" in js
+assert "$('app').classList.add('contextPanelOpen')" in js
+assert '#app.contextPanelOpen .heroStrip{bottom:calc(var(--bottom)' in css
+assert "class=\"heroPortrait\"" in js and 'heroRarityDot' in js
+assert "$('gHpBar').style.width" in js and "$('oHpBar').style.width" in js
 assert "async function loadJsonAsset(path)" in js
 assert "location.protocol==='file:'" in js
 assert "const xhr=new XMLHttpRequest()" in js

@@ -103,15 +103,20 @@
   <div class="hudRight">
     <div class="hudBox tdHud">GOLD <span id="gold">500</span></div>
     <div class="hudBox tdHud">HERO <span id="heroCountHud">0</span>/5</div>
+    <div id="cameraControls" class="cameraControls tdHud" aria-label="전장 카메라">
+      <button id="cameraZoomOut" type="button" aria-label="축소">−</button>
+      <button id="cameraReset" type="button" aria-label="카메라 초기화">1×</button>
+      <button id="cameraZoomIn" type="button" aria-label="확대">＋</button>
+    </div>
     <button class="hudBtn" id="speed">×1</button>
     <button class="hudBtn rpgOnlyControl" id="autoBattle">AUTO OFF</button>
     <button class="hudBtn" id="pause">Ⅱ 일시정지</button>
   </div>
 </header>
 
-<div id="defenseStatus" class="defenseStatus tdHud">
-  <div><span>최종 방어벽</span><strong><span id="gHp">100</span>/100</strong></div>
-  <div><span>성문 코어</span><strong><span id="oHp">120</span>/120</strong></div>
+<div id="defenseStatus" class="defenseStatus tdHud" aria-label="방어 시설 체력">
+  <div class="defenseMeter"><span>최종 방어벽</span><strong><span id="gHp">100</span>/100</strong><i class="defenseHpTrack"><b id="gHpBar"></b></i></div>
+  <div class="defenseMeter"><span>성문 코어</span><strong><span id="oHp">120</span>/120</strong><i class="defenseHpTrack"><b id="oHpBar"></b></i></div>
 </div>
 
 <main id="battlefield">

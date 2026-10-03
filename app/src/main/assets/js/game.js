@@ -267,7 +267,11 @@ function renderHeroStrip(){
   const slot=document.createElement('div');
   const h=active[i];
   slot.className='heroSlot '+(h?'filled':'empty');
-  slot.innerHTML=h?'<strong>'+((HERO_RECIPES.find(r=>r.id===h.heroId)||{name:h.heroId}).name)+'</strong><span>'+((HERO_RARITY_REGISTRY[h.heroId]||'HERO'))+'</span>':'<strong>EMPTY</strong><span>FREE SLOT</span>';
+  if(h){
+   const recipe=HERO_RECIPES.find(r=>r.id===h.heroId)||{name:h.heroId};const rarity=HERO_RARITY_REGISTRY[h.heroId]||'HERO';
+   slot.setAttribute('aria-label',recipe.name+' · '+rarity);slot.title=recipe.name+' · '+rarity;
+   slot.innerHTML='<span class="heroPortrait">'+recipe.name.slice(0,1)+'</span><b class="heroRarityDot"></b>';
+  }else{slot.setAttribute('aria-label','빈 영웅 슬롯');slot.innerHTML='<span class="heroPortrait emptyPortrait">＋</span>'}
   heroStrip.appendChild(slot);
  }
  if($('heroCountHud'))$('heroCountHud').textContent=active.length;
@@ -308,7 +312,7 @@ function showResultScreen(kind,reason){
 }
 function hideResultScreen(){if(resultScreen){resultScreen.classList.remove('on');resultScreen.setAttribute('aria-hidden','true')}}
 function resetBattleRuntimeForUi(){
- running=false;manualPaused=false;speed=1;gameMode='TD';rpgPending=false;rpgTransitioning=false;rpgAutoBattle=false;rpgState=null;rpgSimTime=0;
+ running=false;manualPaused=false;speed=1;gameMode='TD';rpgPending=false;rpgTransitioning=false;rpgAutoBattle=false;rpgState=null;rpgSimTime=0;resetBattleCamera();
  gold=500;wave=1;gHp=100;oHp=120;simTime=0;spawnClock=0;waveClock=0;nextEnemyId=1;selected=null;heroCount=0;waveSpawned=0;specialSpawned=false;waveEnding=false;
  moveModeUnitId=null;comboPlacement=null;luckyNaturalPct=0;luckyBonusPct=0;luckyStageBuffPct=0;luckyOverlayOpen=false;midbossRewardPending=false;luckySpinPhase='IDLE';
  units.clear();enemies.length=0;
@@ -355,6 +359,68 @@ function cellIndex(x,y){return (y-1)*COLS+(x-1)}
 function codeFor(x,y){return TILE_ROWS[y-1][x-1]}
 function posPct(x,y){return {left:((x-.5)/COLS*100)+'%',top:((y-.5)/ROWS*100)+'%'}}
 
+const CAMERA_MIN=1,CAMERA_MAX=1.8,CAMERA_STEP=.15;
+let cameraScale=1,cameraPanX=0,cameraPanY=0,cameraSuppressClickUntil=0;
+const cameraPointers=new Map();
+let cameraGesture=null,cameraPinch=null;
+function clampCameraPan(){
+ const frame=$('mapFrame');if(!frame||!grid)return;
+ const baseW=grid.offsetWidth,baseH=grid.offsetHeight,fw=frame.clientWidth,fh=frame.clientHeight;
+ const maxX=Math.max(0,(baseW*cameraScale-fw)/2),maxY=Math.max(0,(baseH*cameraScale-fh)/2);
+ cameraPanX=Math.max(-maxX,Math.min(maxX,cameraPanX));cameraPanY=Math.max(-maxY,Math.min(maxY,cameraPanY));
+}
+function syncCameraControls(){
+ if($('cameraReset'))$('cameraReset').textContent=cameraScale.toFixed(cameraScale===1?0:1)+'×';
+ if($('cameraZoomOut'))$('cameraZoomOut').disabled=cameraScale<=CAMERA_MIN+.001;
+ if($('cameraZoomIn'))$('cameraZoomIn').disabled=cameraScale>=CAMERA_MAX-.001;
+}
+function applyBattleCamera(){
+ clampCameraPan();grid.style.transform='translate3d('+cameraPanX.toFixed(1)+'px,'+cameraPanY.toFixed(1)+'px,0) scale('+cameraScale.toFixed(3)+')';syncCameraControls();
+}
+function setBattleCameraScale(next){
+ cameraScale=Math.max(CAMERA_MIN,Math.min(CAMERA_MAX,next));applyBattleCamera();return cameraScale;
+}
+function panBattleCamera(dx,dy){cameraPanX+=dx;cameraPanY+=dy;applyBattleCamera();return {x:cameraPanX,y:cameraPanY}}
+function resetBattleCamera(){cameraScale=1;cameraPanX=0;cameraPanY=0;cameraPointers.clear();cameraGesture=null;cameraPinch=null;if(grid)grid.style.transform='';syncCameraControls()}
+function cameraDistance(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
+function beginCameraPointer(e){
+ if(gameMode!=='TD'||rpgPending)return;
+ cameraPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(cameraPointers.size===1)cameraGesture={pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,panX:cameraPanX,panY:cameraPanY,moved:false};
+ if(cameraPointers.size===2){const pts=[...cameraPointers.values()];cameraPinch={distance:Math.max(1,cameraDistance(pts[0],pts[1])),scale:cameraScale};cameraGesture=null}
+}
+function moveCameraPointer(e){
+ if(!cameraPointers.has(e.pointerId)||gameMode!=='TD')return;
+ cameraPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(cameraPointers.size>=2){
+  const pts=[...cameraPointers.values()];if(!cameraPinch)cameraPinch={distance:Math.max(1,cameraDistance(pts[0],pts[1])),scale:cameraScale};
+  const ratio=cameraDistance(pts[0],pts[1])/cameraPinch.distance;setBattleCameraScale(cameraPinch.scale*ratio);cameraSuppressClickUntil=performance.now()+500;e.preventDefault();return;
+ }
+ if(cameraGesture&&cameraGesture.pointerId===e.pointerId){
+  const dx=e.clientX-cameraGesture.startX,dy=e.clientY-cameraGesture.startY;
+  if(!cameraGesture.moved&&Math.hypot(dx,dy)>8)cameraGesture.moved=true;
+  if(cameraGesture.moved){cameraPanX=cameraGesture.panX+dx;cameraPanY=cameraGesture.panY+dy;applyBattleCamera();cameraSuppressClickUntil=performance.now()+500;e.preventDefault()}
+ }
+}
+function endCameraPointer(e){
+ cameraPointers.delete(e.pointerId);
+ if(cameraPointers.size===1){const [id,p]=cameraPointers.entries().next().value;cameraGesture={pointerId:id,startX:p.x,startY:p.y,panX:cameraPanX,panY:cameraPanY,moved:false};cameraPinch=null}
+ else if(cameraPointers.size===0){cameraGesture=null;cameraPinch=null}
+}
+function bindBattleCamera(){
+ const frame=$('mapFrame');if(!frame)return;
+ frame.addEventListener('pointerdown',beginCameraPointer,{passive:true});
+ frame.addEventListener('pointermove',moveCameraPointer,{passive:false});
+ frame.addEventListener('pointerup',endCameraPointer,{passive:true});
+ frame.addEventListener('pointercancel',endCameraPointer,{passive:true});
+ frame.addEventListener('wheel',e=>{if(gameMode!=='TD'||!(e.ctrlKey||e.metaKey))return;e.preventDefault();setBattleCameraScale(cameraScale+(e.deltaY<0?CAMERA_STEP:-CAMERA_STEP))},{passive:false});
+ if($('cameraZoomOut'))$('cameraZoomOut').onclick=e=>{e.stopPropagation();setBattleCameraScale(cameraScale-CAMERA_STEP)};
+ if($('cameraZoomIn'))$('cameraZoomIn').onclick=e=>{e.stopPropagation();setBattleCameraScale(cameraScale+CAMERA_STEP)};
+ if($('cameraReset'))$('cameraReset').onclick=e=>{e.stopPropagation();resetBattleCamera()};
+ window.addEventListener('resize',()=>applyBattleCamera());syncCameraControls();
+}
+bindBattleCamera();
+
 function buildGrid(){
  for(let y=1;y<=ROWS;y++) for(let x=1;x<=COLS;x++){
   const code=codeFor(x,y),el=document.createElement('div');
@@ -370,11 +436,12 @@ function buildGrid(){
 
 function clearSelection(hide=true){
  document.querySelectorAll('.cell.selected').forEach(e=>e.classList.remove('selected'));
+ document.querySelectorAll('.unitToken.selectedUnit').forEach(e=>e.classList.remove('selectedUnit'));
  selected=null;
- if(hide)bottom.classList.remove('on');
+ if(hide){bottom.classList.remove('on');$('app').classList.remove('contextPanelOpen')}
 }
 function onCellTap(x,y){
- if(gameMode!=='TD'||rpgPending)return;
+ if(gameMode!=='TD'||rpgPending||performance.now()<cameraSuppressClickUntil)return;
  if(comboPlacement){chooseHeroPlacement(x,y);return}
  if(moveModeUnitId){completeMove(x,y);return}
  const cell=cells[cellIndex(x,y)],u=units.get(tileKey(x,y));
@@ -387,9 +454,10 @@ function selectCell(x,y){
 }
 function selectUnit(u){
  clearSelection(false);selected={type:'unit',id:u.id};cells[cellIndex(u.x,u.y)].el.classList.add('selected');
+ const token=unitLayer.querySelector('[data-unit-id="'+u.id+'"]');if(token)token.classList.add('selectedUnit');
  const combo=comboForUnit(u);if(combo)renderBottomForCombo(u,combo);else renderBottomForUnit(u);
 }
-function showBottom(text){title.textContent=text;actions.innerHTML='';bottom.classList.add('on')}
+function showBottom(text){title.textContent=text;actions.innerHTML='';bottom.classList.add('on');$('app').classList.add('contextPanelOpen')}
 function actionButton(name,desc,fn,hero=false,disabled=false){
  const b=document.createElement('button');b.className='action'+(hero?' heroAction':'');b.innerHTML='<b>'+name+'</b><small>'+desc+'</small>';
  b.disabled=disabled;if(arguments[5]){b.setAttribute('aria-disabled','true');b.style.opacity='.48';b.style.filter='grayscale(.75)';}b.onclick=fn;actions.appendChild(b);
@@ -555,7 +623,8 @@ function renderUnits(){
  unitLayer.innerHTML='';
  for(const u of units.values()){
   const hero=!!u.heroId;const t=hero?{short:(u.hero||u.heroId||'영').slice(0,1)}:UNIT_DEFS[u.type];
-  const d=document.createElement('div');d.className='unitToken '+(hero?'hero':t.tier===3?'tier3':t.tier===2?'tier2':'basic');
+  const isSelected=selected&&selected.type==='unit'&&selected.id===u.id;
+  const d=document.createElement('div');d.className='unitToken '+(hero?'hero':t.tier===3?'tier3':t.tier===2?'tier2':'basic')+(isSelected?' selectedUnit':'');d.dataset.unitId=u.id;
   const p=posPct(u.x,u.y);d.style.left=p.left;d.style.top=p.top;d.textContent=t.short;unitLayer.appendChild(d);
  }
 }
@@ -1516,7 +1585,7 @@ function loop(ts){
  }
  requestAnimationFrame(loop);
 }
-function syncHUD(){$('gold').textContent=gold;$('wave').textContent=wave;$('gHp').textContent=gHp;$('oHp').textContent=oHp;syncLuckyHud();syncUiV1()}
+function syncHUD(){$('gold').textContent=gold;$('wave').textContent=wave;$('gHp').textContent=gHp;$('oHp').textContent=oHp;if($('gHpBar'))$('gHpBar').style.width=Math.max(0,Math.min(100,gHp))+'%';if($('oHpBar'))$('oHpBar').style.width=Math.max(0,Math.min(100,oHp/120*100))+'%';syncLuckyHud();syncUiV1()}
 function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',750)}
 
 $('closeBottom').onclick=()=>clearSelection(true);
@@ -1562,6 +1631,7 @@ buildGrid();renderUnits();syncHUD();updateComboHighlights();running=false;reques
 
 window.__LG_STAGE1_TEST__={
  luckyRoulette:{eligible:(rarity)=>eligibleOwnedHeroes(rarity),freeSummon:(rarity,count)=>luckyFreeSummon(rarity,count),roll:(v)=>{const q=Array.isArray(v)?[...v]:null;return luckyOutcomeRoll(q?()=>q.shift():v)},spin:(v)=>{const q=Array.isArray(v)?[...v]:null;return luckySpin(q?()=>q.shift():v)},waveClear:(w)=>addLuckyWaveClear(w),midbossBonus:()=>addLuckyMidbossBonus(),buff:(p)=>addLuckyStageBuff(p),state:()=>({jackpotPct:luckyDisplayedJackpotPct(),naturalPct:luckyNaturalPct,bonusPct:luckyBonusPct,stageBuffPct:luckyStageBuffPct,spinPhase:luckySpinPhase}),midbossOptions:()=>openMidbossReward(),chooseMidboss:(id)=>chooseMidbossReward(id)},
+ camera:{state:()=>({scale:cameraScale,panX:cameraPanX,panY:cameraPanY}),setScale:(s)=>setBattleCameraScale(s),pan:(x,y)=>{cameraPanX=x;cameraPanY=y;applyBattleCamera();return {scale:cameraScale,panX:cameraPanX,panY:cameraPanY}},reset:()=>resetBattleCamera()},
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
  state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossHp:rpgState.boss.hp,bossPhase:rpgState.boss.phase,heroes:rpgState.heroes.map(h=>({name:h.name,hp:h.hp,ult:h.ult,ko:h.ko})),result:rpgState.result,transitioning:rpgTransitioning,autoBattle:rpgAutoBattle}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
