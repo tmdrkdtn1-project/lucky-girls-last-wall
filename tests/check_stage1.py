@@ -126,6 +126,9 @@ assert 'id="rpgTransition"' in html
 assert "function playRpgIntroSequence()" in js
 assert "모든 방어선이 '+rpgState.boss.name+' 에게 무너졌다." in js
 assert "DATA_PENDING · 보스 전용 대사 원본 대기" in js
+assert "if($('topHUD'))$('topHUD').style.display='none'" in js
+assert "if($('topHUD'))$('topHUD').style.display=''" in js
+assert "#rpgScreen:not(.battle) #rpgBossStatus,#rpgScreen:not(.battle) #rpgHeroRow{visibility:hidden" in css
 assert "영웅들이여, 그대들이 바로\\nLAST WALL 이다." in js
 assert "rpgTransitioning=true" in js
 assert "running=false;" in js
@@ -632,6 +635,12 @@ assert "해륜왕국" not in html and "생트아르크 교황령" not in html
 assert "출전 영웅" not in html and "편성 변경" not in html
 assert "#legend{display:none!important}" in css and ".coord,.tileLabel{display:none!important}" in css
 assert "function showFlowScreen(name)" in js
+assert "const flowScrollPositions=new Map();" in js
+assert "overflow-y:auto" in css and "touch-action:pan-y" in css
+assert "html,body{margin:0;width:100%;height:100%;overflow:hidden" not in css
+assert ".flowScreen{position:relative;display:none;width:100%;min-height:100dvh" in css
+assert ".prototypeLobby{position:fixed" in css and "-webkit-overflow-scrolling:touch" in css
+assert ".resultScreen{position:fixed" in css and "overflow-y:auto" in css
 assert "function renderHeroStrip()" in js and "function renderHeroBrowser()" in js
 assert "function sellHeroUnit(u)" in js
 assert "if(rarity==='MYTHIC'){toast('신화 영웅은 판매할 수 없습니다');return}" in js

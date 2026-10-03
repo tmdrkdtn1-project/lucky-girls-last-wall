@@ -215,10 +215,14 @@ const grid=$('grid'), unitLayer=$('unitLayer'), enemyLayer=$('enemyLayer'), bott
 const rpgScreen=$('rpgScreen'),rpgHeroRow=$('rpgHeroRow'),rpgTransition=$('rpgTransition'),rpgTransitionMessage=$('rpgTransitionMessage');
 const uiV1Flow=$('uiV1Flow'),heroStrip=$('heroStrip'),heroBrowser=$('heroBrowser'),heroBrowserList=$('heroBrowserList'),resultScreen=$('resultScreen');
 
+const flowScrollPositions=new Map();
 function showFlowScreen(name){
  if(!uiV1Flow)return;
+ const current=uiV1Flow.querySelector('[data-flow-screen].active');
+ if(current)flowScrollPositions.set(current.dataset.flowScreen,uiV1Flow.scrollTop);
  uiV1Flow.classList.remove('off');
  uiV1Flow.querySelectorAll('[data-flow-screen]').forEach(s=>s.classList.toggle('active',s.dataset.flowScreen===name));
+ requestAnimationFrame(()=>{uiV1Flow.scrollTop=flowScrollPositions.get(name)||0});
 }
 document.querySelectorAll('[data-flow-go]').forEach(b=>b.onclick=()=>showFlowScreen(b.dataset.flowGo));
 if($('openTestProfile'))$('openTestProfile').onclick=()=>{uiV1Flow.classList.add('off');$('prototypeLobby').classList.remove('off')};
@@ -288,7 +292,7 @@ function resetBattleRuntimeForUi(){
  moveModeUnitId=null;comboPlacement=null;luckyNaturalPct=0;luckyBonusPct=0;luckyStageBuffPct=0;luckyOverlayOpen=false;midbossRewardPending=false;luckySpinPhase='IDLE';
  units.clear();enemies.length=0;
  if(enemyLayer)enemyLayer.innerHTML='';if(unitLayer)unitLayer.innerHTML='';if($('fxLayer'))$('fxLayer').innerHTML='';
- if(rpgScreen){rpgScreen.className='';rpgScreen.setAttribute('aria-hidden','true')}
+ if(rpgScreen){rpgScreen.className='';rpgScreen.setAttribute('aria-hidden','true')} if($('topHUD'))$('topHUD').style.display=''
  $('battlefield').style.display='';
  document.querySelectorAll('.tdHud').forEach(e=>e.style.display='');
  document.querySelectorAll('.rpgOnlyControl').forEach(e=>e.style.display='none');
@@ -909,7 +913,7 @@ function startRpgBattle(tdHeroes){
  $('battlefield').style.display='none';$('battlefield').classList.remove('tdLocked');
  rpgScreen.classList.add('on','prep','transitionLock');rpgScreen.classList.remove('approach','battle');rpgScreen.setAttribute('aria-hidden','false');
  document.querySelectorAll('.tdHud').forEach(e=>e.style.display='none');
- document.querySelectorAll('.rpgOnlyControl').forEach(e=>e.style.display='inline-flex');
+ document.querySelectorAll('.rpgOnlyControl').forEach(e=>e.style.display='none'); if($('topHUD'))$('topHUD').style.display='none';
  $('rpgBossName').textContent=rpgState.boss.name;
  syncPauseButton();renderRpg();
  if(!heroes.length){finishRpgDefeat('출전 가능한 영웅이 없습니다');return}
@@ -943,6 +947,8 @@ function playRpgIntroSequence(){
  setTimeout(fadeRpgSceneOut,4650);
  setTimeout(()=>{
   rpgScreen.classList.remove('approach');rpgScreen.classList.add('battle');
+  if($('topHUD'))$('topHUD').style.display='';
+  document.querySelectorAll('.rpgOnlyControl').forEach(e=>e.style.display='inline-flex');
   setRpgTransitionMessage('영웅들이여, 그대들이 바로\nLAST WALL 이다.',true);
   fadeRpgSceneIn();
  },5000);
