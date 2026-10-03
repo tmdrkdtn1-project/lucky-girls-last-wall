@@ -4,7 +4,9 @@
 let COLS=18, ROWS=10, CELL_COUNT=COLS*ROWS;
 const WAVE_DURATION=40;
 const PRIORITY_C_CANDIDATE_B=Object.freeze({
- id:'CANDIDATE_B',status:'TEST_ONLY_NOT_CANON',enemyCountX:2.25,enemyHpX:1.35,goldPerKill:11,w5HpX:6.5,w10HpX:10.5,waveDurationSec:40
+ id:'CANDIDATE_B',status:'TEST_ONLY_NOT_CANON',
+ rawEnemyCountX:2.25,rawEnemyHpX:1.35,canonRelativeCountX:1.125,canonRelativeHpX:1.125,
+ goldPerKill:11,w5HpX:6.5,w10HpX:10.5,waveDurationSec:40
 });
 let priorityCTestProfile=null,priorityCTelemetry=null;
 function priorityCBalanceProfile(){return priorityCTestProfile==='CANDIDATE_B'?PRIORITY_C_CANDIDATE_B:null}
@@ -705,10 +707,12 @@ function renderUnits(){
  }
 }
 
-function baselineNormalCountForWave(w){return (10+w*2)*2}
-function baselineNormalHpForWave(w){return Math.round((48+w*12)*1.2)}
-function normalCountForWave(w){const p=priorityCBalanceProfile(),base=baselineNormalCountForWave(w);return p?Math.round(base*p.enemyCountX):base}
-function normalHpForWave(w){const p=priorityCBalanceProfile(),base=baselineNormalHpForWave(w);return p?Math.round(base*p.enemyHpX):base}
+function rawNormalCountForWave(w){return 10+w*2}
+function rawNormalHpForWave(w){return 48+w*12}
+function baselineNormalCountForWave(w){return rawNormalCountForWave(w)*2}
+function baselineNormalHpForWave(w){return Math.round(rawNormalHpForWave(w)*1.2)}
+function normalCountForWave(w){const p=priorityCBalanceProfile();return p?Math.round(rawNormalCountForWave(w)*p.rawEnemyCountX):baselineNormalCountForWave(w)}
+function normalHpForWave(w){const p=priorityCBalanceProfile();return p?Math.round(rawNormalHpForWave(w)*p.rawEnemyHpX):baselineNormalHpForWave(w)}
 function waveSpawnInterval(){
  const count=normalCountForWave(wave),floor=priorityCBalanceProfile()?.08:.34;return Math.max(floor,(WAVE_DURATION-3)/Math.max(1,count));
 }
@@ -1716,6 +1720,11 @@ window.__LG_STAGE1_TEST__={
  camera:{state:()=>({scale:cameraScale,panX:cameraPanX,panY:cameraPanY}),setScale:(s)=>setBattleCameraScale(s),pan:(x,y)=>{cameraPanX=x;cameraPanY=y;applyBattleCamera();return {scale:cameraScale,panX:cameraPanX,panY:cameraPanY}},reset:()=>resetBattleCamera()},
  priorityC:{
   candidateB:()=>({...PRIORITY_C_CANDIDATE_B}),
+  candidateBSanity:(w=1)=>({
+   wave:w,
+   rawCount:rawNormalCountForWave(w),canonCount:baselineNormalCountForWave(w),candidateCount:Math.round(rawNormalCountForWave(w)*PRIORITY_C_CANDIDATE_B.rawEnemyCountX),
+   rawHp:rawNormalHpForWave(w),canonHp:baselineNormalHpForWave(w),candidateHp:Math.round(rawNormalHpForWave(w)*PRIORITY_C_CANDIDATE_B.rawEnemyHpX)
+  }),
   setProfile:(id)=>priorityCSetProfile(id),
   telemetry:()=>priorityCExportTelemetry(),
   setSpeed:(v)=>{speed=Math.max(1,Math.min(3,Number(v)||1));if($('speed'))$('speed').textContent='×'+speed;return speed},

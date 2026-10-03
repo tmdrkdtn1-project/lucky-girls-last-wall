@@ -26,7 +26,8 @@ assert 'recipeNames:["기사단장","기사단장"]' in js
 assert '"type":"knight3_commander","count":2' in js
 assert "replaceUnit" not in js
 assert "wave===5" in js and "midboss" in js
-assert "function baselineNormalCountForWave(w){return (10+w*2)*2}" in js
+assert "function rawNormalCountForWave(w){return 10+w*2}" in js
+assert "function baselineNormalCountForWave(w){return rawNormalCountForWave(w)*2}" in js
 assert "*1.2" in js
 assert "beginTdBossRpgTransition" in js and "startRpgBattle" in js
 assert "bossWarning" in html
@@ -712,7 +713,7 @@ assert locals_by_id["LOCAL_SANDRAK"]["normal_name"]=="상드라크 제국"
 assert "normalName:'브레몽 왕국'" in js and "label:'브레몽 왕국 · 산악 초입'" in js
 assert "normalName:'해륜 황국'" in js and "normalName:'생아트르크 교황령'" in js
 assert "const PRIORITY_C_CANDIDATE_B=Object.freeze({" in js
-for token in ["enemyCountX:2.25","enemyHpX:1.35","goldPerKill:11","w5HpX:6.5","w10HpX:10.5","waveDurationSec:40"]:
+for token in ["rawEnemyCountX:2.25","rawEnemyHpX:1.35","canonRelativeCountX:1.125","canonRelativeHpX:1.125","goldPerKill:11","w5HpX:6.5","w10HpX:10.5","waveDurationSec:40"]:
     assert token in js
 for token in ["spawn_count_per_wave","wave_end_survivors","cumulative_gold","build_actions","upgrade_actions","gate_hp","w5_ttk","w10_td_boss_ttk","td_end_hero_count","rpg_transition"]:
     assert token in js
@@ -720,4 +721,9 @@ assert "profile_status:priorityCBalanceProfile()?PRIORITY_C_CANDIDATE_B.status:'
 assert "setProfile:(id)=>priorityCSetProfile(id)" in js
 assert "TEST_ONLY_NOT_CANON" in js
 assert "priorityCTestProfile=null;" in js
+assert "candidateBSanity:(w=1)=>({" in js
+assert "candidateCount:Math.round(rawNormalCountForWave(w)*PRIORITY_C_CANDIDATE_B.rawEnemyCountX)" in js
+assert "candidateHp:Math.round(rawNormalHpForWave(w)*PRIORITY_C_CANDIDATE_B.rawEnemyHpX)" in js
+assert "p?Math.round(rawNormalCountForWave(w)*p.rawEnemyCountX):baselineNormalCountForWave(w)" in js
+assert "p?Math.round(rawNormalHpForWave(w)*p.rawEnemyHpX):baselineNormalHpForWave(w)" in js
 print("PASS - Priority C keeps map ownership/navigation intact, corrects display names, and isolates Candidate B behind hidden TEST_ONLY telemetry")
