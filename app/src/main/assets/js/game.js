@@ -306,7 +306,29 @@ function returnToStageSelect(){
 if($('resultStageSelect'))$('resultStageSelect').onclick=returnToStageSelect;
 if($('resultRetry'))$('resultRetry').onclick=()=>{const p={...playerProfile,selectedMap:{...activeMapSelection}};resetBattleRuntimeForUi();startPrototypeBattle(p)};
 if($('resultNext'))$('resultNext').onclick=returnToStageSelect;
-if($('uiV1StartBattle'))$('uiV1StartBattle').onclick=()=>startPrototypeBattle({type:'UI_V1',ownedHeroes:[...ALL_HERO_IDS],heroLevel:30,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'},infiniteGold:false});
+let uiV1BattleStartInFlight=false;
+function uiV1BattleProfile(){return {type:'UI_V1',ownedHeroes:[...ALL_HERO_IDS],heroLevel:30,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'},infiniteGold:false}}
+async function activateUiV1BattleStart(){
+ if(uiV1BattleStartInFlight)return false;
+ const b=$('uiV1StartBattle');uiV1BattleStartInFlight=true;
+ if(b){b.setAttribute('aria-busy','true');b.textContent='전투 로딩...'}
+ try{await startPrototypeBattle(uiV1BattleProfile());return true}
+ catch(err){console.error('UI_V1_BATTLE_START_FAILED',err);if(b){b.textContent='전투 시작 실패 · 다시 누르세요'}return false}
+ finally{uiV1BattleStartInFlight=false;if(b){b.removeAttribute('aria-busy');if(!uiV1Flow.classList.contains('off'))setTimeout(()=>{if(!uiV1Flow.classList.contains('off'))b.textContent='전투 시작'},900)}}
+}
+function bindUiV1BattleStartInput(){
+ const b=$('uiV1StartBattle');if(!b)return;
+ let sx=0,sy=0,started=false,lastTouchActivation=0;
+ b.addEventListener('click',()=>{if(performance.now()-lastTouchActivation<700)return;activateUiV1BattleStart()});
+ b.addEventListener('touchstart',e=>{const t=e.touches&&e.touches[0];if(!t||e.touches.length!==1){started=false;return}sx=t.clientX;sy=t.clientY;started=true},{passive:true});
+ b.addEventListener('touchcancel',()=>{started=false},{passive:true});
+ b.addEventListener('touchend',e=>{
+  if(!started)return;started=false;const t=e.changedTouches&&e.changedTouches[0];if(!t)return;
+  const moved=Math.hypot(t.clientX-sx,t.clientY-sy);if(moved>14)return;
+  e.preventDefault();lastTouchActivation=performance.now();activateUiV1BattleStart();
+ },{passive:false});
+}
+bindUiV1BattleStartInput();
 function tileKey(x,y){return x+','+y}
 function cellIndex(x,y){return (y-1)*COLS+(x-1)}
 function codeFor(x,y){return TILE_ROWS[y-1][x-1]}

@@ -635,6 +635,13 @@ assert "해륜왕국" not in html and "생트아르크 교황령" not in html
 assert "출전 영웅" not in html and "편성 변경" not in html
 assert "#legend{display:none!important}" in css and ".coord,.tileLabel{display:none!important}" in css
 assert "function showFlowScreen(name)" in js
+assert 'id="uiV1StartBattle" class="flowPrimary" type="button"' in html
+assert "function bindUiV1BattleStartInput()" in js
+assert "b.addEventListener('touchend'" in js
+assert "if(moved>14)return" in js
+assert "e.preventDefault();lastTouchActivation=performance.now();activateUiV1BattleStart()" in js
+assert "touch-action:manipulation" in css
+assert "#uiV1StartBattle{position:relative;z-index:4;min-height:52px" in css
 assert "const flowScrollPositions=new Map();" in js
 assert "overflow-y:auto" in css and "touch-action:pan-y" in css
 assert "html,body{margin:0;width:100%;height:100%;overflow:hidden" not in css

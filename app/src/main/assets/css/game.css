@@ -259,7 +259,7 @@ linear-gradient(140deg,#466945,#284c35 55%,#1b392b)}
 .eyebrow{font-size:12px;font-weight:1000;letter-spacing:.22em;color:#e5c47f}
 .flowLead{color:#c7c5ce}
 .flowPrimary,.flowCard,.worldRegion,.stageSelectCard,.resultActions button{border:1px solid #d9b86f88;border-radius:12px;background:#2b2334;color:#fff}
-.flowPrimary{padding:12px 22px;font-weight:1000;font-size:16px;margin-top:18px}
+.flowPrimary{padding:12px 22px;font-weight:1000;font-size:16px;margin-top:18px}#uiV1StartBattle{position:relative;z-index:4;min-height:52px;min-width:132px;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:#ffffff24}#uiV1StartBattle:active{transform:scale(.985)}#uiV1StartBattle[aria-busy="true"]{opacity:.78}
 .flowBack{position:absolute;margin:-8px 0 0 -8px;border:0;background:#0008;color:#fff;border-radius:10px;padding:8px 12px}
 .flowCards,.worldRegions,.stageSelectGrid,.prepGrid{display:grid;gap:12px;margin-top:20px}
 .flowCards{grid-template-columns:repeat(2,minmax(0,1fr))}
