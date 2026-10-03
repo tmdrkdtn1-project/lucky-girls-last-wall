@@ -17,6 +17,9 @@ class MainActivity : Activity() {
             settings.domStorageEnabled = true
             settings.useWideViewPort = true
             settings.loadWithOverviewMode = true
+            settings.allowFileAccess = true
+            settings.allowFileAccessFromFileURLs = true
+            settings.allowUniversalAccessFromFileURLs = false
             loadUrl("file:///android_asset/index.html")
         }
         setContentView(webView)

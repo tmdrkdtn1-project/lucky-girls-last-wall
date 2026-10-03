@@ -655,3 +655,10 @@ assert "별 조건</strong><span>DATA_PENDING" in js
 assert "보상</strong><span>DATA_PENDING" in js
 assert "빈 배치칸 '+x+','+y+" not in js
 print("PASS - UI V1 screen flow, TD HUD, hero browser/slots, RPG telegraph/status HUD, result UI and DATA_PENDING guards are locked")
+# Android WebView asset loading contract: Battle Prep -> TD must be able to fetch bundled stage JSON.
+main_activity = Path("app/src/main/java/com/luckygirls/lastwall/MainActivity.kt").read_text(encoding="utf-8")
+assert "settings.allowFileAccess = true" in main_activity
+assert "settings.allowFileAccessFromFileURLs = true" in main_activity
+assert "settings.allowUniversalAccessFromFileURLs = false" in main_activity
+assert 'loadUrl("file:///android_asset/index.html")' in main_activity
+print("PASS - Android WebView allows bundled file-to-file stage data loading without universal file access")
