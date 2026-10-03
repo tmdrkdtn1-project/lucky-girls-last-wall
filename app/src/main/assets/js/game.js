@@ -3,6 +3,77 @@
 
 let COLS=18, ROWS=10, CELL_COUNT=COLS*ROWS;
 const WAVE_DURATION=40;
+const PRIORITY_C_CANDIDATE_B=Object.freeze({
+ id:'CANDIDATE_B',status:'TEST_ONLY_NOT_CANON',enemyCountX:2.25,enemyHpX:1.35,goldPerKill:11,w5HpX:6.5,w10HpX:10.5,waveDurationSec:40
+});
+let priorityCTestProfile=null,priorityCTelemetry=null;
+function priorityCBalanceProfile(){return priorityCTestProfile==='CANDIDATE_B'?PRIORITY_C_CANDIDATE_B:null}
+function priorityCResetTelemetry(){
+ priorityCTelemetry={
+  schema:'LG_STAGE1_PRIORITY_C_TELEMETRY_V1',
+  profile:priorityCTestProfile||'CANON_CURRENT',
+  profile_status:priorityCBalanceProfile()?PRIORITY_C_CANDIDATE_B.status:'CANON',
+  spawn_count_per_wave:{},spawn_count_by_kind:{},
+  wave_end_survivors:{},gate_hp_per_wave:{},final_wall_hp_per_wave:{},
+  cumulative_gold:typeof gold==='number'?gold:500,gold_earned:0,gold_spent:0,
+  build_actions:0,upgrade_actions:0,gate_hp:typeof oHp==='number'?oHp:120,
+  w5_ttk:null,w10_td_boss_ttk:null,td_end_hero_count:null,rpg_transition:false,
+  rpg_transition_sim_time:null,special_spawn_times:{w5:null,w10:null},
+  started_sim_time:typeof simTime==='number'?simTime:0,finished_reason:null
+ };
+ return priorityCTelemetry;
+}
+function priorityCEnsureTelemetry(){return priorityCTelemetry||priorityCResetTelemetry()}
+function priorityCSetProfile(id){
+ if(id==null||id==='CANON_CURRENT')priorityCTestProfile=null;
+ else if(id==='CANDIDATE_B')priorityCTestProfile='CANDIDATE_B';
+ else throw new Error('UNKNOWN_PRIORITY_C_PROFILE '+id);
+ return priorityCResetTelemetry();
+}
+function priorityCRecordGold(amount,source){
+ if(!(amount>0))return;
+ const t=priorityCEnsureTelemetry();t.cumulative_gold+=amount;t.gold_earned+=amount;
+ t.last_gold_source=source||'UNSPECIFIED';
+}
+function priorityCRecordSpend(amount,kind){
+ if(!(amount>0))return;
+ const t=priorityCEnsureTelemetry();t.gold_spent+=amount;
+ if(kind==='BUILD')t.build_actions++;else if(kind==='UPGRADE')t.upgrade_actions++;
+}
+function priorityCRecordSpawn(e){
+ const t=priorityCEnsureTelemetry(),k=String(wave);
+ t.spawn_count_per_wave[k]=(t.spawn_count_per_wave[k]||0)+1;
+ if(!t.spawn_count_by_kind[k])t.spawn_count_by_kind[k]={normal:0,midboss:0,boss:0};
+ t.spawn_count_by_kind[k][e.kind]=(t.spawn_count_by_kind[k][e.kind]||0)+1;
+ if(e.kind==='midboss'&&t.special_spawn_times.w5==null)t.special_spawn_times.w5=simTime;
+ if(e.kind==='boss'&&t.special_spawn_times.w10==null)t.special_spawn_times.w10=simTime;
+}
+function priorityCRecordEnemyDeath(e){
+ const t=priorityCEnsureTelemetry();
+ if(e.kind==='midboss'&&t.w5_ttk==null&&t.special_spawn_times.w5!=null)t.w5_ttk=Math.max(0,simTime-t.special_spawn_times.w5);
+ if(e.kind==='boss'&&t.w10_td_boss_ttk==null&&t.special_spawn_times.w10!=null)t.w10_td_boss_ttk=Math.max(0,simTime-t.special_spawn_times.w10);
+}
+function priorityCRecordWaveEnd(w){
+ const t=priorityCEnsureTelemetry(),k=String(w);
+ if(t.wave_end_survivors[k]===undefined)t.wave_end_survivors[k]=aliveEnemyCount();
+ if(t.gate_hp_per_wave[k]===undefined)t.gate_hp_per_wave[k]=oHp;
+ if(t.final_wall_hp_per_wave[k]===undefined)t.final_wall_hp_per_wave[k]=gHp;
+ t.gate_hp=oHp;
+}
+function priorityCRecordTdEnd(tdHeroes,boss){
+ const t=priorityCEnsureTelemetry();
+ t.wave_end_survivors['10']=enemies.filter(e=>e!==boss&&e.hp>0).length;
+ t.gate_hp_per_wave['10']=oHp;t.final_wall_hp_per_wave['10']=gHp;t.gate_hp=oHp;t.gate_hp_at_td_end=oHp;
+ t.td_end_hero_count=tdHeroes.length;
+}
+function priorityCRecordRpgTransition(){
+ const t=priorityCEnsureTelemetry();t.rpg_transition=true;t.rpg_transition_sim_time=simTime;t.rpg_transition_gate_hp_after_cinematic=oHp;
+}
+function priorityCExportTelemetry(){
+ const t=priorityCEnsureTelemetry();
+ t.current_gold=gold;t.gate_hp=oHp;t.final_wall_hp=gHp;t.current_wave=wave;t.game_mode=gameMode;
+ return JSON.parse(JSON.stringify(t));
+}
 let activeStageRoutes=[];
 let route=[[1,5],[2,5],[3,5],[4,5],[5,5],[6,5],[6,4],[6,3],[7,3],[8,3],[9,3],[10,3],[10,4],[10,5],[11,5],[12,5],[13,5],[14,5],[15,5],[16,5],[17,5],[18,5]];
 let TILE_ROWS=[
@@ -34,11 +105,11 @@ const UNIT_DEFS={
  lancer3_magic:{id:'lancer3_magic',family:'LANCER',tier:3,name:'마창병',short:'마창',cost:195,atk:34,range:4.0,rate:1.05,damageType:'관통/지속',targetCount:2,dotDuration:4,dotTick:1,dotRatio:.25,air:true,next:[]}
 };
 const MAP_RUNTIME_REGISTRY={WORLD_01:{id:'WORLD_01',localMaps:{
-  LOCAL_WEST:{id:'LOCAL_WEST',normalName:'서부 왕국',hardName:'타락한 서부 왕국',modes:{NORMAL:{stages:[{id:'NORMAL_01',globalStage:1,status:'IMPLEMENTED',dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],label:'서부 왕국 · 산악 초입'},{id:'NORMAL_02',globalStage:2,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_03',globalStage:3,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_04',globalStage:4,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_05',globalStage:5,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_31',globalStage:31,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_32',globalStage:32,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_33',globalStage:33,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
+  LOCAL_WEST:{id:'LOCAL_WEST',normalName:'브레몽 왕국',hardName:'타락한 서부 왕국',modes:{NORMAL:{stages:[{id:'NORMAL_01',globalStage:1,status:'IMPLEMENTED',dataPath:'data/stage01.json',baseUnitIds:['watchtower','knight1','archer1','lancer1'],label:'브레몽 왕국 · 산악 초입'},{id:'NORMAL_02',globalStage:2,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_03',globalStage:3,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_04',globalStage:4,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_05',globalStage:5,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_31',globalStage:31,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_32',globalStage:32,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_33',globalStage:33,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
   LOCAL_BELOZAR:{id:'LOCAL_BELOZAR',normalName:'벨로자르 제국',hardName:'타락한 벨로자르 제국',modes:{NORMAL:{stages:[{id:'NORMAL_16',globalStage:16,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_17',globalStage:17,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_18',globalStage:18,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_19',globalStage:19,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_20',globalStage:20,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_34',globalStage:34,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_35',globalStage:35,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_36',globalStage:36,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
   LOCAL_AZAR:{id:'LOCAL_AZAR',normalName:'아자르 삼국연합',hardName:'타락한 아자르 삼국연합',modes:{NORMAL:{stages:[{id:'NORMAL_06',globalStage:6,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_07',globalStage:7,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_08',globalStage:8,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_09',globalStage:9,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_10',globalStage:10,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_37',globalStage:37,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_38',globalStage:38,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_39',globalStage:39,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
-  LOCAL_HAERYUN:{id:'LOCAL_HAERYUN',normalName:'해륜왕국',hardName:'타락한 해륜왕국',modes:{NORMAL:{stages:[{id:'NORMAL_11',globalStage:11,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_12',globalStage:12,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_13',globalStage:13,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_14',globalStage:14,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_15',globalStage:15,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_40',globalStage:40,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_41',globalStage:41,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_42',globalStage:42,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
-  LOCAL_SAINTARC:{id:'LOCAL_SAINTARC',normalName:'생트아르크 교황령',hardName:'암운이 드리운 생트아르크 교황령',modes:{NORMAL:{stages:[{id:'NORMAL_21',globalStage:21,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_22',globalStage:22,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_23',globalStage:23,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_24',globalStage:24,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_25',globalStage:25,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_43',globalStage:43,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_44',globalStage:44,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_45',globalStage:45,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
+  LOCAL_HAERYUN:{id:'LOCAL_HAERYUN',normalName:'해륜 황국',hardName:'타락한 해륜왕국',modes:{NORMAL:{stages:[{id:'NORMAL_11',globalStage:11,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_12',globalStage:12,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_13',globalStage:13,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_14',globalStage:14,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_15',globalStage:15,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_40',globalStage:40,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_41',globalStage:41,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_42',globalStage:42,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
+  LOCAL_SAINTARC:{id:'LOCAL_SAINTARC',normalName:'생아트르크 교황령',hardName:'암운이 드리운 생트아르크 교황령',modes:{NORMAL:{stages:[{id:'NORMAL_21',globalStage:21,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_22',globalStage:22,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_23',globalStage:23,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_24',globalStage:24,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_25',globalStage:25,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_43',globalStage:43,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_44',globalStage:44,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_45',globalStage:45,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}},
   LOCAL_SANDRAK:{id:'LOCAL_SANDRAK',normalName:'상드라크 제국',hardName:'심연에 침식당한 상드라크 제국',modes:{NORMAL:{stages:[{id:'NORMAL_26',globalStage:26,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_27',globalStage:27,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_28',globalStage:28,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_29',globalStage:29,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'NORMAL_30',globalStage:30,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]},HARD:{stages:[{id:'HARD_46',globalStage:46,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_47',globalStage:47,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_48',globalStage:48,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_49',globalStage:49,status:'DATA_CONFIRMED_RUNTIME_PENDING'},{id:'HARD_50',globalStage:50,status:'DATA_CONFIRMED_RUNTIME_PENDING'}]}}}
 }}};
 let activeMapSelection={worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'};
@@ -116,6 +187,7 @@ const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY',YUNA:'LEGENDARY',RIEL:'LEGENDARY',R
 let playerProfile={type:'UNSELECTED',ownedHeroes:[],heroLevel:10,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'},infiniteGold:false};
 function heroSkillUnlocked(slot){return slot===1||slot===2&&playerProfile.heroLevel>=20||slot===3&&playerProfile.heroLevel>=30}
 function spendGold(amount){if(playerProfile.infiniteGold)return true;if(gold<amount)return false;gold-=amount;return true}
+function addGold(amount,source){gold+=amount;priorityCRecordGold(amount,source);return gold}
 let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
 let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false,waveEnding=false;
 let moveModeUnitId=null,comboPlacement=null,manualPaused=false;
@@ -223,7 +295,7 @@ function showMidbossRewardModal(){
  });
 }
 function applyLuckySimpleReward(id){
- if(id==='GOLD_2000')gold+=2000;else if(id==='GOLD_1000'||id==='MID_GOLD_1000')gold+=1000;else if(id==='GOLD_500')gold+=500;
+ if(id==='GOLD_2000')addGold(2000,'LUCKY_GOLD_2000');else if(id==='GOLD_1000'||id==='MID_GOLD_1000')addGold(1000,id);else if(id==='GOLD_500')addGold(500,'LUCKY_GOLD_500');
  else if(id==='STAGE_BUFF_30')addLuckyStageBuff(30);else if(id==='STAGE_BUFF_20')addLuckyStageBuff(20);else if(id==='STAGE_BUFF_10')addLuckyStageBuff(10);
  else if(id==='MID_JACKPOT_20')addLuckyMidbossBonus();
  syncHUD();
@@ -312,8 +384,10 @@ function showResultScreen(kind,reason){
 }
 function hideResultScreen(){if(resultScreen){resultScreen.classList.remove('on');resultScreen.setAttribute('aria-hidden','true')}}
 function resetBattleRuntimeForUi(){
+ priorityCTestProfile=null;
  running=false;manualPaused=false;speed=1;gameMode='TD';rpgPending=false;rpgTransitioning=false;rpgAutoBattle=false;rpgState=null;rpgSimTime=0;resetBattleCamera();
  gold=500;wave=1;gHp=100;oHp=120;simTime=0;spawnClock=0;waveClock=0;nextEnemyId=1;selected=null;heroCount=0;waveSpawned=0;specialSpawned=false;waveEnding=false;
+ priorityCResetTelemetry();
  moveModeUnitId=null;comboPlacement=null;luckyNaturalPct=0;luckyBonusPct=0;luckyStageBuffPct=0;luckyOverlayOpen=false;midbossRewardPending=false;luckySpinPhase='IDLE';
  units.clear();enemies.length=0;
  if(enemyLayer)enemyLayer.innerHTML='';if(unitLayer)unitLayer.innerHTML='';if($('fxLayer'))$('fxLayer').innerHTML='';
@@ -504,6 +578,7 @@ function placeUnit(x,y,t){
  if(gameMode!=='TD'||rpgPending)return;
  if(units.has(tileKey(x,y))||!spendGold(t.cost))return;
  units.set(tileKey(x,y),{id:'u'+Date.now()+Math.random(),x,y,type:t.id,lastShot:0,spent:t.cost,moveCooldownUntil:0});
+ priorityCRecordSpend(t.cost,'BUILD');
  cells[cellIndex(x,y)].el.classList.add('occupied');postUnitChange();toast(t.name+' 배치');
 }
 function upgradeUnit(u,next){
@@ -511,6 +586,7 @@ function upgradeUnit(u,next){
  const cur=UNIT_DEFS[u.type];
  if(!cur||!cur.next.includes(next.id)){toast('같은 계열 업그레이드만 가능합니다');return}
  if(!spendGold(next.cost))return;
+ priorityCRecordSpend(next.cost,'UPGRADE');
  u.type=next.id;u.spent=(u.spent||0)+next.cost;postUnitChange();toast(next.name+' 업그레이드');
 }
 function sellHeroUnit(u){
@@ -523,7 +599,7 @@ function sellHeroUnit(u){
 function sellUnit(u){
  if(gameMode!=='TD'||rpgPending)return;
  if(u.heroId){sellHeroUnit(u);return}
- gold+=Math.max(1,Math.round((u.spent||UNIT_DEFS[u.type].cost)*.35));
+ addGold(Math.max(1,Math.round((u.spent||UNIT_DEFS[u.type].cost)*.35)),'UNIT_SELL');
  units.delete(tileKey(u.x,u.y));cells[cellIndex(u.x,u.y)].el.classList.remove('occupied');postUnitChange();toast('판매 완료');
 }
 function postUnitChange(){renderUnits();syncHUD();updateComboHighlights();syncUiV1();clearSelection(true)}
@@ -629,17 +705,20 @@ function renderUnits(){
  }
 }
 
-function normalCountForWave(w){return (10+w*2)*2}
-function normalHpForWave(w){return Math.round((48+w*12)*1.2)}
+function baselineNormalCountForWave(w){return (10+w*2)*2}
+function baselineNormalHpForWave(w){return Math.round((48+w*12)*1.2)}
+function normalCountForWave(w){const p=priorityCBalanceProfile(),base=baselineNormalCountForWave(w);return p?Math.round(base*p.enemyCountX):base}
+function normalHpForWave(w){const p=priorityCBalanceProfile(),base=baselineNormalHpForWave(w);return p?Math.round(base*p.enemyHpX):base}
 function waveSpawnInterval(){
- const count=normalCountForWave(wave);return Math.max(.34,(WAVE_DURATION-3)/Math.max(1,count));
+ const count=normalCountForWave(wave),floor=priorityCBalanceProfile()?.08:.34;return Math.max(floor,(WAVE_DURATION-3)/Math.max(1,count));
 }
 function spawnEnemy(kind='normal'){
- let hp,speedMult=1,label='E';
- if(kind==='midboss'){hp=Math.round(normalHpForWave(wave)*5.5);speedMult=.72;label='M'}
- else if(kind==='boss'){hp=Math.round(normalHpForWave(wave)*9);speedMult=.62;label='B'}
+ const p=priorityCBalanceProfile();let hp,speedMult=1,label='E';
+ if(kind==='midboss'){hp=Math.round(normalHpForWave(wave)*(p?p.w5HpX:5.5));speedMult=.72;label='M'}
+ else if(kind==='boss'){hp=Math.round(normalHpForWave(wave)*(p?p.w10HpX:9));speedMult=.62;label='B'}
  else hp=normalHpForWave(wave);
- enemies.push({id:nextEnemyId++,kind,label,pathPos:0,hp,maxHp:hp,speed:(.62+wave*.015)*speedMult,lastStructureHit:0,effects:[],rewarded:false,hitFxType:null,hitFxUntil:0,footprintCells:kind==='boss'?1.6:kind==='midboss'?1.3:1.0});
+ const e={id:nextEnemyId++,kind,label,pathPos:0,hp,maxHp:hp,speed:(.62+wave*.015)*speedMult,lastStructureHit:0,effects:[],rewarded:false,hitFxType:null,hitFxUntil:0,footprintCells:kind==='boss'?1.6:kind==='midboss'?1.3:1.0};
+ enemies.push(e);priorityCRecordSpawn(e);
 }
 function showWarning(text,sub='',hold=1400){
  const box=$('bossWarning');$('bossWarningTitle').textContent=text;$('bossWarningSub').textContent=sub;box.classList.add('on');
@@ -704,10 +783,11 @@ function occupiedRouteCells(e){
 function enemyOccupiesRouteCell(e,cellIndex){return occupiedRouteCells(e).includes(cellIndex)}
 function handleEnemyDeath(e){
  if(e.rewarded)return false;
- e.rewarded=true;
- const reward=e.kind==='boss'?180:e.kind==='midboss'?0:12;gold+=reward;
+ e.rewarded=true;priorityCRecordEnemyDeath(e);
+ const p=priorityCBalanceProfile(),normalReward=p?p.goldPerKill:12,reward=e.kind==='boss'?180:e.kind==='midboss'?0:normalReward;
+ addGold(reward,e.kind==='boss'?'TD_BOSS_KILL':e.kind==='midboss'?'MIDBOSS_KILL':'NORMAL_KILL');
  if(e.kind==='boss'){enterRpgPlaceholder(e);return true}
- if(e.kind==='midboss'){openMidbossReward();toast('중간보스 격파 · 보상 1개 선택');}else toast('+12G');
+ if(e.kind==='midboss'){openMidbossReward();toast('중간보스 격파 · 보상 1개 선택');}else toast('+'+normalReward+'G');
  return false;
 }
 const ENEMY_SPECIAL_RUNTIME_SEMANTICS={
@@ -835,7 +915,7 @@ function updateEnemies(dt,now){
    const shieldMult=now<wallShieldUntil?1-wallShieldReduction:1;
    const dmg=Math.max(1,Math.round(rawDmg*defMult*shieldMult));
    if(gHp>0)gHp=Math.max(0,gHp-dmg);else oHp=Math.max(0,oHp-dmg);
-   if(oHp<=0){running=false;showWarning('DEFEAT','GATE CORE DESTROYED',1200);setTimeout(()=>showResultScreen('DEFEAT','GATE CORE DESTROYED'),900);return}
+   if(oHp<=0){priorityCEnsureTelemetry().finished_reason='TD_DEFEAT_GATE';priorityCEnsureTelemetry().gate_hp=0;running=false;showWarning('DEFEAT','GATE CORE DESTROYED',1200);setTimeout(()=>showResultScreen('DEFEAT','GATE CORE DESTROYED'),900);return}
   }
  }
 }
@@ -973,6 +1053,7 @@ function beginTdBossRpgTransition(boss){
  rpgPending=true;running=false;gameMode='TD_TRANSITION';
  cancelAllTdCommands();
  const tdHeroes=[...units.values()].filter(u=>u.heroId).slice(0,5);
+ priorityCRecordTdEnd(tdHeroes,boss);
  clearTimeout(showWarning.t);$('bossWarning').classList.remove('on');
  boss.hp=1;boss.cinematic=true;boss.cinematicState='fallen';
  renderEnemies();
@@ -1008,7 +1089,7 @@ function enterRpgBattle(){
  beginTdBossRpgTransition(boss||{id:-1,hp:1,pathPos:route.length-2,kind:'boss',label:'B',maxHp:1});
 }
 function startRpgBattle(tdHeroes){
- gameMode='RPG';rpgPending=false;manualPaused=false;rpgSimTime=0;rpgTransitioning=true;
+ gameMode='RPG';rpgPending=false;manualPaused=false;rpgSimTime=0;rpgTransitioning=true;priorityCRecordRpgTransition();
  const heroes=tdHeroes.map((u,i)=>{
   const heroId=u.heroId||'ARIA',d=RPG_HERO_DEFS[heroId]||RPG_HERO_DEFS.ARIA;
   return {id:'rpg_'+u.id,heroId,name:d.name,maxHp:d.hp,hp:d.hp,atk:d.atk,def:d.def,
@@ -1560,13 +1641,14 @@ function tryEarlyWaveClear(){
  if(waveEnding||wave>=10||waveClock>=WAVE_DURATION||!waveSpawnComplete()||aliveEnemyCount()>0)return false;
  waveEnding=true;
  const bonus=earlyClearBonus();
- gold+=bonus;
+ addGold(bonus,'EARLY_CLEAR_BONUS');priorityCRecordWaveEnd(wave);
  showWarning('적 전멸 보너스','+'+bonus+'G · '+Math.max(0,Math.ceil(WAVE_DURATION-waveClock))+'초 조기 종료',1200);
  setTimeout(()=>{waveEnding=false;advanceWave()},450);
  return true;
 }
 function advanceWave(){
  if(wave>=10)return;
+ priorityCRecordWaveEnd(wave);
  addLuckyWaveClear(wave);
  wave++;waveClock=0;spawnClock=0;waveSpawned=0;specialSpawned=false;wave10WarningShown=false;wave10EnrageTriggered=false;
  startWaveNotice();
@@ -1632,8 +1714,17 @@ buildGrid();renderUnits();syncHUD();updateComboHighlights();running=false;reques
 window.__LG_STAGE1_TEST__={
  luckyRoulette:{eligible:(rarity)=>eligibleOwnedHeroes(rarity),freeSummon:(rarity,count)=>luckyFreeSummon(rarity,count),roll:(v)=>{const q=Array.isArray(v)?[...v]:null;return luckyOutcomeRoll(q?()=>q.shift():v)},spin:(v)=>{const q=Array.isArray(v)?[...v]:null;return luckySpin(q?()=>q.shift():v)},waveClear:(w)=>addLuckyWaveClear(w),midbossBonus:()=>addLuckyMidbossBonus(),buff:(p)=>addLuckyStageBuff(p),state:()=>({jackpotPct:luckyDisplayedJackpotPct(),naturalPct:luckyNaturalPct,bonusPct:luckyBonusPct,stageBuffPct:luckyStageBuffPct,spinPhase:luckySpinPhase}),midbossOptions:()=>openMidbossReward(),chooseMidboss:(id)=>chooseMidbossReward(id)},
  camera:{state:()=>({scale:cameraScale,panX:cameraPanX,panY:cameraPanY}),setScale:(s)=>setBattleCameraScale(s),pan:(x,y)=>{cameraPanX=x;cameraPanY=y;applyBattleCamera();return {scale:cameraScale,panX:cameraPanX,panY:cameraPanY}},reset:()=>resetBattleCamera()},
+ priorityC:{
+  candidateB:()=>({...PRIORITY_C_CANDIDATE_B}),
+  setProfile:(id)=>priorityCSetProfile(id),
+  telemetry:()=>priorityCExportTelemetry(),
+  setSpeed:(v)=>{speed=Math.max(1,Math.min(3,Number(v)||1));if($('speed'))$('speed').textContent='×'+speed;return speed},
+  stepTd:(dt=.05)=>{if(gameMode!=='TD'||rpgPending||!running)return false;const step=Math.max(.001,Math.min(.05,Number(dt)||.05));simTime+=step;waveClock+=step;updateEnemies(step,simTime);updateUnits(simTime);if(!tryEarlyWaveClear()&&wave<10&&waveClock>=WAVE_DURATION)advanceWave();return true},
+  forceAdvanceAfterEarlyClear:()=>{if(waveEnding){waveEnding=false;advanceWave();return true}return false},
+  upgrade:(x,y,nextId)=>{const u=units.get(tileKey(x,y));if(!u||u.heroId)return false;const cur=UNIT_DEFS[u.type],id=nextId||(cur&&cur.next&&cur.next[0]),next=UNIT_DEFS[id];if(!cur||!next||!cur.next.includes(id))return false;const before=u.type;upgradeUnit(u,next);return u.type!==before}
+ },
  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
- state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossHp:rpgState.boss.hp,bossPhase:rpgState.boss.phase,heroes:rpgState.heroes.map(h=>({name:h.name,hp:h.hp,ult:h.ult,ko:h.ko})),result:rpgState.result,transitioning:rpgTransitioning,autoBattle:rpgAutoBattle}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
+ state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,running,midbossRewardPending,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossHp:rpgState.boss.hp,bossPhase:rpgState.boss.phase,heroes:rpgState.heroes.map(h=>({name:h.name,hp:h.hp,ult:h.ult,ko:h.ko})),result:rpgState.result,transitioning:rpgTransitioning,autoBattle:rpgAutoBattle}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
  select:(x,y)=>onCellTap(x,y),
  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
  route:()=>route.slice(),routes:()=>activeStageRoutes.map(r=>r.slice()),

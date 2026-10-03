@@ -41,7 +41,7 @@
       "local_maps": [
         {
           "id": "LOCAL_WEST",
-          "normal_name": "서부 왕국",
+          "normal_name": "브레몽 왕국",
           "hard_name": "타락한 서부 왕국",
           "normal": {
             "stage_count": 5,
@@ -365,7 +365,7 @@
         },
         {
           "id": "LOCAL_HAERYUN",
-          "normal_name": "해륜왕국",
+          "normal_name": "해륜 황국",
           "hard_name": "타락한 해륜왕국",
           "normal": {
             "stage_count": 5,
@@ -473,7 +473,7 @@
         },
         {
           "id": "LOCAL_SAINTARC",
-          "normal_name": "생트아르크 교황령",
+          "normal_name": "생아트르크 교황령",
           "hard_name": "암운이 드리운 생트아르크 교황령",
           "normal": {
             "stage_count": 5,

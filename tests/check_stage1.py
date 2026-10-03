@@ -26,7 +26,7 @@ assert 'recipeNames:["기사단장","기사단장"]' in js
 assert '"type":"knight3_commander","count":2' in js
 assert "replaceUnit" not in js
 assert "wave===5" in js and "midboss" in js
-assert "normalCountForWave(w){return (10+w*2)*2}" in js
+assert "function baselineNormalCountForWave(w){return (10+w*2)*2}" in js
 assert "*1.2" in js
 assert "beginTdBossRpgTransition" in js and "startRpgBattle" in js
 assert "bossWarning" in html
@@ -483,7 +483,7 @@ for token in [
  "function addLuckyMidbossBonus(){luckyBonusPct=Math.min(100,luckyBonusPct+20)}",
  "function resetLuckyAfterSpin(){luckyNaturalPct=0;luckyBonusPct=0}",
  "function addLuckyStageBuff(pct){luckyStageBuffPct=Math.min(40,luckyStageBuffPct+pct)",
- "const reward=e.kind==='boss'?180:e.kind==='midboss'?0:12",
+ "normalReward=p?p.goldPerKill:12",
  "openMidbossReward();toast('중간보스 격파 · 보상 1개 선택')",
  "const lucky=luckyUnitStatMultiplier()",
  "addLuckyWaveClear(wave);",
@@ -632,8 +632,8 @@ for token in [
     'id="resultScreen"'
 ]:
     assert token in html, "missing UI V1 surface: "+token
-assert "해륜 황국" in html and "생아트르크 교황령" in html
-assert "해륜왕국" not in html and "생트아르크 교황령" not in html
+assert "브레몽 왕국" in html and "생아트르크 교황령" in html
+assert "해륜 황국" not in html and "해륜왕국" not in html and "생트아르크 교황령" not in html
 assert "출전 영웅" not in html and "편성 변경" not in html
 assert "#legend{display:none!important}" in css and ".coord,.tileLabel{display:none!important}" in css
 assert "function showFlowScreen(name)" in js
@@ -698,3 +698,26 @@ assert "settings.allowFileAccessFromFileURLs = true" in main_activity
 assert "settings.allowUniversalAccessFromFileURLs = false" in main_activity
 assert 'loadUrl("file:///android_asset/index.html")' in main_activity
 print("PASS - Android WebView allows bundled file-to-file stage data loading without universal file access")
+
+
+# Priority C Stage1 Gate V2 guards
+map_hierarchy=json.loads((root/"data/map_hierarchy_v1.json").read_text(encoding="utf-8"))
+locals_by_id={x["id"]:x for w in map_hierarchy["worlds"] for x in w["local_maps"]}
+assert locals_by_id["LOCAL_WEST"]["normal_name"]=="브레몽 왕국"
+assert locals_by_id["LOCAL_AZAR"]["normal_name"]=="아자르 삼국연합"
+assert locals_by_id["LOCAL_HAERYUN"]["normal_name"]=="해륜 황국"
+assert locals_by_id["LOCAL_BELOZAR"]["normal_name"]=="벨로자르 제국"
+assert locals_by_id["LOCAL_SAINTARC"]["normal_name"]=="생아트르크 교황령"
+assert locals_by_id["LOCAL_SANDRAK"]["normal_name"]=="상드라크 제국"
+assert "normalName:'브레몽 왕국'" in js and "label:'브레몽 왕국 · 산악 초입'" in js
+assert "normalName:'해륜 황국'" in js and "normalName:'생아트르크 교황령'" in js
+assert "const PRIORITY_C_CANDIDATE_B=Object.freeze({" in js
+for token in ["enemyCountX:2.25","enemyHpX:1.35","goldPerKill:11","w5HpX:6.5","w10HpX:10.5","waveDurationSec:40"]:
+    assert token in js
+for token in ["spawn_count_per_wave","wave_end_survivors","cumulative_gold","build_actions","upgrade_actions","gate_hp","w5_ttk","w10_td_boss_ttk","td_end_hero_count","rpg_transition"]:
+    assert token in js
+assert "profile_status:priorityCBalanceProfile()?PRIORITY_C_CANDIDATE_B.status:'CANON'" in js
+assert "setProfile:(id)=>priorityCSetProfile(id)" in js
+assert "TEST_ONLY_NOT_CANON" in js
+assert "priorityCTestProfile=null;" in js
+print("PASS - Priority C keeps map ownership/navigation intact, corrects display names, and isolates Candidate B behind hidden TEST_ONLY telemetry")
