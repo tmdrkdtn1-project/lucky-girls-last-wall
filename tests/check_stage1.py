@@ -648,6 +648,7 @@ assert "heroCount=Math.max(0,heroCount-1)" in js
 assert "function setRpgCast(name,duration,tier,target)" in js
 assert "function rpgStatusBadges(h)" in js
 assert "function showResultScreen(kind,reason)" in js
+assert "showResultScreen('DEFEAT','GATE CORE DESTROYED')" in js
 assert "DATA_PENDING · 보스 전용 대사 원본 대기" in js
 assert "영웅들이여, 그대들이 바로\\nLAST WALL 이다." in js
 assert "별 조건</strong><span>DATA_PENDING" in js

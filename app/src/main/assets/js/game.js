@@ -723,7 +723,7 @@ function updateEnemies(dt,now){
    const shieldMult=now<wallShieldUntil?1-wallShieldReduction:1;
    const dmg=Math.max(1,Math.round(rawDmg*defMult*shieldMult));
    if(gHp>0)gHp=Math.max(0,gHp-dmg);else oHp=Math.max(0,oHp-dmg);
-   if(oHp<=0){running=false;showWarning('DEFEAT','GATE CORE DESTROYED',999999)}
+   if(oHp<=0){running=false;showWarning('DEFEAT','GATE CORE DESTROYED',1200);setTimeout(()=>showResultScreen('DEFEAT','GATE CORE DESTROYED'),900);return}
   }
  }
 }
