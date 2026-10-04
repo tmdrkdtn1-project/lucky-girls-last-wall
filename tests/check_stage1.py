@@ -756,3 +756,32 @@ for token in ["rawEnemyCountX:2.25","rawEnemyHpX:1.35","goldPerKill:11","w5HpX:6
     assert token in js
 assert "const RPG_HERO_DEFS={" in js and "function startRpgBattle(tdHeroes)" in js and "function updateRpg(dt)" in js
 print("PASS - Priority C V5 makes Candidate B the default Stage1 TD baseline while keeping CANON_CURRENT as explicit control and RPG tuning separate")
+
+
+# Stage1 RPG small-party diagnostic V1 observability guards
+for token in [
+    "let gameMode='TD',rpgState=null,rpgDiagnostic=null",
+    "schema:'LG_STAGE1_RPG_SMALL_PARTY_DIAGNOSTIC_V1'",
+    "function rpgDiagHeroAction(heroId,kind)",
+    "function rpgDiagBossAction(kind)",
+    "function rpgDiagStatus(type,count=1)",
+    "function rpgDiagFirstHeroDefeat(hero)",
+    "function rpgDiagFinish(result)",
+    "function rpgDiagSnapshot()",
+    "rpgDiagnostic.totalPartyDamageToBoss+=",
+    "rpgDiagHeroAction(h.heroId,'basic')",
+    "rpgDiagHeroAction(h.heroId,slot===1?'s1':'s2')",
+    "rpgDiagHeroAction(h.heroId,'ult')",
+    "rpgDiagBossAction('skill1')",
+    "rpgDiagBossAction('skill2')",
+    "rpgDiagBossAction('skill3')",
+    "rpgDiagBossAction('basic')",
+    "rpgDiagStatus(effect.type,targets.length)",
+    "startDiagnosticBattle:(ownedHeroes,heroLevel=30)=>startPrototypeBattle",
+    "rpgDiagnostic:()=>rpgDiagSnapshot()"
+]:
+    assert token in js
+# Diagnostic contract must not change the selected TD baseline or RPG balance constants.
+for token in ["rawEnemyCountX:2.25","rawEnemyHpX:1.35","goldPerKill:11","w5HpX:6.5","w10HpX:10.5","waveDurationSec:40"]:
+    assert token in js
+print("PASS - Stage1 RPG small-party diagnostic V1 adds measurement-only counters and fixed-owned-roster start without direct party injection or tuning changes")

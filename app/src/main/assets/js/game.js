@@ -86,6 +86,56 @@ function priorityCRecordRpgResult(result){
  const t=priorityCEnsureTelemetry();t.rpg_result=result;
  if(result==='VICTORY')t.rpg_boss_ttk_sec=rpgSimTime;
 }
+function rpgDiagReset(heroIds){
+ rpgDiagnostic={
+  schema:'LG_STAGE1_RPG_SMALL_PARTY_DIAGNOSTIC_V1',
+  partyIds:[...(heroIds||[])],
+  bossHpStart:rpgState&&rpgState.boss?rpgState.boss.maxHp:null,
+  bossHpEnd:null,bossHpRemainingPct:null,
+  rpgBattleDurationSec:null,partyAliveCountEnd:null,timeToFirstHeroDefeatSec:null,
+  totalPartyDamageToBoss:0,
+  skillActivationCounts:{heroes:{},boss:{basic:0,skill1:0,skill2:0,skill3:0}},
+  statusEffectCounts:{},result:null
+ };
+ return rpgDiagnostic;
+}
+function rpgDiagHeroAction(heroId,kind){
+ if(!rpgDiagnostic)return;
+ const key=heroId||'UNKNOWN',bucket=rpgDiagnostic.skillActivationCounts.heroes[key]||(rpgDiagnostic.skillActivationCounts.heroes[key]={basic:0,s1:0,s2:0,ult:0});
+ bucket[kind]=(bucket[kind]||0)+1;
+}
+function rpgDiagBossAction(kind){
+ if(!rpgDiagnostic)return;
+ const b=rpgDiagnostic.skillActivationCounts.boss;b[kind]=(b[kind]||0)+1;
+}
+function rpgDiagStatus(type,count=1){
+ if(!rpgDiagnostic||!type)return;
+ rpgDiagnostic.statusEffectCounts[type]=(rpgDiagnostic.statusEffectCounts[type]||0)+Math.max(0,count||0);
+}
+function rpgDiagFirstHeroDefeat(hero){
+ if(!rpgDiagnostic||rpgDiagnostic.timeToFirstHeroDefeatSec!=null)return;
+ if(hero&&(hero.ko||hero.hp<=0))rpgDiagnostic.timeToFirstHeroDefeatSec=rpgSimTime;
+}
+function rpgDiagFinish(result){
+ if(!rpgDiagnostic)return;
+ const boss=rpgState&&rpgState.boss?rpgState.boss:null;
+ rpgDiagnostic.result=result;
+ rpgDiagnostic.rpgBattleDurationSec=rpgSimTime;
+ rpgDiagnostic.bossHpEnd=boss?Math.max(0,boss.hp):null;
+ rpgDiagnostic.bossHpRemainingPct=boss&&boss.maxHp>0?Math.max(0,boss.hp/boss.maxHp*100):null;
+ rpgDiagnostic.partyAliveCountEnd=rpgState?rpgAliveHeroes().length:null;
+}
+function rpgDiagSnapshot(){
+ if(!rpgDiagnostic)return null;
+ const out=JSON.parse(JSON.stringify(rpgDiagnostic));
+ if(rpgState&&rpgState.boss){
+  out.bossHpEnd=Math.max(0,rpgState.boss.hp);
+  out.bossHpRemainingPct=rpgState.boss.maxHp>0?Math.max(0,rpgState.boss.hp/rpgState.boss.maxHp*100):null;
+  out.partyAliveCountEnd=rpgAliveHeroes().length;
+  if(out.rpgBattleDurationSec==null)out.rpgBattleDurationSec=rpgSimTime;
+ }
+ return out;
+}
 function priorityCExportTelemetry(){
  const t=priorityCEnsureTelemetry();
  t.current_gold=gold;t.gate_hp=oHp;t.final_wall_hp=gHp;t.current_wave=wave;t.game_mode=gameMode;
@@ -208,7 +258,7 @@ function addGold(amount,source){gold+=amount;priorityCRecordGold(amount,source);
 let gold=500,wave=1,gHp=100,oHp=120,running=true,speed=1,last=performance.now(),simTime=0;
 let spawnClock=0,waveClock=0,nextEnemyId=1,selected=null,heroCount=0,waveSpawned=0,specialSpawned=false,rpgPending=false,waveEnding=false;
 let moveModeUnitId=null,comboPlacement=null,manualPaused=false;
-let gameMode='TD',rpgState=null,rpgSimTime=0,rpgTransitioning=false,rpgAutoBattle=false;
+let gameMode='TD',rpgState=null,rpgDiagnostic=null,rpgSimTime=0,rpgTransitioning=false,rpgAutoBattle=false;
 let luckyNaturalPct=0,luckyBonusPct=0,luckyStageBuffPct=0,luckyOverlayOpen=false,midbossRewardPending=false,luckySpinPhase='IDLE';
 const LUCKY_FAIL_WEIGHTS={LUCKY:1.5,BONUS:1.8,MISS:1.0};
 function luckyDisplayedJackpotPct(){return Math.max(0,Math.min(100,luckyNaturalPct+luckyBonusPct))}
@@ -403,7 +453,7 @@ function showResultScreen(kind,reason){
 function hideResultScreen(){if(resultScreen){resultScreen.classList.remove('on');resultScreen.setAttribute('aria-hidden','true')}}
 function resetBattleRuntimeForUi(){
  priorityCTestProfile='CANDIDATE_B';
- running=false;manualPaused=false;speed=1;gameMode='TD';rpgPending=false;rpgTransitioning=false;rpgAutoBattle=false;rpgState=null;rpgSimTime=0;resetBattleCamera();
+ running=false;manualPaused=false;speed=1;gameMode='TD';rpgPending=false;rpgTransitioning=false;rpgAutoBattle=false;rpgState=null;rpgDiagnostic=null;rpgSimTime=0;resetBattleCamera();
  gold=500;wave=1;gHp=100;oHp=120;simTime=0;spawnClock=0;waveClock=0;nextEnemyId=1;selected=null;heroCount=0;waveSpawned=0;specialSpawned=false;waveEnding=false;
  priorityCResetTelemetry();
  moveModeUnitId=null;comboPlacement=null;luckyNaturalPct=0;luckyBonusPct=0;luckyStageBuffPct=0;luckyOverlayOpen=false;midbossRewardPending=false;luckySpinPhase='IDLE';
@@ -1124,6 +1174,7 @@ function startRpgBattle(tdHeroes){
   pendingEvents:[],
   result:null
  };
+ rpgDiagReset(heroes.map(h=>h.heroId));
  $('battlefield').style.display='none';$('battlefield').classList.remove('tdLocked');
  rpgScreen.classList.add('on','prep','transitionLock');rpgScreen.classList.remove('approach','battle');rpgScreen.setAttribute('aria-hidden','false');
  document.querySelectorAll('.tdHud').forEach(e=>e.style.display='none');
@@ -1200,18 +1251,22 @@ function applyRpgEffect(effect,ctx={}){
    const raw=typeof effect.amount==='function'?effect.amount(source,t):effect.amount;
    if((t.invulnerableUntil||0)>rpgSimTime)continue;
    if(t===rpgState.boss){
-    const dealt=rpgDamageToBoss(raw,{ignoreDefense:!!effect.ignoreDefense});
+    const beforeHp=t.hp,dealt=rpgDamageToBoss(raw,{ignoreDefense:!!effect.ignoreDefense});
     t.hp=Math.max(0,t.hp-dealt);
+    if(rpgDiagnostic&&source&&source.heroId)rpgDiagnostic.totalPartyDamageToBoss+=Math.max(0,beforeHp-t.hp);
     if((t.reflectUntil||0)>rpgSimTime&&source&&source!==t){
+     const sourceWasAlive=!!(source.heroId&&!source.ko&&source.hp>0);
      const back=Math.max(1,Math.round(dealt*(t.reflectRatio||0)));
-     source.hp=Math.max(0,source.hp-rpgDamageToHero(source,back));if(source.hp<=0)source.ko=true;
+     source.hp=Math.max(0,source.hp-rpgDamageToHero(source,back));
+     if(source.hp<=0){source.ko=true;if(sourceWasAlive)rpgDiagFirstHeroDefeat(source)}
     }
    }else{
-    const dealt=rpgDamageToHero(t,raw);
+    const wasAlive=!t.ko&&t.hp>0,dealt=rpgDamageToHero(t,raw);
     t.hp=Math.max(0,t.hp-dealt);
     if(t.hp<=0){
      if(!tryRpgDeathPrevention(t))t.ko=true;
     }
+    if(wasAlive&&(t.ko||t.hp<=0))rpgDiagFirstHeroDefeat(t);
     if((t.reflectUntil||0)>rpgSimTime&&source&&source!==t&&source===rpgState.boss){
      source.hp=Math.max(0,source.hp-Math.max(1,Math.round(dealt*(t.reflectRatio||0))));
     }
@@ -1244,8 +1299,10 @@ function applyRpgEffect(effect,ctx={}){
    t.reflectRatio=Math.max(t.reflectRatio||0,effect.ratio||0);t.reflectUntil=Math.max(t.reflectUntil||0,rpgSimTime+(effect.duration||0));
   }
  }
+ if(effect.type!=='DAMAGE'&&effect.type!=='HEAL'&&effect.type!=='SUMMON'&&targets.length)rpgDiagStatus(effect.type,targets.length);
  if(effect.type==='SUMMON'){
   const count=Math.max(1,effect.count||1);
+  rpgDiagStatus('SUMMON',count);
   rpgState.summons=rpgState.summons||[];
   for(let i=0;i<count;i++)rpgState.summons.push({id:'add_'+Date.now()+'_'+i,name:effect.name||'소환물',hp:effect.hp||100,maxHp:effect.hp||100,atk:effect.atk||20,attackGap:effect.attackGap||3,lastAttack:rpgSimTime,expiresAt:effect.duration?rpgSimTime+effect.duration:null});
  }
@@ -1447,7 +1504,7 @@ function setRpgCast(name,duration,tier,target){
  setRpgCast.t=setTimeout(()=>{bar.classList.remove('on');bar.setAttribute('aria-hidden','true')},Math.max(300,duration*1000));
 }
 function castBraunHornCharge(b){
- const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill1;
+ const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill1;rpgDiagBossAction('skill1');
  setRpgCast(d.name,.85,'HIGH','ALL HEROES');
  applyRpgEffects([
   {type:'DAMAGE',target:'ALL_HEROES',amount:b.atk*d.prototype.damageRatio},
@@ -1457,14 +1514,14 @@ function castBraunHornCharge(b){
  showWarning('철각왕 브라움 · 뿔박치기','돌진 충격 · 전원 피해 / 행동 지연',850);
 }
 function castBraunRockCollapse(b){
- const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill2;
+ const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill2;rpgDiagBossAction('skill2');
  setRpgCast(d.name,.9,'DANGER','RANDOM 2');
  applyRpgEffects([{type:'SKILL_BLOCK',target:'RANDOM_HEROES',count:d.targetCount,duration:d.duration}],{source:b});
  b.lastSkill2=rpgSimTime;
  showWarning('철각왕 브라움 · 암반 붕괴','영웅 2명 스킬 6초 봉쇄',900);
 }
 function castBraunCrushingRoar(b){
- const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill3;
+ const d=RPG_BOSS_SKILL_DEFS.BRAUM.skill3;rpgDiagBossAction('skill3');
  setRpgCast(d.name,.9,'CRITICAL','ALL HEROES');
  applyRpgEffects([{type:'DAMAGE_TAKEN_MULT',target:'ALL_HEROES',mult:d.damageTakenMult,duration:d.duration}],{source:b});
  b.lastSkill3=rpgSimTime;
@@ -1500,6 +1557,7 @@ function rpgHeroSkillEffects(h,slot){
 }
 function castRpgHeroSkill(h,slot){
  const d=RPG_HERO_DEFS[h.heroId];if(!d)return;
+ rpgDiagHeroAction(h.heroId,slot===1?'s1':'s2');
  const effects=rpgHeroSkillEffects(h,slot);h.lastSkillEffects=effects.map(e=>({...e}));
  applyRpgEffects(effects,{source:h});
  if(slot===1){h.lastSkill1=rpgSimTime;h.ult=Math.min(100,h.ult+12)}
@@ -1526,7 +1584,7 @@ function updateRpg(dt){
   if((h.stunUntil||0)>rpgSimTime)continue;
   const atk=effectiveHeroAtk(h);
   if(rpgSimTime-h.lastBasic>=effectiveHeroGap(h,h.basicGap)){
-   h.lastBasic=rpgSimTime;
+   h.lastBasic=rpgSimTime;rpgDiagHeroAction(h.heroId,'basic');
    applyRpgEffects([{type:'DAMAGE',target:'BOSS',amount:atk}],{source:h});
    h.ult=Math.min(100,h.ult+6);
   }
@@ -1545,7 +1603,7 @@ function updateRpg(dt){
  const bossRate=(b.rateBuffUntil||0)>rpgSimTime?(b.rateBuffMult||1):1;
  const attackGap=(b.baseAttackGap/(b.phase===1?1:b.phase===2?1.18:1.4))/Math.max(.1,bossRate);
  if(rpgSimTime-b.lastAttack>=attackGap){
-  b.lastAttack=rpgSimTime;
+  b.lastAttack=rpgSimTime;rpgDiagBossAction('basic');
   const alive=rpgAliveHeroes();
   if(alive.length){
    const count=b.phase===1?1:Math.min(alive.length,b.phase);
@@ -1568,7 +1626,7 @@ function useRpgUltimate(heroId,fromAuto=false){
  if(gameMode!=='RPG'||!rpgState||rpgState.result||manualPaused)return;
  const h=rpgState.heroes.find(x=>x.id===heroId);
  if(!h||h.ko||!heroSkillUnlocked(3)||h.ult<100||(h.skillBlockUntil||0)>rpgSimTime)return;
- h.ult=0;
+ h.ult=0;rpgDiagHeroAction(h.heroId,'ult');
  const before=rpgState.boss.hp;
  applyRpgEffects(rpgHeroUltimateEffects(h),{source:h});
  const dmg=Math.max(0,Math.round(before-rpgState.boss.hp));
@@ -1577,13 +1635,13 @@ function useRpgUltimate(heroId,fromAuto=false){
 }
 function finishRpgVictory(){
  if(!rpgState||rpgState.result)return;
- priorityCRecordRpgResult('VICTORY');rpgState.result='VICTORY';running=false;
+ priorityCRecordRpgResult('VICTORY');rpgDiagFinish('VICTORY');rpgState.result='VICTORY';running=false;
  showWarning('STAGE CLEAR','RPG BOSS DEFEATED',1200);renderRpg();
  setTimeout(()=>showResultScreen('CLEAR',rpgState.boss.name+' 격파'),900);
 }
 function finishRpgDefeat(reason){
  if(!rpgState||rpgState.result)return;
- priorityCRecordRpgResult('DEFEAT');rpgState.result='DEFEAT';running=false;
+ priorityCRecordRpgResult('DEFEAT');rpgDiagFinish('DEFEAT');rpgState.result='DEFEAT';running=false;
  showWarning('RPG BATTLE FAILED',reason,1200);renderRpg();
  setTimeout(()=>showResultScreen('DEFEAT',reason),900);
 }
@@ -1744,6 +1802,8 @@ window.__LG_STAGE1_TEST__={
   }),
   setProfile:(id)=>priorityCSetProfile(id),
   telemetry:()=>priorityCExportTelemetry(),
+  startDiagnosticBattle:(ownedHeroes,heroLevel=30)=>startPrototypeBattle({type:'RPG_DIAGNOSTIC',ownedHeroes:[...(ownedHeroes||[])],heroLevel:Number(heroLevel)||30,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_01'},infiniteGold:false}),
+  rpgDiagnostic:()=>rpgDiagSnapshot(),
   setSpeed:(v)=>{speed=Math.max(1,Math.min(3,Number(v)||1));if($('speed'))$('speed').textContent='×'+speed;return speed},
   stepTd:(dt=.05)=>{if(gameMode!=='TD'||rpgPending||!running)return false;const step=Math.max(.001,Math.min(.05,Number(dt)||.05));simTime+=step;waveClock+=step;updateEnemies(step,simTime);updateUnits(simTime);if(!tryEarlyWaveClear()&&wave<10&&waveClock>=WAVE_DURATION)advanceWave();return true},
   stepRpg:(dt=.05)=>{if(gameMode!=='RPG'||!rpgState||rpgTransitioning||rpgState.result)return false;const step=Math.max(.001,Math.min(.05,Number(dt)||.05));updateRpg(step);return true},
