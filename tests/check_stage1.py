@@ -502,7 +502,7 @@ for token in [".luckyRouletteButton{",".luckyModal.on{display:flex}",".luckyWhee
     assert token in css, "missing Lucky Roulette presentation: "+token
 for token in ["function openLuckyModal()","function runLuckySpinPresentation()","function showMidbossRewardModal()","$('luckyRouletteButton').onclick=openLuckyModal","$('luckySpinButton').onclick=runLuckySpinPresentation","syncLuckyHud()"]:
     assert token in js, "missing Lucky Roulette UI runtime: "+token
-assert "function luckyFreeSummon(rarity,count)" in js
+assert "function luckyFreeSummon(rarity,count,source='LUCKY_FREE_SUMMON')" in js
 print("PASS - Lucky Roulette button, spin/result/reward UI, fireworks and midboss choice overlay are wired; owned-hero rewards use the PlayerProfile summon runtime")
 
 
@@ -518,7 +518,7 @@ print("PASS - BASIC/MASTER prototype lobby and Lv10/20/30 skill gates are wired"
 
 
 # Lucky owned-hero free summon uniqueness guards
-for token in ["const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY',YUNA:'LEGENDARY',RIEL:'LEGENDARY',RUBY:'LEGENDARY',ERIKA:'LEGENDARY',SERA:'LEGENDARY',REINA:'LEGENDARY',KARIN:'LEGENDARY',BELL:'MYTHIC'","function summonedHeroIds()","function eligibleOwnedHeroes(rarity)","!summoned.has(id)","function luckyFreeSummon(rarity,count)","Math.min(count,open,eligible.length)","showLuckyCelebration('💥 펑!')","heroId:recipe.id","luckyFreeSummon('MYTHIC',1)","luckyFreeSummon('LEGENDARY',2)","luckyFreeSummon('LEGENDARY',1)"]:
+for token in ["const HERO_RARITY_REGISTRY={ARIA:'LEGENDARY',YUNA:'LEGENDARY',RIEL:'LEGENDARY',RUBY:'LEGENDARY',ERIKA:'LEGENDARY',SERA:'LEGENDARY',REINA:'LEGENDARY',KARIN:'LEGENDARY',BELL:'MYTHIC'","function summonedHeroIds()","function eligibleOwnedHeroes(rarity)","!summoned.has(id)","function luckyFreeSummon(rarity,count,source='LUCKY_FREE_SUMMON')","Math.min(count,open,eligible.length)","showLuckyCelebration('💥 펑!')","heroId:recipe.id","luckyFreeSummon('MYTHIC',1,'LUCKY_REWARD_MYTHIC_OWNED_RANDOM_1')","luckyFreeSummon('LEGENDARY',2,'LUCKY_REWARD_LEGENDARY_OWNED_RANDOM_2')","luckyFreeSummon('LEGENDARY',1,'LUCKY_REWARD_LEGENDARY_OWNED_RANDOM_1')"]:
     assert token in js, "missing Lucky owned-hero uniqueness rule: "+token
 assert "PlayerProfile 보유 영웅 데이터 연결 후 활성화" not in js
 print("PASS - Lucky free summons use owned+rarity+not-yet-summoned candidates, respect hero cap, and burst when no candidate exists")
@@ -727,3 +727,17 @@ assert "candidateHp:Math.round(rawNormalHpForWave(w)*PRIORITY_C_CANDIDATE_B.rawE
 assert "p?Math.round(rawNormalCountForWave(w)*p.rawEnemyCountX):baselineNormalCountForWave(w)" in js
 assert "p?Math.round(rawNormalHpForWave(w)*p.rawEnemyHpX):baselineNormalHpForWave(w)" in js
 print("PASS - Priority C keeps map ownership/navigation intact, corrects display names, and isolates Candidate B behind hidden TEST_ONLY telemetry")
+
+# Priority C V4 hero-inclusive representative validation observability
+for token in [
+    "hero_acquisition_actions:[]","td_end_hero_ids:[]","rpg_party_size:null","rpg_battle_started_with_valid_party:false",
+    "rpg_result:null","rpg_boss_ttk_sec:null","function priorityCRecordHeroAcquisition(source,heroIds)",
+    "function priorityCRecordRpgBattleStart(heroIds)","function priorityCRecordRpgResult(result)",
+    "priorityCRecordHeroAcquisition(source,summoned)","luckyFreeSummon('LEGENDARY',1,'MID_BOSS_REWARD')",
+    "t.td_end_hero_count=tdHeroes.length;t.td_end_hero_ids=tdHeroes.map(h=>h.heroId).filter(Boolean)",
+    "priorityCRecordRpgBattleStart(heroes.map(h=>h.heroId))",
+    "priorityCRecordRpgResult('VICTORY')","priorityCRecordRpgResult('DEFEAT')",
+    "stepRpg:(dt=.05)=>","rpgSimTime,heroes:rpgState.heroes.map(h=>({heroId:h.heroId"
+]:
+    assert token in js
+print("PASS - Priority C V4 exposes legal hero acquisition, TD-end hero IDs, valid RPG party start, deterministic RPG stepping and RPG result/TTK telemetry")
