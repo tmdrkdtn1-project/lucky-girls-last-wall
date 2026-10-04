@@ -4,17 +4,17 @@
 let COLS=18, ROWS=10, CELL_COUNT=COLS*ROWS;
 const WAVE_DURATION=40;
 const PRIORITY_C_CANDIDATE_B=Object.freeze({
- id:'CANDIDATE_B',status:'TEST_ONLY_NOT_CANON',
+ id:'CANDIDATE_B',status:'PLANNING_SELECTED_TD_BASELINE_NOT_CANONICAL_MAIN',
  rawEnemyCountX:2.25,rawEnemyHpX:1.35,canonRelativeCountX:1.125,canonRelativeHpX:1.125,
  goldPerKill:11,w5HpX:6.5,w10HpX:10.5,waveDurationSec:40
 });
-let priorityCTestProfile=null,priorityCTelemetry=null;
-function priorityCBalanceProfile(){return priorityCTestProfile==='CANDIDATE_B'?PRIORITY_C_CANDIDATE_B:null}
+let priorityCTestProfile='CANDIDATE_B',priorityCTelemetry=null;
+function priorityCBalanceProfile(){return priorityCTestProfile==='CANON_CURRENT'?null:PRIORITY_C_CANDIDATE_B}
 function priorityCResetTelemetry(){
  priorityCTelemetry={
   schema:'LG_STAGE1_PRIORITY_C_TELEMETRY_V1',
-  profile:priorityCTestProfile||'CANON_CURRENT',
-  profile_status:priorityCBalanceProfile()?PRIORITY_C_CANDIDATE_B.status:'CANON',
+  profile:priorityCTestProfile==='CANON_CURRENT'?'CANON_CURRENT':'CANDIDATE_B',
+  profile_status:priorityCTestProfile==='CANON_CURRENT'?'CANON_CONTROL':PRIORITY_C_CANDIDATE_B.status,
   spawn_count_per_wave:{},spawn_count_by_kind:{},
   wave_end_survivors:{},gate_hp_per_wave:{},final_wall_hp_per_wave:{},
   cumulative_gold:typeof gold==='number'?gold:500,gold_earned:0,gold_spent:0,
@@ -29,8 +29,8 @@ function priorityCResetTelemetry(){
 }
 function priorityCEnsureTelemetry(){return priorityCTelemetry||priorityCResetTelemetry()}
 function priorityCSetProfile(id){
- if(id==null||id==='CANON_CURRENT')priorityCTestProfile=null;
- else if(id==='CANDIDATE_B')priorityCTestProfile='CANDIDATE_B';
+ if(id==null||id==='CANDIDATE_B'||id==='SELECTED_TD_BASELINE')priorityCTestProfile='CANDIDATE_B';
+ else if(id==='CANON_CURRENT')priorityCTestProfile='CANON_CURRENT';
  else throw new Error('UNKNOWN_PRIORITY_C_PROFILE '+id);
  return priorityCResetTelemetry();
 }
@@ -402,7 +402,7 @@ function showResultScreen(kind,reason){
 }
 function hideResultScreen(){if(resultScreen){resultScreen.classList.remove('on');resultScreen.setAttribute('aria-hidden','true')}}
 function resetBattleRuntimeForUi(){
- priorityCTestProfile=null;
+ priorityCTestProfile='CANDIDATE_B';
  running=false;manualPaused=false;speed=1;gameMode='TD';rpgPending=false;rpgTransitioning=false;rpgAutoBattle=false;rpgState=null;rpgSimTime=0;resetBattleCamera();
  gold=500;wave=1;gHp=100;oHp=120;simTime=0;spawnClock=0;waveClock=0;nextEnemyId=1;selected=null;heroCount=0;waveSpawned=0;specialSpawned=false;waveEnding=false;
  priorityCResetTelemetry();

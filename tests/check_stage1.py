@@ -717,16 +717,16 @@ for token in ["rawEnemyCountX:2.25","rawEnemyHpX:1.35","canonRelativeCountX:1.12
     assert token in js
 for token in ["spawn_count_per_wave","wave_end_survivors","cumulative_gold","build_actions","upgrade_actions","gate_hp","w5_ttk","w10_td_boss_ttk","td_end_hero_count","rpg_transition"]:
     assert token in js
-assert "profile_status:priorityCBalanceProfile()?PRIORITY_C_CANDIDATE_B.status:'CANON'" in js
+assert "profile_status:priorityCTestProfile==='CANON_CURRENT'?'CANON_CONTROL':PRIORITY_C_CANDIDATE_B.status" in js
 assert "setProfile:(id)=>priorityCSetProfile(id)" in js
-assert "TEST_ONLY_NOT_CANON" in js
-assert "priorityCTestProfile=null;" in js
+assert "PLANNING_SELECTED_TD_BASELINE_NOT_CANONICAL_MAIN" in js
+assert "priorityCTestProfile='CANDIDATE_B';" in js
 assert "candidateBSanity:(w=1)=>({" in js
 assert "candidateCount:Math.round(rawNormalCountForWave(w)*PRIORITY_C_CANDIDATE_B.rawEnemyCountX)" in js
 assert "candidateHp:Math.round(rawNormalHpForWave(w)*PRIORITY_C_CANDIDATE_B.rawEnemyHpX)" in js
 assert "p?Math.round(rawNormalCountForWave(w)*p.rawEnemyCountX):baselineNormalCountForWave(w)" in js
 assert "p?Math.round(rawNormalHpForWave(w)*p.rawEnemyHpX):baselineNormalHpForWave(w)" in js
-print("PASS - Priority C keeps map ownership/navigation intact, corrects display names, and isolates Candidate B behind hidden TEST_ONLY telemetry")
+print("PASS - Priority C keeps map ownership/navigation intact and keeps Candidate B parameters isolated behind an explicit Stage1 TD profile")
 
 # Priority C V4 hero-inclusive representative validation observability
 for token in [
@@ -741,3 +741,18 @@ for token in [
 ]:
     assert token in js
 print("PASS - Priority C V4 exposes legal hero acquisition, TD-end hero IDs, valid RPG party start, deterministic RPG stepping and RPG result/TTK telemetry")
+
+
+# Priority C V5 selected Stage1 TD baseline guards
+assert "status:'PLANNING_SELECTED_TD_BASELINE_NOT_CANONICAL_MAIN'" in js
+assert "let priorityCTestProfile='CANDIDATE_B',priorityCTelemetry=null;" in js
+assert "function priorityCBalanceProfile(){return priorityCTestProfile==='CANON_CURRENT'?null:PRIORITY_C_CANDIDATE_B}" in js
+assert "if(id==null||id==='CANDIDATE_B'||id==='SELECTED_TD_BASELINE')priorityCTestProfile='CANDIDATE_B';" in js
+assert "else if(id==='CANON_CURRENT')priorityCTestProfile='CANON_CURRENT';" in js
+assert js.count("priorityCTestProfile='CANDIDATE_B';") >= 2
+assert "profile:priorityCTestProfile==='CANON_CURRENT'?'CANON_CURRENT':'CANDIDATE_B'" in js
+assert "profile_status:priorityCTestProfile==='CANON_CURRENT'?'CANON_CONTROL':PRIORITY_C_CANDIDATE_B.status" in js
+for token in ["rawEnemyCountX:2.25","rawEnemyHpX:1.35","goldPerKill:11","w5HpX:6.5","w10HpX:10.5","waveDurationSec:40"]:
+    assert token in js
+assert "const RPG_HERO_DEFS={" in js and "function startRpgBattle(tdHeroes)" in js and "function updateRpg(dt)" in js
+print("PASS - Priority C V5 makes Candidate B the default Stage1 TD baseline while keeping CANON_CURRENT as explicit control and RPG tuning separate")
