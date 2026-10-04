@@ -1,0 +1,214 @@
+{
+  "schema": "lucky_girls.golden_scenarios.v1",
+  "version": "1.0.0",
+  "authority": "MAINDEV-AUTONOMOUS-DEV-SYSTEM-V1-20261004",
+  "p0_regression_blocks_promotion": true,
+  "scenarios": [
+    {
+      "id": "GOLDEN_STAGE1_TD_BASELINE",
+      "owner": "GAME_BUILD",
+      "severity": "P0",
+      "preconditions": [
+        "Stage1 NORMAL_01",
+        "default runtime profile Candidate B"
+      ],
+      "legal_path": [
+        "normal battle start",
+        "normal placement and upgrades"
+      ],
+      "deterministic_inputs": {
+        "profile": "CANDIDATE_B"
+      },
+      "required_invariants": [
+        "candidate_b_default",
+        "wave1_spawn_27",
+        "wave1_hp_81",
+        "wave2_reached",
+        "no_runtime_error"
+      ],
+      "tolerance_bands": {},
+      "evidence_fields": [
+        "profile",
+        "wave1_spawn_count",
+        "wave1_hp",
+        "reached_wave",
+        "runtime_errors"
+      ]
+    },
+    {
+      "id": "GOLDEN_STAGE1_TD_REWARD_FLOW",
+      "owner": "GAME_BUILD",
+      "severity": "P0",
+      "preconditions": [
+        "Reach Wave5 midboss reward"
+      ],
+      "legal_path": [
+        "normal reward modal",
+        "select one offered reward"
+      ],
+      "deterministic_inputs": {},
+      "required_invariants": [
+        "reward_modal_opened",
+        "reward_choice_legal",
+        "reward_applied_once",
+        "no_runtime_error"
+      ],
+      "tolerance_bands": {},
+      "evidence_fields": [
+        "reward_options",
+        "selected_reward",
+        "hero_acquisition_actions",
+        "gold_delta",
+        "runtime_errors"
+      ]
+    },
+    {
+      "id": "GOLDEN_STAGE1_RPG_SOLO",
+      "owner": "GAME_BUILD",
+      "severity": "P0",
+      "preconditions": [
+        "one legally acquired TD-end hero"
+      ],
+      "legal_path": [
+        "TD boss clear",
+        "normal cinematic transition",
+        "same TD-end hero enters RPG"
+      ],
+      "deterministic_inputs": {
+        "auto_ultimate": true
+      },
+      "required_invariants": [
+        "legal_hero_acquisition",
+        "same_party_transition",
+        "party_size_1",
+        "result_recorded",
+        "no_runtime_error"
+      ],
+      "tolerance_bands": {},
+      "evidence_fields": [
+        "hero_id",
+        "rpg_result",
+        "battle_duration_sec",
+        "boss_hp_remaining_pct",
+        "runtime_errors"
+      ]
+    },
+    {
+      "id": "GOLDEN_STAGE1_RPG_SMALL_PARTY",
+      "owner": "GAME_BUILD",
+      "severity": "P1",
+      "preconditions": [
+        "2-5 legally acquired surviving TD-end heroes"
+      ],
+      "legal_path": [
+        "normal TD progression",
+        "normal RPG transition"
+      ],
+      "deterministic_inputs": {
+        "auto_ultimate": true
+      },
+      "required_invariants": [
+        "legal_party_acquisition",
+        "same_party_transition",
+        "party_size_2_to_5",
+        "result_recorded",
+        "no_runtime_error"
+      ],
+      "tolerance_bands": {},
+      "evidence_fields": [
+        "party_ids",
+        "party_size",
+        "rpg_result",
+        "runtime_errors"
+      ]
+    },
+    {
+      "id": "GOLDEN_STAGE1_RECIPE_FLOW",
+      "owner": "GAME_BUILD",
+      "severity": "P1",
+      "preconditions": [
+        "recipe materials obtained by normal TD actions"
+      ],
+      "legal_path": [
+        "normal build",
+        "normal upgrade",
+        "normal combo UI"
+      ],
+      "deterministic_inputs": {
+        "reference_recipe": "knight3_commander x2 -> ARIA"
+      },
+      "required_invariants": [
+        "materials_legal",
+        "combo_ui_used",
+        "recipe_result_recorded",
+        "no_forced_state",
+        "no_runtime_error"
+      ],
+      "tolerance_bands": {},
+      "evidence_fields": [
+        "recipe_id",
+        "materials",
+        "recipe_completed",
+        "terminal_state",
+        "runtime_errors"
+      ]
+    },
+    {
+      "id": "GOLDEN_STAGE1_NAVIGATION",
+      "owner": "GAME_BUILD",
+      "severity": "P0",
+      "preconditions": [
+        "app loaded"
+      ],
+      "legal_path": [
+        "lobby",
+        "story",
+        "world",
+        "local",
+        "stage",
+        "battle"
+      ],
+      "deterministic_inputs": {
+        "stage": "NORMAL_01"
+      },
+      "required_invariants": [
+        "all_flow_screens_reachable",
+        "selected_stage_preserved",
+        "battle_entry_success",
+        "no_runtime_error"
+      ],
+      "tolerance_bands": {},
+      "evidence_fields": [
+        "visited_screens",
+        "selected_stage",
+        "battle_started",
+        "runtime_errors"
+      ]
+    },
+    {
+      "id": "GOLDEN_STAGE1_RESULT_TRANSITION",
+      "owner": "GAME_BUILD",
+      "severity": "P0",
+      "preconditions": [
+        "RPG battle reaches terminal result"
+      ],
+      "legal_path": [
+        "normal result resolution"
+      ],
+      "deterministic_inputs": {},
+      "required_invariants": [
+        "result_once",
+        "combat_stopped",
+        "result_ui_visible",
+        "no_runtime_error"
+      ],
+      "tolerance_bands": {},
+      "evidence_fields": [
+        "result",
+        "running",
+        "result_ui_visible",
+        "runtime_errors"
+      ]
+    }
+  ]
+}
