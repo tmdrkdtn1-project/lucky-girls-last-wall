@@ -785,3 +785,11 @@ for token in [
 for token in ["rawEnemyCountX:2.25","rawEnemyHpX:1.35","goldPerKill:11","w5HpX:6.5","w10HpX:10.5","waveDurationSec:40"]:
     assert token in js
 print("PASS - Stage1 RPG small-party diagnostic V1 adds measurement-only counters and fixed-owned-roster start without direct party injection or tuning changes")
+
+# PLANNING_SELECTED Stage1 RPG V2_A production tuning guards
+assert "const STAGE1_RPG_SOLO_BOSS_DAMAGE_X=.70;" in js
+assert "partySize===1?STAGE1_RPG_SOLO_BOSS_DAMAGE_X:1" in js
+assert "atk:RPG_BOSS_DEF.atk*stage1SoloBossDamageX" in js
+assert "maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp" in js
+assert "activeMapSelection.stageId==='NORMAL_01'" in js
+print("PASS - PLANNING_SELECTED V2_A applies Stage1 solo boss outgoing damage x0.70 only to party_size==1 while preserving boss HP")
