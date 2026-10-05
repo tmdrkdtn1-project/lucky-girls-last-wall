@@ -1039,6 +1039,10 @@ const RPG_HERO_DEFS={
  EVE:{name:'이브',hp:2850,atk:250,def:120,basicGap:1/.95,skill1Gap:8,skill2Gap:14,s1:1.2,s2:.35,ult:3.2,skill1Name:'시간지연',skill2Name:'되감기',ultimateName:'멈춰버린 세계'}
 };
 const RPG_BOSS_DEF={name:'철각왕 브라움',hp:16000,atk:110,def:60,baseAttackGap:3.0};
+const STAGE1_RPG_SOLO_BOSS_DAMAGE_X=.70;
+function stage1RpgSoloBossDamageX(partySize){
+ return activeMapSelection.worldId==='WORLD_01'&&activeMapSelection.localMapId==='LOCAL_WEST'&&activeMapSelection.mode==='NORMAL'&&activeMapSelection.stageId==='NORMAL_01'&&partySize===1?STAGE1_RPG_SOLO_BOSS_DAMAGE_X:1;
+}
 const RPG_BOSS_SKILL_DEFS={
  BRAUM:{
   skill1:{id:'BRAUM_S1',name:'뿔박치기',cooldown:11,prototype:{damageRatio:.75,actionDelay:.8},source:'직선 경로 가속'},
@@ -1117,9 +1121,10 @@ function startRpgBattle(tdHeroes){
    buffUntil:0,atkBuffMult:1,atkBuffUntil:0,rateBuffMult:1,rateBuffUntil:0,damageReduction:0,damageReductionUntil:0,damageTakenMult:1,damageTakenUntil:0,stunUntil:0,defModPct:0,defModUntil:0,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[],ult:0,ko:false,slot:i};
  });
  priorityCRecordRpgBattleStart(heroes.map(h=>h.heroId));
+ const stage1SoloBossDamageX=stage1RpgSoloBossDamageX(heroes.length);
  rpgState={
   heroes,
-  boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,rateBuffMult:1,rateBuffUntil:0,deathPreventionCharges:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]},
+  boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,atk:RPG_BOSS_DEF.atk*stage1SoloBossDamageX,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,rateBuffMult:1,rateBuffUntil:0,deathPreventionCharges:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]},
   summons:[],
   pendingEvents:[],
   result:null

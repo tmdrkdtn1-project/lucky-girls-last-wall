@@ -756,3 +756,14 @@ for token in ["rawEnemyCountX:2.25","rawEnemyHpX:1.35","goldPerKill:11","w5HpX:6
     assert token in js
 assert "const RPG_HERO_DEFS={" in js and "function startRpgBattle(tdHeroes)" in js and "function updateRpg(dt)" in js
 print("PASS - Priority C V5 makes Candidate B the default Stage1 TD baseline while keeping CANON_CURRENT as explicit control and RPG tuning separate")
+
+# PLANNING_SELECTED Stage1 RPG V2_A production tuning guards
+assert "const STAGE1_RPG_SOLO_BOSS_DAMAGE_X=.70;" in js
+assert "partySize===1?STAGE1_RPG_SOLO_BOSS_DAMAGE_X:1" in js
+assert "atk:RPG_BOSS_DEF.atk*stage1SoloBossDamageX" in js
+assert "maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp" in js
+assert "activeMapSelection.worldId==='WORLD_01'" in js
+assert "activeMapSelection.localMapId==='LOCAL_WEST'" in js
+assert "activeMapSelection.mode==='NORMAL'" in js
+assert "activeMapSelection.stageId==='NORMAL_01'" in js
+print("PASS - PLANNING_SELECTED V2_A applies Stage1 NORMAL_01 solo boss outgoing damage x0.70 only to party_size==1 while preserving boss HP")
