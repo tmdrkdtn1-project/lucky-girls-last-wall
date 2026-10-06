@@ -61,14 +61,16 @@
               {
                 "stage": 2,
                 "id": "NORMAL_02",
-                "status": "DATA_CONFIRMED_RUNTIME_PENDING",
-                "data_path": null,
-                "geometry_status": "DESIGN_PENDING",
+                "status": "IMPLEMENTED_LOCKED",
+                "data_path": "data/stage02.json",
+                "geometry_status": "IMPLEMENTED",
                 "runtime_contract": {
                   "geometry": "STAGE_JSON",
                   "wave_source": "AUTHORITATIVE_WORKBOOK",
                   "boss_rpg_transition": true
-                }
+                },
+                "player_exposed": false,
+                "td_profile": "STAGE2_G"
               },
               {
                 "stage": 3,
