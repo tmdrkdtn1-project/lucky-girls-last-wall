@@ -1,0 +1,1040 @@
+{
+  "schema": "lucky_girls.stage2.normal02.td_foundation.core_sim_bundle.v1",
+  "candidate": {
+    "schema": "lucky_girls.stage2.normal02.td_foundation_candidate.v1",
+    "version": "1.0.0",
+    "candidate_id": "NORMAL_02_TD_FOUNDATION_A",
+    "authority": "TEST_ONLY_NOT_CANON",
+    "stage": {
+      "world_id": "WORLD_01",
+      "local_map_id": "LOCAL_WEST",
+      "local_name": "브레몽 왕국",
+      "mode": "NORMAL",
+      "stage_id": "NORMAL_02",
+      "stage_number": 2
+    },
+    "grid": {
+      "cols": 18,
+      "rows": 10
+    },
+    "route": [
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        5,
+        5
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        7,
+        3
+      ],
+      [
+        8,
+        3
+      ],
+      [
+        9,
+        3
+      ],
+      [
+        10,
+        3
+      ],
+      [
+        10,
+        4
+      ],
+      [
+        10,
+        5
+      ],
+      [
+        10,
+        6
+      ],
+      [
+        10,
+        7
+      ],
+      [
+        11,
+        7
+      ],
+      [
+        12,
+        7
+      ],
+      [
+        13,
+        7
+      ],
+      [
+        13,
+        6
+      ],
+      [
+        13,
+        5
+      ],
+      [
+        14,
+        5
+      ],
+      [
+        15,
+        5
+      ],
+      [
+        16,
+        5
+      ],
+      [
+        17,
+        5
+      ],
+      [
+        18,
+        5
+      ]
+    ],
+    "tile_rows": [
+      "WWTTXDDDDDTTTTTTTT",
+      "TWTTDDDDDDXTTTTTTT",
+      "DDDDPPPPPPDDDDDDDD",
+      "DDDDPDDDDPDDDDDDCC",
+      "SPPPPDDDDPDDPPPPGO",
+      "DDDDDDDDDPDDPDDDCC",
+      "DDDDDDDDDPPPPDDDDD",
+      "TTTTTTTTTTTTTTTTTT",
+      "WWTTTTTTTTTTTTTTTT",
+      "TWTTTTTTTTTTTTTTTT"
+    ],
+    "geometry_summary": {
+      "route_length_cells": 26,
+      "direction_changes": 6,
+      "meaningful_choke_zones": [
+        "UPPER_MINE_BEND_X5_TO_X10_Y3",
+        "CENTRAL_SHAFT_X10_Y3_TO_Y7",
+        "CASTLE_APPROACH_X13_TO_X18"
+      ],
+      "stage01_castle_gate_core_semantics_preserved": true,
+      "candidate_only": true
+    },
+    "source_enemies": {
+      "화약 밀수꾼": {
+        "role": "사망 시 폭발",
+        "hp": 94,
+        "def": 0,
+        "move_speed": 1.08,
+        "wall_atk": 12,
+        "runtime_semantic": "SOURCE_METADATA_ONLY"
+      },
+      "광산 파괴자": {
+        "role": "방어벽 특화",
+        "hp": 116,
+        "def": 4,
+        "move_speed": 0.95,
+        "wall_atk": 21,
+        "runtime_semantic": "SOURCE_METADATA_ONLY"
+      },
+      "뿔멧돼지": {
+        "role": "돌진",
+        "hp": 104,
+        "def": 2,
+        "move_speed": 1.35,
+        "wall_atk": 16,
+        "runtime_semantic": "SOURCE_METADATA_ONLY"
+      },
+      "절벽 매": {
+        "role": "공중",
+        "hp": 86,
+        "def": 0,
+        "move_speed": 1.28,
+        "wall_atk": 9,
+        "runtime_semantic": "FLYING_TERRAIN_IGNORE"
+      },
+      "암석 골렘": {
+        "role": "고HP",
+        "hp": 170,
+        "def": 5,
+        "move_speed": 0.78,
+        "wall_atk": 15,
+        "runtime_semantic": "FREEZE_DURATION_REDUCTION_40"
+      },
+      "최초의 골렘 아즈로": {
+        "role": "고HP/고방어",
+        "hp": 2376,
+        "def": 40,
+        "move_speed": 0.72,
+        "wall_atk": 50,
+        "runtime_semantic": "FREEZE_DURATION_REDUCTION_40"
+      }
+    },
+    "source_boss": {
+      "name": "광산왕 모르겐",
+      "hp": 2431,
+      "def": 12,
+      "move_speed": 0.69,
+      "wall_atk": 69,
+      "recommended_power": 113,
+      "skills": [
+        "파쇄 타격",
+        "낙석 지대",
+        "광맥 폭주"
+      ]
+    },
+    "spawn_count_total_per_wave": {
+      "1": 27,
+      "2": 32,
+      "3": 36,
+      "4": 41,
+      "5": 46,
+      "6": 50,
+      "7": 54,
+      "8": 59,
+      "9": 63,
+      "10": 35
+    },
+    "wave_composition": {
+      "1": [
+        "화약 밀수꾼"
+      ],
+      "2": [
+        "화약 밀수꾼",
+        "광산 파괴자"
+      ],
+      "3": [
+        "화약 밀수꾼",
+        "광산 파괴자",
+        "뿔멧돼지"
+      ],
+      "4": [
+        "광산 파괴자",
+        "뿔멧돼지",
+        "절벽 매"
+      ],
+      "5": [
+        "최초의 골렘 아즈로",
+        "화약 밀수꾼",
+        "광산 파괴자"
+      ],
+      "6": [
+        "화약 밀수꾼",
+        "광산 파괴자",
+        "뿔멧돼지"
+      ],
+      "7": [
+        "광산 파괴자",
+        "뿔멧돼지",
+        "절벽 매"
+      ],
+      "8": [
+        "암석 골렘",
+        "광산 파괴자",
+        "절벽 매"
+      ],
+      "9": [
+        "화약 밀수꾼",
+        "광산 파괴자",
+        "뿔멧돼지",
+        "절벽 매",
+        "암석 골렘"
+      ],
+      "10": [
+        "광산왕 모르겐",
+        "광산 파괴자",
+        "암석 골렘"
+      ]
+    },
+    "economy_control": {
+      "initial_gold": 500,
+      "gold_per_kill": 11,
+      "roulette": "OFF_FOR_FOUNDATION_MEASUREMENT",
+      "stage2_specific_rewards": "DISABLED_DATA_PENDING",
+      "stage2_specific_recipes": "DISABLED_DATA_PENDING"
+    },
+    "deterministic_policy": {
+      "seeds": [
+        11,
+        22,
+        33,
+        44
+      ],
+      "spawn_order": "ROUND_ROBIN_ROTATED_BY_SEED",
+      "placements": [
+        [
+          "watchtower",
+          6,
+          2
+        ],
+        [
+          "archer1",
+          9,
+          4
+        ],
+        [
+          "lancer1",
+          12,
+          4
+        ],
+        [
+          "watchtower",
+          15,
+          4
+        ],
+        [
+          "knight1",
+          17,
+          4
+        ]
+      ],
+      "upgrade_plan": [
+        [
+          15,
+          4,
+          "watchtower",
+          "watchtower2"
+        ],
+        [
+          15,
+          4,
+          "watchtower2",
+          "watchtower3_sniper"
+        ],
+        [
+          9,
+          4,
+          "archer1",
+          "archer2"
+        ],
+        [
+          9,
+          4,
+          "archer2",
+          "archer3_rapid"
+        ],
+        [
+          12,
+          4,
+          "lancer1",
+          "lancer2"
+        ],
+        [
+          12,
+          4,
+          "lancer2",
+          "lancer3_elite"
+        ],
+        [
+          17,
+          4,
+          "knight1",
+          "knight2"
+        ],
+        [
+          17,
+          4,
+          "knight2",
+          "knight3_commander"
+        ],
+        [
+          6,
+          2,
+          "watchtower",
+          "watchtower2"
+        ],
+        [
+          6,
+          2,
+          "watchtower2",
+          "watchtower3_rapid"
+        ]
+      ]
+    },
+    "diagnostic_adapter": {
+      "source_enemy_def_rule": "REUSE_EXISTING_RPG_BOSS_FLAT_DEF_REDUCTION_FACTOR_0_25_TEST_ONLY",
+      "source_wall_atk_rule": "USE_SOURCE_WALL_ATK_AS_STRUCTURE_HIT_BASE_DAMAGE",
+      "bound_special_semantics_only": true,
+      "unbound_roles_remain_metadata_only": true,
+      "production_files_mutated": false
+    }
+  },
+  "runs": [
+    {
+      "schema": "lucky_girls.balance_lab.trial.v1",
+      "scenario_id": "STAGE2_NORMAL02_TD_FOUNDATION",
+      "candidate_id": "NORMAL_02_TD_FOUNDATION_A",
+      "mode": "CORE_SIM",
+      "validated_fixture": true,
+      "production_exposed_fixture": false,
+      "direct_injection": false,
+      "seed": 11,
+      "victory": false,
+      "runtime_errors": [],
+      "telemetry": {
+        "spawn_count_per_wave": {
+          "1": 27,
+          "2": 32,
+          "3": 36,
+          "4": 41,
+          "5": 46,
+          "6": 10
+        },
+        "enemy_mix_per_wave": {
+          "1": {
+            "화약 밀수꾼": 27
+          },
+          "2": {
+            "광산 파괴자": 16,
+            "화약 밀수꾼": 16
+          },
+          "3": {
+            "뿔멧돼지": 12,
+            "화약 밀수꾼": 12,
+            "광산 파괴자": 12
+          },
+          "4": {
+            "절벽 매": 14,
+            "광산 파괴자": 14,
+            "뿔멧돼지": 13
+          },
+          "5": {
+            "광산 파괴자": 23,
+            "화약 밀수꾼": 22,
+            "최초의 골렘 아즈로": 1
+          },
+          "6": {
+            "뿔멧돼지": 4,
+            "화약 밀수꾼": 3,
+            "광산 파괴자": 3
+          }
+        },
+        "wave_end_survivors": {
+          "1": 13,
+          "2": 17,
+          "3": 13,
+          "4": 7,
+          "5": 8
+        },
+        "gate_hp_per_wave": {
+          "1": 120,
+          "2": 120,
+          "3": 120,
+          "4": 120,
+          "5": 120
+        },
+        "final_wall_hp_per_wave": {
+          "1": 88,
+          "2": 88,
+          "3": 88,
+          "4": 88,
+          "5": 88
+        },
+        "w5_ttk": null,
+        "w10_td_boss_ttk": null,
+        "special_spawn_times": {
+          "w5": 167.25000000000378,
+          "w10": null
+        },
+        "runtime_errors": [],
+        "cumulative_gold": 2513,
+        "current_gold": 573,
+        "gold_earned": 2013,
+        "gold_spent": 1940,
+        "build_actions": 5,
+        "upgrade_actions": 10,
+        "gate_hp_at_td_end": null,
+        "gate_core_hp_end": 0,
+        "final_wall_hp_end": 0,
+        "td_end_hero_count": 0,
+        "td_end_hero_ids": [],
+        "rpg_transition_event": false,
+        "rpg_transition_plumbing_static_verified": true,
+        "finished_reason": "TD_DEFEAT_GATE"
+      }
+    },
+    {
+      "schema": "lucky_girls.balance_lab.trial.v1",
+      "scenario_id": "STAGE2_NORMAL02_TD_FOUNDATION",
+      "candidate_id": "NORMAL_02_TD_FOUNDATION_A",
+      "mode": "CORE_SIM",
+      "validated_fixture": true,
+      "production_exposed_fixture": false,
+      "direct_injection": false,
+      "seed": 22,
+      "victory": false,
+      "runtime_errors": [],
+      "telemetry": {
+        "spawn_count_per_wave": {
+          "1": 27,
+          "2": 32,
+          "3": 36,
+          "4": 41,
+          "5": 46,
+          "6": 10
+        },
+        "enemy_mix_per_wave": {
+          "1": {
+            "화약 밀수꾼": 27
+          },
+          "2": {
+            "화약 밀수꾼": 16,
+            "광산 파괴자": 16
+          },
+          "3": {
+            "광산 파괴자": 12,
+            "뿔멧돼지": 12,
+            "화약 밀수꾼": 12
+          },
+          "4": {
+            "뿔멧돼지": 14,
+            "절벽 매": 14,
+            "광산 파괴자": 13
+          },
+          "5": {
+            "화약 밀수꾼": 23,
+            "광산 파괴자": 22,
+            "최초의 골렘 아즈로": 1
+          },
+          "6": {
+            "광산 파괴자": 4,
+            "뿔멧돼지": 3,
+            "화약 밀수꾼": 3
+          }
+        },
+        "wave_end_survivors": {
+          "1": 13,
+          "2": 17,
+          "3": 15,
+          "4": 9,
+          "5": 7
+        },
+        "gate_hp_per_wave": {
+          "1": 120,
+          "2": 120,
+          "3": 120,
+          "4": 120,
+          "5": 120
+        },
+        "final_wall_hp_per_wave": {
+          "1": 88,
+          "2": 88,
+          "3": 88,
+          "4": 88,
+          "5": 88
+        },
+        "w5_ttk": null,
+        "w10_td_boss_ttk": null,
+        "special_spawn_times": {
+          "w5": 167.25000000000378,
+          "w10": null
+        },
+        "runtime_errors": [],
+        "cumulative_gold": 2502,
+        "current_gold": 562,
+        "gold_earned": 2002,
+        "gold_spent": 1940,
+        "build_actions": 5,
+        "upgrade_actions": 10,
+        "gate_hp_at_td_end": null,
+        "gate_core_hp_end": 0,
+        "final_wall_hp_end": 0,
+        "td_end_hero_count": 0,
+        "td_end_hero_ids": [],
+        "rpg_transition_event": false,
+        "rpg_transition_plumbing_static_verified": true,
+        "finished_reason": "TD_DEFEAT_GATE"
+      }
+    },
+    {
+      "schema": "lucky_girls.balance_lab.trial.v1",
+      "scenario_id": "STAGE2_NORMAL02_TD_FOUNDATION",
+      "candidate_id": "NORMAL_02_TD_FOUNDATION_A",
+      "mode": "CORE_SIM",
+      "validated_fixture": true,
+      "production_exposed_fixture": false,
+      "direct_injection": false,
+      "seed": 33,
+      "victory": false,
+      "runtime_errors": [],
+      "telemetry": {
+        "spawn_count_per_wave": {
+          "1": 27,
+          "2": 32,
+          "3": 36,
+          "4": 41,
+          "5": 46,
+          "6": 10
+        },
+        "enemy_mix_per_wave": {
+          "1": {
+            "화약 밀수꾼": 27
+          },
+          "2": {
+            "광산 파괴자": 16,
+            "화약 밀수꾼": 16
+          },
+          "3": {
+            "화약 밀수꾼": 12,
+            "광산 파괴자": 12,
+            "뿔멧돼지": 12
+          },
+          "4": {
+            "광산 파괴자": 14,
+            "뿔멧돼지": 14,
+            "절벽 매": 13
+          },
+          "5": {
+            "광산 파괴자": 23,
+            "화약 밀수꾼": 22,
+            "최초의 골렘 아즈로": 1
+          },
+          "6": {
+            "화약 밀수꾼": 4,
+            "광산 파괴자": 3,
+            "뿔멧돼지": 3
+          }
+        },
+        "wave_end_survivors": {
+          "1": 13,
+          "2": 17,
+          "3": 13,
+          "4": 7,
+          "5": 8
+        },
+        "gate_hp_per_wave": {
+          "1": 120,
+          "2": 120,
+          "3": 120,
+          "4": 120,
+          "5": 120
+        },
+        "final_wall_hp_per_wave": {
+          "1": 88,
+          "2": 88,
+          "3": 88,
+          "4": 88,
+          "5": 88
+        },
+        "w5_ttk": null,
+        "w10_td_boss_ttk": null,
+        "special_spawn_times": {
+          "w5": 167.25000000000378,
+          "w10": null
+        },
+        "runtime_errors": [],
+        "cumulative_gold": 2513,
+        "current_gold": 573,
+        "gold_earned": 2013,
+        "gold_spent": 1940,
+        "build_actions": 5,
+        "upgrade_actions": 10,
+        "gate_hp_at_td_end": null,
+        "gate_core_hp_end": 0,
+        "final_wall_hp_end": 0,
+        "td_end_hero_count": 0,
+        "td_end_hero_ids": [],
+        "rpg_transition_event": false,
+        "rpg_transition_plumbing_static_verified": true,
+        "finished_reason": "TD_DEFEAT_GATE"
+      }
+    },
+    {
+      "schema": "lucky_girls.balance_lab.trial.v1",
+      "scenario_id": "STAGE2_NORMAL02_TD_FOUNDATION",
+      "candidate_id": "NORMAL_02_TD_FOUNDATION_A",
+      "mode": "CORE_SIM",
+      "validated_fixture": true,
+      "production_exposed_fixture": false,
+      "direct_injection": false,
+      "seed": 44,
+      "victory": false,
+      "runtime_errors": [],
+      "telemetry": {
+        "spawn_count_per_wave": {
+          "1": 27,
+          "2": 32,
+          "3": 36,
+          "4": 41,
+          "5": 46,
+          "6": 10
+        },
+        "enemy_mix_per_wave": {
+          "1": {
+            "화약 밀수꾼": 27
+          },
+          "2": {
+            "화약 밀수꾼": 16,
+            "광산 파괴자": 16
+          },
+          "3": {
+            "뿔멧돼지": 12,
+            "화약 밀수꾼": 12,
+            "광산 파괴자": 12
+          },
+          "4": {
+            "절벽 매": 14,
+            "광산 파괴자": 14,
+            "뿔멧돼지": 13
+          },
+          "5": {
+            "화약 밀수꾼": 23,
+            "광산 파괴자": 22,
+            "최초의 골렘 아즈로": 1
+          },
+          "6": {
+            "뿔멧돼지": 4,
+            "화약 밀수꾼": 3,
+            "광산 파괴자": 3
+          }
+        },
+        "wave_end_survivors": {
+          "1": 13,
+          "2": 17,
+          "3": 14,
+          "4": 6,
+          "5": 7
+        },
+        "gate_hp_per_wave": {
+          "1": 120,
+          "2": 120,
+          "3": 120,
+          "4": 120,
+          "5": 120
+        },
+        "final_wall_hp_per_wave": {
+          "1": 88,
+          "2": 88,
+          "3": 88,
+          "4": 88,
+          "5": 88
+        },
+        "w5_ttk": null,
+        "w10_td_boss_ttk": null,
+        "special_spawn_times": {
+          "w5": 167.25000000000378,
+          "w10": null
+        },
+        "runtime_errors": [],
+        "cumulative_gold": 2513,
+        "current_gold": 573,
+        "gold_earned": 2013,
+        "gold_spent": 1940,
+        "build_actions": 5,
+        "upgrade_actions": 10,
+        "gate_hp_at_td_end": null,
+        "gate_core_hp_end": 0,
+        "final_wall_hp_end": 0,
+        "td_end_hero_count": 0,
+        "td_end_hero_ids": [],
+        "rpg_transition_event": false,
+        "rpg_transition_plumbing_static_verified": true,
+        "finished_reason": "TD_DEFEAT_GATE"
+      }
+    }
+  ],
+  "summary": {
+    "run_count": 4,
+    "seed_evidence_class": "SMOKE",
+    "runtime_error_count": 0,
+    "gate_core_hp_end": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "final_wall_hp_end": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "w5_ttk": {
+      "count": 0,
+      "mean": null,
+      "median": null,
+      "p10": null,
+      "p50": null,
+      "p90": null,
+      "min": null,
+      "max": null
+    },
+    "w10_td_boss_ttk": {
+      "count": 0,
+      "mean": null,
+      "median": null,
+      "p10": null,
+      "p50": null,
+      "p90": null,
+      "min": null,
+      "max": null
+    },
+    "w5_band_pass": false,
+    "w10_band_pass": false,
+    "stage1_reference": {
+      "w5_ttk_sec": 22.3,
+      "w10_ttk_sec": 41.0
+    },
+    "effective_pressure_proxy_pct": null,
+    "effective_pressure_proxy_formula": "mean(W5_TTK_ratio_minus_1,W10_TTK_ratio_minus_1)*100 using VERIFIED Candidate B 22.30s/41.00s",
+    "pressure_band_8_20_pass": false,
+    "spawn_counts_exact": false,
+    "spawn_count_per_wave": [
+      {
+        "1": 27,
+        "2": 32,
+        "3": 36,
+        "4": 41,
+        "5": 46,
+        "6": 10
+      },
+      {
+        "1": 27,
+        "2": 32,
+        "3": 36,
+        "4": 41,
+        "5": 46,
+        "6": 10
+      },
+      {
+        "1": 27,
+        "2": 32,
+        "3": 36,
+        "4": 41,
+        "5": 46,
+        "6": 10
+      },
+      {
+        "1": 27,
+        "2": 32,
+        "3": 36,
+        "4": 41,
+        "5": 46,
+        "6": 10
+      }
+    ],
+    "enemy_mix_per_wave": [
+      {
+        "1": {
+          "화약 밀수꾼": 27
+        },
+        "2": {
+          "광산 파괴자": 16,
+          "화약 밀수꾼": 16
+        },
+        "3": {
+          "뿔멧돼지": 12,
+          "화약 밀수꾼": 12,
+          "광산 파괴자": 12
+        },
+        "4": {
+          "절벽 매": 14,
+          "광산 파괴자": 14,
+          "뿔멧돼지": 13
+        },
+        "5": {
+          "광산 파괴자": 23,
+          "화약 밀수꾼": 22,
+          "최초의 골렘 아즈로": 1
+        },
+        "6": {
+          "뿔멧돼지": 4,
+          "화약 밀수꾼": 3,
+          "광산 파괴자": 3
+        }
+      },
+      {
+        "1": {
+          "화약 밀수꾼": 27
+        },
+        "2": {
+          "화약 밀수꾼": 16,
+          "광산 파괴자": 16
+        },
+        "3": {
+          "광산 파괴자": 12,
+          "뿔멧돼지": 12,
+          "화약 밀수꾼": 12
+        },
+        "4": {
+          "뿔멧돼지": 14,
+          "절벽 매": 14,
+          "광산 파괴자": 13
+        },
+        "5": {
+          "화약 밀수꾼": 23,
+          "광산 파괴자": 22,
+          "최초의 골렘 아즈로": 1
+        },
+        "6": {
+          "광산 파괴자": 4,
+          "뿔멧돼지": 3,
+          "화약 밀수꾼": 3
+        }
+      },
+      {
+        "1": {
+          "화약 밀수꾼": 27
+        },
+        "2": {
+          "광산 파괴자": 16,
+          "화약 밀수꾼": 16
+        },
+        "3": {
+          "화약 밀수꾼": 12,
+          "광산 파괴자": 12,
+          "뿔멧돼지": 12
+        },
+        "4": {
+          "광산 파괴자": 14,
+          "뿔멧돼지": 14,
+          "절벽 매": 13
+        },
+        "5": {
+          "광산 파괴자": 23,
+          "화약 밀수꾼": 22,
+          "최초의 골렘 아즈로": 1
+        },
+        "6": {
+          "화약 밀수꾼": 4,
+          "광산 파괴자": 3,
+          "뿔멧돼지": 3
+        }
+      },
+      {
+        "1": {
+          "화약 밀수꾼": 27
+        },
+        "2": {
+          "화약 밀수꾼": 16,
+          "광산 파괴자": 16
+        },
+        "3": {
+          "뿔멧돼지": 12,
+          "화약 밀수꾼": 12,
+          "광산 파괴자": 12
+        },
+        "4": {
+          "절벽 매": 14,
+          "광산 파괴자": 14,
+          "뿔멧돼지": 13
+        },
+        "5": {
+          "화약 밀수꾼": 23,
+          "광산 파괴자": 22,
+          "최초의 골렘 아즈로": 1
+        },
+        "6": {
+          "뿔멧돼지": 4,
+          "화약 밀수꾼": 3,
+          "광산 파괴자": 3
+        }
+      }
+    ],
+    "wave_end_survivors": [
+      {
+        "1": 13,
+        "2": 17,
+        "3": 13,
+        "4": 7,
+        "5": 8
+      },
+      {
+        "1": 13,
+        "2": 17,
+        "3": 15,
+        "4": 9,
+        "5": 7
+      },
+      {
+        "1": 13,
+        "2": 17,
+        "3": 13,
+        "4": 7,
+        "5": 8
+      },
+      {
+        "1": 13,
+        "2": 17,
+        "3": 14,
+        "4": 6,
+        "5": 7
+      }
+    ],
+    "cumulative_gold": [
+      2513,
+      2502,
+      2513,
+      2513
+    ],
+    "gold_earned": [
+      2013,
+      2002,
+      2013,
+      2013
+    ],
+    "gold_spent": [
+      1940,
+      1940,
+      1940,
+      1940
+    ],
+    "build_actions": [
+      5,
+      5,
+      5,
+      5
+    ],
+    "upgrade_actions": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "td_end_hero_count": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "td_end_hero_ids": [
+      [],
+      [],
+      [],
+      []
+    ],
+    "rpg_transition_event": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "selection_band_pass": false
+  }
+}

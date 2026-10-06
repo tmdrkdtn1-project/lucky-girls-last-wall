@@ -1,0 +1,385 @@
+{
+  "schema": "lucky_girls.stage2.normal02.td_foundation_candidate.v1",
+  "version": "1.0.0",
+  "candidate_id": "NORMAL_02_TD_FOUNDATION_A",
+  "authority": "TEST_ONLY_NOT_CANON",
+  "stage": {
+    "world_id": "WORLD_01",
+    "local_map_id": "LOCAL_WEST",
+    "local_name": "브레몽 왕국",
+    "mode": "NORMAL",
+    "stage_id": "NORMAL_02",
+    "stage_number": 2
+  },
+  "grid": {
+    "cols": 18,
+    "rows": 10
+  },
+  "route": [
+    [
+      1,
+      5
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      4,
+      5
+    ],
+    [
+      5,
+      5
+    ],
+    [
+      5,
+      4
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      6,
+      3
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      9,
+      3
+    ],
+    [
+      10,
+      3
+    ],
+    [
+      10,
+      4
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      11,
+      7
+    ],
+    [
+      12,
+      7
+    ],
+    [
+      13,
+      7
+    ],
+    [
+      13,
+      6
+    ],
+    [
+      13,
+      5
+    ],
+    [
+      14,
+      5
+    ],
+    [
+      15,
+      5
+    ],
+    [
+      16,
+      5
+    ],
+    [
+      17,
+      5
+    ],
+    [
+      18,
+      5
+    ]
+  ],
+  "tile_rows": [
+    "WWTTXDDDDDTTTTTTTT",
+    "TWTTDDDDDDXTTTTTTT",
+    "DDDDPPPPPPDDDDDDDD",
+    "DDDDPDDDDPDDDDDDCC",
+    "SPPPPDDDDPDDPPPPGO",
+    "DDDDDDDDDPDDPDDDCC",
+    "DDDDDDDDDPPPPDDDDD",
+    "TTTTTTTTTTTTTTTTTT",
+    "WWTTTTTTTTTTTTTTTT",
+    "TWTTTTTTTTTTTTTTTT"
+  ],
+  "geometry_summary": {
+    "route_length_cells": 26,
+    "direction_changes": 6,
+    "meaningful_choke_zones": [
+      "UPPER_MINE_BEND_X5_TO_X10_Y3",
+      "CENTRAL_SHAFT_X10_Y3_TO_Y7",
+      "CASTLE_APPROACH_X13_TO_X18"
+    ],
+    "stage01_castle_gate_core_semantics_preserved": true,
+    "candidate_only": true
+  },
+  "source_enemies": {
+    "화약 밀수꾼": {
+      "role": "사망 시 폭발",
+      "hp": 94,
+      "def": 0,
+      "move_speed": 1.08,
+      "wall_atk": 12,
+      "runtime_semantic": "SOURCE_METADATA_ONLY"
+    },
+    "광산 파괴자": {
+      "role": "방어벽 특화",
+      "hp": 116,
+      "def": 4,
+      "move_speed": 0.95,
+      "wall_atk": 21,
+      "runtime_semantic": "SOURCE_METADATA_ONLY"
+    },
+    "뿔멧돼지": {
+      "role": "돌진",
+      "hp": 104,
+      "def": 2,
+      "move_speed": 1.35,
+      "wall_atk": 16,
+      "runtime_semantic": "SOURCE_METADATA_ONLY"
+    },
+    "절벽 매": {
+      "role": "공중",
+      "hp": 86,
+      "def": 0,
+      "move_speed": 1.28,
+      "wall_atk": 9,
+      "runtime_semantic": "FLYING_TERRAIN_IGNORE"
+    },
+    "암석 골렘": {
+      "role": "고HP",
+      "hp": 170,
+      "def": 5,
+      "move_speed": 0.78,
+      "wall_atk": 15,
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40"
+    },
+    "최초의 골렘 아즈로": {
+      "role": "고HP/고방어",
+      "hp": 2376,
+      "def": 40,
+      "move_speed": 0.72,
+      "wall_atk": 50,
+      "runtime_semantic": "FREEZE_DURATION_REDUCTION_40"
+    }
+  },
+  "source_boss": {
+    "name": "광산왕 모르겐",
+    "hp": 2431,
+    "def": 12,
+    "move_speed": 0.69,
+    "wall_atk": 69,
+    "recommended_power": 113,
+    "skills": [
+      "파쇄 타격",
+      "낙석 지대",
+      "광맥 폭주"
+    ]
+  },
+  "spawn_count_total_per_wave": {
+    "1": 27,
+    "2": 32,
+    "3": 36,
+    "4": 41,
+    "5": 46,
+    "6": 50,
+    "7": 54,
+    "8": 59,
+    "9": 63,
+    "10": 35
+  },
+  "wave_composition": {
+    "1": [
+      "화약 밀수꾼"
+    ],
+    "2": [
+      "화약 밀수꾼",
+      "광산 파괴자"
+    ],
+    "3": [
+      "화약 밀수꾼",
+      "광산 파괴자",
+      "뿔멧돼지"
+    ],
+    "4": [
+      "광산 파괴자",
+      "뿔멧돼지",
+      "절벽 매"
+    ],
+    "5": [
+      "최초의 골렘 아즈로",
+      "화약 밀수꾼",
+      "광산 파괴자"
+    ],
+    "6": [
+      "화약 밀수꾼",
+      "광산 파괴자",
+      "뿔멧돼지"
+    ],
+    "7": [
+      "광산 파괴자",
+      "뿔멧돼지",
+      "절벽 매"
+    ],
+    "8": [
+      "암석 골렘",
+      "광산 파괴자",
+      "절벽 매"
+    ],
+    "9": [
+      "화약 밀수꾼",
+      "광산 파괴자",
+      "뿔멧돼지",
+      "절벽 매",
+      "암석 골렘"
+    ],
+    "10": [
+      "광산왕 모르겐",
+      "광산 파괴자",
+      "암석 골렘"
+    ]
+  },
+  "economy_control": {
+    "initial_gold": 500,
+    "gold_per_kill": 11,
+    "roulette": "OFF_FOR_FOUNDATION_MEASUREMENT",
+    "stage2_specific_rewards": "DISABLED_DATA_PENDING",
+    "stage2_specific_recipes": "DISABLED_DATA_PENDING"
+  },
+  "deterministic_policy": {
+    "seeds": [
+      11,
+      22,
+      33,
+      44
+    ],
+    "spawn_order": "ROUND_ROBIN_ROTATED_BY_SEED",
+    "placements": [
+      [
+        "watchtower",
+        6,
+        2
+      ],
+      [
+        "archer1",
+        9,
+        4
+      ],
+      [
+        "lancer1",
+        12,
+        4
+      ],
+      [
+        "watchtower",
+        15,
+        4
+      ],
+      [
+        "knight1",
+        17,
+        4
+      ]
+    ],
+    "upgrade_plan": [
+      [
+        15,
+        4,
+        "watchtower",
+        "watchtower2"
+      ],
+      [
+        15,
+        4,
+        "watchtower2",
+        "watchtower3_sniper"
+      ],
+      [
+        9,
+        4,
+        "archer1",
+        "archer2"
+      ],
+      [
+        9,
+        4,
+        "archer2",
+        "archer3_rapid"
+      ],
+      [
+        12,
+        4,
+        "lancer1",
+        "lancer2"
+      ],
+      [
+        12,
+        4,
+        "lancer2",
+        "lancer3_elite"
+      ],
+      [
+        17,
+        4,
+        "knight1",
+        "knight2"
+      ],
+      [
+        17,
+        4,
+        "knight2",
+        "knight3_commander"
+      ],
+      [
+        6,
+        2,
+        "watchtower",
+        "watchtower2"
+      ],
+      [
+        6,
+        2,
+        "watchtower2",
+        "watchtower3_rapid"
+      ]
+    ]
+  },
+  "diagnostic_adapter": {
+    "source_enemy_def_rule": "REUSE_EXISTING_RPG_BOSS_FLAT_DEF_REDUCTION_FACTOR_0_25_TEST_ONLY",
+    "source_wall_atk_rule": "USE_SOURCE_WALL_ATK_AS_STRUCTURE_HIT_BASE_DAMAGE",
+    "bound_special_semantics_only": true,
+    "unbound_roles_remain_metadata_only": true,
+    "production_files_mutated": false
+  }
+}

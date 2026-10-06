@@ -1,0 +1,49 @@
+{
+  "schema": "lucky_girls.golden_scenarios.contract.v1",
+  "version": "1.0.0",
+  "scope": "STAGE2_NORMAL02_TD_FOUNDATION_TEST_ONLY",
+  "scenarios": [
+    {
+      "id": "GOLDEN_STAGE2_DIAGNOSTIC_BOUNDARY",
+      "severity": "P0",
+      "required_invariants": [
+        "production_ui_locked",
+        "runtime_pending_preserved",
+        "data_path_null_preserved",
+        "geometry_pending_preserved",
+        "diagnostic_candidate_only"
+      ],
+      "tolerance_bands": {}
+    },
+    {
+      "id": "GOLDEN_STAGE2_TD_FOUNDATION",
+      "severity": "P0",
+      "required_invariants": [
+        "four_runs",
+        "runtime_errors_0",
+        "gate_core_positive",
+        "w5_band_pass",
+        "w10_band_pass",
+        "exact_spawn_counts",
+        "rpg_transition_plumbing"
+      ],
+      "tolerance_bands": {
+        "route_length_cells": {
+          "min": 22,
+          "max": 28
+        }
+      }
+    },
+    {
+      "id": "GOLDEN_STAGE1_NO_REGRESSION",
+      "severity": "P0",
+      "required_invariants": [
+        "stage1_tests_pass",
+        "balance_lab_tests_pass",
+        "git_diff_check_pass",
+        "normal02_v2a_factor_1"
+      ],
+      "tolerance_bands": {}
+    }
+  ]
+}

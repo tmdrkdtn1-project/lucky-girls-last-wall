@@ -1,0 +1,40 @@
+{
+  "schema": "lucky_girls.golden_scenarios.result.v1",
+  "scenario_count": 3,
+  "pass_count": 2,
+  "fail_count": 1,
+  "not_run_count": 0,
+  "p0_blocking_scenarios": [
+    "GOLDEN_STAGE2_TD_FOUNDATION"
+  ],
+  "promotion_gate": "BLOCKED",
+  "results": [
+    {
+      "id": "GOLDEN_STAGE2_DIAGNOSTIC_BOUNDARY",
+      "severity": "P0",
+      "status": "PASS",
+      "failures": [],
+      "promotion_blocking": false
+    },
+    {
+      "id": "GOLDEN_STAGE2_TD_FOUNDATION",
+      "severity": "P0",
+      "status": "FAIL",
+      "failures": [
+        "INVARIANT:gate_core_positive",
+        "INVARIANT:w5_band_pass",
+        "INVARIANT:w10_band_pass",
+        "INVARIANT:exact_spawn_counts",
+        "INVARIANT:rpg_transition_plumbing"
+      ],
+      "promotion_blocking": true
+    },
+    {
+      "id": "GOLDEN_STAGE1_NO_REGRESSION",
+      "severity": "P0",
+      "status": "PASS",
+      "failures": [],
+      "promotion_blocking": false
+    }
+  ]
+}

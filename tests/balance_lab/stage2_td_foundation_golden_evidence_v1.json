@@ -1,0 +1,37 @@
+{
+  "scenarios": {
+    "GOLDEN_STAGE2_DIAGNOSTIC_BOUNDARY": {
+      "checks": {
+        "production_ui_locked": true,
+        "runtime_pending_preserved": true,
+        "data_path_null_preserved": true,
+        "geometry_pending_preserved": true,
+        "diagnostic_candidate_only": true
+      },
+      "metrics": {}
+    },
+    "GOLDEN_STAGE2_TD_FOUNDATION": {
+      "checks": {
+        "four_runs": true,
+        "runtime_errors_0": true,
+        "gate_core_positive": false,
+        "w5_band_pass": false,
+        "w10_band_pass": false,
+        "exact_spawn_counts": false,
+        "rpg_transition_plumbing": false
+      },
+      "metrics": {
+        "route_length_cells": 28
+      }
+    },
+    "GOLDEN_STAGE1_NO_REGRESSION": {
+      "checks": {
+        "stage1_tests_pass": true,
+        "balance_lab_tests_pass": true,
+        "git_diff_check_pass": true,
+        "normal02_v2a_factor_1": true
+      },
+      "metrics": {}
+    }
+  }
+}
