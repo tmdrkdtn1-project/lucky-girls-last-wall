@@ -1,0 +1,73 @@
+{
+  "schema": "lucky_girls.game_build.stage2_balance_closed_loop_admin_fallback_evidence.v1",
+  "status": "VERIFIED_TEST_ONLY",
+  "scope": {
+    "stage_id": "NORMAL_02",
+    "production_mutation": false,
+    "canonical_main_mutation": false,
+    "player_unlock": false,
+    "physical_android_qa": "NOT_RUN"
+  },
+  "planning_contract": {
+    "path": "02_JOBS/ADMIN_BRIDGE/PLANNING/STAGE2_NORMAL02_TD_FOUNDATION_CANDIDATE_V1.json",
+    "sha256": "46a67bfe7c16d4092d0b87335ab1d0ed128703775e6e6fea7046d7bdbbc83781",
+    "status": "PLANNING_PROPOSAL_TEST_ONLY"
+  },
+  "federated_v3": {
+    "admin_bridge_version": "1.4.0",
+    "capability_plane_version": "3.0-A",
+    "local_provider_state": "QUARANTINED",
+    "admin_provider_state": "READY_STABLE",
+    "read_fallback_verified": [
+      "project.git.status",
+      "project.files.list",
+      "project.file.text.read",
+      "project.file.hash"
+    ],
+    "authority_boundary_verified": {
+      "main_dev_write_to_game_build": "BLOCKED_WORKROOM_PATH_OUTSIDE_ROUTE",
+      "unapproved_protected_write": "BLOCKED_OUTSIDE_DRAFT_ALLOWLIST",
+      "game_build_approved_job": "PASS",
+      "host_execution_approval_gate": "PASS"
+    }
+  },
+  "changed_files": {
+    "tests/balance_lab/stage2_normal02_balance_extension_v1.py": "0009f1f8c8e4dc6ed9b93d8eb0d821f028f80d948bea1107cd79878210b3a811",
+    "tests/balance_lab/closed_loop_stage2_v1.py": "eeacf94f711a64940c9534eeeeeb9ef83a66a991666f26bf239603927f8fb703",
+    "tests/balance_lab/test_stage2_normal02_extension_v1.py": "cfaff83646211b172bf3d5cced23914eb85e0ff1e23cdeb11b44673b21201ad5"
+  },
+  "verification": {
+    "stage2_extension_test": {
+      "returncode": 0,
+      "status": "PASS",
+      "stdout_sha256": "fe61e2224276ab52cf790207e12f36748502b7881625bf34aea8c7d7f3319354"
+    },
+    "legacy_balance_lab_test": {
+      "returncode": 0,
+      "status": "PASS",
+      "stdout_sha256": "c84dc1c2d986dfb9670cf292944be397b97f4294552f2ef7fe9afeaea90f4f5f"
+    },
+    "stage1_regression": {
+      "returncode": 0,
+      "status": "ALL_PASS",
+      "stdout_sha256": "a072ad6ff8ecb58d42f3921cf2d3279ccfd39461d80f0888a53b4d324c2ed3e5"
+    }
+  },
+  "closed_loop_fixture_validation": {
+    "fixture_only": true,
+    "balance_claim_allowed": false,
+    "round1": "REVISE_ONCE",
+    "round2": "FOUNDATION_PASS_PLANNING_REVIEW_REQUIRED",
+    "next_owner": "PLANNING",
+    "canonical_auto_promotion": false,
+    "limits": {
+      "max_rounds": 3,
+      "max_candidates_per_round": 4
+    }
+  },
+  "warnings": [
+    "This validates the Stage2 Balance Lab/Closed Loop harness and Admin fallback path, not live NORMAL_02 gameplay balance.",
+    "NORMAL_02 production UI/runtime/data/geometry blockers remain unresolved.",
+    "No source enemy/boss base stats were changed."
+  ]
+}
