@@ -32,3 +32,7 @@ jobs:
         run: python3 tests/balance_lab/test_stage2_td_foundation_v1.py
       - name: NORMAL_02 player-lock preflight
         run: python3 tests/balance_lab/test_normal02_integration_preflight_v1.py
+      - name: Stage 2 RPG source guard
+        run: python3 tests/check_stage2_rpg_source_v1.py
+      - name: Stage 2 release plumbing guard
+        run: python3 tests/check_stage2_release.py
