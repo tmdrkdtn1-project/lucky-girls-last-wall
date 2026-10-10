@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - integration/normal02-rpg-20261010
+      - main
   pull_request:
     branches:
       - main
