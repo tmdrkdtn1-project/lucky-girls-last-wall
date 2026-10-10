@@ -1,0 +1,34 @@
+name: NORMAL_02 RPG Integration Checks
+on:
+  push:
+    branches:
+      - integration/normal02-rpg-20261010
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'app/src/main/assets/**'
+      - 'tests/**'
+      - '.github/workflows/normal02-rpg-integration.yml'
+permissions:
+  contents: read
+jobs:
+  integration-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check app/src/main/assets/js/game.js
+      - name: Stage 1 regression
+        run: python3 tests/check_stage1.py
+      - name: Frozen Stage 2 TD
+        run: python3 tests/balance_lab/test_stage2_td_foundation_v1.py
+      - name: NORMAL_02 player-lock preflight
+        run: python3 tests/balance_lab/test_normal02_integration_preflight_v1.py
