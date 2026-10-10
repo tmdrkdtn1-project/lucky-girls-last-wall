@@ -40,5 +40,10 @@ assert s2["td_profile"] == "STAGE2_G"
 assert "playerExposed:false,tdProfile:'STAGE2_G'" in js
 assert 'data-stage="2" disabled' in html
 assert "activeMapSelection.stageId==='NORMAL_01'&&partySize===1?STAGE1_RPG_SOLO_BOSS_DAMAGE_X:1" in js
-assert any(x["id"] == "NORMAL_03" and not x.get("player_exposed", False) for x in stages)
+assert any(
+    x["id"] == "NORMAL_03"
+    and x["status"] == "DATA_CONFIRMED_RUNTIME_PENDING"
+    and x["data_path"] is None
+    for x in stages
+)
 print("PASS - NORMAL_02 preflight frozen TD / Stage1 solo RPG / player locks")
