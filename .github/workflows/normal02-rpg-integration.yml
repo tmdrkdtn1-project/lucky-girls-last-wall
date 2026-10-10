@@ -42,3 +42,22 @@ jobs:
         run: python3 tests/balance_lab/normal02_td_rpg_browser_ci_v1.py
       - name: Stage 2 release first and repeat clear browser reward
         run: python3 tests/balance_lab/normal02_release_browser_ci_v1.py
+      - name: Stage 2 RPG defeat retry no reward
+        run: python3 tests/balance_lab/normal02_defeat_retry_browser_ci_v1.py
+      - name: Verify Golden runner blocks missing P0
+        run: python3 tests/balance_lab/golden_runner_v1.py --self-test --contract tests/balance_lab/golden_normal02_rpg_v1.json
+      - name: Evaluate five live NORMAL_02 Golden P0 scenarios
+        run: python3 tests/balance_lab/normal02_golden_live_ci_v1.py
+      - name: Preserve run-scoped NORMAL_02 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: normal02-rpg-ci-evidence
+          path: |
+            tests/balance_lab/normal02_rpg_a_component_result.json
+            tests/balance_lab/normal02_td_rpg_integration_result.json
+            tests/balance_lab/normal02_release_idempotency_result.json
+            tests/balance_lab/normal02_defeat_retry_ci_result.json
+            tests/balance_lab/normal02_golden_live_ci_result.json
+          retention-days: 7
+          if-no-files-found: warn
