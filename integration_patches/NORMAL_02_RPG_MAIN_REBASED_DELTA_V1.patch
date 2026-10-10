@@ -1,0 +1,160 @@
+diff --git a/app/src/main/assets/js/game.js b/app/src/main/assets/js/game.js
+--- a/app/src/main/assets/js/game.js
++++ b/app/src/main/assets/js/game.js
+@@ -392,15 +392,48 @@
+ if($('heroBrowserButton'))$('heroBrowserButton').onclick=()=>{renderHeroBrowser();heroBrowser.classList.add('on');heroBrowser.setAttribute('aria-hidden','false')};
+ if($('heroBrowserClose'))$('heroBrowserClose').onclick=()=>{heroBrowser.classList.remove('on');heroBrowser.setAttribute('aria-hidden','true')};
+ 
++const STAGE2_RELEASE_STORAGE_KEY='LG_NORMAL02_RELEASE_V1';
++const STAGE2_CLEAR_BASE_REWARD=160,STAGE2_FIRST_CLEAR_BONUS=70;
++function defaultStage2ReleaseState(){return {growthCurrency:0,firstClearGranted:false,clearCount:0,lastReward:0}}
++function loadStage2ReleaseState(){
++ try{
++  const raw=localStorage.getItem(STAGE2_RELEASE_STORAGE_KEY),v=raw?JSON.parse(raw):null;
++  if(v&&Number.isFinite(v.growthCurrency)&&Number.isInteger(v.clearCount))return {
++   growthCurrency:Math.max(0,Number(v.growthCurrency)||0),
++   firstClearGranted:!!v.firstClearGranted,
++   clearCount:Math.max(0,Number(v.clearCount)||0),
++   lastReward:Math.max(0,Number(v.lastReward)||0)
++  };
++ }catch(_){}
++ return defaultStage2ReleaseState();
++}
++let stage2ReleaseState=loadStage2ReleaseState();
++function persistStage2ReleaseState(){try{localStorage.setItem(STAGE2_RELEASE_STORAGE_KEY,JSON.stringify(stage2ReleaseState))}catch(_){}}
++function stage2IntegratedReleaseEligible(){
++ if(!activeMapSelection||activeMapSelection.stageId!=='NORMAL_02')return false;
++ const t=priorityCEnsureTelemetry(),td=(t.td_end_hero_ids||[]),rp=(t.rpg_party_ids||[]);
++ return t.rpg_transition===true&&Number(t.td_end_hero_count)>0&&td.length>0&&td.length===rp.length&&td.every((id,i)=>id===rp[i]);
++}
++function applyStage2IntegratedClearReward(){
++ if(!stage2IntegratedReleaseEligible())return {applied:false,reward:0,...stage2ReleaseState};
++ const first=!stage2ReleaseState.firstClearGranted,reward=STAGE2_CLEAR_BASE_REWARD+(first?STAGE2_FIRST_CLEAR_BONUS:0);
++ stage2ReleaseState={growthCurrency:stage2ReleaseState.growthCurrency+reward,firstClearGranted:true,clearCount:stage2ReleaseState.clearCount+1,lastReward:reward};
++ persistStage2ReleaseState();
++ return {applied:true,firstClear:first,reward,...stage2ReleaseState};
++}
+ function showResultScreen(kind,reason){
+  if(!resultScreen)return;
+  resultScreen.classList.add('on');resultScreen.setAttribute('aria-hidden','false');
+  $('resultEyebrow').textContent=kind==='CLEAR'?'STAGE RESULT':'BATTLE RESULT';
+  $('resultTitle').textContent=kind==='CLEAR'?'STAGE CLEAR':'DEFEAT';
+  $('resultReason').textContent=reason||'';
++ if(kind==='CLEAR'&&activeMapSelection&&activeMapSelection.stageId==='NORMAL_02'){
++  $('resultMeta').innerHTML='<div><strong>STAGE 2</strong><span>완료</span></div><div><strong>별 평가</strong><span>없음</span></div><div><strong>보상</strong><span>성장 재화 +'+stage2ReleaseState.lastReward+' · 누적 '+stage2ReleaseState.growthCurrency+'</span></div>';
++ }else{
+  $('resultMeta').innerHTML=kind==='CLEAR'
+   ?'<div><strong>STAGE 1</strong><span>완료</span></div><div><strong>별 조건</strong><span>DATA_PENDING</span></div><div><strong>보상</strong><span>DATA_PENDING</span></div>'
+   :'<div><strong>패배 사유</strong><span>'+reason+'</span></div><div><strong>재도전</strong><span>가능</span></div><div><strong>복귀</strong><span>로컬 전선 유지</span></div>';
++ }
+  $('resultNext').style.display=kind==='CLEAR'?'inline-block':'none';
+ }
+ function hideResultScreen(){if(resultScreen){resultScreen.classList.remove('on');resultScreen.setAttribute('aria-hidden','true')}}
+@@ -820,7 +853,6 @@
+  const p=priorityCBalanceProfile(),normalReward=p?p.goldPerKill:12,s2=stage2FoundationProfile(),resolvedNormalReward=s2?Number(s2.economy_control.gold_per_kill||11):normalReward,reward=e.kind==='boss'?(s2?0:180):e.kind==='midboss'?0:resolvedNormalReward;
+  addGold(reward,e.kind==='boss'?'TD_BOSS_KILL':e.kind==='midboss'?'MIDBOSS_KILL':'NORMAL_KILL');
+  if(e.kind==='boss'){
+-  if(s2){const tdHeroes=[...units.values()].filter(u=>u.heroId).slice(0,5);priorityCRecordTdEnd(tdHeroes,e);priorityCRecordRpgTransition();priorityCEnsureTelemetry().finished_reason='TD_BOSS_DEFEATED';running=false;gameMode='TD_TRANSITION';showWarning('TD BOSS DOWN','STAGE 2 RPG · DATA_PENDING',1400);return true}
+   enterRpgPlaceholder(e);return true
+  }
+  if(e.kind==='midboss'){if(s2)toast('중간보스 격파 · STAGE 2 보상 DATA_PENDING');else{openMidbossReward();toast('중간보스 격파 · 보상 1개 선택')}}else toast('+'+resolvedNormalReward+'G');
+@@ -1055,6 +1087,9 @@
+  EVE:{name:'이브',hp:2850,atk:250,def:120,basicGap:1/.95,skill1Gap:8,skill2Gap:14,s1:1.2,s2:.35,ult:3.2,skill1Name:'시간지연',skill2Name:'되감기',ultimateName:'멈춰버린 세계'}
+ };
+ const RPG_BOSS_DEF={name:'철각왕 브라움',hp:16000,atk:110,def:60,baseAttackGap:3.0};
++const NORMAL02_RPG_SOURCE={name:'광산왕 모르겐',tdAtk:69,rpgPressure:5.3097265,hp:3990.65625,def:12,baseAttackGap:3.0};
++function selectedRpgBossDef(){if(activeMapSelection.stageId==='NORMAL_02')return {...NORMAL02_RPG_SOURCE,atk:NORMAL02_RPG_SOURCE.tdAtk*NORMAL02_RPG_SOURCE.rpgPressure,pressureModel:'TD_ATK_X_RPG_PRESSURE_COEFFICIENT'};return RPG_BOSS_DEF}
++function normal02RpgAggregatePressure(){return activeMapSelection.stageId==='NORMAL_02'}
+ const STAGE1_RPG_SOLO_BOSS_DAMAGE_X=.70;
+ function stage1RpgSoloBossDamageX(partySize){
+  return activeMapSelection.worldId==='WORLD_01'&&activeMapSelection.localMapId==='LOCAL_WEST'&&activeMapSelection.mode==='NORMAL'&&activeMapSelection.stageId==='NORMAL_01'&&partySize===1?STAGE1_RPG_SOLO_BOSS_DAMAGE_X:1;
+@@ -1103,7 +1138,7 @@
+  },1500);
+  setTimeout(()=>{
+   boss.cinematicState='roar';renderEnemies();
++  showWarning('⚠ ROAR',selectedRpgBossDef().name+'이 다시 일어섰다',900);
+-  showWarning('⚠ ROAR',RPG_BOSS_DEF.name+'이 다시 일어섰다',900);
+  },2200);
+  setTimeout(()=>{
+   destroyTdDefenseForBossCharge();
+@@ -1137,10 +1172,11 @@
+    buffUntil:0,atkBuffMult:1,atkBuffUntil:0,rateBuffMult:1,rateBuffUntil:0,damageReduction:0,damageReductionUntil:0,damageTakenMult:1,damageTakenUntil:0,stunUntil:0,defModPct:0,defModUntil:0,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[],ult:0,ko:false,slot:i};
+  });
+  priorityCRecordRpgBattleStart(heroes.map(h=>h.heroId));
++ const stage1SoloBossDamageX=stage1RpgSoloBossDamageX(heroes.length),stage2Boss=activeMapSelection.stageId==='NORMAL_02'?selectedRpgBossDef():null;
++ const rpgBoss=stage2Boss?{...stage2Boss,maxHp:stage2Boss.hp,hp:stage2Boss.hp,atk:stage2Boss.atk,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,rateBuffMult:1,rateBuffUntil:0,deathPreventionCharges:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]}:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,atk:RPG_BOSS_DEF.atk*stage1SoloBossDamageX,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,rateBuffMult:1,rateBuffUntil:0,deathPreventionCharges:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]};
+- const stage1SoloBossDamageX=stage1RpgSoloBossDamageX(heroes.length);
+  rpgState={
+   heroes,
++  boss:rpgBoss,
+-  boss:{...RPG_BOSS_DEF,maxHp:RPG_BOSS_DEF.hp,hp:RPG_BOSS_DEF.hp,atk:RPG_BOSS_DEF.atk*stage1SoloBossDamageX,lastAttack:0,lastSkill1:0,lastSkill2:0,lastSkill3:0,rateBuffMult:1,rateBuffUntil:0,deathPreventionCharges:0,phase:1,enraged:false,invulnerableUntil:0,skillBlockUntil:0,reflectUntil:0,reflectRatio:0,rpgDots:[]},
+   summons:[],
+   pendingEvents:[],
+   result:null
+@@ -1491,6 +1527,7 @@
+  b.lastSkill3=rpgSimTime;
+  showWarning('철각왕 브라움 · 분쇄 포효','8초간 파티 받는 피해 +40%',900);
+ }function updateRpgBossSkills(b){
++ if(normal02RpgAggregatePressure())return; // Stage2 source pressure coefficient already aggregates skill/AoE pressure; discrete Morgen numerics remain source-pending
+  if((b.stunUntil||0)>rpgSimTime||(b.skillBlockUntil||0)>rpgSimTime)return;
+  const d=RPG_BOSS_SKILL_DEFS.BRAUM;
+  if(rpgSimTime-b.lastSkill3>=d.skill3.cooldown){castBraunCrushingRoar(b);return}
+@@ -1563,16 +1600,16 @@
+   showWarning(nextPhase===3?'⚠ BOSS ENRAGED':'BOSS PHASE '+nextPhase,nextPhase===3?'HP 35% · 최종 광폭화':'공격 패턴 강화',1200);
+  }
+  updateRpgBossSkills(b);
++ const bossRate=(b.rateBuffUntil||0)>rpgSimTime?(b.rateBuffMult||1):1,aggregatePressure=normal02RpgAggregatePressure();
++ const attackGap=(b.baseAttackGap/(aggregatePressure?1:(b.phase===1?1:b.phase===2?1.18:1.4)))/Math.max(.1,bossRate);
+- const bossRate=(b.rateBuffUntil||0)>rpgSimTime?(b.rateBuffMult||1):1;
+- const attackGap=(b.baseAttackGap/(b.phase===1?1:b.phase===2?1.18:1.4))/Math.max(.1,bossRate);
+  if(rpgSimTime-b.lastAttack>=attackGap){
+   b.lastAttack=rpgSimTime;
+   const alive=rpgAliveHeroes();
+   if(alive.length){
++   const count=aggregatePressure?1:(b.phase===1?1:Math.min(alive.length,b.phase));
+-   const count=b.phase===1?1:Math.min(alive.length,b.phase);
+    const targets=alive.slice().sort(()=>Math.random()-.5).slice(0,count);
+    targets.forEach(h=>{
++    const raw=b.atk*(aggregatePressure?1:(b.phase===1?1:b.phase===2?1.15:1.35));
+-    const raw=b.atk*(b.phase===1?1:b.phase===2?1.15:1.35);
+     applyRpgEffects([{type:'DAMAGE',target:'SELF',amount:raw}],{source:h});
+     h.ult=Math.min(100,h.ult+10);
+    });
+@@ -1599,6 +1636,7 @@
+ function finishRpgVictory(){
+  if(!rpgState||rpgState.result)return;
+  priorityCRecordRpgResult('VICTORY');rpgState.result='VICTORY';running=false;
++ if(activeMapSelection&&activeMapSelection.stageId==='NORMAL_02')applyStage2IntegratedClearReward();
+  showWarning('STAGE CLEAR','RPG BOSS DEFEATED',1200);renderRpg();
+  setTimeout(()=>showResultScreen('CLEAR',rpgState.boss.name+' 격파'),900);
+ }
+@@ -1768,6 +1806,10 @@
+   setProfile:(id)=>priorityCSetProfile(id),
+   telemetry:()=>priorityCExportTelemetry(),
+   startStage2FoundationDiagnostic:()=>startPrototypeBattle({type:'STAGE2_TD_FOUNDATION_DIAGNOSTIC',ownedHeroes:[],heroLevel:30,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_02'},infiniteGold:false}),
++   startStage2RpgDiagnostic:(ownedHeroes=['ARIA'],heroLevel=4)=>startPrototypeBattle({type:'STAGE2_RPG_DIAGNOSTIC',ownedHeroes:[...ownedHeroes],heroLevel:Number(heroLevel)||4,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_02'},infiniteGold:false}),
++   startStage2IntegrationDiagnostic:(heroLevel=4)=>startPrototypeBattle({type:'STAGE2_TD_RPG_INTEGRATION_DIAGNOSTIC',ownedHeroes:[],heroLevel:Number(heroLevel)||4,selectedMap:{worldId:'WORLD_01',localMapId:'LOCAL_WEST',mode:'NORMAL',stageId:'NORMAL_02'},infiniteGold:false}),
++   tdBossState:()=>{const b=enemies.find(e=>e.kind==='boss'&&e.hp>0);return b?{hp:b.hp,maxHp:b.maxHp,name:b.enemyName||b.label,enraged:!!b.enraged}:null},
++   rpgBossSource:()=>({...selectedRpgBossDef()}),
+   setSpeed:(v)=>{speed=Math.max(1,Math.min(3,Number(v)||1));if($('speed'))$('speed').textContent='×'+speed;return speed},
+   stepTd:(dt=.05)=>{if(gameMode!=='TD'||rpgPending||!running)return false;const step=Math.max(.001,Math.min(.05,Number(dt)||.05));simTime+=step;waveClock+=step;updateEnemies(step,simTime);updateUnits(simTime);if(!tryEarlyWaveClear()&&wave<10&&waveClock>=WAVE_DURATION)advanceWave();return true},
+   stepRpg:(dt=.05)=>{if(gameMode!=='RPG'||!rpgState||rpgTransitioning||rpgState.result)return false;const step=Math.max(.001,Math.min(.05,Number(dt)||.05));updateRpg(step);return true},
+@@ -1775,15 +1817,17 @@
+   upgrade:(x,y,nextId)=>{const u=units.get(tileKey(x,y));if(!u||u.heroId)return false;const cur=UNIT_DEFS[u.type],id=nextId||(cur&&cur.next&&cur.next[0]),next=UNIT_DEFS[id];if(!cur||!next||!cur.next.includes(id))return false;const before=u.type;upgradeUnit(u,next);return u.type!==before}
+  },
+  grid:()=>({cols:COLS,rows:ROWS,cells:cells.length}),
++ state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,running,midbossRewardPending,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossName:rpgState.boss.name,bossHp:rpgState.boss.hp,bossMaxHp:rpgState.boss.maxHp,bossAtk:rpgState.boss.atk,bossDef:rpgState.boss.def,bossPhase:rpgState.boss.phase,rpgSimTime,heroes:rpgState.heroes.map(h=>({heroId:h.heroId,name:h.name,hp:h.hp,maxHp:h.maxHp,ult:h.ult,ko:h.ko})),result:rpgState.result,transitioning:rpgTransitioning,autoBattle:rpgAutoBattle}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
+- state:()=>({gameMode,wave,gold,gHp,oHp,speed,simTime,waveClock,running,midbossRewardPending,units:[...units.values()],enemies:enemies.length,bosses:enemies.filter(e=>e.kind==='boss'&&e.hp>0).length,bossEnraged:enemies.some(e=>e.kind==='boss'&&e.hp>0&&e.enraged),bottomVisible:bottom.classList.contains('on'),rpgPending,manualPaused,moveModeUnitId,comboPlacement:!!comboPlacement,rpg:rpgState?{bossHp:rpgState.boss.hp,bossPhase:rpgState.boss.phase,rpgSimTime,heroes:rpgState.heroes.map(h=>({heroId:h.heroId,name:h.name,hp:h.hp,ult:h.ult,ko:h.ko})),result:rpgState.result,transitioning:rpgTransitioning,autoBattle:rpgAutoBattle}:null,gatePhase:gHp>0?'FINAL_WALL_G':'GATE_CORE_O'}),
+  select:(x,y)=>onCellTap(x,y),
+  place:(x,y,type)=>placeUnit(x,y,UNIT_DEFS[type]),
+  route:()=>route.slice(),routes:()=>activeStageRoutes.map(r=>r.slice()),
+  recipes:()=>HERO_RECIPES,
+  unitDefs:()=>UNIT_DEFS,
+  startRpg:()=>startRpgBattle([...units.values()].filter(u=>u.heroId).slice(0,5)),
++  craftHero:(heroId)=>{const r=HERO_RECIPES.find(x=>x.id===heroId);if(!r||r.recipeRuntimeComplete!==true)return false;const mats=recipeMaterials(r);if(!mats||!mats.length)return false;beginHeroSummon(mats[0],r);chooseHeroPlacement(mats[0].x,mats[0].y);return summonedHeroIds().has(heroId)},
+  enemySpecialRuntime:{semantics:()=>ENEMY_SPECIAL_RUNTIME_SEMANTICS,bindings:()=>({...ENEMY_SPECIAL_SEMANTIC_BY_NAME}),bind:(enemy,name)=>bindEnemySpecialSemantic(enemy,name),profile:(semantic,hp,maxHp)=>enemySpecialRuntimeProfile(semantic,hp,maxHp),freezeDuration:(semantic,duration)=>enemyFreezeDuration({specialSemantic:semantic,hp:1,maxHp:1},duration),physicalDamage:(semantic,amount)=>applyEnemyPhysicalDamageReduction({specialSemantic:semantic,hp:1,maxHp:1},amount,'PHYSICAL')},
+  profile:()=>({...playerProfile,ownedHeroes:[...playerProfile.ownedHeroes]}),stages:()=>availableMasterStages(),skillUnlocked:(slot)=>heroSkillUnlocked(slot),
++ release:{state:()=>({...stage2ReleaseState}),eligible:()=>stage2IntegratedReleaseEligible(),resetForTest:()=>{stage2ReleaseState=defaultStage2ReleaseState();persistStage2ReleaseState();return {...stage2ReleaseState}},setForTest:(v={})=>{stage2ReleaseState={...defaultStage2ReleaseState(),...v};persistStage2ReleaseState();return {...stage2ReleaseState}}},
+  standard:'LG_STAGE1_RPG_BOSS_PROTOTYPE_V1_2'
+ };
+ })();

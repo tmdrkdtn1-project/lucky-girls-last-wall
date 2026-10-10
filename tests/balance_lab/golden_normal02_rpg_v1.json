@@ -1,0 +1,70 @@
+{
+  "schema": "lucky_girls.golden_scenarios.contract.v1",
+  "version": "1.1.0",
+  "scope": "NORMAL_02_RPG_TD_RPG_RELEASE_REGRESSION",
+  "scenarios": [
+    {
+      "id": "GOLDEN_NORMAL02_RPG_SOURCE_MINIMUM",
+      "severity": "P0",
+      "required_invariants": [
+        "four_runs",
+        "runtime_errors_0",
+        "victories_4",
+        "ttk_16_24_all",
+        "party_alive_end",
+        "source_formula"
+      ],
+      "tolerance_bands": {}
+    },
+    {
+      "id": "GOLDEN_NORMAL02_TD_RPG_INTEGRATION",
+      "severity": "P0",
+      "required_invariants": [
+        "four_runs",
+        "runtime_errors_0",
+        "legal_ruby_craft_4",
+        "transition_4",
+        "party_match_4",
+        "gate_positive",
+        "victories_4"
+      ],
+      "tolerance_bands": {}
+    },
+    {
+      "id": "GOLDEN_NORMAL02_FROZEN_TD_NO_REGRESSION",
+      "severity": "P0",
+      "required_invariants": [
+        "stage02_hash_unchanged",
+        "regressions_pass"
+      ],
+      "tolerance_bands": {}
+    },
+    {
+      "id": "GOLDEN_NORMAL02_REWARD_FIRST_REPEAT",
+      "severity": "P0",
+      "required_invariants": [
+        "first_230",
+        "repeat_160",
+        "total_390",
+        "no_runtime_errors",
+        "no_player_unlock",
+        "no_normal03_auto_entry"
+      ],
+      "tolerance_bands": {}
+    },
+    {
+      "id": "GOLDEN_NORMAL02_DEFEAT_RETRY_NO_REWARD",
+      "severity": "P0",
+      "required_invariants": [
+        "defeat",
+        "same_before_after_defeat",
+        "same_after_retry",
+        "retry_resets_td",
+        "stage2_context_retained",
+        "no_next_button",
+        "no_runtime_errors"
+      ],
+      "tolerance_bands": {}
+    }
+  ]
+}
