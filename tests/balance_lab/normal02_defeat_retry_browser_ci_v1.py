@@ -43,16 +43,16 @@ class H(http.server.SimpleHTTPRequestHandler):
   if self.path!='/result':self.send_response(404);self.end_headers();return
   n=int(self.headers.get('Content-Length','0'));self.q.put(json.loads(self.rfile.read(n).decode()));self.send_response(200);self.end_headers();self.wfile.write(b'ok')
 def main():
- js=ASSETS/'qa_stage2_defeat_retry.js';html=ASSETS/'qa_stage2_rpg_component.html'
+ js=ASSETS/'qa_stage2_defeat_retry.js';html=ASSETS/'qa_stage2_defeat_retry.html'
  js.write_text(JS,encoding='utf-8');src=(ASSETS/'index.html').read_text(encoding='utf-8');needle='<script src="js/game.js"></script>'
  if needle not in src:raise RuntimeError('INDEX_SCRIPT_MARKER_MISSING')
- html.write_text(src.replace(needle,needle+'\n<script src="qa_stage2_rpg_component.js"></script>',1),encoding='utf-8')
+ html.write_text(src.replace(needle,needle+'\n<script src="qa_stage2_defeat_retry.js"></script>',1),encoding='utf-8')
  if not CHROME:raise RuntimeError('CHROME_NOT_AVAILABLE_ON_CI')
  srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),lambda *a,**kw:H(*a,directory=str(ASSETS),**kw));threading.Thread(target=srv.serve_forever,daemon=True).start();runs=[]
  try:
   for seed in SEEDS:
    profile=tempfile.mkdtemp(prefix='lg_defeat_ci_'+str(seed)+'_')
-   cmd=[str(CHROME),'--headless=new','--no-sandbox','--disable-dev-shm-usage','--disable-gpu','--no-first-run','--no-default-browser-check','--disable-background-networking','--disable-component-update','--disk-cache-size=1',f'--user-data-dir={profile}',f'http://127.0.0.1:{srv.server_address[1]}/qa_stage2_rpg_component.html?seed={seed}']
+   cmd=[str(CHROME),'--headless=new','--no-sandbox','--disable-dev-shm-usage','--disable-gpu','--no-first-run','--no-default-browser-check','--disable-background-networking','--disable-component-update','--disk-cache-size=1',f'--user-data-dir={profile}',f'http://127.0.0.1:{srv.server_address[1]}/qa_stage2_defeat_retry.html?seed={seed}']
    p=subprocess.Popen(cmd,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
    try:runs.append(H.q.get(timeout=90))
    finally:
