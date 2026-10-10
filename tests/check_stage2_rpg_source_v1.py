@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 game=(ROOT/'app/src/main/assets/js/game.js').read_text(encoding='utf-8')
 stage=ROOT/'app/src/main/assets/data/stage02.json'
 data=json.loads(stage.read_text(encoding='utf-8'))
-assert hashlib.sha256(stage.read_bytes()).hexdigest()=='cd5a664e83b0e462bb5d6246d3533267f9af6c18252939b1a5f7daf9405d8bca'
+assert hashlib.sha256(stage.read_text(encoding='utf-8').replace('\n','\r\n').encode('utf-8')).hexdigest()=='cd5a664e83b0e462bb5d6246d3533267f9af6c18252939b1a5f7daf9405d8bca'
 assert "name:'광산왕 모르겐',tdAtk:69,rpgPressure:5.3097265,hp:3990.65625,def:12,baseAttackGap:3.0" in game
 assert "atk:NORMAL02_RPG_SOURCE.tdAtk*NORMAL02_RPG_SOURCE.rpgPressure" in game
 assert math.isclose(69*5.3097265,366.3711285,rel_tol=0,abs_tol=1e-9)
