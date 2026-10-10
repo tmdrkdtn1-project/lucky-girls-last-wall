@@ -38,3 +38,5 @@ jobs:
         run: python3 tests/check_stage2_release.py
       - name: Stage 2 RPG browser 4-seed component
         run: python3 tests/balance_lab/normal02_rpg_browser_ci_v1.py
+      - name: Stage 2 TD to RPG browser 4-seed integration
+        run: python3 tests/balance_lab/normal02_td_rpg_browser_ci_v1.py
