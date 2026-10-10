@@ -41,7 +41,9 @@ assert "dataPath:'data/stage02.json'" in game
 assert "playerExposed:false,tdProfile:'STAGE2_G'" in game
 assert "startStage2FoundationDiagnostic" in game
 assert "STAGE 2 · Lucky Roulette DATA_PENDING" in game
-assert "STAGE 2 RPG · DATA_PENDING" in game
+assert "if(e.kind==='boss'){" in game and "enterRpgPlaceholder(e);return true" in game
+assert "NORMAL02_RPG_SOURCE" in game and "stage2IntegratedReleaseEligible" in game
+assert "STAGE2_CLEAR_BASE_REWARD=160,STAGE2_FIRST_CLEAR_BONUS=70" in game
 assert "activeMapSelection.stageId==='NORMAL_01'&&partySize===1?STAGE1_RPG_SOLO_BOSS_DAMAGE_X:1" in game
 assert ('data-stage="2" disabled' in index) and ('STAGE 2 · 준비중' in index)
 
